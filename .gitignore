@@ -10,3 +10,26 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+/**/target/
+/**/.mvn/
+/**/.classpath
+/**/.project
+/**/.settings/
+/**/nb-configuration.xml
+/**/.springBeans
+/**/.checkstyle
+/**/nbactions.xml
+/**/pom.xml.releaseBackup
+/**/node_modules/
+/**/bower_components/
+
+/**/polymer-loader.vulcanized.html
+/**/test-target
+/**/main.min.css
+/**/dist/public
+/**/dist/www
+/**/.idea
+/**/npm-debug.log
+/**/*.log
+/**/nbproject/private/

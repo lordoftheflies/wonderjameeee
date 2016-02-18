@@ -17,6 +17,7 @@ update-rc.d postgresql defaults
 add-apt-repository ppa:webupd8team/java
 apt-get update
 apt-get install oracle-java8-*
+apt-get install maven
 # Set environment variable for JDK 8.
 echo '# System default JDK & JRE' >> /etc/bash.bashrc
 echo 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle' >> /etc/bash.bashrc
