@@ -1,3 +1,12 @@
+#!/bin/bash
+# =====================================================================
+# Installation script for Christeam server.
+# =====================================================================
+#  * Install PostgreSQL 9.3
+#  * Install JDK 8
+#  * Install NodeJS (Bower, Grunt, Gulp, Polyserve)
+#  * Linux boot service
+#  * Create and initialize database
 # =====================================================================
 # INSTALL SOFTWARE REQUIREMENTS
 # =====================================================================
@@ -42,5 +51,7 @@ su postgres -c "createuser $USER --createdb --echo --login --createrole --superu
 su postgres -c "createdb $DB_NAME --owner=$USER" 
 su postgres -c "psql -d $DB_NAME -a -f ./init-db.sql"
 su postgres -c "psql -d $DB_NAME -a -f ./generate-data.sql"
-
-
+# =====================================================================
+# FINISH INSTALLATION
+# =====================================================================
+reboot
