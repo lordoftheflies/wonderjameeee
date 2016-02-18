@@ -36,18 +36,25 @@ APP_NAME=$USER				# Application name
 BOOT_SCRIPT=$USER			# LSB boot service script
 DB_NAME=$USER				# Database name
 PASSWD=qwe123				# Administration password.
-# Create user for the application
+# Create application directory
 mkdir /opt/$ORG_NAME
 mkdir /opt/$ORG_NAME/$APP_NAME
+# Create user for the application
 useradd $USER
+# Place deployments
+cp ./christeam-server-$VERSION.jar /opt/$ORG_NAME/$APP_NAME/
 cp ./$BOOT_SCRIPT /etc/init.d/
+# Update roles and rights.
 chmod 755 /etc/init.d/$BOOT_SCRIPT
 chown -R $USER:$USER /opt/$ORG_NAME/$APP_NAME
 # =====================================================================
 # INITIALIZE FOR PRODUCTION
 # =====================================================================
+# Setup auto-boot
 update-rc.d $BOOT_sCRIPT defaults
+# Setup database roles.
 su postgres -c "createuser $USER --createdb --echo --login --createrole --superuser --pwprompt=$PASSWD"
+# Create DDL and setup initial data.
 su postgres -c "createdb $DB_NAME --owner=$USER" 
 su postgres -c "psql -d $DB_NAME -a -f ./init-db.sql"
 su postgres -c "psql -d $DB_NAME -a -f ./generate-data.sql"
