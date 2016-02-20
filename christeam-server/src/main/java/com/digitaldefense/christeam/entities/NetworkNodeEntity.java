@@ -8,6 +8,7 @@ package com.digitaldefense.christeam.entities;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -65,6 +66,17 @@ public class NetworkNodeEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Basic
+    private Boolean active;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @ManyToOne

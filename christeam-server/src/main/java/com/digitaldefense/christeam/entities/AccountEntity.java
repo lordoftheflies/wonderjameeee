@@ -105,7 +105,7 @@ public class AccountEntity implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
