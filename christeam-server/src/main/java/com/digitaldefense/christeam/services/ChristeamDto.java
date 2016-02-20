@@ -6,12 +6,21 @@
 package com.digitaldefense.christeam.services;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author lordoftheflies
  */
+@XmlRootElement
 public class ChristeamDto implements Serializable {
+
+    public ChristeamDto() {
+    }
+
+    public ChristeamDto(NetworkDto network) {
+        this.network = network;
+    }
 
     private NetworkDto network;
 

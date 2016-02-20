@@ -7,11 +7,13 @@ package com.digitaldefense.christeam.services;
 
 import java.io.Serializable;
 import java.util.UUID;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author lordoftheflies
  */
+@XmlRootElement
 public class ContactDto implements Serializable {
 
     public ContactDto() {
