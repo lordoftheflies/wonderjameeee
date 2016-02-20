@@ -80,7 +80,7 @@ public class LicenseService {
             throw new AccountNotExistException();
         }
     }
-    
+
     @RequestMapping(path = "/{nodeId}/approve",
             method = RequestMethod.POST)
     public void approveCodeRegeneration(
