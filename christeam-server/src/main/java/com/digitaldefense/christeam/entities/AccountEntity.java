@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 
 /**
@@ -18,7 +19,7 @@ import javax.persistence.PrePersist;
  * @author lordoftheflies
  */
 @Entity
-public class ContactEntity implements Serializable {
+public class AccountEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,6 +43,47 @@ public class ContactEntity implements Serializable {
         }
     }
 
+    @OneToOne
+    private NetworkNodeEntity node;
+
+    public NetworkNodeEntity getNode() {
+        return node;
+    }
+
+    public void setNode(NetworkNodeEntity node) {
+        this.node = node;
+    }
+
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -52,10 +94,10 @@ public class ContactEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContactEntity)) {
+        if (!(object instanceof AccountEntity)) {
             return false;
         }
-        ContactEntity other = (ContactEntity) object;
+        AccountEntity other = (AccountEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

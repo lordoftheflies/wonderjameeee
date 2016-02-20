@@ -5,10 +5,13 @@
  */
 package com.digitaldefense.christeam.dal;
 
+import com.digitaldefense.christeam.entities.MessageEntity;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
 /**
  *
  * @author lordoftheflies
  */
-public interface MessageRepository {
+public interface MessageRepository extends PagingAndSortingRepository<MessageEntity, Long> {
     
 }
