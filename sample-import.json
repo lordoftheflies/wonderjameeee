@@ -1,0 +1,40 @@
+{
+  "network": {
+    "contact": {
+      "id": "263d0120-d802-11e5-b5d2-0a1d41d68578",
+      "name": "Hegedűs László",
+      "email": "heglas11@gmail.com"
+    },
+    "children": [
+      {
+        "contact": {
+          "id": "3b09ccf0-d802-11e5-b5d2-0a1d41d68578",
+          "name": "A",
+          "email": "a@b.c"
+        },
+        "children": [
+          {
+            "contact": {
+              "id": "3b09d434-d802-11e5-b5d2-0a1d41d68578",
+              "name": "E",
+              "email": "e@b.c"
+            },
+            "children": [],
+            "id": 4
+          }
+        ],
+        "id": 2
+      },
+      {
+        "contact": {
+          "id": "3b09d088-d802-11e5-b5d2-0a1d41d68578",
+          "name": "D",
+          "email": "d@b.c"
+        },
+        "children": [],
+        "id": 3
+      }
+    ],
+    "id": 1
+  }
+}
