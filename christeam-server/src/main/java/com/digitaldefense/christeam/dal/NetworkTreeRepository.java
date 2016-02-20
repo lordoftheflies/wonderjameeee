@@ -20,5 +20,8 @@ public interface NetworkTreeRepository extends PagingAndSortingRepository<Networ
 
     List<AccountEntity> findContactsOfChildNodes(@Param("accountId") UUID accountId);
     List<NetworkNodeEntity> findChildren(@Param("accountId") UUID accountId);
+    List<NetworkNodeEntity> findChildrenNodes(@Param("nodeId") Long nodeId);
     NetworkNodeEntity findByAccount(@Param("accountId") UUID accountId);
+    Boolean isRoot(@Param("accountId") UUID accountId);
+    Boolean isRootNode(@Param("nodeId") Long nodeId);
 }

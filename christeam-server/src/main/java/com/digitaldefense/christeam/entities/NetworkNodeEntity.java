@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +29,7 @@ import javax.persistence.OneToOne;
 @NamedQueries({
     @NamedQuery(name = "NetworkNodeEntity.findContactsOfChildNodes", query = "SELECT n.contact FROM NetworkNodeEntity n WHERE n.parent.contact.id = :accountId"),
     @NamedQuery(name = "NetworkNodeEntity.findByAccount", query = "SELECT n FROM NetworkNodeEntity n WHERE n.contact.id = :accountId"),
+    @NamedQuery(name = "NetworkNodeEntity.findChildrenNodes", query = "SELECT n FROM NetworkNodeEntity n WHERE n.parent.id = :nodeId"),
     @NamedQuery(name = "NetworkNodeEntity.findChildren", query = "SELECT n FROM NetworkNodeEntity n WHERE n.parent.contact.id = :accountId")
 
 })
@@ -79,6 +82,18 @@ public class NetworkNodeEntity implements Serializable {
         this.active = active;
     }
 
+    @Basic
+    @Enumerated(EnumType.STRING)
+    private AccountState state;
+
+    public AccountState getState() {
+        return state;
+    }
+
+    public void setState(AccountState state) {
+        this.state = state;
+    }
+
     @ManyToOne
     private NetworkNodeEntity parent;
 
@@ -110,6 +125,17 @@ public class NetworkNodeEntity implements Serializable {
 
     public void setContact(AccountEntity contact) {
         this.contact = contact;
+    }
+
+    @Basic
+    private Integer codes;
+
+    public Integer getCodes() {
+        return codes;
+    }
+
+    public void setCodes(Integer codes) {
+        this.codes = codes;
     }
 
     @Override
