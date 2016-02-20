@@ -128,7 +128,7 @@ public class AccountEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.digitaldefense.christeam.entities.ContactEntity[ id=" + id + " ]";
+        return "com.digitaldefense.christeam.entities.AccountEntity[ id=" + id + " ]";
     }
 
 }
