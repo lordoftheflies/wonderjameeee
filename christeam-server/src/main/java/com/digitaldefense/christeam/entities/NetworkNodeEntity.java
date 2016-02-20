@@ -6,6 +6,7 @@
 package com.digitaldefense.christeam.entities;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +24,35 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "NetworkNodeEntity.findContactsOfChildNodes", query = "SELECT n.contact FROM NetworkNodeEntity n WHERE n.parent.contact.id = :parentContactId")
+    @NamedQuery(name = "NetworkNodeEntity.findContactsOfChildNodes", query = "SELECT n.contact FROM NetworkNodeEntity n WHERE n.parent.contact.id = :accountId"),
+    @NamedQuery(name = "NetworkNodeEntity.findByAccount", query = "SELECT n FROM NetworkNodeEntity n WHERE n.contact.id = :accountId"),
+    @NamedQuery(name = "NetworkNodeEntity.findChildren", query = "SELECT n FROM NetworkNodeEntity n WHERE n.parent.contact.id = :accountId")
+
 })
 public class NetworkNodeEntity implements Serializable {
+
+    public NetworkNodeEntity() {
+    }
+
+    public NetworkNodeEntity(Long id, NetworkNodeEntity parent, List<NetworkNodeEntity> children, AccountEntity contact) {
+        this.id = id;
+        this.parent = parent;
+        this.children = children;
+        this.contact = contact;
+    }
+
+    public NetworkNodeEntity(AccountEntity contact, NetworkNodeEntity parent, NetworkNodeEntity... children) {
+        this.parent = parent;
+        this.children = Arrays.asList(children);
+        this.contact = contact;
+    }
+
+    public NetworkNodeEntity(Long id, AccountEntity contact, NetworkNodeEntity parent, NetworkNodeEntity... children) {
+        this.id = id;
+        this.parent = parent;
+        this.children = Arrays.asList(children);
+        this.contact = contact;
+    }
 
     private static final long serialVersionUID = 1L;
     @Id

@@ -46,7 +46,7 @@ public class SwaggerConfiguration {
                                 typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
                                 typeResolver.resolve(WildcardType.class)))
                 .useDefaultResponseMessages(true)
-                .enableUrlTemplating(true);
+                .enableUrlTemplating(false);
     }
 
     @Autowired

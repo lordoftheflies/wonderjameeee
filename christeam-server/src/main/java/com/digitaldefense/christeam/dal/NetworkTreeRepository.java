@@ -18,5 +18,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface NetworkTreeRepository extends PagingAndSortingRepository<NetworkNodeEntity, Long> {
 
-    List<AccountEntity> findContactsOfChildNodes(@Param("parentContactId") UUID parentContactId);
+    List<AccountEntity> findContactsOfChildNodes(@Param("accountId") UUID accountId);
+    List<NetworkNodeEntity> findChildren(@Param("accountId") UUID accountId);
+    NetworkNodeEntity findByAccount(@Param("accountId") UUID accountId);
 }

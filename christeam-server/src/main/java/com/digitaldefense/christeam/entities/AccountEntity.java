@@ -9,20 +9,42 @@ import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author lordoftheflies
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "AccountEntity.findByNetwork", query = "SELECT a FROM AccountEntity a WHERE a.node.id = :nodeId")
+})
 public class AccountEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public AccountEntity() {
+    }
+
+    public AccountEntity(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
+
+    public AccountEntity(UUID id, String email, String name) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+    }
+
     @Id
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
+    @org.hibernate.annotations.Type(type="pg-uuid")
     private UUID id;
 
     public UUID getId() {
@@ -36,12 +58,12 @@ public class AccountEntity implements Serializable {
     /**
      * Generate UNIQUE entity key.
      */
-    @PrePersist
-    protected void generateKey() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-    }
+//    @PrePersist
+//    protected void generateKey() {
+//        if (this.id == null) {
+//            this.id = UUID.randomUUID();
+//        }
+//    }
 
     @OneToOne
     private NetworkNodeEntity node;
