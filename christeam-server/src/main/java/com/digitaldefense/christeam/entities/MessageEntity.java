@@ -33,6 +33,17 @@ public class MessageEntity implements Serializable {
     }
 
     @Basic
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Basic
     private String message;
 
     public String getMessage() {

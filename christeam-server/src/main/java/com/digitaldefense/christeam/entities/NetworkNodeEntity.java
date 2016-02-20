@@ -12,13 +12,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author lordoftheflies
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "NetworkNodeEntity.findContactsOfChildNodes", query = "SELECT n.contact FROM NetworkNodeEntity n WHERE n.parent.contact.id = :parentContactId")
+})
 public class NetworkNodeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +60,17 @@ public class NetworkNodeEntity implements Serializable {
 
     public void setChildren(List<NetworkNodeEntity> children) {
         this.children = children;
+    }
+
+    @OneToOne(mappedBy = "node")
+    private AccountEntity contact;
+
+    public AccountEntity getContact() {
+        return contact;
+    }
+
+    public void setContact(AccountEntity contact) {
+        this.contact = contact;
     }
 
     @Override
