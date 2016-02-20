@@ -9,11 +9,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author lordoftheflies
  */
+@XmlRootElement
 public class NetworkDto implements Serializable {
 
     public NetworkDto() {
