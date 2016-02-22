@@ -33,4 +33,5 @@ hs_err_pid*
 /**/npm-debug.log
 /**/*.log
 /**/nbproject/private/
-/christeam-server/nbproject/
+/**/nbproject/
+/**/dist/
