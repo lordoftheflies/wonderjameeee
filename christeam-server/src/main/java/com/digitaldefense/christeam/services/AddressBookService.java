@@ -5,6 +5,8 @@
  */
 package com.digitaldefense.christeam.services;
 
+import com.digitaldefense.christeam.model.ContactDto;
+import com.digitaldefense.christeam.exceptions.AccountNotExistException;
 import com.digitaldefense.christeam.dal.AccountRepository;
 import com.digitaldefense.christeam.dal.NetworkTreeRepository;
 import com.digitaldefense.christeam.entities.AccountEntity;
