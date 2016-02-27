@@ -61,18 +61,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <body unresolved class="app" data-ng-controller="MainCtrl">
         <span id="browser-sync-binding"></span>
+        
         <template is="dom-bind" id="app">
 
             <paper-drawer-panel id="paperDrawerPanel">
-                <!-- Drawer Scroll Header Panel -->
+                 <!--Drawer Scroll Header Panel--> 
                 <paper-scroll-header-panel drawer fixed>
 
-                    <!-- Drawer Toolbar -->
+                     <!--Drawer Toolbar--> 
                     <paper-toolbar id="drawerToolbar">
                         <span class="menu-name">Menu</span>
                     </paper-toolbar>
 
-                    <!-- Drawer Content -->
+                     <!--Drawer Content--> 
                     <paper-menu attr-for-selected="data-route" selected="[[route]]">
                         <a data-route="home" href="{{baseUrl}}">
                             <iron-icon icon="home"></iron-icon>
@@ -91,30 +92,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </paper-menu>
                 </paper-scroll-header-panel>
 
-                <!-- Main Area -->
+                 <!--Main Area--> 
                 <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
-                    <!-- Main Toolbar -->
+                     <!--Main Toolbar--> 
                     <paper-toolbar id="mainToolbar" class="tall">
                         <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
                         <span class="space"></span>
 
-                        <!-- Toolbar icons -->
+                         <!--Toolbar icons--> 
                         <paper-icon-button icon="refresh"></paper-icon-button>
                         <paper-icon-button icon="search"></paper-icon-button>
 
-                        <!-- Application name -->
+                         <!--Application name--> 
                         <div class="middle middle-container">
                             <div class="app-name">Christeam</div>
                         </div>
 
-                        <!-- Application sub title -->
+                         <!--Application sub title--> 
                         <div class="bottom bottom-container">
                             <div class="bottom-title">The future of the web today</div>
                         </div>
                     </paper-toolbar>
 
-                    <!-- Main Content -->
+                     <!--Main Content--> 
                     <div class="content">
                         <iron-pages attr-for-selected="data-route" selected="{{route}}">
                             <section data-route="home">
@@ -184,8 +185,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
             </paper-toast>
 
-            <!-- Uncomment next block to enable Service Worker support (1/2) -->
-            <!--
+             <!--Uncomment next block to enable Service Worker support (1/2)--> 
+            
             <paper-toast id="caching-complete"
                          duration="6000"
                          text="Caching complete! This app will work offline.">
@@ -200,7 +201,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                  cache-config-file="cache-config.json">
               </platinum-sw-cache>
             </platinum-sw-register>
-            -->
+            
 
         </template>
 

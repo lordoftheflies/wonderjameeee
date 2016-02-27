@@ -17,7 +17,7 @@ define([
      * This is where the AngularJS application is defined and all application dependencies declared.
      * @type {module}
      */
-    var predixApp = angular.module('predixApp', [
+    var app = angular.module('app', [
         'app.routes',
         'app.interceptors',
         'app.services'
@@ -29,7 +29,7 @@ define([
      * child controllers to access properties defined on the $rootScope.
      */
 //    predixApp.controller('MainCtrl', ['$scope', '$rootScope', 'UserService', function ($scope, $rootScope, predixUserService) {
-    predixApp.controller('MainCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+    app.controller('MainCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
             //Global application object
             window.App = $rootScope.App = {
@@ -62,8 +62,8 @@ define([
 
 
     //Set on window for debugging
-    window.predixApp = predixApp;
+    window.application = app;
 
     //Return the application  object
-    return predixApp;
+    return app;
 });
