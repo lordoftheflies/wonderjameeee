@@ -34,7 +34,7 @@ define([
             //Global application object
             window.App = $rootScope.App = {
                 version: '1.0',
-                name: 'Predix Seed',
+                name: 'Christeam',
                 session: {},
                 tabs: [
                     {icon: 'fa-tachometer', state: 'dashboards', label: 'Dashboards'},
@@ -43,6 +43,7 @@ define([
                         ]}
                 ]
             };
+            $scope.appName = $rootScope.App.name;
 
             $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
                 if (angular.isObject(error) && angular.isString(error.code)) {

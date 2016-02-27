@@ -61,19 +61,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <body unresolved class="app" data-ng-controller="MainCtrl">
         <span id="browser-sync-binding"></span>
-        
+
         <template is="dom-bind" id="app">
 
             <paper-drawer-panel id="paperDrawerPanel">
-                 <!--Drawer Scroll Header Panel--> 
+                <!--Drawer Scroll Header Panel--> 
                 <paper-scroll-header-panel drawer fixed>
 
-                     <!--Drawer Toolbar--> 
+                    <!--Drawer Toolbar--> 
                     <paper-toolbar id="drawerToolbar">
-                        <span class="menu-name">Menu</span>
+                        <span class="menu-name">Contacts</span>
                     </paper-toolbar>
+                    <iron-ajax url="data/contacts.json" last-response="{{contacts}}" auto></iron-ajax>
+                    <network-tree-view id="contact-tree" items="{{contacts}}">
+                    </network-tree-view>
 
-                     <!--Drawer Content--> 
+
+                    <!--Drawer Content--> 
                     <paper-menu attr-for-selected="data-route" selected="[[route]]">
                         <a data-route="home" href="{{baseUrl}}">
                             <iron-icon icon="home"></iron-icon>
@@ -92,30 +96,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </paper-menu>
                 </paper-scroll-header-panel>
 
-                 <!--Main Area--> 
+                <!--Main Area--> 
                 <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
-                     <!--Main Toolbar--> 
+                    <!--Main Toolbar--> 
                     <paper-toolbar id="mainToolbar" class="tall">
                         <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
                         <span class="space"></span>
 
-                         <!--Toolbar icons--> 
+                        <!--Toolbar icons--> 
                         <paper-icon-button icon="refresh"></paper-icon-button>
                         <paper-icon-button icon="search"></paper-icon-button>
 
-                         <!--Application name--> 
+                        <!--Application name--> 
                         <div class="middle middle-container">
-                            <div class="app-name">Christeam</div>
+                            <div class="app-name">{{appName}}</div>
                         </div>
 
-                         <!--Application sub title--> 
+                        <!--Application sub title--> 
                         <div class="bottom bottom-container">
                             <div class="bottom-title">The future of the web today</div>
                         </div>
                     </paper-toolbar>
 
-                     <!--Main Content--> 
+                    <!--Main Content--> 
                     <div class="content">
                         <iron-pages attr-for-selected="data-route" selected="{{route}}">
                             <section data-route="home">
@@ -185,23 +189,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
             </paper-toast>
 
-             <!--Uncomment next block to enable Service Worker support (1/2)--> 
-            
+            <!--Uncomment next block to enable Service Worker support (1/2)--> 
+
             <paper-toast id="caching-complete"
                          duration="6000"
                          text="Caching complete! This app will work offline.">
             </paper-toast>
-        
+
             <platinum-sw-register auto-register
                                   clients-claim
                                   skip-waiting
                                   base-uri="bower_components/platinum-sw/bootstrap"
                                   on-service-worker-installed="displayInstalledToast">
-              <platinum-sw-cache default-cache-strategy="fastest"
-                                 cache-config-file="cache-config.json">
-              </platinum-sw-cache>
+                <platinum-sw-cache default-cache-strategy="fastest"
+                                   cache-config-file="cache-config.json">
+                </platinum-sw-cache>
             </platinum-sw-register>
-            
+
 
         </template>
 
@@ -212,7 +216,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </body>
 
-    <script>
+    <script type="text/javascript">
         // IE11 workaround: We can't rely on IE's load order for scripts that are loaded outside of require.js (might
         //  be an issue with the web components polyfill), so we wait for the HTMLImportsLoaded event to ensure our
         //  web components' scripts have loaded.

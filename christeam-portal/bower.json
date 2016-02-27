@@ -17,7 +17,11 @@
     "require-css": "^0.1.8",
     "lodash": "^4.5.1",
     "jquery": "^2.2.1",
-    "requirejs": "^2.1.22"
+    "requirejs": "^2.1.22",
+    "iron-ajax": "polymerelements/iron-ajax#^1.1.1",
+    "plutonium-tree": "git@github.com:lordoftheflies/plutonium-tree.git",
+    "iron-icon": "polymerelements/iron-icon#^1.0.7",
+    "iron-image": "polymerelements/iron-image#^1.2.2"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
