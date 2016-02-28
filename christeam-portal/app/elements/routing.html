@@ -57,6 +57,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/contact', function() {
       app.route = 'contact';
     });
+    
+    // Profile page route
+    page('/:id/profile', function(data) {
+      app.route = 'profile';
+      app.params = data.params;
+    });
+    // Messsaging page route
+    page('/:id/messages', function(data) {
+      app.route = 'messages';
+      app.params = data.params;
+    });
+    // Mailbox page route
+    page('/:id/mailbox', function(data) {
+      app.route = 'mailbox';
+      app.params = data.params;
+    });
+    // Network page route
+    page('/:id/network', function(data) {
+      app.route = 'network';
+      app.params = data.params;
+    });
+    page('/about', function() {
+      app.route = 'about';
+    });
 
     // 404
     page('*', function() {
