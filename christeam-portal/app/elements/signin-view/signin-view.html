@@ -17,14 +17,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
 
-<dom-module id="login-view">
+<dom-module id="signin-view">
     <template>
         <style>
             :host {
-                display: inline-block;
+                display: block;
+                /*@apply(--layout-flex);*/
+                @apply(--layout-center);
+                @apply(--layout-vertical);
             }
         </style>
-        <paper-card heading="Login" class="layout horizontal center">
+        <paper-card heading="Sign-in" class="layout horizontal center">
             <div class="card-content">
                 <paper-input id="login" label="Email address" type="email" auto-validate pattern="{{mailPattern}}" error-message="Invalid email address.">
                     <iron-icon icon="account-circle" prefix></iron-icon>
@@ -50,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             'use strict';
 
             Polymer({
-                is: 'login-view',
+                is: 'signin-view',
                 properties: {
                     mailPattern: {
                         type: String,
@@ -62,7 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     foo: {
                         type: String,
-                        value: 'login-view',
+                        value: 'signin-view',
                         notify: true
                     }
                 },
@@ -108,8 +111,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     
                     var app = document.querySelector('#app');
                     app.userinfo = credentials;
-                    window.location.href = '/about';
                     console.log("Navigate to " + app.route);
+                    app.$.mainPanel.selected = "home";
                 },
                 keydown: function (event, detail, sender) {
                     if (event.keyCode === 13) {

@@ -89,6 +89,11 @@
         // Scale middleContainer appName
         Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
     });
+    
+    app.showUserNavigation = function () {
+        console.log("Show user navigation dropdown.");
+        this.$.userNavigation.toggle();
+    };
 
     // Scroll page to top and expand header
     app.scrollPageToTop = function () {

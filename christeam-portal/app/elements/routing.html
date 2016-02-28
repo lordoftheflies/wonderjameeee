@@ -38,11 +38,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/', function() {
-      app.route = 'login';
+      app.route = 'signin';
     });
 
     page(app.baseUrl, function() {
-      app.route = 'login';
+      app.route = 'signin';
     });
 
     page('/users', function() {
@@ -58,14 +58,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'contact';
     });
     
-    // Profile page route
-    page('/login', function() {
-      app.route = 'login';
+    // Sign-in page route
+    page('/signin', function() {
+      app.route = 'signin';
     });
-    
-    // Profile page route
-    page('/logout', function() {
-      app.route = 'logout';
+    // Sign-on page route
+    page('/signon', function() {
+      app.route = 'signon';
+    });
+    // Sign-in page route
+    page('/signout', function() {
+      app.route = 'signout';
     });
     
     // Profile page route

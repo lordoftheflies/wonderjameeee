@@ -102,12 +102,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <span class="space"></span>
 
                         <!-- Toolbar icons -->
+                        <div>
+                            <paper-button on-click="showUserNavigation">
+                                <iron-icon icon="account-circle"></iron-icon>
+                                <span>[[userinfo.login]]</span>
+                            </paper-button>
+                            <iron-dropdown id="userNavigation" horizontal-align="right" vertical-align="top">
+
+                                <!--<paper-material class="dropdown-content">-->
+                                    <paper-menu attr-for-selected="data-route" selected="[[route]]" class="dropdown-content">
+                                        <a data-route="profile" href="{{baseUrl}}{{userinfo.login}}/profile">
+                                            <iron-icon icon="account-circle"></iron-icon>
+                                            <span>Profile</span>
+                                        </a>
+                                        <a data-route="signout" href="{{baseUrl}}{{userinfo.login}}/signout">
+                                            <iron-icon icon="markunread-mailbox"></iron-icon>
+                                            <span>Logout</span>
+                                        </a>
+                                    </paper-menu>
+                                <!--</paper-material>-->
+                            </iron-dropdown>
+                        </div>
                         <paper-icon-button icon="refresh"></paper-icon-button>
                         <paper-icon-button icon="search"></paper-icon-button>
-                        <a href="{{baseUrl}}{{userinfo.login}}/profile" class="link">
-                            <iron-icon icon="account-circle"></iron-icon>
-                            <span>[[userinfo.login]]</span>
-                        </a>
+
+                        <!--<button class="dropdown-trigger">Basic</button>-->
+
+
 
                         <!-- Application name -->
                         <div class="middle middle-container">
@@ -117,9 +138,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <!-- Main Content -->
                     <div class="content">
-                        <iron-pages attr-for-selected="data-route" selected="{{route}}">
-                            <section data-route="login">
-                                    <login-view></login-view>
+                        <iron-pages id="mainPanel" attr-for-selected="data-route" selected="{{route}}">
+                            <section data-route="signin">
+                                <signin-view></signin-view>
+                            </section>
+                            <section data-route="signon">
+                                <signon-view></signon-view>
                             </section>
                             <section data-route="profile">
                                 <profile-view></profile-view>

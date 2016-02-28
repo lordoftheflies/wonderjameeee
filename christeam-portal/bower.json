@@ -19,7 +19,8 @@
     "paper-menu": "polymerelements/paper-menu#^1.2.2",
     "paper-fab": "polymerelements/paper-fab#^1.2.0",
     "paper-toggle-button": "polymerelements/paper-toggle-button#^1.1.1",
-    "paper-input": "polymerelements/paper-input#^1.1.8"
+    "paper-input": "polymerelements/paper-input#^1.1.8",
+    "iron-dropdown": "polymerelements/iron-dropdown#^1.2.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
