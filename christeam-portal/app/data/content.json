@@ -1,0 +1,10 @@
+{
+    "title": "Első üzenet",
+    "from": "Jung Krisztina",
+    "tags": [
+        "read"
+    ],
+    "ts": "2016. február 28. 14:44",
+    "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg",
+    "content": "<google-youtube video-id='...' height='270px' width='480px' rel='0' start='5' autoplay='1'><\/google-youtube>"
+}

@@ -9,31 +9,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
 <dom-module id="profile-view">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <div>Hello from <span>{{foo}}</span></div>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+    <template>
+        <style>
+            :host {
+                display: block;
+                @apply(--layout-flex);
+                /*@apply(--layout-center);*/
+                @apply(--layout-vertical);
+            }
+        </style>
 
-    Polymer({
-      is: 'profile-view',
+        <iron-ajax url="/data/profile.json" last-response="{{profile}}" auto></iron-ajax>
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'profile-view',
-          notify: true
-        }
-      }
-    });
-  })();
-  </script>
+        <paper-card heading="Account" class="layout horizontal flex">
+            <div class="card-content">
+                <div>
+                    <label>Activation date</label>
+                    <span>[[profile.activated]]</span>
+                </div>
+                <div>
+                    <paper-checkbox checked="{{profile.active}}">Status</paper-checkbox>
+                </div>
+                <div>
+                    <paper-dropdown-menu label="Preferred language">
+                        <paper-menu class="dropdown-content">
+                            <paper-menu class="dropdown-content" selected="{{profile.preferredLanguage}}" attr-for-selected="data-value">
+                                <paper-item data-value="en">English</paper-item>
+                                <paper-item data-value="hu">Magyar</paper-item>
+                            </paper-menu>
+                        </paper-menu>
+                    </paper-dropdown-menu>
+                </div>
+            </div>
+            <div class="card-actions">
+                <paper-button raised>Changing device</paper-button>
+                <paper-button raised>Demand codes</paper-button>
+            </div>
+        </paper-card>
+        <br />
+        <paper-card heading="Tutorials" class="layout horizontal flex">
+            <div class="card-content">
+                Under development ...
+            </div>
+        </paper-card>
+
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'profile-view',
+                properties: {
+                    foo: {
+                        type: String,
+                        value: 'profile-view',
+                        notify: true
+                    }
+                }
+            });
+        })();
+    </script>
 </dom-module>
