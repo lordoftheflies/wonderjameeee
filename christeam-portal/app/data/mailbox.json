@@ -1,3 +1,78 @@
-{
-    "name": "lordoftheflies"
-}
+[
+    {
+        "title": "Első üzenet",
+        "text": "Üdvözlet!",
+        "from": "Jung Krisztina",
+        "tags": [
+            "read"
+        ],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Második üzenet",
+        "text": "Adjá el sokat.",
+        "from": "Jung Krisztina",
+        "tags": [
+            "read"
+        ],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Harmadik üzenet",
+        "text": "11111111",
+        "tags": [
+            "read"
+        ],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Negyedik üzenet",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel consectetur turpis. Sed semper dui id diam placerat, quis pretium leo volutpat.",
+        "from": "Jung Krisztina",
+        "tags": ["unread"],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Ötödik üzenet",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel consectetur turpis. Sed semper dui id diam placerat, quis pretium leo volutpat.",
+        "from": "Jung Krisztina",
+        "tags": ["read"],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Hatodik üzenet",
+        "text": "11111111",
+        "from": "Jung Krisztina",
+        "tags": ["unread"],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Hetedik üzenet",
+        "text": "11111111",
+        "from": "Jung Krisztina",
+        "tags": ["unread"],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Nyolcadik üzenet",
+        "text": "11111111",
+        "from": "Jung Krisztina",
+        "tags": ["read"],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Kilencedik üzenet",
+        "text": "11111111",
+        "from": "Jung Krisztina",
+        "tags": ["read"],
+        "ts": "2016. február 28. 14:44"
+    },
+    {
+        "title": "Tizedik üzenet",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel consectetur turpis. Sed semper dui id diam placerat, quis pretium leo volutpat. Sed efficitur metus dui. Curabitur scelerisque lectus sit amet tortor vehicula lacinia. Curabitur a egestas nisl. In lobortis magna a metus hendrerit, non elementum dolor malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec feugiat urna a eros blandit, eget consequat neque egestas. Etiam eu blandit arcu. Vivamus tincidunt lectus id sapien viverra scelerisque. Vivamus sodales euismod semper. Quisque interdum mi tortor, vel pellentesque leo varius non. Suspendisse potenti. Nunc malesuada eros neque, eget faucibus dui feugiat ac.",
+        "from": "Jung Krisztina",
+        "tags": ["read"],
+        "ts": "2016. február 28. 14:44"
+    }
+
+]
