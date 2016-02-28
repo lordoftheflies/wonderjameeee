@@ -15,19 +15,23 @@
     // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
     var app = document.querySelector('#app');
 
+    app.isAuthenticated = function () {
+        return app.userinfo !== null;
+    };
 
     app.appinfo = {
         name: "Christeam"
     };
-    app.userinfo = {
-        login: "kacsa"
-    };
+    app.userinfo = null;
+//    app.userinfo = {
+//        login: "kacsa"
+//    };
     app.locale = {
         tab_messages: "Messages",
         tab_mailbox: "Mailbox",
         tab_network: "Network",
         tab_about: "About"
-    }
+    };
 
 
     // Sets app default base URL

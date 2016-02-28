@@ -74,19 +74,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <!-- Drawer Content -->
                     <paper-menu attr-for-selected="data-route" selected="[[route]]">
-                        <a data-route="home" href="{{baseUrl}}">
-                            <iron-icon icon="home"></iron-icon>
-                            <span>Home</span>
-                        </a>
-
-                        <a data-route="users" href="{{baseUrl}}users">
-                            <iron-icon icon="info"></iron-icon>
-                            <span>Users</span>
-                        </a>
-
-                        <a data-route="contact" href="{{baseUrl}}contact">
+                        <a data-route="messages" href="{{baseUrl}}{{userinfo.login}}/messages">
                             <iron-icon icon="mail"></iron-icon>
-                            <span>Contact</span>
+                            <span>[[locale.tab_messages]]</span>
+                        </a>
+                        <a data-route="mailbox" href="{{baseUrl}}{{userinfo.login}}/mailbox">
+                            <iron-icon icon="markunread-mailbox"></iron-icon>
+                            <span>[[locale.tab_mailbox]]</span>
+                        </a>
+                        <a data-route="network" href="{{baseUrl}}{{userinfo.login}}/network">
+                            <iron-icon icon="supervisor-account"></iron-icon>
+                            <span>[[locale.tab_network]]</span>
+                        </a>
+                        <a data-route="about" href="{{baseUrl}}about">
+                            <iron-icon icon="info"></iron-icon>
+                            <span>[[locale.tab_about]]</span>
                         </a>
                     </paper-menu>
                 </paper-scroll-header-panel>
@@ -111,40 +113,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <div class="middle middle-container">
                             <div class="app-name">{{appinfo.name}}</div>
                         </div>
-
-                        <!-- Application sub title -->
-                        <paper-tabs  attr-for-selected="data-route" selected="{{selectedTab}}" class="bottom bottom-container">
-                            <paper-tab data-route="messages">
-                                <a data-route="messages" href="{{baseUrl}}{{userinfo.login}}/messages" class="link">
-                                    <iron-icon icon="mail"></iron-icon>
-                                    <span>[[locale.tab_messages]]</span>
-                                </a>
-                            </paper-tab>
-                            <paper-tab data-route="mailbox">
-                                <a data-route="users" href="{{baseUrl}}{{userinfo.login}}/mailbox" class="link">
-                                    <iron-icon icon="markunread-mailbox"></iron-icon>
-                                    <span>[[locale.tab_mailbox]]</span>
-                                </a>
-                            </paper-tab>
-                            <paper-tab data-route="network">
-                                <a data-route="users" href="{{baseUrl}}{{userinfo.login}}/network" class="link">
-                                    <iron-icon icon="supervisor-account"></iron-icon>
-                                    <span>[[locale.tab_network]]</span>
-                                </a>
-                            </paper-tab>
-                            <paper-tab data-route="about">
-                                <a data-route="about" href="{{baseUrl}}about" class="link">
-                                    <span>[[locale.tab_about]]</span>
-                                </a>
-                            </paper-tab>
-                        </paper-tabs>
                     </paper-toolbar>
 
                     <!-- Main Content -->
                     <div class="content">
                         <iron-pages attr-for-selected="data-route" selected="{{route}}">
+                            <section data-route="login">
+                                    <login-view></login-view>
+                            </section>
                             <section data-route="profile">
-                                    <profile-view></profile-view>
+                                <profile-view></profile-view>
                             </section>
                             <section data-route="messages">
                                 <paper-material elevation="1">
