@@ -6,7 +6,8 @@
         "tags": [
             "read"
         ],
-        "ts": "2016. február 28. 14:44"
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Második üzenet",
@@ -15,7 +16,8 @@
         "tags": [
             "read"
         ],
-        "ts": "2016. február 28. 14:44"
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Harmadik üzenet",
@@ -23,56 +25,77 @@
         "tags": [
             "read"
         ],
-        "ts": "2016. február 28. 14:44"
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Negyedik üzenet",
         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel consectetur turpis. Sed semper dui id diam placerat, quis pretium leo volutpat.",
         "from": "Jung Krisztina",
-        "tags": ["unread"],
-        "ts": "2016. február 28. 14:44"
+        "tags": [
+            "unread"
+        ],
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Ötödik üzenet",
         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel consectetur turpis. Sed semper dui id diam placerat, quis pretium leo volutpat.",
         "from": "Jung Krisztina",
-        "tags": ["read"],
-        "ts": "2016. február 28. 14:44"
+        "tags": [
+            "read"
+        ],
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Hatodik üzenet",
         "text": "11111111",
         "from": "Jung Krisztina",
-        "tags": ["unread"],
-        "ts": "2016. február 28. 14:44"
+        "tags": [
+            "unread"
+        ],
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Hetedik üzenet",
         "text": "11111111",
         "from": "Jung Krisztina",
-        "tags": ["unread"],
-        "ts": "2016. február 28. 14:44"
+        "tags": [
+            "unread"
+        ],
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Nyolcadik üzenet",
         "text": "11111111",
         "from": "Jung Krisztina",
-        "tags": ["read"],
-        "ts": "2016. február 28. 14:44"
+        "tags": [
+            "read"
+        ],
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     },
     {
         "title": "Kilencedik üzenet",
         "text": "11111111",
         "from": "Jung Krisztina",
-        "tags": ["read"],
+        "tags": [
+            "read"
+        ],
         "ts": "2016. február 28. 14:44"
     },
     {
         "title": "Tizedik üzenet",
         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel consectetur turpis. Sed semper dui id diam placerat, quis pretium leo volutpat. Sed efficitur metus dui. Curabitur scelerisque lectus sit amet tortor vehicula lacinia. Curabitur a egestas nisl. In lobortis magna a metus hendrerit, non elementum dolor malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec feugiat urna a eros blandit, eget consequat neque egestas. Etiam eu blandit arcu. Vivamus tincidunt lectus id sapien viverra scelerisque. Vivamus sodales euismod semper. Quisque interdum mi tortor, vel pellentesque leo varius non. Suspendisse potenti. Nunc malesuada eros neque, eget faucibus dui feugiat ac.",
         "from": "Jung Krisztina",
-        "tags": ["read"],
-        "ts": "2016. február 28. 14:44"
+        "tags": [
+            "read"
+        ],
+        "ts": "2016. február 28. 14:44",
+        "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg"
     }
 
 ]
