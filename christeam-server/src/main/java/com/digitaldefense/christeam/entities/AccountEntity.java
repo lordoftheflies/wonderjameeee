@@ -21,7 +21,8 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "AccountEntity.findByNetwork", query = "SELECT a FROM AccountEntity a WHERE a.node.id = :nodeId")
+    @NamedQuery(name = "AccountEntity.findByNetwork", query = "SELECT a FROM AccountEntity a WHERE a.node.id = :nodeId"),
+    @NamedQuery(name = "AccountEntity.findByCredentials", query = "SELECT a FROM AccountEntity a WHERE a.email = :email AND a.password = :password")
 })
 public class AccountEntity implements Serializable {
 
@@ -104,6 +105,16 @@ public class AccountEntity implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     @Override

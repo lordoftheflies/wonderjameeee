@@ -17,4 +17,6 @@ import org.springframework.data.repository.query.Param;
 public interface AccountRepository extends CrudRepository<AccountEntity, UUID> {
 
     AccountEntity findByNetwork(@Param("nodeId") Long nodeId);
+    
+    AccountEntity findByCredentials(@Param("email") String email, @Param("password") String password);
 }
