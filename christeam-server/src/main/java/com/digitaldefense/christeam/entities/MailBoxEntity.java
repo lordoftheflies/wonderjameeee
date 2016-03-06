@@ -6,15 +6,14 @@
 package com.digitaldefense.christeam.entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -22,31 +21,9 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "MessageEntity.inboxByRecipient", query ="SELECT m FROM MessageEntity m WHERE m.mailBox.owner.contact.id = :recipientId")
+    @NamedQuery(name = "MailBoxEntity.findByRecipient", query = "SELECT mb FROM MailBoxEntity mb WHERE mb.owner.contact.id = :recipientId")
 })
-public class MessageEntity implements Serializable {
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private ContentEntity content;
-
-    public ContentEntity getContent() {
-        return content;
-    }
-
-    public void setContent(ContentEntity content) {
-        this.content = content;
-    }
-
-    @ManyToOne
-    private MailBoxEntity mailBox;
-
-    public MailBoxEntity getMailBox() {
-        return mailBox;
-    }
-
-    public void setMailBox(MailBoxEntity mailBox) {
-        this.mailBox = mailBox;
-    }
+public class MailBoxEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,18 +37,28 @@ public class MessageEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    private NetworkNodeEntity owner;
 
-    @Basic(optional = false)
-    private Boolean read;
-
-    public Boolean getRead() {
-        return read;
+    public NetworkNodeEntity getOwner() {
+        return owner;
     }
 
-    public void setRead(Boolean read) {
-        this.read = read;
+    public void setOwner(NetworkNodeEntity owner) {
+        this.owner = owner;
+    }
+    
+    @OneToMany(mappedBy = "mailBox")
+    private List<MessageEntity> messages;
+
+    public List<MessageEntity> getMessages() {
+        return messages;
     }
 
+    public void setMessages(List<MessageEntity> messages) {
+        this.messages = messages;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -82,10 +69,10 @@ public class MessageEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MessageEntity)) {
+        if (!(object instanceof MailBoxEntity)) {
             return false;
         }
-        MessageEntity other = (MessageEntity) object;
+        MailBoxEntity other = (MailBoxEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +81,7 @@ public class MessageEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.digitaldefense.christeam.entities.MessageEntity[ id=" + id + " ]";
+        return "com.digitaldefense.christeam.entities.MailBoxEntity[ id=" + id + " ]";
     }
-
+    
 }

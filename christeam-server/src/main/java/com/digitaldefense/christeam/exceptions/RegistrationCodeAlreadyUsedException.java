@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.digitaldefense.christeam.services;
+package com.digitaldefense.christeam.exceptions;
 
 /**
  *
  * @author lordoftheflies
  */
-public class CredentialsException extends Exception {
+public class RegistrationCodeAlreadyUsedException extends Exception {
 
-    public CredentialsException() {
+    public RegistrationCodeAlreadyUsedException() {
     }
     
 }

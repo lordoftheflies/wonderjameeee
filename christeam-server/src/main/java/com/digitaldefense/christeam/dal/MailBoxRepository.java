@@ -5,8 +5,7 @@
  */
 package com.digitaldefense.christeam.dal;
 
-import com.digitaldefense.christeam.entities.MessageEntity;
-import java.util.List;
+import com.digitaldefense.christeam.entities.MailBoxEntity;
 import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,8 +16,8 @@ import org.springframework.stereotype.Repository;
  * @author lordoftheflies
  */
 @Repository
-public interface MessageRepository extends CrudRepository<MessageEntity, Long>{
-    
-    
-    List<MessageEntity> inboxByRecipient(@Param("recipientId") UUID recipient);
+public interface MailBoxRepository extends CrudRepository<MailBoxEntity, Long> {
+
+    MailBoxEntity findByRecipient(@Param("recipientId") UUID recipientId);
+
 }

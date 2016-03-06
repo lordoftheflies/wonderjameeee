@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.digitaldefense.christeam.services;
+package com.digitaldefense.christeam.entities;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 /**
  *
  * @author lordoftheflies
  */
-public class RegistrationCodeAlreadyUsed extends Exception {
-
-    public RegistrationCodeAlreadyUsed() {
-    }
+@Entity
+@DiscriminatorValue(value = "image")
+public class ImageContentEntity extends ContentEntity {
     
 }

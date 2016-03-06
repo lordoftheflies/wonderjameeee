@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.digitaldefense.christeam.services;
+package com.digitaldefense.christeam.exceptions;
 
 /**
  *
  * @author lordoftheflies
  */
-public class AccountNotFoundException extends Exception {
+public class CredentialsException extends Exception {
 
-    public AccountNotFoundException() {
+    public CredentialsException() {
     }
     
 }

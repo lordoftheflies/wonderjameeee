@@ -5,6 +5,9 @@
  */
 package com.digitaldefense.christeam.services;
 
+import com.digitaldefense.christeam.exceptions.CredentialsException;
+import com.digitaldefense.christeam.exceptions.AccountNotFoundException;
+import com.digitaldefense.christeam.exceptions.RegistrationCodeAlreadyUsedException;
 import com.digitaldefense.christeam.dal.AccountRepository;
 import com.digitaldefense.christeam.dal.NetworkTreeRepository;
 import com.digitaldefense.christeam.entities.AccountEntity;
@@ -59,7 +62,7 @@ public class AuthenticationService {
 
     @CrossOrigin
     @RequestMapping(path = "/signon", method = RequestMethod.POST)
-    public void signOn(RegistrationDto dto) throws AccountNotFoundException, RegistrationCodeAlreadyUsed {
+    public void signOn(RegistrationDto dto) throws AccountNotFoundException, RegistrationCodeAlreadyUsedException {
         if (accountRepository.count() == 0) {
             AccountEntity accountEntity = new AccountEntity();
             apply(dto, accountEntity);
@@ -77,7 +80,7 @@ public class AuthenticationService {
             AccountEntity accountEntity = accountRepository.findOne(UUID.fromString(dto.getActivationCode()));
             NetworkNodeEntity nodeEntity = networkRepository.findByAccount(accountEntity.getId());
             if (nodeEntity.getActive()) {
-                throw new RegistrationCodeAlreadyUsed();
+                throw new RegistrationCodeAlreadyUsedException();
             } else {
                 apply(dto, accountEntity);
                 accountRepository.save(accountEntity);
