@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-section.html">
 
 <dom-module id="mailbox-view">
     <template>
@@ -64,11 +65,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 outline: 0;
                 background-color: #ddd;
             }
-            
+
             .item.selected .star {
                 color: var(--paper-blue-600);
             }
-            
+
             .item.selected {
                 background-color: var(--google-grey-300);
                 border-bottom: 1px solid #ccc;
@@ -106,8 +107,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template>
                 <div>
                     <div class$="item {{getItemClasses(item)}}" tabindex$="[[tabIndex]]">
-                        <iron-image class="avatar" sizing="contain" src="[[item.image]]"></iron-image>
-                        
+                         <iron-image class="avatar" sizing="contain" src="[[item.image]]"></iron-image>
+
                         <div class="pad">
                             <div class="primary container">
                                 <span>[[item.from]]</span>
@@ -118,7 +119,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <span>[[item.title]]</span>
                                 <p>[[item.text]]</p>
                             </div>
-                            <div class="secondary dim">[[item.content]]</div>
+                            <div class="secondary dim">
+                                <plutonium-cm-section></plutonium-cm-section>
+                                <!--                                [[item.content]]
+                                -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,7 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         notify: true
                     }
                 },
-                getItemClasses: function(item) {
+                getItemClasses: function (item) {
                     return item.tags.join(" ");
                 }
             });

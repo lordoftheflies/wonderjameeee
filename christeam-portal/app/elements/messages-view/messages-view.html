@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-form.html">
 
 <dom-module id="messages-view">
     <template>
@@ -51,7 +52,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
         <paper-card heading="New message">
-            <div class="card-content">
+            <plutonium-cm-form></plutonium-cm-form>
+            
+<!--            <div class="card-content">
                 <paper-input label="To"></paper-input>
             </div>
             <div class="card-content">
@@ -109,7 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         </div>
-    </template>
+    </template>-->
 </paper-card>
 <paper-material elevation="1">
     <paper-icon-button on-click="addSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>

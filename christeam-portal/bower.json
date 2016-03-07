@@ -22,7 +22,8 @@
     "paper-input": "polymerelements/paper-input#^1.1.8",
     "iron-dropdown": "polymerelements/iron-dropdown#^1.2.0",
     "paper-icon-button": "polymerelements/paper-icon-button#^1.0.6",
-    "google-youtube": "GoogleWebComponents/google-youtube#^1.2.1"
+    "google-youtube": "GoogleWebComponents/google-youtube#^1.2.1",
+    "plutonium-cm-form": "git@github.com:lordoftheflies/plutonium-cm-form.git"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
