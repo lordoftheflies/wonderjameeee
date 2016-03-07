@@ -5,6 +5,8 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lordoftheflies
  */
 @XmlRootElement
+@ApiModel
 public class ChristeamDto implements Serializable {
 
     public ChristeamDto() {
@@ -22,6 +25,7 @@ public class ChristeamDto implements Serializable {
         this.network = network;
     }
 
+    @ApiModelProperty
     private NetworkDto network;
 
     public NetworkDto getNetwork() {

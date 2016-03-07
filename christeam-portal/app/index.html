@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="generator" content="Polymer Starter Kit">
-        <title>Polymer Starter Kit</title>
+        <title>Christeam Portal</title>
 
         <!-- Place favicon.ico in the `app/` directory -->
 
@@ -62,7 +62,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <body unresolved>
         <span id="browser-sync-binding"></span>
         <template is="dom-bind" id="app">
-
+            <iron-ajax auto id="login" 
+                       on-response="sessionInfoHandler" on-error="sessionInitializationErrorHandler" 
+                       url$="http://localhost:8080/authentication/session?token={{sessionInfo.token}}"
+                       last-response$="{{sessionInfo}}">
+            </iron-ajax>
             <paper-drawer-panel id="paperDrawerPanel">
                 <!-- Drawer Scroll Header Panel -->
                 <paper-scroll-header-panel drawer fixed>
@@ -74,15 +78,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <!-- Drawer Content -->
                     <paper-menu attr-for-selected="data-route" selected="[[route]]">
-                        <a data-route="messages" href="{{baseUrl}}{{userinfo.login}}/messages">
+                        <a data-route="messages" href="{{baseUrl}}messages">
                             <iron-icon icon="mail"></iron-icon>
                             <span>[[locale.tab_messages]]</span>
                         </a>
-                        <a data-route="mailbox" href="{{baseUrl}}{{userinfo.login}}/mailbox">
+                        <a data-route="mailbox" href="{{baseUrl}}mailbox">
                             <iron-icon icon="markunread-mailbox"></iron-icon>
                             <span>[[locale.tab_mailbox]]</span>
                         </a>
-                        <a data-route="network" href="{{baseUrl}}{{userinfo.login}}/network">
+                        <a data-route="network" href="{{baseUrl}}network">
                             <iron-icon icon="supervisor-account"></iron-icon>
                             <span>[[locale.tab_network]]</span>
                         </a>
@@ -105,21 +109,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <div>
                             <paper-button on-click="showUserNavigation">
                                 <iron-icon icon="account-circle"></iron-icon>
-                                <span>[[userinfo.login]]</span>
+                                <span>{{sessionInfo.userName}}</span>
                             </paper-button>
                             <iron-dropdown id="userNavigation" horizontal-align="right" vertical-align="top">
 
                                 <!--<paper-material class="dropdown-content">-->
-                                    <paper-menu attr-for-selected="data-route" selected="[[route]]" class="dropdown-content">
-                                        <a data-route="profile" href="{{baseUrl}}{{userinfo.login}}/profile">
-                                            <iron-icon icon="account-circle"></iron-icon>
-                                            <span>Profile</span>
-                                        </a>
-                                        <a data-route="signout" href="{{baseUrl}}{{userinfo.login}}/signout">
-                                            <iron-icon icon="markunread-mailbox"></iron-icon>
-                                            <span>Logout</span>
-                                        </a>
-                                    </paper-menu>
+                                <paper-menu attr-for-selected="data-route" selected="[[route]]" class="dropdown-content">
+                                    <a data-route="profile" href="{{baseUrl}}profile">
+                                        <iron-icon icon="account-circle"></iron-icon>
+                                        <span>Profile</span>
+                                    </a>
+                                    <a data-route="signout" href="{{baseUrl}}signout">
+                                        <iron-icon icon="markunread-mailbox"></iron-icon>
+                                        <span>Logout</span>
+                                    </a>
+                                </paper-menu>
                                 <!--</paper-material>-->
                             </iron-dropdown>
                         </div>
@@ -149,9 +153,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <profile-view></profile-view>
                             </section>
                             <section data-route="messages">
-                                <paper-material elevation="1">
-                                    <messages-view></messages-view>
-                                </paper-material>
+                                <messages-view></messages-view>
                             </section>
                             <section data-route="mailbox">
                                 <mailbox-view></mailbox-view>

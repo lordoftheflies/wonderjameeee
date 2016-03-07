@@ -20,7 +20,9 @@
     "paper-fab": "polymerelements/paper-fab#^1.2.0",
     "paper-toggle-button": "polymerelements/paper-toggle-button#^1.1.1",
     "paper-input": "polymerelements/paper-input#^1.1.8",
-    "iron-dropdown": "polymerelements/iron-dropdown#^1.2.0"
+    "iron-dropdown": "polymerelements/iron-dropdown#^1.2.0",
+    "paper-icon-button": "polymerelements/paper-icon-button#^1.0.6",
+    "google-youtube": "GoogleWebComponents/google-youtube#^1.2.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

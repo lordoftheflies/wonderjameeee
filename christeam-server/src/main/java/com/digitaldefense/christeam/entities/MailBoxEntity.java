@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -38,6 +39,7 @@ public class MailBoxEntity implements Serializable {
         this.id = id;
     }
     
+    @OneToOne
     private NetworkNodeEntity owner;
 
     public NetworkNodeEntity getOwner() {

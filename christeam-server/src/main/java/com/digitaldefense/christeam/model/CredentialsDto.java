@@ -5,12 +5,17 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *
  * @author lordoftheflies
  */
+@ApiModel
 public class CredentialsDto {
 
+    @ApiModelProperty
     private String email;
 
     public String getEmail() {
@@ -20,6 +25,8 @@ public class CredentialsDto {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    @ApiModelProperty
     private String password;
 
     public String getPassword() {

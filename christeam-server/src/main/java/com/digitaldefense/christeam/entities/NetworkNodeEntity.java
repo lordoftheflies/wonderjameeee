@@ -37,6 +37,9 @@ import javax.persistence.OneToOne;
 })
 public class NetworkNodeEntity implements Serializable {
 
+    @OneToOne(mappedBy = "owner")
+    private MailBoxEntity mailBox;
+
     public NetworkNodeEntity() {
     }
 
@@ -129,7 +132,6 @@ public class NetworkNodeEntity implements Serializable {
         this.contact = contact;
     }
 
-    @Basic
     private Integer codes;
 
     public Integer getCodes() {
@@ -138,6 +140,14 @@ public class NetworkNodeEntity implements Serializable {
 
     public void setCodes(Integer codes) {
         this.codes = codes;
+    }
+
+    public MailBoxEntity getMailBox() {
+        return mailBox;
+    }
+
+    public void setMailBox(MailBoxEntity mailBox) {
+        this.mailBox = mailBox;
     }
 
     @Override

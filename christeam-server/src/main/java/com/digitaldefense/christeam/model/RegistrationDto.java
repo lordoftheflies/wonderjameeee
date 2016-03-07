@@ -5,14 +5,18 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 /**
  *
  * @author lordoftheflies
  */
-public class RegistrationDto implements Serializable {
+@ApiModel
+public class RegistrationDto {
 
+    @ApiModelProperty
     private String name;
 
     public String getName() {
@@ -23,6 +27,7 @@ public class RegistrationDto implements Serializable {
         this.name = name;
     }
 
+    @ApiModelProperty
     private String email;
 
     public String getEmail() {
@@ -33,6 +38,7 @@ public class RegistrationDto implements Serializable {
         this.email = email;
     }
 
+    @ApiModelProperty
     private String password;
 
     public String getPassword() {
@@ -43,13 +49,14 @@ public class RegistrationDto implements Serializable {
         this.password = password;
     }
 
-    private String activationCode;
+    @ApiModelProperty
+    private String code;
 
-    public String getActivationCode() {
-        return activationCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
+    public void setCode(String activationCode) {
+        this.code = activationCode;
     }
 }

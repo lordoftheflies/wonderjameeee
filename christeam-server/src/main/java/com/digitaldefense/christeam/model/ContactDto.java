@@ -5,6 +5,8 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.UUID;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lordoftheflies
  */
 @XmlRootElement
+@ApiModel
 public class ContactDto implements Serializable {
 
     public ContactDto() {
@@ -25,6 +28,7 @@ public class ContactDto implements Serializable {
         this.email = email;
     }
 
+    @ApiModelProperty
     private UUID id;
 
     public UUID getId() {
@@ -35,6 +39,18 @@ public class ContactDto implements Serializable {
         this.id = id;
     }
 
+    @ApiModelProperty
+    private UUID parentId;
+
+    public UUID getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(UUID parentId) {
+        this.parentId = parentId;
+    }
+
+    @ApiModelProperty
     private String name;
 
     public String getName() {
@@ -45,6 +61,7 @@ public class ContactDto implements Serializable {
         this.name = name;
     }
 
+    @ApiModelProperty
     private String email;
 
     public String getEmail() {
@@ -54,4 +71,16 @@ public class ContactDto implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @ApiModelProperty
+    private int codes;
+
+    public int getCodes() {
+        return codes;
+    }
+
+    public void setCodes(int codes) {
+        this.codes = codes;
+    }
+
 }

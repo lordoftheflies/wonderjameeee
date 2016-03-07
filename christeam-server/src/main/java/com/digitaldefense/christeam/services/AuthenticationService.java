@@ -9,8 +9,10 @@ import com.digitaldefense.christeam.exceptions.CredentialsException;
 import com.digitaldefense.christeam.exceptions.AccountNotFoundException;
 import com.digitaldefense.christeam.exceptions.RegistrationCodeAlreadyUsedException;
 import com.digitaldefense.christeam.dal.AccountRepository;
+import com.digitaldefense.christeam.dal.MailBoxRepository;
 import com.digitaldefense.christeam.dal.NetworkTreeRepository;
 import com.digitaldefense.christeam.entities.AccountEntity;
+import com.digitaldefense.christeam.entities.MailBoxEntity;
 import com.digitaldefense.christeam.entities.NetworkNodeEntity;
 import com.digitaldefense.christeam.model.CredentialsDto;
 import com.digitaldefense.christeam.model.RegistrationDto;
@@ -19,8 +21,11 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,13 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(
-        path = "/authentication",
-        consumes = {
-            MediaType.APPLICATION_JSON_VALUE
-        },
-        produces = {
-            MediaType.APPLICATION_JSON_VALUE
-        })
+        path = "/authentication")
 public class AuthenticationService {
 
     private static final Logger LOG = Logger.getLogger(AuthenticationService.class.getName());
@@ -47,12 +46,18 @@ public class AuthenticationService {
     private AccountRepository accountRepository;
     @Autowired
     private NetworkTreeRepository networkRepository;
+    @Autowired
+    private MailBoxRepository mailBoxRepository;
 
     private void apply(RegistrationDto dto, AccountEntity entity) {
         entity.setEmail(dto.getEmail());
         entity.setPassword(dto.getPassword());
         entity.setName(dto.getName());
-        entity.setId(UUID.fromString(dto.getActivationCode()));
+        if (dto.getCode() != null) {
+            entity.setId(UUID.fromString(dto.getCode()));
+        } else {
+            entity.setId(UUID.randomUUID());
+        }
     }
 
     private void apply(AccountEntity entity, SessionDto dto) {
@@ -60,9 +65,17 @@ public class AuthenticationService {
         dto.setToken(entity.getId().toString());
     }
 
-    @CrossOrigin
-    @RequestMapping(path = "/signon", method = RequestMethod.POST)
-    public void signOn(RegistrationDto dto) throws AccountNotFoundException, RegistrationCodeAlreadyUsedException {
+    @CrossOrigin(origins = "*")
+    @RequestMapping(
+            path = "/signon",
+            consumes = {
+                MediaType.APPLICATION_JSON_VALUE
+            },
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            },
+            method = RequestMethod.POST)
+    public ResponseEntity<SessionDto> signOn(@RequestBody(required = true) RegistrationDto dto) throws AccountNotFoundException, RegistrationCodeAlreadyUsedException {
         if (accountRepository.count() == 0) {
             AccountEntity accountEntity = new AccountEntity();
             apply(dto, accountEntity);
@@ -73,12 +86,25 @@ public class AuthenticationService {
             nodeEntity.setContact(accountEntity);
             networkRepository.save(nodeEntity);
 
+            accountEntity.setNode(nodeEntity);
+            accountRepository.save(accountEntity);
+
+            MailBoxEntity mbEntity = new MailBoxEntity();
+            mbEntity.setOwner(nodeEntity);
+            mailBoxRepository.save(mbEntity);
+
+            nodeEntity.setMailBox(mbEntity);
+            networkRepository.save(nodeEntity);
+
             LOG.log(Level.INFO, "Sign-on principal user {0}", dto.toString());
-        } else if (!accountRepository.exists(UUID.fromString(dto.getActivationCode()))) {
+
+            return new ResponseEntity<>(new SessionDto(accountEntity.getId(), accountEntity.getName(), true), HttpStatus.OK);
+        } else if (dto.getCode() != null && !accountRepository.exists(UUID.fromString(dto.getCode()))) {
             throw new AccountNotFoundException();
         } else {
-            AccountEntity accountEntity = accountRepository.findOne(UUID.fromString(dto.getActivationCode()));
-            NetworkNodeEntity nodeEntity = networkRepository.findByAccount(accountEntity.getId());
+            UUID accountId = UUID.fromString(dto.getCode());
+            AccountEntity accountEntity = accountRepository.findOne(accountId);
+            NetworkNodeEntity nodeEntity = networkRepository.findByAccount(accountId);
             if (nodeEntity.getActive()) {
                 throw new RegistrationCodeAlreadyUsedException();
             } else {
@@ -89,13 +115,22 @@ public class AuthenticationService {
                 networkRepository.save(nodeEntity);
 
                 LOG.log(Level.INFO, "Sign-on user {0}", dto.getEmail());
+                return new ResponseEntity<>(new SessionDto(accountEntity.getId(), accountEntity.getName(), networkRepository.isRoot(accountId)), HttpStatus.OK);
             }
         }
     }
 
-    @CrossOrigin
-    @RequestMapping(path = "/signin", method = RequestMethod.POST)
-    public SessionDto signIn(CredentialsDto dto) throws CredentialsException {
+    @CrossOrigin(origins = "*")
+    @RequestMapping(
+            path = "/signin",
+            consumes = {
+                MediaType.APPLICATION_JSON_VALUE
+            },
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            },
+            method = RequestMethod.POST)
+    public ResponseEntity<SessionDto> signIn(@RequestBody(required = true) CredentialsDto dto) throws CredentialsException {
         SessionDto result = new SessionDto();
         AccountEntity accountEntity = accountRepository.findByCredentials(dto.getEmail(), dto.getPassword());
         if (accountEntity == null) {
@@ -103,26 +138,47 @@ public class AuthenticationService {
         } else {
             LOG.log(Level.INFO, "Sign-in user {0}", dto.getEmail());
             apply(accountEntity, result);
-            return result;
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
     }
 
-    @CrossOrigin
-    @RequestMapping(path = "/signout", method = RequestMethod.POST)
-    public void signOut(SessionDto session) {
+    @CrossOrigin(origins = "*")
+    @RequestMapping(
+            path = "/signout",
+            consumes = {
+                MediaType.APPLICATION_JSON_VALUE
+            },
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            },
+            method = RequestMethod.POST)
+    public ResponseEntity<SessionDto> signOut(@RequestBody(required = true) SessionDto session) {
         LOG.log(Level.INFO, "Sign-out token {0}", session.getToken());
+        session.setToken(null);
+        return new ResponseEntity<>(session, HttpStatus.UNAUTHORIZED);
     }
 
-    @CrossOrigin
-    @RequestMapping(path = "/session", method = RequestMethod.GET)
-    public SessionDto session(@RequestParam(value = "token") String token) throws AccountNotFoundException {
-        if (!accountRepository.exists(UUID.fromString(token))) {
+    @CrossOrigin(origins = "*")
+    @RequestMapping(
+            path = "/session",
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            },
+            method = RequestMethod.GET)
+    public ResponseEntity<SessionDto> session(
+            @RequestParam(value = "token", required = false, defaultValue = DEFAULT_TOKEN_EMPTY) String token
+    ) throws AccountNotFoundException, AccesDeniedException {
+        if (token == null || token.equals(DEFAULT_TOKEN_EMPTY)) {
+            throw new AccesDeniedException("Empty user token");
+        } else if (!accountRepository.exists(UUID.fromString(token))) {
             throw new AccountNotFoundException();
         } else {
             SessionDto dto = new SessionDto();
             AccountEntity accountEntity = accountRepository.findOne(UUID.fromString(token));
             apply(accountEntity, dto);
-            return dto;
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         }
     }
+
+    private static final String DEFAULT_TOKEN_EMPTY = "empty";
 }

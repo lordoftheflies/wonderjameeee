@@ -5,6 +5,8 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lordoftheflies
  */
 @XmlRootElement
+@ApiModel
 public class NetworkDto implements Serializable {
 
     public NetworkDto() {
@@ -28,6 +31,7 @@ public class NetworkDto implements Serializable {
         this.children = Arrays.asList(children);
     }
 
+    @ApiModelProperty
     private ContactDto contact;
 
     public ContactDto getContact() {
@@ -38,6 +42,7 @@ public class NetworkDto implements Serializable {
         this.contact = contact;
     }
 
+    @ApiModelProperty
     private List<NetworkDto> children;
 
     public List<NetworkDto> getChildren() {
@@ -48,6 +53,7 @@ public class NetworkDto implements Serializable {
         this.children = children;
     }
 
+    @ApiModelProperty
     private Long id;
 
     public Long getId() {

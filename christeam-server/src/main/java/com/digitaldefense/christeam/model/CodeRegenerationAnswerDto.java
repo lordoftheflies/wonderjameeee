@@ -5,11 +5,17 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *
  * @author lordoftheflies
  */
+@ApiModel
 public class CodeRegenerationAnswerDto {
+
+    @ApiModelProperty
     private Boolean decision;
 
     public Boolean getDecision() {
@@ -19,6 +25,5 @@ public class CodeRegenerationAnswerDto {
     public void setDecision(Boolean decision) {
         this.decision = decision;
     }
-    
-    
+
 }

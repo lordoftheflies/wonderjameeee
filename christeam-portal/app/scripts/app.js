@@ -16,21 +16,42 @@
     var app = document.querySelector('#app');
 
     app.isAuthenticated = function () {
-        return app.userinfo !== null;
+        return !(app.sessionInfo.userName === undefined || app.sessionInfo.userName === null);
     };
 
     app.appinfo = {
         name: "Christeam"
     };
-    app.userinfo = null;
-//    app.userinfo = {
-//        login: "kacsa"
-//    };
+    // Session information object.
+    app.sessionInfo = {
+        token: 'empty'
+    };
+    
+    app.sessionInitializationErrorHandler = function (event, args) {
+        if (args.request.status === 401) {
+            console.log(app.locale.error_unauthenticated);
+        } else {
+            console.log('Session initialization error ...');
+            console.log('\t' + JSON.stringify(args.error));
+        }
+
+        app.$.toast.text = app.locale.error_unauthenticated;
+        app.$.toast.show();
+        page.redirect(app.baseUrl + "signin");
+    };
+    app.sessionInfoHandler = function (event, details) {
+        console.log('Session initialization info.' + JSON.stringify(details.reponse));// + '|' + JSON.stringify(a) + '|' + JSON.stringify(a));
+    };
     app.locale = {
-        tab_messages: "Messages",
-        tab_mailbox: "Mailbox",
-        tab_network: "Network",
-        tab_about: "About"
+        tab_messages: 'Messages',
+        tab_mailbox: 'Mailbox',
+        tab_network: 'Network',
+        tab_about: 'About',
+        
+        error_unauthenticated: 'Session token corrupted or invalid. Navigate to login.',
+        error_credentials: 'Username or password invalid.',
+        error_registration: 'Registration failed.',
+        error_login: 'Login failed.'
     };
 
 
@@ -60,6 +81,7 @@
     // See https://github.com/Polymer/polymer/issues/1381
     window.addEventListener('WebComponentsReady', function () {
         // imports are loaded and elements have been registered
+        console.log('Web components is ready.');
     });
 
     // Main area's paper-scroll-header-panel custom condensing transformation of
@@ -89,7 +111,7 @@
         // Scale middleContainer appName
         Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
     });
-    
+
     app.showUserNavigation = function () {
         console.log("Show user navigation dropdown.");
         this.$.userNavigation.toggle();

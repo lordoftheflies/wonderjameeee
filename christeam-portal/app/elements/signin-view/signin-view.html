@@ -16,36 +16,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../styles/shared-styles.html">
+
 
 <dom-module id="signin-view">
     <template>
-        <style>
+        <style include="shared-styles">
             :host {
                 display: block;
                 /*@apply(--layout-flex);*/
                 @apply(--layout-center);
                 @apply(--layout-vertical);
             }
+
+            /*            :host .card-actions {
+                            @apply(--layout-center);
+                            @apply(--layout-horizontal);
+                        }*/
         </style>
         <paper-card heading="Sign-in" class="layout horizontal center">
-            <div class="card-content">
-                <paper-input id="login" label="Email address" type="email" auto-validate pattern="{{mailPattern}}" error-message="Invalid email address.">
-                    <iron-icon icon="account-circle" prefix></iron-icon>
-                </paper-input>
-            </div>
-            <div class="card-content">
-                <paper-input id="password" label="Password" type="password" auto-validate pattern="{{passPattern}}" error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
-                    <iron-icon icon="lock" prefix></iron-icon>
-                </paper-input>
-            </div>
-            <div class="card-content" horizontal layout>
-                <paper-toggle-button id="remember" checked>Remember me</paper-toggle-button>
-            </div>
-            <div class="card-actions">
-                <paper-button raised class="primary"  on-click="logged">Login</paper-button>
+            <form is="iron-form" id="form" 
+                  content-type="application/json" 
+                  verbose 
+                  method="post" 
+                  on-response="onSignInResponse"
+                  on-error="onSignInError" 
+                  action="http://localhost:8080/authentication/signin" 
+                  handle-as="json">
+                <div class="card-content">
+                    <paper-input id="login" label="Email address" name="email" type="email" auto-validate pattern="{{mailPattern}}" error-message="Invalid email address.">
+                        <iron-icon icon="account-circle" prefix></iron-icon>
+                    </paper-input>
+                </div>
+                <div class="card-content">
+                    <paper-input id="password" label="Password" name="password" type="password" auto-validate pattern="{{passPattern}}" error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
+                        <iron-icon icon="lock" prefix></iron-icon>
+                    </paper-input>
+                </div>
+                <div class="card-content" horizontal layout>
+                    <paper-toggle-button id="remember" checked>Remember me</paper-toggle-button>
+                </div>
+                <div class="card-actions">
+                    <paper-button raised class="primary"  on-click="onNavigateToSignOn">Sign-on</paper-button>
 
-                <!--<paper-fab id="arrow" icon="arrow-forward" title="submit" on-click="logged" ></paper-fab>-->
-            </div>
+                    <paper-fab icon="arrow-forward" title="submit" on-click="onLogin" ></paper-fab>
+                </div>
+            </form>
         </paper-card>
     </template>
     <script>
@@ -70,8 +86,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                 },
                 listeners: {
-                    'logged': 'logged'
+                    'form.iron-form-response': 'onSignInResponse',
+                    'form.iron-form-error': 'onSignInError'
                 },
+//                listeners: {
+//                    'logged': 'logged'
+//                },
                 ready: function () {
                     this.addEventListener('blur', this.check);
                     this.addEventListener('keydown', this.keydown);
@@ -99,20 +119,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         this.$.core_card_main.className = "red";
                     }
                 },
-                logged: function () {
+                onNavigateToSignOn: function () {
+                    page.redirect(app.baseUrl + "signon");
+                },
+                onLogin: function () {
                     var credentials = {
                         login: this.$.login.value,
                         password: this.$.password.value,
                         rememberMe: this.$.remember.checked
                     };
-                    
+
                     console.log("Login user " + JSON.stringify(credentials));
                     this.fire('login', credentials);
-                    
-                    var app = document.querySelector('#app');
-                    app.userinfo = credentials;
-                    console.log("Navigate to " + app.route);
-                    app.$.mainPanel.selected = "home";
+
+                    app.$.toast.text = app.locale.error_credentials;
+                    app.$.toast.show();
+
+//                    page.redirect(app.baseUrl);
+                    this.$.form.submit();
+//                    var app = document.querySelector('#app');
+//                    app.userinfo = credentials;
+//                    console.log("Navigate to " + app.route);
+//                    app.$.mainPanel.selected = "home";
+                },
+                onSignInResponse: function (event, details) {
+                    console.log('Sign-in response: ' + JSON.stringify(details.response));
+                    app.sessionInfo = details.response;
+                    page.redirect(app.baseUrl + 'mailbox');
+                },
+                onSignInError: function (event, details) {
+                    console.log('Sign-in erro: ' + JSON.stringify(details.response));
+                    app.$.toast.text = app.locale.error_login;
+                    app.$.toast.show();
                 },
                 keydown: function (event, detail, sender) {
                     if (event.keyCode === 13) {

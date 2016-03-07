@@ -6,5 +6,5 @@
     ],
     "ts": "2016. február 28. 14:44",
     "image": "https://s3.amazonaws.com/uifaces/faces/twitter/enda/73.jpg",
-    "content": "<google-youtube video-id='...' height='270px' width='480px' rel='0' start='5' autoplay='1'><\/google-youtube>"
+    "content": "<paper-textarea label='Text'>{{item.value}}</paper-textarea></template><template is='dom-if' if='{{isVideoSection(item)}}'><google-youtube video-id$='{{item.value}}' rel='0' start='5' autoplay='1'></google-youtube></template><template is='dom-if' if='{{isImageSection(item)}}'><iron-image src$='{{item.value}}'></iron-image>"
 }

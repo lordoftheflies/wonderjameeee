@@ -10,102 +10,129 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script src="../bower_components/page/page.js"></script>
 <script>
-  window.addEventListener('WebComponentsReady', function() {
+    window.addEventListener('WebComponentsReady', function () {
 
-    // We use Page.js for routing. This is a Micro
-    // client-side router inspired by the Express router
-    // More info: https://visionmedia.github.io/page.js/
+        // We use Page.js for routing. This is a Micro
+        // client-side router inspired by the Express router
+        // More info: https://visionmedia.github.io/page.js/
 
-    // Removes end / from app.baseUrl which page.base requires for production
-    if (window.location.port === '') {  // if production
-      page.base(app.baseUrl.replace(/\/$/, ''));
-    }
+        // Removes end / from app.baseUrl which page.base requires for production
+        if (window.location.port === '') {  // if production
+            page.base(app.baseUrl.replace(/\/$/, ''));
+        }
 
-    // Middleware
-    function scrollToTop(ctx, next) {
-      app.scrollPageToTop();
-      next();
-    }
+        // Middleware
+        function scrollToTop(ctx, next) {
+            app.scrollPageToTop();
+            next();
+        }
 
-    function closeDrawer(ctx, next) {
-      app.closeDrawer();
-      next();
-    }
+        function closeDrawer(ctx, next) {
+            app.closeDrawer();
+            next();
+        }
 
-    // Routes
-    page('*', scrollToTop, closeDrawer, function(ctx, next) {
-      next();
-    });
+        // Routes
+        page('*', scrollToTop, closeDrawer, function (ctx, next) {
+            next();
+        });
 
-    page('/', function() {
-      app.route = 'signin';
-    });
+        page('/', function () {
+            if (app.isAuthenticated())
+                app.route = 'home';
+            else
+                app.route = 'signin';
+        });
 
-    page(app.baseUrl, function() {
-      app.route = 'signin';
-    });
+        page(app.baseUrl, function () {
+            if (app.isAuthenticated())
+                app.route = 'home';
+            else
+                app.route = 'signin';
+        });
 
-    page('/users', function() {
-      app.route = 'users';
-    });
+        page('/users', function () {
+            if (app.isAuthenticated())
+                app.route = 'users';
+            else
+                app.route = 'signin';
+        });
 
-    page('/users/:name', function(data) {
-      app.route = 'user-info';
-      app.params = data.params;
-    });
+        page('/users/:name', function (data) {
+            if (app.isAuthenticated()) {
+                app.route = 'user-info';
+                app.params = data.params;
+            } else
+                app.route = 'signin';
+        });
 
-    page('/contact', function() {
-      app.route = 'contact';
-    });
-    
-    // Sign-in page route
-    page('/signin', function() {
-      app.route = 'signin';
-    });
-    // Sign-on page route
-    page('/signon', function() {
-      app.route = 'signon';
-    });
-    // Sign-in page route
-    page('/signout', function() {
-      app.route = 'signout';
-    });
-    
-    // Profile page route
-    page('/:id/profile', function(data) {
-      app.route = 'profile';
-      app.params = data.params;
-    });
-    // Messsaging page route
-    page('/:id/messages', function(data) {
-      app.route = 'messages';
-      app.params = data.params;
-    });
-    // Mailbox page route
-    page('/:id/mailbox', function(data) {
-      app.route = 'mailbox';
-      app.params = data.params;
-    });
-    // Network page route
-    page('/:id/network', function(data) {
-      app.route = 'network';
-      app.params = data.params;
-    });
-    page('/about', function() {
-      app.route = 'about';
-    });
+        page('/contact', function () {
+            if (app.isAuthenticated()) {
+                app.route = 'contact';
+            } else
+                app.route = 'signin';
+        });
 
-    // 404
-    page('*', function() {
-      app.$.toast.text = 'Can\'t find: ' + window.location.href  + '. Redirected you to Home Page';
-      app.$.toast.show();
-      page.redirect(app.baseUrl);
-    });
+        // Sign-in page route
+        page('/signin', function () {
+            app.route = 'signin';
+        });
+        // Sign-on page route
+        page('/signon', function () {
+            app.route = 'signon';
+        });
+        // Sign-in page route
+        page('/signout', function () {
+            app.route = 'signout';
+        });
 
-    // add #! before urls
-    page({
-      hashbang: true
-    });
+        // Profile page route
+        page('/profile', function () {
+            if (app.isAuthenticated()) {
+                app.route = 'profile';
+//                app.params = data.params;
+            } else
+                app.route = 'signin';
+        });
+        // Messsaging page route
+        page('/messages', function () {
+            if (app.isAuthenticated()) {
+                app.route = 'messages';
+//                app.params = data.params;
+            } else
+                app.route = 'signin';
+        });
+        // Mailbox page route
+        page('/mailbox', function () {
+            if (app.isAuthenticated()) {
+                app.route = 'mailbox';
+                app.params = data.params;
+            } else
+                app.route = 'signin';
+        });
+        // Network page route
+        page('/network', function () {
+            if (app.isAuthenticated()) {
+                app.route = 'network';
+//                app.params = data.params;
+            } else
+                app.route = 'signin';
+        });
+        page('/about', function () {
+            app.route = 'about';
+        });
 
-  });
+        // 404
+        page('*', function () {
+            app.$.toast.text = 'Can\'t find: ' + window.location.href + '. Redirected you to Home Page';
+            app.$.toast.show();
+            page.redirect(app.baseUrl);
+        });
+
+        // add #! before urls
+        page({
+            hashbang: true
+        });
+
+    });
 </script>

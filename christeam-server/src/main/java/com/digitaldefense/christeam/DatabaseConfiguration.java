@@ -5,6 +5,7 @@
  */
 package com.digitaldefense.christeam;
 
+import com.ge.current.innovation.storage.jpa.boot.JsonPostgreSQLDialect;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -57,7 +58,8 @@ public class DatabaseConfiguration {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan(getClass().getPackage().getName());
         factory.setDataSource(dataSource());
-
+        factory.getJpaPropertyMap().put("hibernate.dialect", JsonPostgreSQLDialect.class.getCanonicalName());
+        
         return factory;
     }
 

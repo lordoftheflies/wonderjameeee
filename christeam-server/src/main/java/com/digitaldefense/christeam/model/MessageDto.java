@@ -5,6 +5,8 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +18,7 @@ import java.util.UUID;
  *
  * @author lordoftheflies
  */
+@ApiModel
 public class MessageDto implements Serializable {
 
     public MessageDto() {
@@ -31,6 +34,7 @@ public class MessageDto implements Serializable {
         this.pageId = pageId;
     }
 
+    @ApiModelProperty
     private List<UUID> recipients;
 
     public List<UUID> getRecipients() {
@@ -41,6 +45,7 @@ public class MessageDto implements Serializable {
         this.recipients = recipients;
     }
 
+    @ApiModelProperty
     private UUID pageId;
 
     public UUID getPageId() {

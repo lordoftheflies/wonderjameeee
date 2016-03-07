@@ -5,6 +5,8 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lordoftheflies
  */
 @XmlRootElement
+@ApiModel
 public class LicenseDto implements Serializable {
 
     public LicenseDto() {
@@ -23,6 +26,7 @@ public class LicenseDto implements Serializable {
         this.nodeId = nodeId;
     }
 
+    @ApiModelProperty
     private Integer count;
 
     public Integer getCount() {
@@ -33,6 +37,7 @@ public class LicenseDto implements Serializable {
         this.count = count;
     }
 
+    @ApiModelProperty
     private Long nodeId;
 
     public Long getNodeId() {

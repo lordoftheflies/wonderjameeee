@@ -5,10 +5,14 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *
  * @author lordoftheflies
  */
+@ApiModel
 public class SectionDto {
 
     public SectionDto() {
@@ -19,7 +23,7 @@ public class SectionDto {
         this.type = type;
         this.data = data;
     }
-
+    @ApiModelProperty
     private String title;
 
     public String getTitle() {
@@ -29,7 +33,7 @@ public class SectionDto {
     public void setTitle(String title) {
         this.title = title;
     }
-
+    @ApiModelProperty
     private String type;
 
     public String getType() {
@@ -39,7 +43,7 @@ public class SectionDto {
     public void setType(String type) {
         this.type = type;
     }
-
+    @ApiModelProperty
     private String data;
 
     public String getData() {

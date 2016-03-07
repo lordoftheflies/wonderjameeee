@@ -5,12 +5,17 @@
  */
 package com.digitaldefense.christeam.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *
  * @author lordoftheflies
  */
+@ApiModel
 public class CodeRegenerationDto {
 
+    @ApiModelProperty
     private String message;
 
     public String getMessage() {
