@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
 <dom-module id="network-view">
     <template>
@@ -106,16 +108,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .spacer {
                 @apply(--layout-flex);
             }
-            
+
             :host paper-material {
                 background-color: white;
                 height: 40px;
                 @apply(--layout-center);
                 @apply(--layout-horizontal);
             }
-            
+
             :host ul.breadcrumbs {
                 @apply(--layout-horizontal);
+                @apply(--layout-flex);
+                list-style-type: none;
             }
             :host ul.breadcrumbs li{
                 margin-left: 10px;
@@ -123,28 +127,88 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 display: inline-block;  
                 @apply(--layout-horizontal);
             }
+            :host ul.breadcrumbs li:first-child:before {
+                content:''; /* Change this to unicode as needed*/
+                margin-right: 1em;
+            }
+            :host ul.breadcrumbs li:before {
+                content:'>>'; /* Change this to unicode as needed*/
+                margin-right: 1em;
+            }
+
             :host ul.breadcrumbs li div {
                 display: inline-block;
                 /*padding: 0 16px;*/
                 @apply(--layout-center);
                 @apply(--layout-horizontal);
             }
+
+            paper-material div {
+                @apply(--layout-horizontal);
+            }
         </style>
         <!--<h2>Mailbox</h2>-->
-        
+
+        <paper-dialog id="memberDialog">
+            <h2>New member</h2>
+            <div class="card-content">
+                <paper-input name="name" label="Name"></paper-input>
+                <paper-input name="email" label="Email"></paper-input>
+                <paper-input name="codes" label="Codes"></paper-input>
+                <paper-dropdown-menu name="parent" label="Parent member">
+                    <paper-menu class="dropdown-content">
+                        <paper-item>Jung Krisztina (christine.jung@flavon.hu)</paper-item>
+                        <paper-item>Hegedűs László (heglas11@gmail.com)</paper-item>
+                        <paper-item>Péczely Balázs (balazs.peczely@digitaldefense.com)</paper-item>
+                    </paper-menu>
+                </paper-dropdown-menu>
+            </div>
+            <div class="card-actions">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm>Create</paper-button>
+            </div>
+        </paper-dialog>
+
+        <paper-dialog id="memberEraseConfirm">
+            <h2>Delete member</h2>
+            <div class="card-content">
+                Are you sure delete member?
+            </div>
+            <div class="card-actions">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm>OK</paper-button>
+            </div>
+        </paper-dialog>
+        <paper-dialog id="licenseCodesToMember">
+            <h2>Send codes</h2>
+            <div class="card-content">
+                <paper-input name="unused" readonly label="Unused codes" type="number" value="200"></paper-input>
+                <paper-input name="codes" label="Codes" type="number"></paper-input>
+            </div>
+            <div class="card-actions">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm>OK</paper-button>
+            </div>
+        </paper-dialog>
+
         <iron-ajax url="/data/network-breadcrumbs.json" last-response="{{parents}}" auto></iron-ajax>
         <paper-material elevation="1">
             <ul class="breadcrumbs">
                 <template is="dom-repeat" items="[[parents]]">
-                <li>
-                    <span class="separator"></span>
+                    <li>
+                        <span class="separator"></span>
                     <iron-image class="thumbnail" sizing="contain" src="[[item.image]]"></iron-image>
                     <div>[[item.name]]</div>
-                </li>
+                    </li>
                 </template>
             </ul>
+            <div class="card-actions">
+                <paper-icon-button icon="add-circle" on-click="onOpenCreateMember"></paper-icon-button>
+                <paper-icon-button icon="remove-circle" on-click="onConfirmRemoveMember"></paper-icon-button>
+                <paper-icon-button icon="code" on-click="onOpenLicenseCodeSender"></paper-icon-button>
+            </div>
         </paper-material>
-        
+
         <iron-ajax url="/data/network.json" last-response="{{data}}" auto></iron-ajax>
         <iron-list items="[[data]]" as="item">
             <template>
@@ -155,6 +219,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <div class="pad">
                             <div class="primary">
                                 <span>[[item.name]]</span>
+                                Codes: 100
                             </div>
                             <div class="secondary">
                                 <span>[[item.title]]</span>
@@ -179,6 +244,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         value: 'network-view',
                         notify: true
                     }
+                },
+                onOpenCreateMember: function () {
+                    this.$.memberDialog.open();
+                },
+                onConfirmRemoveMember: function () {
+                    this.$.memberEraseConfirm.open();
+                },
+                onOpenLicenseCodeSender: function () {
+                    this.$.licenseCodesToMember.open();
                 }
             });
         })();
