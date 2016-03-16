@@ -53,7 +53,7 @@ public class AuthenticationService {
         entity.setEmail(dto.getEmail());
         entity.setPassword(dto.getPassword());
         entity.setName(dto.getName());
-        if (dto.getCode() != null) {
+        if (dto.getCode() != null && !"".equals(dto.getCode())) {
             entity.setId(UUID.fromString(dto.getCode()));
         } else {
             entity.setId(UUID.randomUUID());
@@ -98,7 +98,7 @@ public class AuthenticationService {
 
             LOG.log(Level.INFO, "Sign-on principal user {0}", dto.toString());
 
-            return new ResponseEntity<>(new SessionDto(accountEntity.getId(), accountEntity.getName(), true), HttpStatus.OK);
+            return new ResponseEntity<>(new SessionDto(networkRepository.isRoot(accountEntity.getId()), networkRepository.findByAccount(accountEntity.getId()).getCodes(), accountEntity.getId().toString(), accountEntity.getName()), HttpStatus.OK);
         } else if (dto.getCode() != null && !accountRepository.exists(UUID.fromString(dto.getCode()))) {
             throw new AccountNotFoundException();
         } else {
@@ -115,7 +115,7 @@ public class AuthenticationService {
                 networkRepository.save(nodeEntity);
 
                 LOG.log(Level.INFO, "Sign-on user {0}", dto.getEmail());
-                return new ResponseEntity<>(new SessionDto(accountEntity.getId(), accountEntity.getName(), networkRepository.isRoot(accountId)), HttpStatus.OK);
+                return new ResponseEntity<>(new SessionDto(networkRepository.isRoot(accountId), networkRepository.findByAccount(accountEntity.getId()).getCodes(), accountEntity.getId().toString(), accountEntity.getName()), HttpStatus.OK);
             }
         }
     }

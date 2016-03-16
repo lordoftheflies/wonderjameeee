@@ -51,7 +51,11 @@
         error_unauthenticated: 'Session token corrupted or invalid. Navigate to login.',
         error_credentials: 'Username or password invalid.',
         error_registration: 'Registration failed.',
-        error_login: 'Login failed.'
+        error_login: 'Login failed.',
+        success_login: 'Logged successfully.',
+        
+        error_member_create: 'Member create operation failed.',
+        success_member_create: 'New member created.'
     };
 
 

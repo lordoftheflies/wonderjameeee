@@ -10,12 +10,16 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
 
 /**
- *
+ * Model for code distributing transaction.
+ * 
  * @author lordoftheflies
  */
-@ApiModel
+@ApiModel(value = "Transaction DTO", description = "Code sending transaction model object.")
 public class TransactionDto {
 
+    /**
+     * Source account ID.
+     */
     @ApiModelProperty
     private UUID from;
 
@@ -27,6 +31,9 @@ public class TransactionDto {
         this.from = from;
     }
 
+    /**
+     * Destination account.
+     */
     @ApiModelProperty
     private UUID to;
 
@@ -38,6 +45,9 @@ public class TransactionDto {
         this.to = to;
     }
 
+    /**
+     * Count of transferred codes.
+     */
     @ApiModelProperty
     private int count;
 
@@ -48,5 +58,4 @@ public class TransactionDto {
     public void setCount(int count) {
         this.count = count;
     }
-
 }

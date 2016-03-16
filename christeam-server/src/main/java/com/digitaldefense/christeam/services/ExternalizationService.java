@@ -72,8 +72,9 @@ public class ExternalizationService {
         LOG.log(Level.INFO, "\tAccount id: {0}", account.getId());
         LOG.log(Level.INFO, "\tEmail: {0}", account.getEmail());
         LOG.log(Level.INFO, "\tName: {0}", account.getName());
+        
 
-        NetworkDto dto = new NetworkDto(new ContactDto(account.getId(), account.getName(), account.getEmail()));
+        NetworkDto dto = new NetworkDto(new ContactDto(account.getId(), null, account.getName(), account.getEmail(), 0, null));
         dto.setId(entity.getId());
 
         LOG.log(Level.INFO, "Fetch children of {0}", account.getEmail());

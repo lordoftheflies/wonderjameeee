@@ -10,12 +10,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../code-transaction-view/code-transaction-view.html">
+<link rel="import" href="../../bower_components/paper-badge/paper-badge.html">
 
 <dom-module id="network-view">
     <template>
@@ -147,26 +151,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 @apply(--layout-horizontal);
             }
         </style>
-        <!--<h2>Mailbox</h2>-->
+
+        <iron-ajax 
+            id="genocideIronAjax"
+            url="{{apiUrl}}/addressbook/genocide" 
+            params="{{genocideRequestParams}}"
+            last-response="{{parents}}" 
+            auto></iron-ajax>
+        <iron-ajax 
+            id="possibleParentsIronAjax"
+            url="{{apiUrl}}/addressbook/all" 
+            last-response="{{possibleParents}}" 
+            auto></iron-ajax>
+        <iron-ajax 
+            id="childrenIronAjax"
+            url="{{apiUrl}}/addressbook/children" 
+            params="{{childrenRequestParams}}"
+            last-response="{{data}}" 
+            auto></iron-ajax>
 
         <paper-dialog id="memberDialog">
             <h2>New member</h2>
-            <div class="card-content">
-                <paper-input name="name" label="Name"></paper-input>
-                <paper-input name="email" label="Email"></paper-input>
-                <paper-input name="codes" label="Codes"></paper-input>
-                <paper-dropdown-menu name="parent" label="Parent member">
-                    <paper-menu class="dropdown-content">
-                        <paper-item>Jung Krisztina (christine.jung@flavon.hu)</paper-item>
-                        <paper-item>Hegedűs László (heglas11@gmail.com)</paper-item>
-                        <paper-item>Péczely Balázs (balazs.peczely@digitaldefense.com)</paper-item>
+            <form id="newMemberForm" is="iron-form" class="card-content" verbose 
+                  content-type="application/json" method="post" action="{{apiUrl}}/addressbook/save"
+                  on-response="onCreateMemberResponse"
+                  on-error="onCreateMemberError" 
+                  handle-as="json">
+                <paper-input name="name" label="Name" type="text"></paper-input>
+                <paper-input name="email" label="Email" type="email"></paper-input>
+                <paper-input name="codes" label="Codes" type="number"></paper-input>
+                <input name="parent" type="hidden" value="{{selectedParent}}" />
+                <paper-dropdown-menu 
+                    label="Parent member" 
+                    >
+                    <paper-menu
+                        class="dropdown-content" selected="{{selectedParent}}" attr-for-selected="value"
+                        attr-for-selected="id">
+                        <template is="dom-repeat" items="{{possibleParents}}">
+                            <paper-item value="{{item.id}}">{{item.name}}</paper-item>
+                        </template>
                     </paper-menu>
                 </paper-dropdown-menu>
-            </div>
-            <div class="card-actions">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Create</paper-button>
-            </div>
+                <div class="card-actions">
+                    <paper-button dialog-dismiss>Cancel</paper-button>
+                    <paper-button raised class="primary" on-click="onCreateMember" dialog-confirm>Create</paper-button>
+                </div>
+            </form>
         </paper-dialog>
 
         <paper-dialog id="memberEraseConfirm">
@@ -180,53 +210,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
         </paper-dialog>
         <paper-dialog id="licenseCodesToMember">
-            <h2>Send codes</h2>
-            <div class="card-content">
-                <paper-input name="unused" readonly label="Unused codes" type="number" value="200"></paper-input>
-                <paper-input name="codes" label="Codes" type="number"></paper-input>
-            </div>
-            <div class="card-actions">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>OK</paper-button>
-            </div>
+            <code-transaction-view
+                source-account="{{app.sessionInfo.token}}"
+                destination-account="{{accountId}}"
+                account-network="{{possibleParents}}"
+                usable-codes="{{unusedCodes}}"
+                ></code-transaction-view>
         </paper-dialog>
 
-        <iron-ajax url="/data/network-breadcrumbs.json" last-response="{{parents}}" auto></iron-ajax>
-        <paper-material elevation="1">
-            <ul class="breadcrumbs">
+        <paper-material elevation="2">
+            <ul class="breadcrumbs" id="parentBeadCrumbs">
                 <template is="dom-repeat" items="[[parents]]">
-                    <li>
+                    <li nodeid="{{item.id}}" on-tap="onNavigateToChildren" id="parentName-{{item.id}}">
                         <span class="separator"></span>
                     <iron-image class="thumbnail" sizing="contain" src="[[item.image]]"></iron-image>
                     <div>[[item.name]]</div>
+                    <paper-badge for="parentName-{{item.id}}" label="{{item.codes}}" class="blue"></paper-badge>
                     </li>
                 </template>
             </ul>
             <div class="card-actions">
+                <paper-icon-button icon="arrow-upward" on-click="onNavigateUp"></paper-icon-button>
                 <paper-icon-button icon="add-circle" on-click="onOpenCreateMember"></paper-icon-button>
                 <paper-icon-button icon="remove-circle" on-click="onConfirmRemoveMember"></paper-icon-button>
                 <paper-icon-button icon="code" on-click="onOpenLicenseCodeSender"></paper-icon-button>
             </div>
         </paper-material>
 
-        <iron-ajax url="/data/network.json" last-response="{{data}}" auto></iron-ajax>
-        <iron-list items="[[data]]" as="item">
+
+        <iron-list id="childrenIronList" items="[[data]]" as="item">
             <template>
-                <div>
-                    <div class="item" tabindex$="[[tabIndex]]">
-                         <iron-image class="avatar" sizing="contain" src="[[item.image]]"></iron-image>
+                <div nodeid="{{item.id}}" on-tap="onNavigateToChildren">
+                    <div  class="item" tabindex$="[[tabIndex]]">
+                          <iron-image class="avatar" sizing="contain" src="[[item.image]]"></iron-image>
 
                         <div class="pad">
-                            <div class="primary">
+                            <div id="memberName-{{item.id}}"   class="primary">
                                 <span>[[item.name]]</span>
-                                Codes: 100
                             </div>
+                            <paper-badge for="memberName-{{item.id}}" label="{{item.codes}}" class="blue"></paper-badge>
                             <div class="secondary">
                                 <span>[[item.title]]</span>
                                 <p>[[item.text]]</p>
                             </div>
                             <div class="secondary dim">[[item.longText]]</div>
                         </div>
+
                     </div>
                 </div>
             </template>
@@ -239,16 +268,93 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             Polymer({
                 is: 'network-view',
                 properties: {
-                    foo: {
+                    genocideRequestParams: {
+                        type: Object,
+                        notify: true,
+                        value: {
+                            childId: null
+                        }
+                    },
+                    childrenRequestParams: {
+                        type: Object,
+                        notify: true,
+                        value: {
+                            parentId: null
+                        }
+                    },
+                    apiUrl: {
                         type: String,
-                        value: 'network-view',
+                        notify: true,
+                        value: 'http://localhost:8080'
+                    },
+                    accountId: {
+                        type: String,
+                        notify: true
+                    },
+                    possibleParents: {
+                        type: Array,
+                        notify: true
+                    },
+                    unusedCodes: {
+                        type: Number,
+                        value: function () {
+                            return document.querySelector('#app').sessionInfo.unused;
+                        },
                         notify: true
                     }
+                },
+                observers: [
+                    'computeChildRequestParams(accountId)',
+                    'computeGenocideRequestParams(accountId)'
+                ],
+                listeners: {
+                    'newMemberForm.iron-form-response': 'onCreateMemberResponse',
+                    'newMemberForm.iron-form-error': 'onCreateMemberError'
+                },
+                ready: function () {
+                    console.log('Network-view is READY(account-id=' + this.accountId);
+                },
+                computeChildRequestParams: function (accountId) {
+                    this.childrenRequestParams.parentId = accountId;
+                    console.log('Network-view child request parameters updated: ' + JSON.stringify(this.childrenRequestParams))
+                    this.$.childrenIronAjax.generateRequest();
+                },
+                computeGenocideRequestParams: function (accountId) {
+                    this.genocideRequestParams.childId = accountId;
+                    console.log('Network-view genocide request parameters updated: ' + JSON.stringify(this.genocideRequestParams))
+                    this.$.genocideIronAjax.generateRequest();
+                },
+                onNavigateToChildren: function (event, details) {
+                    this.accountId = event.currentTarget.nodeid;
+                    this.$.childrenIronAjax.generateRequest();
+                    this.$.genocideIronAjax.generateRequest();
+                    console.log('Network-view navigate to children ');
+                },
+                onNavigateUp: function (event, details) {
+                    this.accountId = this.$.parentBeadCrumbs.children[this.$.parentBeadCrumbs.children.length < 3 ? 0 : this.$.parentBeadCrumbs.children.length - 3].nodeid;
+                    this.$.childrenIronAjax.generateRequest();
+                    this.$.genocideIronAjax.generateRequest();
+                    console.log('Network-view navigate to children ');
                 },
                 onOpenCreateMember: function () {
                     this.$.memberDialog.open();
                 },
+                onCreateMember: function () {
+                    this.$.newMemberForm.submit();
+                },
+                onCreateMemberResponse: function (event, details) {
+                    console.log('Member created successfully: ' + JSON.stringify(details.response));
+                    this.$.childrenIronAjax.generateRequest();
+                    app.$.toast.text = app.locale.success_member_create;
+                    app.$.toast.show();
+                },
+                onCreateMemberError: function (event, details) {
+                    console.log('Create-member error: ' + JSON.stringify(details.response));
+                    app.$.toast.text = app.locale.error_member_create;
+                    app.$.toast.show();
+                },
                 onConfirmRemoveMember: function () {
+                    this.$.possibleParentsIronAjax.generateRequest();
                     this.$.memberEraseConfirm.open();
                 },
                 onOpenLicenseCodeSender: function () {

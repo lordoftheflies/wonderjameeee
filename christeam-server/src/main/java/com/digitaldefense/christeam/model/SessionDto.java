@@ -20,17 +20,15 @@ public class SessionDto implements Serializable {
     public SessionDto() {
     }
 
-    public SessionDto(UUID token, String userName, boolean powerUser) {
-        this.userName = userName;
-        this.token = token.toString();
+    public SessionDto(boolean powerUser, int unused, String token, String userName) {
         this.powerUser = powerUser;
-    }
-
-    public SessionDto(String token, String userName, boolean powerUser) {
+        this.unused = unused;
         this.token = token;
         this.userName = userName;
     }
+
     
+
     private boolean powerUser;
 
     public boolean isPowerUser() {
@@ -40,7 +38,17 @@ public class SessionDto implements Serializable {
     public void setPowerUser(boolean powerUser) {
         this.powerUser = powerUser;
     }
-    
+
+    private int unused;
+
+    public int getUnused() {
+        return unused;
+    }
+
+    public void setUnused(int unused) {
+        this.unused = unused;
+    }
+
     @ApiModelProperty
     private String token;
 

@@ -132,7 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     console.log("Login user " + JSON.stringify(credentials));
                     this.fire('login', credentials);
 
-                    app.$.toast.text = app.locale.error_credentials;
+                    app.$.toast.text = app.locale.success_login;
                     app.$.toast.show();
 
 //                    page.redirect(app.baseUrl);

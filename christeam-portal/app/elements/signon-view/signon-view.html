@@ -44,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type="text" 
                         auto-validate 
                         pattern="{{namePattern}}" 
-                        error-message="Invalid email address.">
+                        error-message="Invalid name.">
                     </paper-input>
                 </div>
                 <div class="card-content">
@@ -68,6 +68,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         auto-validate 
                         pattern="{{passPattern}}" 
                         error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
+                        <iron-icon icon="lock" prefix></iron-icon>
+                    </paper-input>
+                    <paper-input 
+                        id="passwordConfirm" 
+                        name="passwordConfirm" 
+                        label="Password confirmation" 
+                        type="password"
                         <iron-icon icon="lock" prefix></iron-icon>
                     </paper-input>
                 </div>
