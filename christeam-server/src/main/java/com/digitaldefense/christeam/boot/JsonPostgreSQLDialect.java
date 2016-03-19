@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ge.current.innovation.storage.jpa.boot;
+package com.digitaldefense.christeam.boot;
 
 import java.sql.Types;
 import org.hibernate.dialect.PostgreSQL9Dialect;

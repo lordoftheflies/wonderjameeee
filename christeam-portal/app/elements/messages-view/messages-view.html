@@ -16,6 +16,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-text.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-image.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-link.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-video.html">
 <link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-form.html">
 
 <dom-module id="messages-view">
@@ -24,164 +28,199 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             :host {
                 display: block;
                 /*@apply(--layout-vertical);*/
-                @apply(--layout-horizontal);
+                /*@apply(--layout-horizontal);*/
                 /*@apply(--layout-center);*/
             }
-            :host paper-material {
+            
+            plutonium-cm-form {
+                display: block;
+                @apply(--layout-vertical);
+            }
+/*            :host paper-material {
                 margin-left: 20px;
                 background-color: white;
                 @apply(--layout-vertical);
-                /*@apply(--layout-center);*/
-            }
+                @apply(--layout-center);
+            }*/
 
-            .card-content {
+/*             {
                 @apply(--layout-horizontal);
                 @apply(--layout-flex);
-                /*@apply(--layout-center);*/
+                @apply(--layout-center);
+            }
+/*            .card-content {
+                @apply(--layout-horizontal);
+                @apply(--layout-flex);
+                @apply(--layout-center);
             }
             .section-content {
                 display: inline-block;
                 @apply(--layout-horizontal);
                 @apply(--layout-flex);
-                /*                @apply(--layout-center);*/
+                                @apply(--layout-center);
             }
             .section-actions {
                 display: inline-block;
                 @apply(--layout-vertical);
                 @apply(--layout-center);
-            }
+            }*/
         </style>
-        <paper-card heading="New message">
-            <plutonium-cm-form></plutonium-cm-form>
+        <!--<paper-card heading="New message">-->
+            <!--{{sections}}-->
+            <plutonium-cm-form content-model$="{{sections}}"></plutonium-cm-form>
+
+            <!--            <div class="card-content">
+                            <paper-input label="To"></paper-input>
+                        </div>
+                        <div class="card-content">
+                            <paper-input label="Title"></paper-input>
+                        </div>
+                        <template is="dom-repeat" items="{{sections}}">
+                            <div id="content-section-{{item.index}}" class="card-content">
+                                <paper-tabs selected="{{selected}}">
+                                    <paper-tab>
+                                        <paper-icon-button item-index$="{{item.index}}" on-click="editSection" icon="create" title="Edit this section."></paper-icon-button>
+                                    </paper-tab>
+                                    <paper-tab>
+                                        <paper-icon-button item-index$="{{item.index}}" on-click="removeSection" icon="remove-circle" title="Remove this section."></paper-icon-button>
+                                    </paper-tab>
+                                </paper-tabs>
             
-<!--            <div class="card-content">
-                <paper-input label="To"></paper-input>
-            </div>
-            <div class="card-content">
-                <paper-input label="Title"></paper-input>
-            </div>
-            <template is="dom-repeat" items="{{sections}}">
-                <div id="content-section-{{item.index}}" class="card-content">
-                    <paper-tabs selected="{{selected}}">
-                        <paper-tab>
-                            <paper-icon-button item-index$="{{item.index}}" on-click="editSection" icon="create" title="Edit this section."></paper-icon-button>
-                        </paper-tab>
-                        <paper-tab>
-                            <paper-icon-button item-index$="{{item.index}}" on-click="removeSection" icon="remove-circle" title="Remove this section."></paper-icon-button>
-                        </paper-tab>
-                    </paper-tabs>
-
-                    <iron-pages selected="{{selected}}"  class="section-content">
-                        <div>
-                            <template is="dom-if" if="{{isTextSection(item)}}">
-                                <paper-textarea label="Text">
-                                    {{item.value}}
-                                </paper-textarea>
-                            </template>
-                            <template is="dom-if" if="{{isVideoSection(item)}}">
-                                <google-youtube
-                                    video-id$="{{item.value}}"
-                                    rel="0"
-                                    start="5"
-                                    autoplay="0">
-                            </google-youtube>
-                        </template>
-                        <template is="dom-if" if="{{isImageSection(item)}}">
-                            <iron-image src$="{{item.value}}"></iron-image>
-                        </template>
+                                <iron-pages selected="{{selected}}"  class="section-content">
+                                    <div>
+                                        <template is="dom-if" if="{{isTextSection(item)}}">
+                                            <paper-textarea label="Text">
+                                                {{item.value}}
+                                            </paper-textarea>
+                                        </template>
+                                        <template is="dom-if" if="{{isVideoSection(item)}}">
+                                            <google-youtube
+                                                video-id$="{{item.value}}"
+                                                rel="0"
+                                                start="5"
+                                                autoplay="0">
+                                        </google-youtube>
+                                    </template>
+                                    <template is="dom-if" if="{{isImageSection(item)}}">
+                                        <iron-image src$="{{item.value}}"></iron-image>
+                                    </template>
+                                </div>
+                                <div>
+                                    <template is="dom-if" if="{{isTextSection(item)}}">
+                                        <paper-textarea label="Text">
+                                            {{item.value}}
+                                        </paper-textarea>
+                                    </template>
+                                    <template is="dom-if" if="{{isVideoSection(item)}}">
+                                        <google-youtube
+                                            video-id$="{{item.value}}"
+                                            rel="0"
+                                            start="5"
+                                            autoplay="0">
+                                    </google-youtube>
+                                </template>
+                                <template is="dom-if" if="{{isImageSection(item)}}">
+                                    <iron-image src$="{{item.value}}"></iron-image>
+                                </template>
+                            </div>
+                        </iron-pages>
+            
+            
                     </div>
-                    <div>
-                        <template is="dom-if" if="{{isTextSection(item)}}">
-                            <paper-textarea label="Text">
-                                {{item.value}}
-                            </paper-textarea>
-                        </template>
-                        <template is="dom-if" if="{{isVideoSection(item)}}">
-                            <google-youtube
-                                video-id$="{{item.value}}"
-                                rel="0"
-                                start="5"
-                                autoplay="0">
-                        </google-youtube>
-                    </template>
-                    <template is="dom-if" if="{{isImageSection(item)}}">
-                        <iron-image src$="{{item.value}}"></iron-image>
-                    </template>
-                </div>
-            </iron-pages>
+                </template>-->
+        <!--</paper-card>-->
+        <!--        <paper-material elevation="1">
+                    <paper-icon-button on-click="addSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
+                    <paper-icon-button on-click="embedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
+                    <paper-icon-button on-click="embedImage" icon="perm-media" title="Embedd image to the message content."></paper-icon-button>
+                    <paper-icon-button icon="supervisor-account" title="Choose users."></paper-icon-button>
+                    <paper-icon-button icon="send" title="Send message"></paper-icon-button>
+                </paper-material>-->
+    </template>
+    <script>
+        (function () {
+            'use strict';
 
-
-        </div>
-    </template>-->
-</paper-card>
-<paper-material elevation="1">
-    <paper-icon-button on-click="addSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
-    <paper-icon-button on-click="embedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
-    <paper-icon-button on-click="embedImage" icon="perm-media" title="Embedd image to the message content."></paper-icon-button>
-    <paper-icon-button icon="supervisor-account" title="Choose users."></paper-icon-button>
-    <paper-icon-button icon="send" title="Send message"></paper-icon-button>
-</paper-material>
-</template>
-<script>
-    (function () {
-        'use strict';
-
-        Polymer({
-            is: 'messages-view',
-            properties: {
-                sections: {
-                    type: Array,
-                    value: [
-                        {index: 0, type: 'text', value: 'Lorem ipsum.'},
-                        {index: 1, type: 'video', value: 'z88XbRMR6H4'},
-                        {index: 2, type: 'text', value: 'Lorem ipsum dloret aet apsi.'},
-                        {index: 3, type: 'image', value: 'http://www.luluka.eoldal.hu/img/mid/43/cica-harc.jpg'}
-                    ]
+            Polymer({
+                is: 'messages-view',
+                properties: {
+                    sections: {
+                        type: Object,
+                        notify: true,
+                        value: {
+                            "sections": [
+                                {
+                                    "type": "plutonium-cm-editor-video",
+                                    "key": "first",
+                                    "data": "Si4BM7QOWXI"
+                                },
+                                {
+                                    "type": "plutonium-cm-editor-text",
+                                    "key": "second",
+                                    "data": "Si4BM7QOWXI"
+                                },
+                                {
+                                    "type": "plutonium-cm-editor-image",
+                                    "key": "third",
+                                    "data": "https://www.google.hu/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjGifff4qXLAhWFNpoKHX4XBssQjRwIBw&url=http%3A%2F%2Fwww.trademagazin.hu%2Fhirek-es-cikkek%2Fpiaci-hirek%2Fszeretjuk-a-kacsahust.html&psig=AFQjCNHKGebKo-p4MfAbQfxvxMKMgTF_jg&ust=1457137611971834"
+                                },
+                                {
+                                    "type": "plutonium-cm-editor-link",
+                                    "key": "linkkkk",
+                                    "data": "https://www.google.hu"
+                                },
+                                {
+                                    "type": "plutonium-cm-editor-text",
+                                    "key": "fourth",
+                                    "data": "Semmi különös"
+                                }
+                            ]
+                        }
+                    },
+                    foo: {
+                        type: String,
+                        value: 'messages-view',
+                        notify: true
+                    }
                 },
-                foo: {
-                    type: String,
-                    value: 'messages-view',
-                    notify: true
+                //                listeners: {
+                //                    'addSection': 'addSection',
+                //                    'embedVideo': 'embedVideo',
+                //                    'embedImage': 'embedImage'
+                //                }
+                //                ,
+                addSection: function () {
+                    console.log('Add new text-section.');
+                    this.push('sections', {index: this.sections.length, type: 'text', value: ''});
+                },
+                embedVideo: function () {
+                    console.log('Add new video-section.');
+                    this.push('sections', {index: this.sections.length, type: 'video', value: ''});
+                },
+                embedImage: function () {
+                    console.log('Add new image-section.');
+                    this.push('sections', {index: this.sections.length, type: 'image', value: ''});
+                },
+                editSection: function (e, a) {
+                    var index = e.currentTarget.getAttribute("item-index");
+                    console.log('Edit section [' + index + ']');
+                    this.splice('sections', index, 1);
+                },
+                removeSection: function (e, a) {
+                    var index = e.currentTarget.getAttribute("item-index");
+                    console.log('Remove section [' + index + ']');
+                    this.splice('sections', index, 1);
+                },
+                isVideoSection: function (item) {
+                    return (item.type === 'video');
+                },
+                isImageSection: function (item) {
+                    return (item.type === 'image');
+                },
+                isTextSection: function (item) {
+                    return (item.type === 'text');
                 }
-            },
-            //                listeners: {
-            //                    'addSection': 'addSection',
-            //                    'embedVideo': 'embedVideo',
-            //                    'embedImage': 'embedImage'
-            //                }
-            //                ,
-            addSection: function () {
-                console.log('Add new text-section.');
-                this.push('sections', {index: this.sections.length, type: 'text', value: ''});
-            },
-            embedVideo: function () {
-                console.log('Add new video-section.');
-                this.push('sections', {index: this.sections.length, type: 'video', value: ''});
-            },
-            embedImage: function () {
-                console.log('Add new image-section.');
-                this.push('sections', {index: this.sections.length, type: 'image', value: ''});
-            },
-            editSection: function (e, a) {
-                var index = e.currentTarget.getAttribute("item-index");
-                console.log('Edit section [' + index + ']');
-                this.splice('sections', index, 1);
-            },
-            removeSection: function (e, a) {
-                var index = e.currentTarget.getAttribute("item-index");
-                console.log('Remove section [' + index + ']');
-                this.splice('sections', index, 1);
-            },
-            isVideoSection: function (item) {
-                return (item.type === 'video');
-            },
-            isImageSection: function (item) {
-                return (item.type === 'image');
-            },
-            isTextSection: function (item) {
-                return (item.type === 'text');
-            }
-        });
-    })();
-</script>
+            });
+        })();
+    </script>
 </dom-module>

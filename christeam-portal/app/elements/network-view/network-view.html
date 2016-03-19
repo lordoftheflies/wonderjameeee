@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
@@ -18,8 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../code-transaction-view/code-transaction-view.html">
 <link rel="import" href="../../bower_components/paper-badge/paper-badge.html">
+<link rel="import" href="../plutonium-witdget-behavior.html">
+<link rel="import" href="../code-transaction-view/code-transaction-view.html">
 
 <dom-module id="network-view">
     <template>
@@ -120,31 +122,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 @apply(--layout-horizontal);
             }
 
-            :host ul.breadcrumbs {
+            /* Breadcrumbs */
+            :host .breadcrumbs {
                 @apply(--layout-horizontal);
                 @apply(--layout-flex);
                 list-style-type: none;
             }
-            :host ul.breadcrumbs li{
-                margin-left: 10px;
-                list-style: none;
-                display: inline-block;  
-                @apply(--layout-horizontal);
-            }
-            :host ul.breadcrumbs li:first-child:before {
+            :host .breadcrumbs div:first-child:before {
                 content:''; /* Change this to unicode as needed*/
-                margin-right: 1em;
+                margin-left: 1em;
             }
-            :host ul.breadcrumbs li:before {
-                content:'>>'; /* Change this to unicode as needed*/
+            :host .breadcrumbs div:before {
+                content:' >> '; /* Change this to unicode as needed*/
+                margin-left: 1em;
                 margin-right: 1em;
-            }
-
-            :host ul.breadcrumbs li div {
-                display: inline-block;
-                /*padding: 0 16px;*/
-                @apply(--layout-center);
-                @apply(--layout-horizontal);
             }
 
             paper-material div {
@@ -181,9 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-input name="email" label="Email" type="email"></paper-input>
                 <paper-input name="codes" label="Codes" type="number"></paper-input>
                 <input name="parent" type="hidden" value="{{selectedParent}}" />
-                <paper-dropdown-menu 
-                    label="Parent member" 
-                    >
+                <paper-dropdown-menu label="Parent member">
                     <paper-menu
                         class="dropdown-content" selected="{{selectedParent}}" attr-for-selected="value"
                         attr-for-selected="id">
@@ -211,24 +200,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-dialog>
         <paper-dialog id="licenseCodesToMember">
             <code-transaction-view
-                source-account="{{app.sessionInfo.token}}"
-                destination-account="{{accountId}}"
+                source-account="{{accountId}}"
                 account-network="{{possibleParents}}"
                 usable-codes="{{unusedCodes}}"
                 ></code-transaction-view>
         </paper-dialog>
 
         <paper-material elevation="2">
-            <ul class="breadcrumbs" id="parentBeadCrumbs">
+            <iron-selector class="breadcrumbs" id="parentBeadCrumbs" attr-for-selected="nodeid" selected="{{selectedAccount}}">
                 <template is="dom-repeat" items="[[parents]]">
-                    <li nodeid="{{item.id}}" on-tap="onNavigateToChildren" id="parentName-{{item.id}}">
-                        <span class="separator"></span>
-                    <iron-image class="thumbnail" sizing="contain" src="[[item.image]]"></iron-image>
-                    <div>[[item.name]]</div>
-                    <paper-badge for="parentName-{{item.id}}" label="{{item.codes}}" class="blue"></paper-badge>
-                    </li>
+                    <div nodeid="{{item.id}}" unusedcodes="{{item.codes}}" on-tap="onNavigateToChildren" id="parentName-{{item.id}}">
+                        <iron-image class="thumbnail" sizing="contain" src="[[item.image]]"></iron-image>
+                        <span>[[item.name]]</span>
+                        <paper-badge id="codeBadge-{{item.id}}" for="parentName-{{item.id}}" label="{{item.codes}}" class="blue"></paper-badge>
+                    </div>
                 </template>
-            </ul>
+            </iron-selector>
             <div class="card-actions">
                 <paper-icon-button icon="arrow-upward" on-click="onNavigateUp"></paper-icon-button>
                 <paper-icon-button icon="add-circle" on-click="onOpenCreateMember"></paper-icon-button>
@@ -267,6 +254,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             Polymer({
                 is: 'network-view',
+                behaviors: [PlutoniumBehaviors],
                 properties: {
                     genocideRequestParams: {
                         type: Object,
@@ -282,12 +270,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             parentId: null
                         }
                     },
-                    apiUrl: {
-                        type: String,
-                        notify: true,
-                        value: 'http://localhost:8080'
-                    },
                     accountId: {
+                        type: String,
+                        notify: true
+                    },
+                    selectedAccount: {
                         type: String,
                         notify: true
                     },
@@ -297,22 +284,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     unusedCodes: {
                         type: Number,
-                        value: function () {
-                            return document.querySelector('#app').sessionInfo.unused;
-                        },
                         notify: true
                     }
                 },
                 observers: [
                     'computeChildRequestParams(accountId)',
-                    'computeGenocideRequestParams(accountId)'
+                    'computeGenocideRequestParams(accountId)',
+                    'computeSelected(accountId)'
                 ],
                 listeners: {
                     'newMemberForm.iron-form-response': 'onCreateMemberResponse',
-                    'newMemberForm.iron-form-error': 'onCreateMemberError'
+                    'newMemberForm.iron-form-error': 'onCreateMemberError',
+                    'parentBeadCrumbs.iron-select': 'onSelectMember',
+                    'network-tree-refresh': 'onRefresh'
                 },
                 ready: function () {
                     console.log('Network-view is READY(account-id=' + this.accountId);
+                    this.selectedAccount = this.accountId;
                 },
                 computeChildRequestParams: function (accountId) {
                     this.childrenRequestParams.parentId = accountId;
@@ -324,17 +312,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     console.log('Network-view genocide request parameters updated: ' + JSON.stringify(this.genocideRequestParams))
                     this.$.genocideIronAjax.generateRequest();
                 },
+                computeSelected: function (accountId) {
+                    this.selectedAccount = accountId;
+                },
+                onSelectMember: function (event, details) {
+                    console.log('Network-view select account:');
+                    this.unusedCodes = details.item.unusedcodes;
+                },
                 onNavigateToChildren: function (event, details) {
                     this.accountId = event.currentTarget.nodeid;
+                    this.selectedAccount = this.accountId;
+                    this.$.childrenIronAjax.generateRequest();
+                    this.$.genocideIronAjax.generateRequest();
+                    console.log('Network-view navigate to children ');
+
+                },
+                onNavigateUp: function (event, details) {
+                    this.accountId = this.$.parentBeadCrumbs.children[this.$.parentBeadCrumbs.children.length < 3 ? 0 : this.$.parentBeadCrumbs.children.length - 3].nodeid;
+                    this.selectedAccount = this.accountId;
                     this.$.childrenIronAjax.generateRequest();
                     this.$.genocideIronAjax.generateRequest();
                     console.log('Network-view navigate to children ');
                 },
-                onNavigateUp: function (event, details) {
-                    this.accountId = this.$.parentBeadCrumbs.children[this.$.parentBeadCrumbs.children.length < 3 ? 0 : this.$.parentBeadCrumbs.children.length - 3].nodeid;
+                onRefresh: function() {
                     this.$.childrenIronAjax.generateRequest();
                     this.$.genocideIronAjax.generateRequest();
-                    console.log('Network-view navigate to children ');
                 },
                 onOpenCreateMember: function () {
                     this.$.memberDialog.open();

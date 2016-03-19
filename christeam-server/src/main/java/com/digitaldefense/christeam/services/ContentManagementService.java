@@ -12,7 +12,6 @@ import com.digitaldefense.christeam.dal.MessageRepository;
 import com.digitaldefense.christeam.entities.ContainerContentEntity;
 import com.digitaldefense.christeam.entities.ContentEntity;
 import com.digitaldefense.christeam.entities.ImageContentEntity;
-import com.digitaldefense.christeam.entities.MailBoxEntity;
 import com.digitaldefense.christeam.entities.MessageEntity;
 import com.digitaldefense.christeam.entities.ReferenceContentEntity;
 import com.digitaldefense.christeam.entities.TextContentEntity;
@@ -21,7 +20,6 @@ import com.digitaldefense.christeam.model.MessageDto;
 import com.digitaldefense.christeam.model.PageDto;
 import com.digitaldefense.christeam.model.SectionDto;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -50,45 +48,50 @@ public class ContentManagementService {
     @Autowired
     private MailBoxRepository mailBoxRepository;
 
-    private TextContentEntity createText(String title, String value, ContainerContentEntity parent) {
-        TextContentEntity entity = new TextContentEntity();
-        entity.setContent(value);
-        entity.setTitle(title);
-        entity.setParent(parent);
-        return contentRepository.save(entity);
+    private class ContentEntityFactory {
+
+        public TextContentEntity createText(String title, String value, ContainerContentEntity parent) {
+            TextContentEntity entity = new TextContentEntity();
+            entity.setContent(value);
+            entity.setTitle(title);
+            entity.setParent(parent);
+            return contentRepository.save(entity);
+        }
+
+        public VideoContentEntity createVideo(String title, String value, ContainerContentEntity parent) {
+            VideoContentEntity entity = new VideoContentEntity();
+            entity.setContent(value);
+            entity.setTitle(title);
+            entity.setParent(parent);
+            return contentRepository.save(entity);
+        }
+
+        private ImageContentEntity createImage(String title, String value, ContainerContentEntity parent) {
+            ImageContentEntity entity = new ImageContentEntity();
+            entity.setContent(value);
+            entity.setTitle(title);
+            entity.setParent(parent);
+            return contentRepository.save(entity);
+        }
+
+        private ReferenceContentEntity createReference(String title, String value, ContainerContentEntity parent) {
+            ReferenceContentEntity entity = new ReferenceContentEntity();
+            entity.setContent(value);
+            entity.setTitle(title);
+            entity.setParent(parent);
+            return contentRepository.save(entity);
+        }
+
+        private ContainerContentEntity createContent(String title, String value, ContainerContentEntity parent) {
+            ContainerContentEntity entity = new ContainerContentEntity();
+            entity.setContent(value);
+            entity.setTitle(title);
+            entity.setParent(parent);
+            return contentRepository.save(entity);
+        }
     }
 
-    private VideoContentEntity createVideo(String title, String value, ContainerContentEntity parent) {
-        VideoContentEntity entity = new VideoContentEntity();
-        entity.setContent(value);
-        entity.setTitle(title);
-        entity.setParent(parent);
-        return contentRepository.save(entity);
-    }
-
-    private ImageContentEntity createImage(String title, String value, ContainerContentEntity parent) {
-        ImageContentEntity entity = new ImageContentEntity();
-        entity.setContent(value);
-        entity.setTitle(title);
-        entity.setParent(parent);
-        return contentRepository.save(entity);
-    }
-
-    private ReferenceContentEntity createReference(String title, String value, ContainerContentEntity parent) {
-        ReferenceContentEntity entity = new ReferenceContentEntity();
-        entity.setContent(value);
-        entity.setTitle(title);
-        entity.setParent(parent);
-        return contentRepository.save(entity);
-    }
-
-    private ContainerContentEntity createContent(String title, String value, ContainerContentEntity parent) {
-        ContainerContentEntity entity = new ContainerContentEntity();
-        entity.setContent(value);
-        entity.setTitle(title);
-        entity.setParent(parent);
-        return contentRepository.save(entity);
-    }
+    private ContentEntityFactory factory;
 
     @CrossOrigin
     @RequestMapping(path = "/page",
@@ -103,7 +106,6 @@ public class ContentManagementService {
             PageDto dto = new PageDto();
             ContentEntity container = contentRepository.findOne(UUID.fromString(pageId));
             dto.setTitle(container.getTitle());
-            dto.setData(container.getContent());
             if ("container".equals(container.getResourceType())) {
                 dto.setSections(contentRepository
                         .findByParent(UUID.fromString(pageId))
@@ -124,23 +126,23 @@ public class ContentManagementService {
                 MediaType.APPLICATION_JSON_VALUE
             })
     public void save(PageDto dto) {
-        ContainerContentEntity container = this.createContent(dto.getTitle(), dto.getData(), null);
+        ContainerContentEntity container = factory.createContent(dto.getTitle(), null, null);
         LOG.log(Level.INFO, "Created new page[{0}].", container.getId());
         dto.getSections().forEach(s -> {
             ContentEntity ce;
             switch (s.getType()) {
                 case "video":
-                    ce = createVideo(s.getTitle(), s.getData(), container);
+                    ce = factory.createVideo(s.getKey(), s.getData(), container);
                     break;
                 case "image":
-                    ce = createImage(s.getTitle(), s.getData(), container);
+                    ce = factory.createImage(s.getKey(), s.getData(), container);
                     break;
                 case "link":
-                    ce = createReference(s.getTitle(), s.getData(), container);
+                    ce = factory.createReference(s.getKey(), s.getData(), container);
                     break;
                 case "text":
                 default:
-                    ce = createText(s.getTitle(), s.getData(), container);
+                    ce = factory.createText(s.getKey(), s.getData(), container);
                     break;
             }
             LOG.log(Level.INFO, "Created new {0}-content[{1}].", new Object[]{s.getType(), ce.getId()});

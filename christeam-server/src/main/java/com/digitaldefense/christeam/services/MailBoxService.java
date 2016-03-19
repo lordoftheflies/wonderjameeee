@@ -32,9 +32,10 @@ public class MailBoxService {
 
     @RequestMapping(path = "/inbox")
     public PageDto inbox(@PathVariable("accountId") String accountId) {
-        PageDto dto = new PageDto("inbox");
-        dto.setSections(messageRepository.inboxByRecipient(UUID.fromString(accountId)).stream()
-                .map((MessageEntity e) -> new SectionDto(e.getContent().getTitle(), "link", null))
+        UUID id = UUID.fromString(accountId);
+        PageDto dto = new PageDto();
+        dto.setSections(messageRepository.inboxByRecipient(id).stream()
+                .map((MessageEntity e) -> new SectionDto(e.getContent().getTitle(), e.getContent().getResourceType(), null))
                 .collect(Collectors.toList()));
         return dto;
     }

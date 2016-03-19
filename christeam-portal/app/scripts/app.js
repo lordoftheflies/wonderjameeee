@@ -55,7 +55,10 @@
         success_login: 'Logged successfully.',
         
         error_member_create: 'Member create operation failed.',
-        success_member_create: 'New member created.'
+        success_member_create: 'New member created.',
+        
+        success_code_transaction: 'Codes sent successfully.',
+        error_code_transaction: 'Codes sending failed.'
     };
 
 

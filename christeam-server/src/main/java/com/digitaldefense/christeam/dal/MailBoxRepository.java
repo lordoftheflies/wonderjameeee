@@ -18,6 +18,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MailBoxRepository extends CrudRepository<MailBoxEntity, Long> {
 
+	/**
+	 * 
+	 * @param recipientId
+	 * @return
+	 */
     MailBoxEntity findByRecipient(@Param("recipientId") UUID recipientId);
 
 }

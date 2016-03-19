@@ -18,21 +18,26 @@ public class SectionDto {
     public SectionDto() {
     }
 
-    public SectionDto(String title, String type, String data) {
-        this.title = title;
+    public SectionDto(String type) {
+        this.type = type;
+    }
+
+    public SectionDto(String key, String type, String data) {
+        this.key = key;
         this.type = type;
         this.data = data;
     }
     @ApiModelProperty
-    private String title;
+    private String key;
 
-    public String getTitle() {
-        return title;
+    public String getKey() {
+        return key;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setKey(String key) {
+        this.key = key;
     }
+
     @ApiModelProperty
     private String type;
 

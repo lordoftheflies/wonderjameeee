@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -19,13 +20,19 @@ public class PageDto {
     public PageDto() {
     }
 
-    public PageDto(String title, Collection<SectionDto> sections) {
+    public PageDto(String title) {
         this.title = title;
+    }
+ 
+    public PageDto(UUID id, String title, Collection<SectionDto> sections) {
+        this.title = title;
+        this.id = id;
         this.sections = new ArrayList<>(sections);
     }
-
-    public PageDto(String title, SectionDto... sections) {
+    
+    public PageDto(UUID id, String title, SectionDto... sections) {
         this.title = title;
+        this.id = id;
         this.sections = Arrays.asList(sections);
     }
 
@@ -38,18 +45,18 @@ public class PageDto {
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    private String data;
 
-    public String getData() {
-        return data;
+    private UUID id;
+
+    public UUID getId() {
+        return id;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setId(UUID id) {
+        this.id = id;
     }
-    
-    private List<SectionDto> sections;
+
+    private List<SectionDto> sections = new ArrayList<>();
 
     public List<SectionDto> getSections() {
         return sections;

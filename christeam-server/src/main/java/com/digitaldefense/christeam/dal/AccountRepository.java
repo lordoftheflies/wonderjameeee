@@ -28,4 +28,4 @@ public interface AccountRepository extends CrudRepository<AccountEntity, UUID> {
     
     
     AccountEntity findByCredentials(@Param("email") String email, @Param("password") String password);
-}
+}	
