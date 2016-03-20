@@ -17,29 +17,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @ApiModel
-public class ContactDto implements Serializable {
+public class ContactDto extends ContactInfoDto {
 
     public ContactDto() {
     }
 
     public ContactDto(UUID id, UUID parent, String name, String email, int codes, String phone) {
-        this.id = id;
+        super(id, name, email);
         this.parent = parent;
-        this.name = name;
-        this.email = email;
         this.codes = codes;
         this.phone = phone;
-    }
-
-    @ApiModelProperty
-    private UUID id;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     @ApiModelProperty
@@ -51,28 +38,6 @@ public class ContactDto implements Serializable {
 
     public void setParent(UUID parentId) {
         this.parent = parentId;
-    }
-
-    @ApiModelProperty
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @ApiModelProperty
-    private String email;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @ApiModelProperty
@@ -95,5 +60,4 @@ public class ContactDto implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
 }

@@ -5,6 +5,7 @@
  */
 package com.digitaldefense.christeam.services;
 
+import com.digitaldefense.christeam.exceptions.ContentNotFoundException;
 import com.digitaldefense.christeam.dal.AccountRepository;
 import com.digitaldefense.christeam.dal.ContentRepository;
 import com.digitaldefense.christeam.dal.MailBoxRepository;
@@ -156,10 +157,10 @@ public class ContentManagementService {
                 MediaType.APPLICATION_JSON_VALUE
             })
     public void publish(MessageDto dto) throws ContentNotFoundException {
-        if (!contentRepository.exists(dto.getPageId())) {
+        if (!contentRepository.exists(dto.getId())) {
             throw new ContentNotFoundException();
         } else {
-            ContentEntity contentEntity = contentRepository.findOne(dto.getPageId());
+            ContentEntity contentEntity = contentRepository.findOne(dto.getId());
             messageRepository.save(dto.getRecipients().stream().map((UUID recipientId) -> {
                 MessageEntity message = new MessageEntity();
                 message.setContent(contentEntity);

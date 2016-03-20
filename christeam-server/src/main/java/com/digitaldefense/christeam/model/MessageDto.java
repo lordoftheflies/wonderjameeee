@@ -19,19 +19,29 @@ import java.util.UUID;
  * @author lordoftheflies
  */
 @ApiModel
-public class MessageDto implements Serializable {
+public class MessageDto extends PageDto {
 
     public MessageDto() {
     }
 
+    public MessageDto(UUID id, String title, List<UUID> recipients, List<SectionDto> sections) {
+        super(id, title, sections);
+        this.recipients = recipients;
+    }
+
+    public MessageDto(UUID id, String title, List<UUID> recipients, SectionDto... sections) {
+        super(id, title, sections);
+        this.recipients = recipients;
+    }
+
     public MessageDto(UUID pageId, Collection<UUID> recipients) {
+        super(pageId, null, new ArrayList<>());
         this.recipients = new ArrayList<>(recipients);
-        this.pageId = pageId;
     }
 
     public MessageDto(UUID pageId, UUID... recipients) {
+        super(pageId, null, new ArrayList<>());
         this.recipients = Arrays.asList(recipients);
-        this.pageId = pageId;
     }
 
     @ApiModelProperty
@@ -43,16 +53,5 @@ public class MessageDto implements Serializable {
 
     public void setRecipients(List<UUID> recipients) {
         this.recipients = recipients;
-    }
-
-    @ApiModelProperty
-    private UUID pageId;
-
-    public UUID getPageId() {
-        return pageId;
-    }
-
-    public void setPageId(UUID pageId) {
-        this.pageId = pageId;
     }
 }

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.digitaldefense.christeam.services;
+package com.digitaldefense.christeam.exceptions;
 
 /**
  *
  * @author lordoftheflies
  */
-public class InsufficientCodesException extends Exception {
+public class ContentNotFoundException extends Exception {
 
-    public InsufficientCodesException() {
+    public ContentNotFoundException() {
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package com.digitaldefense.christeam.services;
 
+import com.digitaldefense.christeam.exceptions.AccesDeniedException;
 import com.digitaldefense.christeam.exceptions.CredentialsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

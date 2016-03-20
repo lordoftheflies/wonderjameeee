@@ -5,6 +5,7 @@
  */
 package com.digitaldefense.christeam.services;
 
+import com.digitaldefense.christeam.exceptions.AccesDeniedException;
 import com.digitaldefense.christeam.exceptions.CredentialsException;
 import com.digitaldefense.christeam.exceptions.AccountNotFoundException;
 import com.digitaldefense.christeam.exceptions.RegistrationCodeAlreadyUsedException;
