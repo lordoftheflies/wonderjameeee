@@ -22,6 +22,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-video.html">
 <link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-form.html">
 
+<link rel="import" href="../plutonium-witdget-behavior.html">
+
 <dom-module id="messages-view">
     <template>
         <style>
@@ -31,111 +33,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 /*@apply(--layout-horizontal);*/
                 /*@apply(--layout-center);*/
             }
-            
+
             plutonium-cm-form {
                 display: block;
                 @apply(--layout-vertical);
             }
-/*            :host paper-material {
-                margin-left: 20px;
-                background-color: white;
-                @apply(--layout-vertical);
-                @apply(--layout-center);
-            }*/
+            /*            :host paper-material {
+                            margin-left: 20px;
+                            background-color: white;
+                            @apply(--layout-vertical);
+                            @apply(--layout-center);
+                        }*/
 
-/*             {
-                @apply(--layout-horizontal);
-                @apply(--layout-flex);
-                @apply(--layout-center);
-            }
-/*            .card-content {
-                @apply(--layout-horizontal);
-                @apply(--layout-flex);
-                @apply(--layout-center);
-            }
-            .section-content {
-                display: inline-block;
-                @apply(--layout-horizontal);
-                @apply(--layout-flex);
-                                @apply(--layout-center);
-            }
-            .section-actions {
-                display: inline-block;
-                @apply(--layout-vertical);
-                @apply(--layout-center);
-            }*/
+            /*             {
+                            @apply(--layout-horizontal);
+                            @apply(--layout-flex);
+                            @apply(--layout-center);
+                        }
+            /*            .card-content {
+                            @apply(--layout-horizontal);
+                            @apply(--layout-flex);
+                            @apply(--layout-center);
+                        }
+                        .section-content {
+                            display: inline-block;
+                            @apply(--layout-horizontal);
+                            @apply(--layout-flex);
+                                            @apply(--layout-center);
+                        }
+                        .section-actions {
+                            display: inline-block;
+                            @apply(--layout-vertical);
+                            @apply(--layout-center);
+                        }*/
         </style>
-        <!--<paper-card heading="New message">-->
-            <!--{{sections}}-->
-            <plutonium-cm-form content-model$="{{sections}}"></plutonium-cm-form>
 
-            <!--            <div class="card-content">
-                            <paper-input label="To"></paper-input>
-                        </div>
-                        <div class="card-content">
-                            <paper-input label="Title"></paper-input>
-                        </div>
-                        <template is="dom-repeat" items="{{sections}}">
-                            <div id="content-section-{{item.index}}" class="card-content">
-                                <paper-tabs selected="{{selected}}">
-                                    <paper-tab>
-                                        <paper-icon-button item-index$="{{item.index}}" on-click="editSection" icon="create" title="Edit this section."></paper-icon-button>
-                                    </paper-tab>
-                                    <paper-tab>
-                                        <paper-icon-button item-index$="{{item.index}}" on-click="removeSection" icon="remove-circle" title="Remove this section."></paper-icon-button>
-                                    </paper-tab>
-                                </paper-tabs>
-            
-                                <iron-pages selected="{{selected}}"  class="section-content">
-                                    <div>
-                                        <template is="dom-if" if="{{isTextSection(item)}}">
-                                            <paper-textarea label="Text">
-                                                {{item.value}}
-                                            </paper-textarea>
-                                        </template>
-                                        <template is="dom-if" if="{{isVideoSection(item)}}">
-                                            <google-youtube
-                                                video-id$="{{item.value}}"
-                                                rel="0"
-                                                start="5"
-                                                autoplay="0">
-                                        </google-youtube>
-                                    </template>
-                                    <template is="dom-if" if="{{isImageSection(item)}}">
-                                        <iron-image src$="{{item.value}}"></iron-image>
-                                    </template>
-                                </div>
-                                <div>
-                                    <template is="dom-if" if="{{isTextSection(item)}}">
-                                        <paper-textarea label="Text">
-                                            {{item.value}}
-                                        </paper-textarea>
-                                    </template>
-                                    <template is="dom-if" if="{{isVideoSection(item)}}">
-                                        <google-youtube
-                                            video-id$="{{item.value}}"
-                                            rel="0"
-                                            start="5"
-                                            autoplay="0">
-                                    </google-youtube>
-                                </template>
-                                <template is="dom-if" if="{{isImageSection(item)}}">
-                                    <iron-image src$="{{item.value}}"></iron-image>
-                                </template>
-                            </div>
-                        </iron-pages>
-            
-            
-                    </div>
-                </template>-->
-        <!--</paper-card>-->
-        <!--        <paper-material elevation="1">
-                    <paper-icon-button on-click="addSection" icon="add-circle" title="Embedd video to the message content."></paper-icon-button>
-                    <paper-icon-button on-click="embedVideo" icon="theaters" title="Embedd video to the message content."></paper-icon-button>
-                    <paper-icon-button on-click="embedImage" icon="perm-media" title="Embedd image to the message content."></paper-icon-button>
-                    <paper-icon-button icon="supervisor-account" title="Choose users."></paper-icon-button>
-                    <paper-icon-button icon="send" title="Send message"></paper-icon-button>
-                </paper-material>-->
+        <iron-ajax 
+            id="contactsAjax"
+            url="{{apiUrl}}/addressbook/{{accountId}}/contacts" 
+            last-response="{{contacts}}" 
+            auto></iron-ajax>
+
+        <plutonium-cm-form contacts="{{contacts}}" content-model="{{sections}}"></plutonium-cm-form>
     </template>
     <script>
         (function () {
@@ -143,6 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             Polymer({
                 is: 'messages-view',
+                behaviors: [PlutoniumBehaviors.WidgetBehavior],
                 properties: {
                     sections: {
                         type: Object,
@@ -177,9 +117,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             ]
                         }
                     },
-                    foo: {
+                    accountId: {
                         type: String,
-                        value: 'messages-view',
                         notify: true
                     }
                 },
