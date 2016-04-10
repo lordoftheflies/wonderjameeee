@@ -13,7 +13,7 @@ import javax.persistence.Entity;
  * @author lordoftheflies
  */
 @Entity
-@DiscriminatorValue(value = "image")
+@DiscriminatorValue(value = ImageContentEntity.RESOURCE_TYPE)
 public class ImageContentEntity extends ContentEntity {
-    
+    public static final String RESOURCE_TYPE = "image";
 }

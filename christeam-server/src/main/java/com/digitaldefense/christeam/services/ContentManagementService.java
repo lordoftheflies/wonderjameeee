@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -97,7 +98,7 @@ public class ContentManagementService {
         }
     }
 
-    private ContentEntityFactory factory;
+    private ContentEntityFactory factory = new ContentEntityFactory();
 
     @CrossOrigin
     @RequestMapping(path = "/page/{pageId}",
@@ -112,18 +113,79 @@ public class ContentManagementService {
             PageDto dto = new PageDto();
             ContentEntity container = contentRepository.findOne(UUID.fromString(pageId));
             dto.setTitle(container.getTitle());
-            if ("container".equals(container.getResourceType())) {
+            dto.setId(container.getId());
+            if (ContainerContentEntity.RESOURCE_TYPE.equals(container.getResourceType())) {
                 dto.setSections(contentRepository
                         .findByParent(UUID.fromString(pageId))
                         .stream()
                         .map((ContentEntity entity) -> new SectionDto(entity.getTitle(), entity.getResourceType(), entity.getContent()))
                         .collect(Collectors.toList()));
             } else {
-
+                LOG.log(Level.INFO, "{0} is not a container.", pageId);
             }
             return dto;
         }
     }
+
+    @CrossOrigin
+    @RequestMapping(path = "/toc/info",
+            method = RequestMethod.GET,
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            })
+    public PageDto pageInfo(@RequestParam(value = "pageId", required = true) String pageId) throws ContentNotFoundException {
+        PageDto dto = new PageDto();
+        if (ROOT_PSEUDO_ID.equals(pageId)) {
+            dto.setTitle("");
+            dto.setId(null);
+
+        } else {
+
+            UUID pageUuid = UUID.fromString(pageId);
+            if (!contentRepository.exists(pageUuid)) {
+                throw new ContentNotFoundException();
+            } else {
+                ContentEntity container = contentRepository.findOne(UUID.fromString(pageId));
+                dto.setTitle(container.getTitle());
+                dto.setId(container.getId());
+            }
+        }
+
+        return dto;
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(path = "/toc",
+            method = RequestMethod.GET,
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            })
+    public PageDto toc(@RequestParam(value = "pageId", defaultValue = "ROOT") String pageId) throws ContentNotFoundException {
+        PageDto dto = new PageDto();
+
+        if (ROOT_PSEUDO_ID.equals(pageId)) {
+            dto.setSections(contentRepository
+                    .findRoots()
+                    .stream()
+                    .map((ContentEntity entity) -> new SectionDto(entity.getTitle(), entity.getResourceType(), entity.getId().toString()))
+                    .collect(Collectors.toList()));
+        } else if (!contentRepository.exists(UUID.fromString(pageId))) {
+            throw new ContentNotFoundException();
+        } else {
+            ContentEntity container = contentRepository.findOne(UUID.fromString(pageId));
+            dto.setTitle(container.getTitle());
+            dto.setId(container.getId());
+            dto.setSections(contentRepository
+                    .findByParent(UUID.fromString(pageId))
+                    .stream()
+                    .map((ContentEntity entity) -> new SectionDto(entity.getTitle(), entity.getResourceType(), entity.getId().toString()))
+                    .collect(Collectors.toList()));
+
+        }
+        return dto;
+    }
+    public static final String ROOT_PSEUDO_ID = "ROOT";
 
     @CrossOrigin
     @RequestMapping(path = "/save",

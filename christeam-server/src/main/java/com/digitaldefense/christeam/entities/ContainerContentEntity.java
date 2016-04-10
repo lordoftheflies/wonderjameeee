@@ -15,8 +15,10 @@ import javax.persistence.OneToMany;
  * @author lordoftheflies
  */
 @Entity
-@DiscriminatorValue(value = "container")
+@DiscriminatorValue(value = ContainerContentEntity.RESOURCE_TYPE)
 public class ContainerContentEntity extends ContentEntity {
+
+    public static final String RESOURCE_TYPE = "container";
 
     @OneToMany(mappedBy = "parent")
     private List<ContentEntity> children;

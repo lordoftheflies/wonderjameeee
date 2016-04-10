@@ -28,4 +28,6 @@ public interface ContentRepository extends PagingAndSortingRepository<ContentEnt
     public List<ContentEntity> findAll();
 
     public List<ContentEntity> findByParent(@Param("parentId") UUID parentId);
+    
+    public List<ContentEntity> findRoots();
 }

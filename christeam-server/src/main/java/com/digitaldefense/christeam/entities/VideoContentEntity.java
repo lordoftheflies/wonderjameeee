@@ -13,7 +13,8 @@ import javax.persistence.Entity;
  * @author lordoftheflies
  */
 @Entity
-@DiscriminatorValue(value = "video")
+@DiscriminatorValue(value = VideoContentEntity.RESOURCE_TYPE)
 public class VideoContentEntity extends ContentEntity {
-    
+
+    public static final String RESOURCE_TYPE = "video";
 }

@@ -13,7 +13,8 @@ import javax.persistence.Entity;
  * @author lordoftheflies
  */
 @Entity
-@DiscriminatorValue(value = "link")
+@DiscriminatorValue(value = ReferenceContentEntity.RESOURCE_TYPE)
 public class ReferenceContentEntity extends ContentEntity {
 
+    public static final String RESOURCE_TYPE = "link";
 }

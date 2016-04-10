@@ -27,6 +27,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
+    @NamedQuery(name = "NetworkNodeEntity.findContactsOfRootNodes", query = "SELECT n.contact FROM NetworkNodeEntity n WHERE n.parent IS NULL"),
     @NamedQuery(name = "NetworkNodeEntity.findContactsOfChildNodes", query = "SELECT n.contact FROM NetworkNodeEntity n WHERE n.parent.contact.id = :accountId"),
     @NamedQuery(name = "NetworkNodeEntity.findByAccount", query = "SELECT n FROM NetworkNodeEntity n WHERE n.contact.id = :accountId"),
     @NamedQuery(name = "NetworkNodeEntity.findChildrenNodes", query = "SELECT n FROM NetworkNodeEntity n WHERE n.parent.id = :nodeId"),

@@ -13,7 +13,8 @@ import javax.persistence.Entity;
  * @author lordoftheflies
  */
 @Entity
-@DiscriminatorValue(value = "text")
+@DiscriminatorValue(value = TextContentEntity.RESOURCE_TYPE)
 public class TextContentEntity extends ContentEntity {
-    
+
+    public static final String RESOURCE_TYPE = "text";
 }

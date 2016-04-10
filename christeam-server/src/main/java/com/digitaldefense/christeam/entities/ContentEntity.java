@@ -33,7 +33,8 @@ import org.hibernate.annotations.GenericGenerator;
 @DiscriminatorColumn(name = "resource", discriminatorType = DiscriminatorType.STRING, length = 20)
 @DiscriminatorValue(value = "resource")
 @NamedQueries({
-    @NamedQuery(name = "ContentEntity.findByParent", query = "SELECT c FROM ContentEntity c WHERE c.parent.id = :parentId")
+    @NamedQuery(name = "ContentEntity.findByParent", query = "SELECT c FROM ContentEntity c WHERE c.parent.id = :parentId"),
+    @NamedQuery(name = "ContentEntity.findRoots", query = "SELECT c FROM ContentEntity c WHERE c.parent IS NULL")
 })
 public class ContentEntity implements Serializable {
 
@@ -74,6 +75,7 @@ public class ContentEntity implements Serializable {
         this.title = title;
     }
 
+    @Basic
     private String content;
 
     public String getContent() {
