@@ -56,6 +56,7 @@ public class ContentManagementService {
             entity.setContent(value);
             entity.setTitle(title);
             entity.setParent(parent);
+//            entity.setResourceType(ViewConstants.CONTENT_MANAGEMENT_WIDGET_TEXT);
             return contentRepository.save(entity);
         }
 
@@ -64,6 +65,7 @@ public class ContentManagementService {
             entity.setContent(value);
             entity.setTitle(title);
             entity.setParent(parent);
+//            entity.setResourceType(ViewConstants.CONTENT_MANAGEMENT_WIDGET_VIDEO);
             return contentRepository.save(entity);
         }
 
@@ -72,6 +74,7 @@ public class ContentManagementService {
             entity.setContent(value);
             entity.setTitle(title);
             entity.setParent(parent);
+//            entity.setResourceType(ViewConstants.CONTENT_MANAGEMENT_WIDGET_IMAGE);
             return contentRepository.save(entity);
         }
 
@@ -80,6 +83,7 @@ public class ContentManagementService {
             entity.setContent(value);
             entity.setTitle(title);
             entity.setParent(parent);
+//            entity.setResourceType(ViewConstants.CONTENT_MANAGEMENT_WIDGET_LINK);
             return contentRepository.save(entity);
         }
 
@@ -88,6 +92,7 @@ public class ContentManagementService {
             entity.setContent(value);
             entity.setTitle(title);
             entity.setParent(parent);
+//            entity.setResourceType(ViewConstants.CONTENT_MANAGEMENT_WIDGET_CONTAINER);
             return contentRepository.save(entity);
         }
     }
@@ -95,7 +100,7 @@ public class ContentManagementService {
     private ContentEntityFactory factory;
 
     @CrossOrigin
-    @RequestMapping(path = "/page",
+    @RequestMapping(path = "/page/{pageId}",
             method = RequestMethod.GET,
             produces = {
                 MediaType.APPLICATION_JSON_VALUE
@@ -133,15 +138,19 @@ public class ContentManagementService {
             ContentEntity ce;
             switch (s.getType()) {
                 case "video":
+                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_VIDEO:
                     ce = factory.createVideo(s.getKey(), s.getData(), container);
                     break;
                 case "image":
+                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_IMAGE:
                     ce = factory.createImage(s.getKey(), s.getData(), container);
                     break;
                 case "link":
+                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_LINK:
                     ce = factory.createReference(s.getKey(), s.getData(), container);
                     break;
                 case "text":
+                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_TEXT:
                 default:
                     ce = factory.createText(s.getKey(), s.getData(), container);
                     break;

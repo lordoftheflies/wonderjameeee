@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -30,7 +31,7 @@ public class MailBoxService {
     @Autowired
     private ContentRepository contentRepository;
 
-    @RequestMapping(path = "/inbox")
+    @RequestMapping(path = "/{accountId}/inbox", method = RequestMethod.GET)
     public PageDto inbox(@PathVariable("accountId") String accountId) {
         UUID id = UUID.fromString(accountId);
         PageDto dto = new PageDto();
