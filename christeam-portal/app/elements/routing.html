@@ -45,32 +45,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         page(app.baseUrl, function () {
-            if (app.isAuthenticated())
-                app.route = 'home';
-            else
-                app.route = 'signin';
+            app.route = 'home';
         });
 
         page('/users', function () {
-            if (app.isAuthenticated())
-                app.route = 'users';
-            else
-                app.route = 'signin';
+            app.route = 'users';
         });
 
         page('/users/:name', function (data) {
-            if (app.isAuthenticated()) {
-                app.route = 'user-info';
-                app.params = data.params;
-            } else
-                app.route = 'signin';
+            app.route = 'user-info';
+            app.params = data.params;
         });
 
         page('/contact', function () {
-            if (app.isAuthenticated()) {
                 app.route = 'contact';
-            } else
-                app.route = 'signin';
         });
 
         // Sign-in page route
@@ -88,48 +76,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // Profile page route
         page('/profile', function () {
-            if (app.isAuthenticated()) {
                 app.route = 'profile';
-//                app.params = data.params;
-            } else
-                app.route = 'signin';
         });
         // Messsaging page route
         page('/share-content', function () {
-            if (app.isAuthenticated()) {
                 app.route = 'share-content';
-            } else
-                app.route = 'signin';
         });
         // Messsaging page route
         page('/content-tree', function () {
-            if (app.isAuthenticated()) {
                 app.route = 'content-tree';
-            } else
-                app.route = 'signin';
+                app.params.contentId = 'ROOT';
         });
         page('/content-tree/:contentId', function (data) {
-            if (app.isAuthenticated()) {
                 app.route = 'content-tree';
                 app.params = data.params;
-            } else
-                app.route = 'signin';
         });
         // Mailbox page route
         page('/mailbox', function () {
-            if (app.isAuthenticated()) {
                 app.route = 'mailbox';
-//                app.params = data.params;
-            } else
-                app.route = 'signin';
         });
         // Network page route
         page('/network', function () {
-            if (app.isAuthenticated()) {
                 app.route = 'network';
-//                app.params = data.params;
-            } else
-                app.route = 'signin';
         });
         page('/about', function () {
             app.route = 'about';

@@ -28,12 +28,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 };
             }
 
-            paper-material:hover {
-                background-color: var(--google-gray);
-                color: white;
-            }
-
-
             paper-material {
                 @apply(--layout-flex);
                 @apply(--layout-vertical);
@@ -41,23 +35,107 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 text-align: center;
                 padding: 0 16px;
             }
+            
+           
+/*            .container {
+                @apply(--layout-horizontal);
+            }
+            .flexchild {
+                display: inline-block;
+                @apply(--layout-flex);
+            }
+            iron-list {
+                 padding-top: 148px; 
+                 margin-top: 64px; 
+                padding-bottom: 16px;
+            }
+            .item {
+                @apply(--layout-horizontal);
+                padding: 20px;
+                border-radius: 8px;
+                background-color: white;
+                border: 1px solid #ddd;
+                 max-width: 800px; 
+                margin: 16px auto 0 auto;
+            }
+            .item:focus {
+                outline: 0;
+                border-color: #333;
+            }
+
+            .item.unread {
+                outline: 0;
+                background-color: #ddd;
+            }
+
+            .item.selected .star {
+                color: var(--paper-blue-600);
+            }
+
+            .item.selected {
+                background-color: var(--google-grey-300);
+                border-bottom: 1px solid #ccc;
+            }
+
+            .avatar {
+                height: 40px;
+                width: 40px;
+                border-radius: 20px;
+                box-sizing: border-box;
+                background-color: #DDD;
+            }
+            .pad {
+                padding: 0 16px;
+                @apply(--layout-flex);
+                @apply(--layout-vertical);
+            }
+            .primary {
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .secondary {
+                font-size: 14px;
+            }
+            .dim {
+                color: gray;
+            }
+            .spacer {
+                @apply(--layout-flex);
+            }*/
 
         </style>
-        {{selectedRoot}}
 
-        <iron-ajax url="/data/content.json" last-response="{{rootModel}}" auto></iron-ajax>
+        <iron-ajax id="rootModelAjax"
 
-        <iron-ajax url="/data/mailbox.json" last-response="{{data}}" auto></iron-ajax>
+                   url="{{apiUrl}}/content-management/toc/info" 
+                   params="{{infoRequestParams}}"
+                   handle-as="json"
+                   last-response="{{rootModel}}" 
+                   auto>
+
+        </iron-ajax>
+
+        <iron-ajax id="childTocAjax"
+                   url="{{apiUrl}}/content-management/toc" 
+                   params="{{tocRequestParams}}"
+                   handle-as="json"
+                   last-response="{{data}}" 
+                   auto>
+
+        </iron-ajax>
+
+
 
         <h2>{{rootModel.title}}</h2>
         <!--<paper-card heading="{{rootModel.title}}">-->
-        <iron-list items="[[data]]" as="item"  hidden$="[[!data.length]]">
+        <iron-list items="{{data.sections}}" as="item"  hidden$="[[!data.sections.length]]">
                    <template>
+
                 <!--<iron-item>-->
                 <!--<template is="dom-if" if="{{isFork(item)}}">-->
                 <paper-item tabindex$="[[tabIndex]]">
                             <paper-material>
-                                <h3 title="Navigate to {{baseUrl}}content-tree/{{item.id}}"><a href$="{{baseUrl}}content-tree/{{item.id}}">[[item.title]]</a></h3>
+                        <h3 title="Navigate to {{baseUrl}}content-tree/{{item.data}}"><a href$="{{baseUrl}}content-tree/{{item.data}}">[[item.key]]</a></h3>
                     </paper-material>
                 </paper-item>
                 <!--</template>-->
@@ -72,10 +150,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             Polymer({
                 is: 'messages-view',
+                behaviors: [PlutoniumBehaviors.WidgetBehavior],
                 properties: {
+                    tocRequestParams: {
+                        type: Object,
+                        notify: true,
+                        value: {
+                            pageId: null
+                        }
+                    },
+                    infoRequestParams: {
+                        type: Object,
+                        notify: true,
+                        value: {
+                            pageId: null
+                        }
+                    },
                     selectedRoot: {
                         type: String,
-                        notify: true
+                        notify: true,
+                        value: 'ROOT'
                     },
                     baseUrl: {
                         type: String,
@@ -85,11 +179,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         type: Object,
                         notify: true
                     },
-                    foo: {
-                        type: String,
-                        value: 'messages-view',
-                        notify: true
+                    ready: function () {
+                        console.log('Toc-Content-view is READY(account-id=' + this.selectedRoot + ')');
                     }
+                },
+                observers: [
+                    'computeTocRequestParams(selectedRoot)'
+                ],
+                computeTocRequestParams: function (selectedRoot) {
+                    this.tocRequestParams.pageId = selectedRoot;
+                    this.infoRequestParams.pageId = selectedRoot;
+                    console.log('Toc-Content-view toc navigation request parameters updated: ' + JSON.stringify(this.tocRequestParams))
+                    this.$.rootModelAjax.generateRequest();
+                    this.$.childTocAjax.generateRequest();
                 },
                 getItemClasses: function (item) {
                     return item.tags.join(" ");

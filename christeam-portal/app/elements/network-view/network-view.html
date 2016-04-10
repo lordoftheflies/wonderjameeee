@@ -161,7 +161,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             last-response="{{data}}" 
             auto></iron-ajax>
 
-        <paper-dialog id="memberDialog">
+        <paper-dialog id="memberDialog" modal>
             <h2>New member</h2>
             <form id="newMemberForm" is="iron-form" class="card-content" verbose 
                   content-type="application/json" method="post" action="{{apiUrl}}/addressbook/save"
@@ -184,11 +184,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="card-actions">
                     <paper-button dialog-dismiss>Cancel</paper-button>
                     <paper-button raised class="primary" on-click="onCreateMember" dialog-confirm>Create</paper-button>
+                    <paper-button raised class="primary" on-click="onCreateMemberRepeat" dialog-confirm>Create & repeat</paper-button>
                 </div>
             </form>
         </paper-dialog>
 
-        <paper-dialog id="memberEraseConfirm">
+        <paper-dialog id="memberEraseConfirm" modal>
             <h2>Delete member</h2>
             <div class="card-content">
                 Are you sure delete member?
@@ -198,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-button dialog-confirm>OK</paper-button>
             </div>
         </paper-dialog>
-        <paper-dialog id="licenseCodesToMember">
+        <paper-dialog id="licenseCodesToMember" modal>
             <code-transaction-view
                 source-account="{{accountId}}"
                 account-network="{{possibleParents}}"
@@ -343,6 +344,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 },
                 onCreateMember: function () {
                     this.$.newMemberForm.submit();
+                },
+                onCreateMemberRepeat: function () {
+                    this.$.newMemberForm.submit();
+                    this.$.memberDialog.open();
                 },
                 onCreateMemberResponse: function (event, details) {
                     console.log('Member created successfully: ' + JSON.stringify(details.response));
