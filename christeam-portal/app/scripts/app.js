@@ -16,7 +16,8 @@
     var app = document.querySelector('#app');
 
     app.isAuthenticated = function () {
-        return !(app.sessionInfo.userName === undefined || app.sessionInfo.userName === null);
+        return !(app.sessionInfo === undefined || app.sessionInfo === null)
+                && !(app.sessionInfo.userName === undefined || app.sessionInfo.userName === null);
     };
 
     app.appinfo = {
@@ -26,7 +27,7 @@
     app.sessionInfo = {
         token: 'empty'
     };
-    
+
     app.sessionInitializationErrorHandler = function (event, args) {
         if (args.request.status === 401) {
             console.log(app.locale.error_unauthenticated);
@@ -47,16 +48,14 @@
         tab_mailbox: 'Mailbox',
         tab_network: 'Network',
         tab_about: 'About',
-        
+        tab_new_message: 'Share content',
         error_unauthenticated: 'Session token corrupted or invalid. Navigate to login.',
         error_credentials: 'Username or password invalid.',
         error_registration: 'Registration failed.',
         error_login: 'Login failed.',
         success_login: 'Logged successfully.',
-        
         error_member_create: 'Member create operation failed.',
         success_member_create: 'New member created.',
-        
         success_code_transaction: 'Codes sent successfully.',
         error_code_transaction: 'Codes sending failed.'
     };

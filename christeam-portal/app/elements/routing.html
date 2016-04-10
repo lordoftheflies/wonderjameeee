@@ -95,6 +95,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 app.route = 'signin';
         });
         // Messsaging page route
+        page('/share-content', function () {
+            if (app.isAuthenticated()) {
+                app.route = 'share-content';
+            } else
+                app.route = 'signin';
+        });
+        // Messsaging page route
         page('/messages', function () {
             if (app.isAuthenticated()) {
                 app.route = 'messages';

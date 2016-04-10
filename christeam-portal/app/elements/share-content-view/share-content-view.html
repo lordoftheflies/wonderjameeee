@@ -1,0 +1,165 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-text.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-image.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-link.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-editor-video.html">
+<link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-form.html">
+
+<link rel="import" href="../plutonium-witdget-behavior.html">
+
+<dom-module id="share-content-view">
+    <template>
+        <style>
+            :host {
+                display: block;
+                /*@apply(--layout-vertical);*/
+                /*@apply(--layout-horizontal);*/
+                /*@apply(--layout-center);*/
+            }
+
+            plutonium-cm-form {
+                display: block;
+                @apply(--layout-vertical);
+            }
+            /*            :host paper-material {
+                            margin-left: 20px;
+                            background-color: white;
+                            @apply(--layout-vertical);
+                            @apply(--layout-center);
+                        }*/
+
+            /*             {
+                            @apply(--layout-horizontal);
+                            @apply(--layout-flex);
+                            @apply(--layout-center);
+                        }
+            /*            .card-content {
+                            @apply(--layout-horizontal);
+                            @apply(--layout-flex);
+                            @apply(--layout-center);
+                        }
+                        .section-content {
+                            display: inline-block;
+                            @apply(--layout-horizontal);
+                            @apply(--layout-flex);
+                                            @apply(--layout-center);
+                        }
+                        .section-actions {
+                            display: inline-block;
+                            @apply(--layout-vertical);
+                            @apply(--layout-center);
+                        }*/
+        </style>
+
+        <iron-ajax 
+            id="contactsAjax"
+            url="{{apiUrl}}/addressbook/{{accountId}}/contacts" 
+            last-response="{{contacts}}" 
+            auto></iron-ajax>
+
+        <plutonium-cm-form contacts="{{contacts}}" content-model="{{sections}}"></plutonium-cm-form>
+        
+        <iron-ajax 
+            id="contactsAjax"
+            url="{{apiUrl}}/content-management/save" 
+            body="{{pageDto}}" 
+            auto></iron-ajax>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+
+            Polymer({
+                is: 'share-content-view',
+                behaviors: [PlutoniumBehaviors.WidgetBehavior],
+                properties: {
+                    pageDto: {
+                        type: Object,
+                        notify: true
+                    },
+                    sections: {
+                        type: Object,
+                        notify: true,
+                        value: {
+                            "sections": [
+                                {
+                                    "type": "plutonium-cm-editor-text",
+                                    "key": "second",
+                                    "data": "Si4BM7QOWXI"
+                                }
+                            ]
+                        }
+                    },
+                    accountId: {
+                        type: String,
+                        notify: true
+                    }
+                },
+                //                listeners: {
+                //                    'addSection': 'addSection',
+                //                    'embedVideo': 'embedVideo',
+                //                    'embedImage': 'embedImage'
+                //                }
+                //                ,
+                observers: [
+                    'updateModel(sections)'
+                ],
+                updateModel: function (sections) {
+                    this.pageDto = {
+                        
+                    };
+                },
+                
+                
+                addSection: function () {
+                    console.log('Add new text-section.');
+                    this.push('sections', {index: this.sections.length, type: 'text', value: ''});
+                },
+                embedVideo: function () {
+                    console.log('Add new video-section.');
+                    this.push('sections', {index: this.sections.length, type: 'video', value: ''});
+                },
+                embedImage: function () {
+                    console.log('Add new image-section.');
+                    this.push('sections', {index: this.sections.length, type: 'image', value: ''});
+                },
+                editSection: function (e, a) {
+                    var index = e.currentTarget.getAttribute("item-index");
+                    console.log('Edit section [' + index + ']');
+                    this.splice('sections', index, 1);
+                },
+                removeSection: function (e, a) {
+                    var index = e.currentTarget.getAttribute("item-index");
+                    console.log('Remove section [' + index + ']');
+                    this.splice('sections', index, 1);
+                },
+                isVideoSection: function (item) {
+                    return (item.type === 'video');
+                },
+                isImageSection: function (item) {
+                    return (item.type === 'image');
+                },
+                isTextSection: function (item) {
+                    return (item.type === 'text');
+                }
+            });
+        })();
+    </script>
+</dom-module>

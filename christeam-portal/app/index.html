@@ -62,12 +62,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <body unresolved>
         <span id="browser-sync-binding"></span>
         <template is="dom-bind" id="app">
+            
+            
             <iron-ajax auto id="login" 
                        on-response="sessionInfoHandler" on-error="sessionInitializationErrorHandler" 
                        url$="http://localhost:8080/authentication/session?token={{sessionInfo.token}}"
                        last-response$="{{sessionInfo}}">
             </iron-ajax>
             <paper-drawer-panel id="paperDrawerPanel">
+                
+                
                 <!-- Drawer Scroll Header Panel -->
                 <paper-scroll-header-panel drawer fixed>
 
@@ -78,6 +82,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <!-- Drawer Content -->
                     <paper-menu attr-for-selected="data-route" selected="[[route]]">
+                        <a data-route="share-content" href="{{baseUrl}}share-content">
+                            <iron-icon icon="send"></iron-icon>
+                            <span>[[locale.tab_new_message]]</span>
+                        </a>
                         <a data-route="messages" href="{{baseUrl}}messages">
                             <iron-icon icon="mail"></iron-icon>
                             <span>[[locale.tab_messages]]</span>
@@ -152,8 +160,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <section data-route="profile">
                                 <profile-view></profile-view>
                             </section>
+                            <section data-route="share-content">
+                                <share-content-view account-id="{{sessionInfo.token}}"></share-content-view>
+                            </section>
                             <section data-route="messages">
-                                <messages-view account-id="{{sessionInfo.token}}"></messages-view>
+                                <messages-view></messages-view>
                             </section>
                             <section data-route="mailbox">
                                 <mailbox-view></mailbox-view>
