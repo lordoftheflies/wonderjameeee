@@ -102,10 +102,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 app.route = 'signin';
         });
         // Messsaging page route
-        page('/messages', function () {
+        page('/content-tree', function () {
             if (app.isAuthenticated()) {
-                app.route = 'messages';
-//                app.params = data.params;
+                app.route = 'content-tree';
+            } else
+                app.route = 'signin';
+        });
+        page('/content-tree/:contentId', function (data) {
+            if (app.isAuthenticated()) {
+                app.route = 'content-tree';
+                app.params = data.params;
             } else
                 app.route = 'signin';
         });

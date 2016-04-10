@@ -27,21 +27,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     margin: auto;
                 };
             }
-            
-            paper-material {
-                background-color: white;
+
+            paper-material:hover {
+                background-color: var(--google-gray);
+                color: white;
             }
+
+
+            paper-material {
+                @apply(--layout-flex);
+                @apply(--layout-vertical);
+                background-color: white;
+                text-align: center;
+                padding: 0 16px;
+            }
+
         </style>
+        {{selectedRoot}}
+
+        <iron-ajax url="/data/content.json" last-response="{{rootModel}}" auto></iron-ajax>
+
         <iron-ajax url="/data/mailbox.json" last-response="{{data}}" auto></iron-ajax>
-        <iron-list items="[[data]]" as="item">
-            <template>
+
+        <h2>{{rootModel.title}}</h2>
+        <!--<paper-card heading="{{rootModel.title}}">-->
+        <iron-list items="[[data]]" as="item"  hidden$="[[!data.length]]">
+                   <template>
+                <!--<iron-item>-->
                 <!--<template is="dom-if" if="{{isFork(item)}}">-->
-                <paper-material>
-                    <a href="http://www.google.com">[[item.title]]</a>
-                </paper-material>
+                <paper-item tabindex$="[[tabIndex]]">
+                            <paper-material>
+                                <h3 title="Navigate to {{baseUrl}}content-tree/{{item.id}}"><a href$="{{baseUrl}}content-tree/{{item.id}}">[[item.title]]</a></h3>
+                    </paper-material>
+                </paper-item>
                 <!--</template>-->
+                <!--</iron-item>-->
             </template>
         </iron-list>
+        <!--</paper-card>-->
     </template>
     <script>
         (function () {
@@ -50,6 +73,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             Polymer({
                 is: 'messages-view',
                 properties: {
+                    selectedRoot: {
+                        type: String,
+                        notify: true
+                    },
+                    baseUrl: {
+                        type: String,
+                        notify: true
+                    },
+                    rootModel: {
+                        type: Object,
+                        notify: true
+                    },
                     foo: {
                         type: String,
                         value: 'messages-view',

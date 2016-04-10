@@ -86,7 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <iron-icon icon="send"></iron-icon>
                             <span>[[locale.tab_new_message]]</span>
                         </a>
-                        <a data-route="messages" href="{{baseUrl}}messages">
+                        <a data-route="content-tree" href="{{baseUrl}}content-tree">
                             <iron-icon icon="mail"></iron-icon>
                             <span>[[locale.tab_messages]]</span>
                         </a>
@@ -163,8 +163,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <section data-route="share-content">
                                 <share-content-view account-id="{{sessionInfo.token}}"></share-content-view>
                             </section>
-                            <section data-route="messages">
-                                <messages-view></messages-view>
+                            <section data-route="content-tree">
+                                <messages-view selected-root="{{params.contentId}}" base-url="/"></messages-view>
                             </section>
                             <section data-route="mailbox">
                                 <mailbox-view></mailbox-view>

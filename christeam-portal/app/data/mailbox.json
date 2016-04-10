@@ -1,5 +1,6 @@
 [
     {
+        "id": "1111111",
         "title": "Első üzenet",
         "text": "Üdvözlet!",
         "from": "Jung Krisztina",
@@ -37,6 +38,7 @@
         ]
     },
     {
+        "id": "1122222211111",
         "title": "Második üzenet",
         "text": "Adjá el sokat.",
         "from": "Jung Krisztina",
