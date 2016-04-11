@@ -23,9 +23,10 @@
     "iron-dropdown": "polymerelements/iron-dropdown",
     "paper-icon-button": "polymerelements/paper-icon-button",
     "google-youtube": "GoogleWebComponents/google-youtube",
-    "plutonium-cm-form": "git@github.com:lordoftheflies/plutonium-cm-form.git",
+    "plutonium-cm-form": "git@github.com:lordoftheflies/plutonium-cm-form.git#master",
     "paper-badge": "polymerelements/paper-badge",
-    "iron-selector": "polymerelements/iron-selector"
+    "iron-selector": "polymerelements/iron-selector",
+    "paper-dialog-scrollable": "polymerelements/paper-dialog-scrollable#^1.1.4"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
