@@ -3,7 +3,7 @@
 
 # Initialize continous-delivery process.
 
-VERSION=alpha-hosting
+VERSION=1.2
 DIR=/var/www/android
 
 if [ -z "$CHRISTEAM_CD_ANDROID_DIR" ]; then
@@ -17,11 +17,11 @@ if [ -z "$CHRISTEAM_CD_ANDROID_DIR" ]; then
 	echo "Update bash profile ..."
 
 	# Add continous-delivery envrionment variable to user bash profile.
-	echo "export CHRISTEAM_CD_ANDROID_DIR=${DIR}" | tee -a ~/.profile
+	echo "export CHRISTEAM_CD_ANDROID_DIR=${DIR}" | tee -a ~/.bashrc
 	export CHRISTEAM_CD_ANDROID_DIR=${DIR}
 	# Define current stable release.
-	echo "export CHRISTEAM_CD_ANDROID_VERSION=${VERSION}" | tee -a ~/.profile
-	export CHRISTEAM_CD_ANDROID_VERSION=$VERSION	
+	echo "export CHRISTEAM_CD_ANDROID_VERSION=${VERSION}" | tee -a ~/.bashrc
+	export CHRISTEAM_CD_ANDROID_VERSION=$VERSION
 	# Update session
 	source ~/.bashrc
 fi
