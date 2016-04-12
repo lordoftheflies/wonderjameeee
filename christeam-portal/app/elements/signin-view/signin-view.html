@@ -143,11 +143,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 //                    app.$.mainPanel.selected = "home";
                 },
                 onSignInResponse: function (event, details) {
+
+
                     console.log('Sign-in response: ' + JSON.stringify(details.response));
                     app.sessionInfo = details.response;
                     page.redirect(app.baseUrl + 'mailbox');
                 },
                 onSignInError: function (event, details) {
+//                    var dropClasses = function (o) {
+//
+//                        for (var p in o) {
+//                            if (o[p] instanceof jQuery || o[p] instanceof HTMLElement) {
+//                                o[p] = null;
+//                            } else if (typeof o[p] == 'object')
+//                                JS.dropClasses(o[p]);
+//                        }
+//                    };
+//
+//                    
+//                    console.log('Sign-in erroEE: ' + JSON.stringify(dropClasses(event)));
+//                    console.log('Sign-in erroDD: ' + JSON.stringify(dropClasses(details)));
                     console.log('Sign-in erro: ' + JSON.stringify(details.response));
                     app.$.toast.text = app.locale.error_login;
                     app.$.toast.show();

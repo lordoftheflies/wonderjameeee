@@ -3,7 +3,7 @@
 
 # Initialize continous-delivery process.
 
-VERSION=alpha
+VERSION=alpha-hosting
 DIR=/var/www/android
 
 if [ -z "$CHRISTEAM_CD_ANDROID_DIR" ]; then
@@ -20,7 +20,7 @@ if [ -z "$CHRISTEAM_CD_ANDROID_DIR" ]; then
 	echo "export CHRISTEAM_CD_ANDROID_DIR=${DIR}" | tee -a ~/.profile
 	export CHRISTEAM_CD_ANDROID_DIR=${DIR}
 	# Define current stable release.
-	echo "export CHRISTEAM_CD_ANDROID_VERSION=alpha" | tee -a ~/.profile
+	echo "export CHRISTEAM_CD_ANDROID_VERSION=${VERSION}" | tee -a ~/.profile
 	export CHRISTEAM_CD_ANDROID_VERSION=$VERSION	
 	# Update session
 	source ~/.bashrc
@@ -43,13 +43,13 @@ curl -L -O -J -n -H "Accept:application/octet-stream" https://github.com/lordoft
 
 # Post-process release.
 unzip christeam-${CHRISTEAM_CD_ANDROID_VERSION}.zip
-cd ./christeam-${CHRISTEAM_CD_ANDROID_VERSION}/Christeam-app-android/app
+cd ./christeam-${CHRISTEAM_CD_ANDROID_VERSION}/ChristeamAppAndroid/app
 
 # Copy to distribution
-cp ./app-release.apk ${CHRISTEAM_CD_ANDROID_DIR}/christeam-app-android-v${CHRISTEAM_CD_ANDROID_VERSION}.apk
+cp ./app-release.apk ${CHRISTEAM_CD_ANDROID_DIR}/christeamAppAndroid-${CHRISTEAM_CD_ANDROID_VERSION}.apk
 chown -R www-data:www-data ${CHRISTEAM_CD_ANDROID_DIR}
 
-ln -sf ${CHRISTEAM_CD_ANDROID_DIR}/christeam-app-android-v${CHRISTEAM_CD_ANDROID_VERSION}.apk ${CHRISTEAM_CD_ANDROID_DIR}/christeam-app-android-stable.apk
+ln -sf ${CHRISTEAM_CD_ANDROID_DIR}/christeam-app-android-${CHRISTEAM_CD_ANDROID_VERSION}.apk ${CHRISTEAM_CD_ANDROID_DIR}/christeam-app-android-stable.apk
 
 # Clean up
 cd ../../../../

@@ -101,6 +101,7 @@ public class AuthenticationService {
 
             return new ResponseEntity<>(new SessionDto(networkRepository.isRoot(accountEntity.getId()), networkRepository.findByAccount(accountEntity.getId()).getCodes(), accountEntity.getId().toString(), accountEntity.getName()), HttpStatus.OK);
         } else if (dto.getCode() != null && !accountRepository.exists(UUID.fromString(dto.getCode()))) {
+            LOG.log(Level.INFO, "Sign-on failed account {0} not found.", dto.getEmail());
             throw new AccountNotFoundException();
         } else {
             UUID accountId = UUID.fromString(dto.getCode());
@@ -135,6 +136,7 @@ public class AuthenticationService {
         SessionDto result = new SessionDto();
         AccountEntity accountEntity = accountRepository.findByCredentials(dto.getEmail(), dto.getPassword());
         if (accountEntity == null) {
+            LOG.log(Level.INFO, "Sign-in failed for {0}", dto.getEmail());
             throw new CredentialsException();
         } else {
             LOG.log(Level.INFO, "Sign-in user {0}", dto.getEmail());
@@ -170,11 +172,14 @@ public class AuthenticationService {
             @RequestParam(value = "token", required = false, defaultValue = DEFAULT_TOKEN_EMPTY) String token
     ) throws AccountNotFoundException, AccesDeniedException {
         if (token == null || token.equals(DEFAULT_TOKEN_EMPTY)) {
+            LOG.log(Level.INFO, "Session fetching failed for {0}", token);
             throw new AccesDeniedException("Empty user token");
         } else if (!accountRepository.exists(UUID.fromString(token))) {
+            LOG.log(Level.INFO, "Session fetching failed for {0}", token);
             throw new AccountNotFoundException();
         } else {
             SessionDto dto = new SessionDto();
+            LOG.log(Level.INFO, "Session fetched for {0}", token);
             AccountEntity accountEntity = accountRepository.findOne(UUID.fromString(token));
             apply(accountEntity, dto);
             return new ResponseEntity<>(dto, HttpStatus.OK);
