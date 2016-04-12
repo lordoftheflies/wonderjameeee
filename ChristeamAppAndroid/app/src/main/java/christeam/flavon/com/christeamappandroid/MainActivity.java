@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class FrontEndViewClient extends WebViewClient {
-        
+
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
