@@ -3,7 +3,7 @@
 
 # Initialize continous-delivery process.
 
-VERSION=1.3
+VERSION=1.4
 DIR=/var/www/android
 
 if [ -z "$CHRISTEAM_CD_ANDROID_DIR" ]; then

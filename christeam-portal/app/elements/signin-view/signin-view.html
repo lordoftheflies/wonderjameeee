@@ -41,10 +41,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   method="post" 
                   on-response="onSignInResponse"
                   on-error="onSignInError" 
-                  action="http://localhost:8080/authentication/signin" 
+                  action="http://192.168.0.254:8080/authentication/signin" 
                   handle-as="json">
                 <div class="card-content">
-                    <paper-input id="login" label="Email address" name="email" type="email" auto-validate pattern="{{mailPattern}}" error-message="Invalid email address.">
+                    <!--action="http://localhost:8080/authentication/signin"--> 
+                  <paper-input id="login" label="Email address" name="email" type="email" auto-validate pattern="{{mailPattern}}" error-message="Invalid email address.">
                         <iron-icon icon="account-circle" prefix></iron-icon>
                     </paper-input>
                 </div>
