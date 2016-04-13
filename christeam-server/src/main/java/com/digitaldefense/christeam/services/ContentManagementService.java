@@ -20,6 +20,9 @@ import com.digitaldefense.christeam.entities.VideoContentEntity;
 import com.digitaldefense.christeam.model.MessageDto;
 import com.digitaldefense.christeam.model.PageDto;
 import com.digitaldefense.christeam.model.SectionDto;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +46,8 @@ public class ContentManagementService {
 
     @Autowired
     private ContentRepository contentRepository;
+    
+    
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -185,6 +190,35 @@ public class ContentManagementService {
         }
         return dto;
     }
+    
+    @CrossOrigin
+    @RequestMapping(path = "/toc/path",
+            method = RequestMethod.GET,
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            })
+    public PageDto tocPath(@RequestParam(value = "pageId", defaultValue = "ROOT") String pageId) throws ContentNotFoundException {
+        PageDto dto = new PageDto();
+        dto.setSections(new ArrayList<>());
+        if (ROOT_PSEUDO_ID.equals(pageId)) {
+            dto.setTitle(".");
+            dto.getSections().add(new SectionDto(".", null, "ROOT"));
+        } else if (!contentRepository.exists(UUID.fromString(pageId))) {
+            throw new ContentNotFoundException();
+        } else {
+            ContentEntity item = contentRepository.findByChild(UUID.fromString(pageId));
+            dto.getSections().add(new SectionDto(item.getTitle(), null, item.getId().toString()));
+            while (item != null) {
+                dto.getSections().add(new SectionDto(item.getTitle(), null, item.getId().toString()));
+                item = contentRepository.findByChild(item.getId());
+                
+            }
+            dto.getSections().add(new SectionDto(".", null, "ROOT"));
+            Collections.reverse(dto.getSections());
+        }
+        return dto;
+    }
+    
     public static final String ROOT_PSEUDO_ID = "ROOT";
 
     @CrossOrigin

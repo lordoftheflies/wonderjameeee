@@ -34,7 +34,8 @@ import org.hibernate.annotations.GenericGenerator;
 @DiscriminatorValue(value = "resource")
 @NamedQueries({
     @NamedQuery(name = "ContentEntity.findByParent", query = "SELECT c FROM ContentEntity c WHERE c.parent.id = :parentId"),
-    @NamedQuery(name = "ContentEntity.findRoots", query = "SELECT c FROM ContentEntity c WHERE c.parent IS NULL")
+    @NamedQuery(name = "ContentEntity.findRoots", query = "SELECT c FROM ContentEntity c WHERE c.parent IS NULL"),
+    @NamedQuery(name = "ContentEntity.findByChild", query = "SELECT c.parent FROM ContentEntity c WHERE c.id = :childId AND c.parent IS NOT NULL")
 })
 public class ContentEntity implements Serializable {
 

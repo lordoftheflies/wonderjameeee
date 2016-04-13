@@ -8,6 +8,8 @@ package com.digitaldefense.christeam.entities;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -16,6 +18,10 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @DiscriminatorValue(value = ContainerContentEntity.RESOURCE_TYPE)
+@NamedQueries({
+    @NamedQuery(name = "ContainerContentEntity.findByParent", query = "SELECT c FROM ContentEntity c WHERE c.parent.id = :parentId"),
+    @NamedQuery(name = "ContainerContentEntity.findRoots", query = "SELECT c FROM ContentEntity c WHERE c.parent IS NULL")
+})
 public class ContainerContentEntity extends ContentEntity {
 
     public static final String RESOURCE_TYPE = "container";

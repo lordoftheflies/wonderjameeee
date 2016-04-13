@@ -85,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Messsaging page route
         page('/content-tree', function () {
                 app.route = 'content-tree';
-                app.params.contentId = 'ROOT';
+                if (app.params !== undefined || app.params !== null) app.params.contentId = 'ROOT';
         });
         page('/content-tree/:contentId', function (data) {
                 app.route = 'content-tree';

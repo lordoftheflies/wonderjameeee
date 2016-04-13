@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/grapp-breadcrumbs/grapp-breadcrumbs.html">
 
 <dom-module id="messages-view">
     <template>
@@ -35,73 +37,73 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 text-align: center;
                 padding: 0 16px;
             }
+
+
+            /*            .container {
+                            @apply(--layout-horizontal);
+                        }
+                        .flexchild {
+                            display: inline-block;
+                            @apply(--layout-flex);
+                        }
+                        iron-list {
+                             padding-top: 148px; 
+                             margin-top: 64px; 
+                            padding-bottom: 16px;
+                        }
+                        .item {
+                            @apply(--layout-horizontal);
+                            padding: 20px;
+                            border-radius: 8px;
+                            background-color: white;
+                            border: 1px solid #ddd;
+                             max-width: 800px; 
+                            margin: 16px auto 0 auto;
+                        }
+                        .item:focus {
+                            outline: 0;
+                            border-color: #333;
+                        }
             
-           
-/*            .container {
-                @apply(--layout-horizontal);
-            }
-            .flexchild {
-                display: inline-block;
-                @apply(--layout-flex);
-            }
-            iron-list {
-                 padding-top: 148px; 
-                 margin-top: 64px; 
-                padding-bottom: 16px;
-            }
-            .item {
-                @apply(--layout-horizontal);
-                padding: 20px;
-                border-radius: 8px;
-                background-color: white;
-                border: 1px solid #ddd;
-                 max-width: 800px; 
-                margin: 16px auto 0 auto;
-            }
-            .item:focus {
-                outline: 0;
-                border-color: #333;
-            }
-
-            .item.unread {
-                outline: 0;
-                background-color: #ddd;
-            }
-
-            .item.selected .star {
-                color: var(--paper-blue-600);
-            }
-
-            .item.selected {
-                background-color: var(--google-grey-300);
-                border-bottom: 1px solid #ccc;
-            }
-
-            .avatar {
-                height: 40px;
-                width: 40px;
-                border-radius: 20px;
-                box-sizing: border-box;
-                background-color: #DDD;
-            }
-            .pad {
-                padding: 0 16px;
-                @apply(--layout-flex);
-                @apply(--layout-vertical);
-            }
-            .primary {
-                font-size: 16px;
-                font-weight: bold;
-            }
-            .secondary {
-                font-size: 14px;
-            }
-            .dim {
-                color: gray;
-            }
-            .spacer {
-                @apply(--layout-flex);
-            }*/
+                        .item.unread {
+                            outline: 0;
+                            background-color: #ddd;
+                        }
+            
+                        .item.selected .star {
+                            color: var(--paper-blue-600);
+                        }
+            
+                        .item.selected {
+                            background-color: var(--google-grey-300);
+                            border-bottom: 1px solid #ccc;
+                        }
+            
+                        .avatar {
+                            height: 40px;
+                            width: 40px;
+                            border-radius: 20px;
+                            box-sizing: border-box;
+                            background-color: #DDD;
+                        }
+                        .pad {
+                            padding: 0 16px;
+                            @apply(--layout-flex);
+                            @apply(--layout-vertical);
+                        }
+                        .primary {
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+                        .secondary {
+                            font-size: 14px;
+                        }
+                        .dim {
+                            color: gray;
+                        }
+                        .spacer {
+                            @apply(--layout-flex);
+                        }*/
 
         </style>
 
@@ -111,6 +113,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    params="{{infoRequestParams}}"
                    handle-as="json"
                    last-response="{{rootModel}}" 
+                   auto>
+
+        </iron-ajax>
+
+        <iron-ajax id="parentTocAjax"
+
+                   url="{{apiUrl}}/content-management/toc/path" 
+                   params="{{tocRequestParams}}"
+                   handle-as="json"
+                   last-response="{{parentModel}}" 
+                   on-response="onParentTocResponse"
+                   on-error="onParentTocError"
                    auto>
 
         </iron-ajax>
@@ -125,8 +139,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-ajax>
 
 
+        <!--        <template is="dom-repeat" items="{{parentModel.sections}}">
+                    yyy
+                    <grapp-breadcrumb href="{{baseUrl}}content-tree/{{item.data}}">[[item.key]]</grapp-breadcrumb>
+                <template is="dom-repeat" items="{{parentModel.sections}}">
+                    yyy
+                    <grapp-breadcrumb href="{{baseUrl}}content-tree/{{item.data}}">[[item.key]]</grapp-breadcrumb>
+                </template>-->
+
+        <template is="dom-repeat" items="{{parentModel.sections}}">
+            <grapp-breadcrumb href="{{baseUrl}}content-tree/{{item.data}}">[[item.key]]</grapp-breadcrumb>
+        </template>
+
+<!--        <grapp-breadcrumbs>
+
+            <template is="dom-repeat" items="{{parentModel.sections}}">
+                yyy
+                <grapp-breadcrumb href="{{baseUrl}}content-tree/{{item.data}}">[[item.key]]</grapp-breadcrumb>
+            </template>
+        </grapp-breadcrumbs>-->
+
+        <grapp-breadcrumbs id="parentTocBc" render$="{{renderBreadCrumbs}}"></grapp-breadcrumbs>
+
 
         <h2>{{rootModel.title}}</h2>
+
         <!--<paper-card heading="{{rootModel.title}}">-->
         <iron-list items="{{data.sections}}" as="item"  hidden$="[[!data.sections.length]]">
                    <template>
@@ -166,6 +203,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             pageId: null
                         }
                     },
+                    renderBreadCrumbs: {
+                        type: Boolean,
+                        notify: true,
+                        value: false
+                    },
                     selectedRoot: {
                         type: String,
                         notify: true,
@@ -176,6 +218,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         notify: true
                     },
                     rootModel: {
+                        type: Object,
+                        notify: true
+                    },
+                    parentModel: {
                         type: Object,
                         notify: true
                     },
@@ -192,6 +238,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     console.log('Toc-Content-view toc navigation request parameters updated: ' + JSON.stringify(this.tocRequestParams))
                     this.$.rootModelAjax.generateRequest();
                     this.$.childTocAjax.generateRequest();
+                    this.$.parentTocAjax.generateRequest();
                 },
                 getItemClasses: function (item) {
                     return item.tags.join(" ");
@@ -202,7 +249,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 },
                 isFork: function (item) {
                     return item.sections.length > 0;
-                }
+                },
+                onParentTocResponse: function () {
+                    console.log('Toc-Content-View parent path request paramter success.');
+                    this.renderBreadCrumbs = true;
+                    this.$.parentTocBc.render = true;
+                },
+                onParentTocError: function () {
+                    this.renderBreadCrumbs = true;
+                },
             });
         })();
     </script>

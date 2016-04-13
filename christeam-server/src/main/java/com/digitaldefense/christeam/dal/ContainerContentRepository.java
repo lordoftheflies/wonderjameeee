@@ -5,6 +5,7 @@
  */
 package com.digitaldefense.christeam.dal;
 
+import com.digitaldefense.christeam.entities.ContainerContentEntity;
 import com.digitaldefense.christeam.entities.ContentEntity;
 import java.util.List;
 import java.util.UUID;
@@ -16,20 +17,20 @@ import org.springframework.data.repository.query.Param;
  *
  * @author lordoftheflies
  */
-public interface ContentRepository extends PagingAndSortingRepository<ContentEntity, UUID> {
+public interface ContainerContentRepository extends PagingAndSortingRepository<ContainerContentEntity, UUID> {
 
     @Override
-    public List<ContentEntity> findAll(Sort sort);
+    public List<ContainerContentEntity> findAll(Sort sort);
 
     @Override
-    public List<ContentEntity> findAll(Iterable<UUID> itrbl);
+    public List<ContainerContentEntity> findAll(Iterable<UUID> itrbl);
 
     @Override
-    public List<ContentEntity> findAll();
+    public List<ContainerContentEntity> findAll();
 
-    public List<ContentEntity> findByParent(@Param("parentId") UUID parentId);
+    public List<ContainerContentEntity> findByParent(@Param("parentId") UUID parentId);
 //    
-    public ContentEntity findByChild(@Param("childId") UUID childId);
+//    public List<ContentEntity> findByChildren(@Param("childId") UUID childId);
     
     public List<ContentEntity> findRoots();
 }
