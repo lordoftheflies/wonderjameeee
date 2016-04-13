@@ -27,7 +27,8 @@
     "paper-badge": "polymerelements/paper-badge",
     "iron-selector": "polymerelements/iron-selector",
     "paper-dialog-scrollable": "polymerelements/paper-dialog-scrollable#^1.1.4",
-    "grapp-breadcrumbs": "^0.1.5"
+    "grapp-breadcrumbs": "^0.1.5",
+    "paper-radio-button": "polymerelements/paper-radio-button#^1.1.2"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
