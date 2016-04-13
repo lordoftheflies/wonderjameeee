@@ -221,6 +221,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-icon-button icon="arrow-upward" on-click="onNavigateUp"></paper-icon-button>
                 <paper-icon-button icon="add-circle" on-click="onOpenCreateMember"></paper-icon-button>
                 <paper-icon-button icon="remove-circle" on-click="onConfirmRemoveMember"></paper-icon-button>
+                <paper-icon-button icon="send" on-click="onSendTo"></paper-icon-button>
                 <paper-icon-button icon="code" on-click="onOpenLicenseCodeSender"></paper-icon-button>
             </div>
         </paper-material>
@@ -366,6 +367,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 },
                 onOpenLicenseCodeSender: function () {
                     this.$.licenseCodesToMember.open();
+                },
+                onSendTo: function() {
+                    
                 }
             });
         })();

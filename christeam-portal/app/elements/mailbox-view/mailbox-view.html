@@ -11,9 +11,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/plutonium-cm-form/plutonium-cm-section.html">
 
 <dom-module id="mailbox-view">
@@ -103,29 +105,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <!--<h2>Mailbox</h2>-->
         <iron-ajax url="/data/mailbox.json" last-response="{{data}}" auto></iron-ajax>
-        <iron-list items="[[data]]" as="item">
-            <template>
-                <div>
-                    <div class$="item {{getItemClasses(item)}}" tabindex$="[[tabIndex]]">
-                        <iron-image class="avatar" sizing="contain" src="[[item.image]]"></iron-image>
 
-                        <div class="pad">
-                            <div class="primary container">
-                                <span>[[item.from]]</span>
-                                <div class="flexchild"></div>
-                                <span>[[item.ts]]</span>
-                            </div>
-                            <div class="secondary">
-                                <span>[[item.title]]</span>
-                            </div>
-                            <div class="secondary dim">
-                                <plutonium-cm-section content-model="{{item}}"></plutonium-cm-section>
+        <paper-tabs selected="{{selectedMailBoxFolder}}">
+            <paper-tab>Inbox</paper-tab>
+            <paper-tab>Sent items</paper-tab>
+        </paper-tabs>
+        <iron-pages selected="{{selectedMailBoxFolder}}">
+            <iron-list items="[[data]]" as="item">
+                <template>
+                    <div>
+                        <div class$="item {{getItemClasses(item)}}" tabindex$="[[tabIndex]]">
+                             <!--<iron-image class="avatar" sizing="contain" src="[[item.image]]"></iron-image>-->
+
+                             <div class="pad">
+                                <div class="primary container">
+                                    <span>[[item.from]]</span>
+                                    <div class="flexchild"></div>
+                                    <span>[[item.ts]]</span>
+                                </div>
+                                <div class="secondary">
+                                    <span>[[item.title]]</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </template>
-        </iron-list>
+                </template>
+            </iron-list>
+            <iron-list items="[[data]]" as="item">
+                <template>
+                    <div>
+                        <div class$="item {{getItemClasses(item)}}" tabindex$="[[tabIndex]]">
+                             <!--<iron-image class="avatar" sizing="contain" src="[[item.image]]"></iron-image>-->
+
+                             <div class="pad">
+                                <div class="primary container">
+                                    <span>[[item.from]]</span>
+                                    <div class="flexchild"></div>
+                                    <span>[[item.ts]]</span>
+                                </div>
+                                <div class="secondary">
+                                    <span>[[item.title]]</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </iron-list>
+        </iron-pages>
     </template>
     <script>
         (function () {
@@ -134,6 +160,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             Polymer({
                 is: 'mailbox-view',
                 properties: {
+                    selectedMailBoxFolder: {
+                        type: Number,
+                        notify: true,
+                        value: 0,
+                    },
                     foo: {
                         type: String,
                         value: 'mailbox-view',

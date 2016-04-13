@@ -44,7 +44,7 @@
         console.log('Session initialization info.' + JSON.stringify(details.reponse));// + '|' + JSON.stringify(a) + '|' + JSON.stringify(a));
     };
     app.locale = {
-        tab_messages: 'Messages',
+        tab_messages: 'Contents',
         tab_mailbox: 'Mailbox',
         tab_network: 'Network',
         tab_about: 'About',
