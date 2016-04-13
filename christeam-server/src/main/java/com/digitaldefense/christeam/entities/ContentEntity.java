@@ -77,6 +77,7 @@ public class ContentEntity implements Serializable {
     }
 
     @Basic
+    @Column(length = 100000)
     private String content;
 
     public String getContent() {
