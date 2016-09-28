@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/model/signinEmailPassword/label",
+        "value": "Password"
+      },
+      {
+        "op": "add",
+        "path": "/rememberMeToggleButtonLabel",
+        "value": "Remember me"
+      },
+      {
+        "op": "add",
+        "path": "/forgottenPasswordTitle",
+        "value": "Forgotten password"
+      },
+      {
+        "op": "add",
+        "path": "/signOnSubmitTitle",
+        "value": "Sign on"
+      },
+      {
+        "op": "add",
+        "path": "/model/signInSubmit/title",
+        "value": "Sign in"
+      }
+    ]
+  },
+  "model": {
+    "signinEmailPassword": {
+      "label": "Jelszó"
+    },
+    "signInSubmit": {
+      "title": "Sign in"
+    }
+  },
+  "rememberMeToggleButtonLabel": "Remember me",
+  "forgottenPasswordTitle": "Forgotten password",
+  "signOnSubmitTitle": "Sign on"
+}

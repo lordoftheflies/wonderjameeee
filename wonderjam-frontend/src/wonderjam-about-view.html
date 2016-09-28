@@ -1,0 +1,57 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="wonderjam-shared-styles.html">
+
+<dom-module id="wonderjam-about-view">
+    <template>
+        <style include="wonderjam-shared-styles iron-flex">
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+                padding: 10px;
+            }
+        </style>
+
+        <paper-card text-id="authors-card" heading="Authors & contributors">
+            <div class="card-content layout horizontal">
+                <paper-item class="layout flex">
+                    <paper-item-body two-line>
+                        <div>Hegedűs László</div>
+                        <div secondary>laszlo.hegedus@cherubits.hu</div>
+                    </paper-item-body>
+                </paper-item>
+                <paper-item class="layout flex">
+                    <paper-item-body two-line>
+                        <div>Péczely Balázs</div>
+                        <div secondary>peczely.balazs@digitaldefense.hu</div>
+                    </paper-item-body>
+                </paper-item>
+            </div>
+        </paper-card>
+
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'wonderjam-about-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior
+            ]
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-09-27T15:59:02Z" product-name="messages">
+    <header>
+      <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
+    </header>
+    <body>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item:paper-item-body:div">
+        <source>Hegedűs László</source>
+        <target state="new">Hegedűs László</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item:paper-item-body:div_1">
+        <source>laszlo.hegedus@cherubits.hu</source>
+        <target state="needs-translation">laszlo.hegedus@cherubits.hu</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item_1:paper-item-body:div">
+        <source>Péczely Balázs</source>
+        <target state="new">Péczely Balázs</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item_1:paper-item-body:div_1">
+        <source>peczely.balazs@digitaldefense.hu</source>
+        <target state="new">peczely.balazs@digitaldefense.hu</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.model.openMemberEditorFab.title">
+        <source>Edit member.</source>
+        <target state="new">Edit member.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.model.sendMessageFab.title">
+        <source>Publish content</source>
+        <target state="new">Publish content</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.model.addSectionButton.title">
+        <source>Embedd text to the message content.</source>
+        <target state="new">Embedd text to the message content.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.model.addVideoButton.title">
+        <source>Embedd video to the message content.</source>
+        <target state="new">Embedd video to the message content.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.model.addImageButton.title">
+        <source>Embedd image to the message content.</source>
+        <target state="new">Embedd image to the message content.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.model.addLinkButton.title">
+        <source>Embedd a link to another message to the message content.</source>
+        <target state="new">Embedd a link to another message to the message content.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.model.sendNewContentFab.title">
+        <source>Cancel all changes &amp; create new article.</source>
+        <target state="new">Cancel all changes &amp; create new article.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.main-menu-label">
+        <source>Menu</source>
+        <target state="new">Menu</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.article-menu-label">
+        <source>Articles</source>
+        <target state="new">Articles</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.mailbox-menu-label">
+        <source>Mailbox</source>
+        <target state="new">Mailbox</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.members-menu-label">
+        <source>Network</source>
+        <target state="new">Network</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.about-menu-label">
+        <source>About</source>
+        <target state="new">About</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.mainTitle">
+        <source>Topflavon</source>
+        <target state="new">Topflavon</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.english-language-label">
+        <source>English</source>
+        <target state="new">English</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.hungarian-language-label">
+        <source>Magyar</source>
+        <target state="new">Magyar</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.polish-language-label">
+        <source>Polski</source>
+        <target state="new">Polski</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.profile-menu-label">
+        <source>Profile</source>
+        <target state="new">Profile</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.logout-label">
+        <source>Logout</source>
+        <target state="new">Logout</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.messagesPagePublicFolderTitle">
+        <source>Public</source>
+        <target state="new">Public</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.messagesPageMyContentsFolderTitle">
+        <source>Drafts</source>
+        <target state="new">Drafts</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.messagesPagePublishedFolderTitle">
+        <source>Published</source>
+        <target state="new">Published</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.mailBoxPageInboxFolderTitle.0">
+        <source> {1} </source>
+        <target state="needs-translation"> {1} </target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.mailBoxPageInboxFolderTitle.1">
+        <source>Inbox</source>
+        <target state="needs-translation">Inbox</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.sentItemsPageInboxFolderTitle.0">
+        <source> {1} </source>
+        <target state="needs-translation"> {1} </target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.sentItemsPageInboxFolderTitle.1">
+        <source>Sent items</source>
+        <target state="needs-translation">Sent items</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab">
+        <source>Person</source>
+        <target state="new">Person</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1">
+        <source>Group</source>
+        <target state="new">Group</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-article-view.emptyChildrenText">
+        <source>No content in the folder.</source>
+        <target state="new">No content in the folder.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.model.signinEmailPassword.label">
+        <source>Password</source>
+        <target state="new">Password</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.model.signInSubmit.title">
+        <source>Sign in</source>
+        <target state="new">Sign in</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.rememberMeToggleButtonLabel">
+        <source>Remember me</source>
+        <target state="new">Remember me</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.forgottenPasswordTitle">
+        <source>Forgotten password</source>
+        <target state="new">Forgotten password</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signOnSubmitTitle">
+        <source>Sign on</source>
+        <target state="new">Sign on</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-mailbox-view.messageItemSenderLabel">
+        <source>From:</source>
+        <target state="new">Od</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-mailbox-view.messageItemReceiverLabel">
+        <source>To:</source>
+        <target state="new">Do</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-mailbox-view.emptyMailBoxFolderText">
+        <source>No messages in the folder.</source>
+        <target state="new">Brak wiadomości w folderze.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.model.newMemberNameLabel.label">
+        <source>Name</source>
+        <target state="new">Name</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.model.newMemberNameLabel.error-message">
+        <source>Member name must be specified.</source>
+        <target state="new">Member name must be specified.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.model.newMemberEmailLabel.label">
+        <source>Email</source>
+        <target state="new">Email</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.model.newMemberEmailLabel.error-message">
+        <source>Member email must be specified.</source>
+        <target state="new">Member email must be specified.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.model.newMemberParentLabel.label">
+        <source>Parent member</source>
+        <target state="new">Parent member</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.model.preferredLanguageLabel.label">
+        <source>Preferred language</source>
+        <target state="new">Preferred language</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.newMemberTypeUserTitle">
+        <source>User</source>
+        <target state="new">User</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.newMemberTypeGroupTitle">
+        <source>Group</source>
+        <target state="new">Group</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.newMemberTypeAdminTitle">
+        <source>Admin</source>
+        <target state="new">Admin</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-members-view.emptyChildrenText">
+        <source>No children.</source>
+        <target state="new">No children.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-profile-view.model.preferredLanguageLabel.label">
+        <source>Preferred language</source>
+        <target state="new">Preferred language</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-profile-view.changingDeviceButton">
+        <source>Changing device</source>
+        <target state="new">Changing device</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-profile-view.underDevelopmentText">
+        <source>Under development ...</source>
+        <target state="new">Under development ...</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-recipients-view.emptyChildrenText">
+        <source>No children.</source>
+        <target state="new">No children.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.model.contentTitleInput.label">
+        <source>Title</source>
+        <target state="new">Title</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.model.parentDdLabel.label">
+        <source>Parent</source>
+        <target state="new">Parent</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.draftIndicator">
+        <source>Draft</source>
+        <target state="new">Draft</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.fileContentTabLabel">
+        <source>Upload</source>
+        <target state="new">Upload</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.folderContentTabLabel">
+        <source>Folder</source>
+        <target state="new">Folder</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.articleContentTabLabel">
+        <source>Assemble</source>
+        <target state="new">Assemble</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.uploadFileText">
+        <source>Choose File</source>
+        <target state="new">Choose File</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.propertiesCardTitle">
+        <source> Select articles. </source>
+        <target state="new"> Select articles. </target>
+      </trans-unit>
+      <trans-unit id="wonderjam-view401.text_1">
+        <source> Oops you hit a forbidden (401) page. Please </source>
+        <target state="new"> Oops you hit a forbidden (401) page. Please </target>
+      </trans-unit>
+      <trans-unit id="wonderjam-view401.a_2">
+        <source>sign in</source>
+        <target state="new">sign in</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-view401.text_3">
+        <source> as admin. </source>
+        <target state="new"> as admin. </target>
+      </trans-unit>
+      <trans-unit id="wonderjam-view404.text_1">
+        <source> Oops you hit a 404. </source>
+        <target state="new"> Oops you hit a 404. </target>
+      </trans-unit>
+      <trans-unit id="wonderjam-view404.a_2">
+        <source>Head back to home.</source>
+        <target state="new">Head back to home.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

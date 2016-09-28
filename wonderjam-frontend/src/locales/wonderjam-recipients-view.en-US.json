@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/emptyChildrenText",
+        "value": "No children."
+      }
+    ]
+  },
+  "model": {},
+  "emptyChildrenText": "No children."
+}

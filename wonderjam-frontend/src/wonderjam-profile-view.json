@@ -1,0 +1,10 @@
+{
+  "meta": {},
+  "model": {
+    "preferredLanguageLabel": {
+      "label": "Preferred language"
+    }
+  },
+  "changingDeviceButton": "Changing device",
+  "underDevelopmentText": "Under development ..."
+}

@@ -1,0 +1,215 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/polymer-cookie/polymer-cookie.html">
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<dom-module id="wonderjam-logon-view">
+    <template>
+        <style>
+            :host {
+                position: absolute;
+                top: 0px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: var(--app-primary-color);
+                /*transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);*/
+                z-index: 1;
+                /*color: var(--paper-purple-50);*/
+                @apply(--layout);
+                @apply(--layout-center-center);
+            }
+            /*            :host([signed-in]) {
+                            opacity: 0;
+                            pointer-events: none;
+                        }*/
+            paper-button > * {
+                vertical-align: middle;
+                text-transform: none;
+            }
+
+            form {
+                position: relative;
+            }
+
+            form paper-fab {
+                position: absolute;
+                top: -50px;
+                right: -40px;
+            }
+        </style>
+        <app-route route="{{route}}" pattern="/:activationCode" data="{{registrationSubrouteData}}"></app-route>
+
+        <!--Get profile-->
+        <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
+                   last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
+                   handle-as="json" content-type="application/json"></iron-ajax>
+
+        <paper-card id="signinCard" heading="Logon">
+            <paper-spinner id="spinner" hidden="[[!loading]]"></paper-spinner>
+            <div class="card-content">
+                <form is="iron-form" id="form" verbose
+                      content-type="application/json" 
+                      method="post"
+                      handle-as="json"
+                      action="[[registrationUrl]]">
+                    <div class="layout vertical">
+                        <paper-input id="registrateNameLabel" 
+                                     name="name" label="Name" type="text" 
+                                     auto-validate pattern="{{namePattern}}" error-message="Invalid name.">
+                        </paper-input>
+                        <gold-email-input id="registrateEmailLabel" 
+                                          name="email" label="Email address">
+                            <iron-icon icon="account-circle" prefix></iron-icon>
+                        </gold-email-input>
+                        <paper-input id="registratePhoneNumberLabel" 
+                                     name="phone" label="Phone" type="text" 
+                                     auto-validate pattern="{{phonePattern}}" error-message="Invalid phone number.">
+                            <iron-icon icon="account-circle" prefix></iron-icon>
+                        </paper-input>
+                        <paper-input id="registratePasswordLabel" 
+                                     name="password" label="Password" type="password" 
+                                     auto-validate pattern="{{passPattern}}" error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
+                            <iron-icon icon="lock" prefix></iron-icon>
+                        </paper-input>
+                        <paper-input id="registratePasswordConfirmLabel" 
+                                     name="passwordConfirm" label="Password confirmation" type="password">
+                            <iron-icon icon="lock" prefix></iron-icon>
+                        </paper-input>
+                        <paper-input id="registrateCodeLabel" 
+                                     name="code" label="Activation code" type="text" 
+                                     auto-validate pattern="{{passPattern}}" error-message="Activation code."
+                                     value="{{activationCode}}">
+                            <iron-icon icon="lock" prefix></iron-icon>
+                        </paper-input>
+                    </div>
+                    <paper-fab 
+                        id="registrateButton" 
+                        icon="arrow-forward" 
+                        title="Sign on" 
+                        on-tap="onSignOn"></paper-fab>
+                </form>
+            </div>
+            <div class="card-actions layout vertical">
+                <paper-button on-tap="onToForgottenPassword" tabindex="5" raised>
+                    <iron-icon icon="account-circle"></iron-icon>
+                    <span id="forgottenPasswordTitle">Forgotten password</span>
+                </paper-button>
+                <br />
+                <paper-button on-tap="onToSignIn" tabindex="6" raised>
+                    <iron-icon icon="account-circle"></iron-icon>
+                    <span id="signOnSubmitTitle">Sign on</span>
+                </paper-button>
+                <!--</div>-->
+            </div>
+
+
+        </paper-card>
+    </template>
+    <script>
+        Polymer({
+            is: 'wonderjam-logon-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior
+            ],
+            properties: {
+                activationCode: {
+                    type: String,
+                    notify: true
+                },
+                registrationUrl: {
+                    type: String,
+                    notify: true
+                },
+                profileUrl: {
+                    type: String,
+                    notify: true
+                }
+            },
+            listeners: {
+                'form.iron-form-response': 'onRegistrationResponse',
+                'form.iron-form-error': 'onRegistrationError',
+//                    'profileIronAjax.response': 'onProfileResponse',
+//                    'profileIronAjax.error': 'onProfileError',
+//                    'registrate': 'onOpen'
+            },
+            observers: [
+                'observeActivationCodeParam(registrationSubrouteData.activationCode)',
+//                'observeActivationCode(activationCode)'
+            ],
+            observeActivationCodeParam: function (activationCode) {
+                if (activationCode) {
+                    this.$.profileIronAjax.generateRequest();
+                    this.activationCode = activationCode;
+                } else {
+                    this.activationCode = this._guid();
+                }
+            },
+            observeActivationCode: function (activationCode) {
+
+            },
+            onRegistrationResponse: function (event, details) {
+                console.log(this.is + ' registration succeed.');
+                this.fire('registrated', {
+                    userName: this.$.form.$$('[name="email"]').value,
+                    password: this.$.form.$$('[name="password"]').value
+                });
+            },
+            onRegistrationError: function (event, details) {
+                console.log(this.is + ' navigate to registration.');
+//                this.$.form.reset();
+//                this.fire('registrate', {
+//                    token: this.activationCode
+//                });
+            },
+            onSignOn: function () {
+                console.log(this.is, 'registrate user ...');
+                this.$.form.submit();
+            },
+            onProfileIronAjaxResponse: function (event, details) {
+                this.$.form.$$('[name="name"]').value = details.response.name;
+                this.$.form.$$('[name="email"]').value = details.response.email;
+                this.$.form.$$('[name="phone"]').value = details.response.phone;
+                console.log(this.is, 'registration profile fetched successfully.');
+            },
+            onProfileIronAjaxError: function (event, details) {
+                this.fire('feedback', {
+                    message: 'Wrong activation code.'
+                });
+                this.activationCode = this._guid();
+                console.log(this.is, 'registration profile fetching failed.');
+            },
+            onToSignIn: function () {
+                this.fire('login', {});
+            },
+            _guid: function () {
+                function s4() {
+                    return Math.floor((1 + Math.random()) * 0x10000)
+                            .toString(16)
+                            .substring(1);
+                }
+                return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                        s4() + '-' + s4() + s4() + s4();
+            }
+        });
+    </script>
+</dom-module>

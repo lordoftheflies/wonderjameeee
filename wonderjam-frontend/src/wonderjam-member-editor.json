@@ -1,0 +1,22 @@
+{
+  "meta": {},
+  "model": {
+    "newMemberNameLabel": {
+      "label": "Name",
+      "error-message": "Member name must be specified."
+    },
+    "newMemberEmailLabel": {
+      "label": "Email",
+      "error-message": "Member email must be specified."
+    },
+    "newMemberParentLabel": {
+      "label": "Parent member"
+    },
+    "preferredLanguageLabel": {
+      "label": "Preferred language"
+    }
+  },
+  "newMemberTypeUserTitle": "User",
+  "newMemberTypeGroupTitle": "Group",
+  "newMemberTypeAdminTitle": "Admin"
+}

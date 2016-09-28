@@ -1,0 +1,190 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<!--Iron components-->
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<!--Paper components-->
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<!--Application shared stlyes-->
+<link rel="import" href="wonderjam-shared-styles.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <wonderjam-article-view 
+        name="article-view"
+        info-request-params="{{infoRequestParams}}"
+        toc-request-params="{{tocRequestParams}}"
+        root-model="[[rootModel]]"
+        parent-model="[[parentModel]]"
+        content-children-model="{{contentChildrenModel}}"
+        publisher-model="[[publisherModel]]"
+        account-id="[[session.token]]" 
+        admin="[[session.powerUser]]" 
+        owner-id="[[session.token]]"
+        selected-article-id="{{contentSubrouteData.contentId}}"
+        selected-content-folder="{{selectedContentFolder}}">
+    </wonderjam-article-view>
+
+@demo index.html
+-->
+<dom-module id="wonderjam-article-view">
+    <template>
+        <style include="wonderjam-shared-styles">
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+                padding: 10px;
+            }
+            
+            
+            
+        </style>
+
+        <div class="card-content" hidden="[[isEmpty(contentChildrenModel)]]">
+            <template is="dom-repeat" items="{{contentChildrenModel.sections}}" as="section">
+                <paper-item class="card-item flex layout horizontal" on-tap="onNavigate" name="[[section.id]]" type="[[section.contentType]]">
+                    <span class="flex">[[section.title]]</span>
+                    <div hidden="[[!isDraftSelected(selectedContentFolder)]]" class="layout horizontal">
+                        <paper-icon-button name="[[section.name]]" icon="create" on-tap="onEditArticle"></paper-icon-button>
+                        <paper-icon-button name="[[section.name]]" icon="delete" on-tap="onDeleteArticle"></paper-icon-button>
+                        <paper-icon-button name="[[section.name]]" icon="file-upload" on-tap="onPublishArticle"></paper-icon-button>
+                        <paper-icon-button name="[[section.name]]" icon="file-download" on-tap="onUnpublishArticle"></paper-icon-button>
+                    </div>
+                </paper-item>
+            </template>
+            <!--</iron-list>-->
+        </div>
+
+
+
+        <paper-material class="layout vertical flex material-card" hidden="[[contentChildrenModel.leaf]]">
+            <!--<iron-list items="{{contentChildrenModel.sections}}"   hidden="[[isEmpty(contentChildrenModel)]]" as="section">-->
+            <div class="card-content" hidden="[[!isEmpty(contentChildrenModel)]]">
+                <div id="emptyChildrenText">No content in the folder.</div>
+            </div>
+
+        </paper-material>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'wonderjam-article-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior
+            ],
+            properties: {
+                /**
+                 * Table of contents request parameters.
+                 * {{pageId: String, tag: String, owner: String}}
+                 */
+                tocRequestParams: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Article information request parameters.
+                 * @type {{pageId: String}}
+                 */
+                infoRequestParams: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Sub-route parameters for members page.
+                 * @type {{}}
+                 */
+                contentSubrouteData: {
+                    type: Object,
+                    notify: true
+                },
+                selectedContentFolder: {
+                    type: String,
+                    notify: true
+                },
+                selectedArticleId: {
+                    type: String,
+                    notify: true,
+                    value: 'ROOT'
+                },
+                contentChildrenModel: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            observers: [
+//                'observeSelectedContentFolder(selectedContentFolder)',
+//                'observeCurrentArticle(selectedArticleId, selectedContentFolder, accountId)',
+//                'observeContentChildrenModel(contentChildrenModel)'
+            ],
+            ready: function () {
+                console.log(this.is + ' is ready.');
+            },
+            observeCurrentArticle: function (selectedArticleId, selectedContentFolder, ownerId) {
+                this.tocRequestParams = {
+                    pageId: selectedArticleId,
+                    tag: selectedContentFolder,
+                    owner: ownerId
+                };
+                this.infoRequestParams = {
+                    pageId: selectedArticleId
+                };
+                console.log(this.is, 'toc navigation request parameters updated:', JSON.stringify(this.tocRequestParams));
+
+//                this.$.rootTocAjax.generateRequest();
+//                this.$.childTocAjax.generateRequest();
+//                this.$.parentTocAjax.generateRequest();
+                this.fire('fetch-data', {
+                    ids: ['rootTocAjax', 'childTocAjax', 'parentTocAjax']
+                });
+            },
+//            observeContentChildrenModel: function () {
+////                var list = document.querySelector('iron-list')
+////                if (list)
+////                    list.fire('iron-resize');
+//            },
+            observeSelectedContentFolder: function (folder) {
+                if (this.tocRequestParams) {
+                    console.log(this.is + ' observe selected content folder: ' + folder);
+                    this.tocRequestParams.tag = folder;
+                    this.selectedArticleId = 'ROOT';
+                }
+            },
+            isEmpty: function (data) {
+                return (data === undefined || data === null || data.sections === undefined || data.sections === null || data.sections.length === 0);
+            },
+            isDraftSelected: function (selectedContentFolder) {
+                return selectedContentFolder === 'drafts';
+            },
+            onNavigate: function (event, detail) {
+                console.log('Navigate to ', event.currentTarget.name);
+                this.selectedArticleId = event.currentTarget.name;
+                this.fire('article-details', {
+                    contentId: event.currentTarget.name,
+                    type: event.currentTarget.type
+                });
+            },
+            json: function (data) {
+                return JSON.stringify(data);
+            },
+        });
+    </script>
+</dom-module>

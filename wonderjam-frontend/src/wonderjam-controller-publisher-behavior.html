@@ -1,0 +1,141 @@
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+
+<script>
+    (function () {
+        'use strict';
+
+        window.WonderjamAppBehaviors = window.WonderjamAppBehaviors || {};
+
+        /**
+         * Publisher controller behavior,
+         * 
+         *
+         * @polymerBehavior
+         */
+        WonderjamAppBehaviors.ControllerPublicherBehaviorImpl = {
+            properties: {
+                /**
+                 * Model for publisher.
+                 * @type {{accountId: string, articleId: string}}
+                 */
+                publisherModel: {
+                },
+                /**
+                 * Model for content.
+                 * @type {{sections: Array<{name: string, title: string, data: string}>}}
+                 */
+                contentModel: {
+                    type: Object,
+                    notify: true,
+                    value: {
+                        sections: []
+                    }
+                }
+            },
+            /**
+             * Add text-section handler.
+             */
+            onAddSection: function () {
+                console.log('Add section after field[' + 'section' + this.contentModel.sections.length + ']');
+                this.$.shareView.$.sectionEditor.createTextSection();
+//                this.$.shareView.$.sectionEditor.fire('create', {
+//                    name: 'section' + this.contentModel.sections.length,
+//                    type: 'plutonium-cm-editor-text',
+//                    title: '',
+//                    data: ''
+//                });
+            },
+            /**
+             * Add video-section handler.
+             */
+            onEmbedVideo: function () {
+                console.log('Embed video to after field[' + 'section' + this.contentModel.sections.length + ']');
+               this.$.shareView.$.sectionEditor.createVideoSection();
+//                 this.$.shareView.$.sectionEditor.fire('create', {
+//                    name: 'section' + this.contentModel.sections.length,
+//                    type: 'plutonium-cm-editor-video',
+//                    title: '',
+//                    data: ''
+//                });
+            },
+            /**
+             * Add image-section handler.
+             */
+            onEmbedImage: function () {
+                console.log('Embed image to after field[' + 'section' + this.contentModel.sections.length + ']');
+              this.$.shareView.$.sectionEditor.createImageSection();
+//                  this.$.shareView.$.sectionEditor.fire('create', {
+//                    name: this.name,
+//                    type: 'plutonium-cm-editor-image',
+//                    title: '',
+//                    data: ''
+//                });
+            },
+            /**
+             * Add link-section handler.
+             */
+            onEmbedLink: function () {
+                console.log('Embed link to after field[' + 'section' + this.contentModel.sections.length + ']');
+                this.$.shareView.$.sectionEditor.createLinkSection();
+//                this.$.shareView.$.sectionEditor.fire('create', {
+//                    name: 'section' + this.contentModel.sections.length,
+//                    type: 'plutonium-cm-editor-link',
+//                    title: '',
+//                    data: ''
+//                });
+            },
+            /**
+             * Ajax response handler for `publisherAjax` element.
+             */
+            onPublisherAjaxResponse: function () {
+                console.log(this.is, 'published', this.contentSubrouteData.contentId);
+                this.fire('feedback', {
+                    message: 'Message published succesfully.'
+                });
+            },
+            /**
+             * Ajax error handler for `publisherAjax` element.
+             */
+            onPublisherAjaxError: function () {
+                console.error(this.is, 'publishing failed', this.contentSubrouteData.contentId);
+                this.fire('feedback', {
+                    message: 'Message publishing failed.'
+                });
+            },
+            /**
+             * Ajax response handler for `unpublisherAjax` element.
+             */
+            onUnpublisherAjaxResponse: function () {
+                console.error(this.is, 'unpublished', this.contentSubrouteData.contentId);
+                this.fire('feedback', {
+                    message: 'Message unpublished succesfully.'
+                });
+            },
+            /**
+             * Ajax error handler for `unpublisherAjax` element.
+             */
+            onUnpublisherAjaxError: function () {
+                console.error(this.is, 'unpublishing failed', this.contentSubrouteData.contentId);
+                this.fire('feedback', {
+                    message: 'Message publishing failed.'
+                });
+            },
+            onNavigateToEditor: function () {
+                this.set('route.path', '/share-view');
+//                this.fire('page-go', {page: 'share-view'});
+            },
+            onShare: function() {
+                this.$.shareView.submit();
+                this.set('route.path', '/article-view/' + ((this.$.shareView.selectedParent !== null && this.$.shareView.selectedParent !== 'null') ? this.$.shareView.selectedParent: 'ROOT'));
+            },
+            onBackToContents: function () {
+                this.set('route.path', '/article-view');
+//                this.fire('page-go', {page: 'article-view'});
+            }
+        };
+        WonderjamAppBehaviors.ControllerPublicherBehavior = [
+            PlutoniumBehaviors.WidgetBoundBehavior,
+            WonderjamAppBehaviors.ControllerPublicherBehaviorImpl
+        ];
+    })();
+</script>

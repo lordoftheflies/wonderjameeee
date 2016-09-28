@@ -1,0 +1,516 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-chip/paper-chip.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-fab-transitions/paper-fab-morph.html">
+<link rel="import" href="../bower_components/plutonium-cms/plutonium-cms.html">
+
+<link rel="import" href="../bower_components/file-upload/file-upload.html">
+
+<link rel="import" href="wonderjam-icons.html">
+<link rel="import" href="wonderjam-shared-styles.html">
+
+<link rel="import" href="wonderjam-article-form.html">
+
+
+<!--
+`<wonderjam-share-view>` Share page of the application.
+
+In typical use, just slap some `<wonderjam-share-view>` at the top of your body:
+
+    <body>
+      <wonderjam-share-view></wonderjam-share-view>
+
+Wham! It's all awesome now!
+
+    @group Mlm Elements
+    @demo demo/wonderjam-share-view-index.html
+-->
+<dom-module id="wonderjam-share-view">
+
+    <template>
+
+        <style include="wonderjam-shared-styles iron-flex">
+
+            :host {
+                --paper-menu-background-color: none;
+                display: block;
+                @apply(--layout-vertical);
+                /*@apply(--layout-center);*/
+                padding: 10px;
+
+
+            }
+
+            :host paper-material {
+                background-color: white;
+            }
+
+            .card-header {
+                position: relative;
+                border-top-left-radius: inherit;
+                border-top-right-radius: inherit;
+                overflow: hidden;
+
+                @apply(--paper-card-header);
+            }
+
+            .card-header iron-image {
+                display: block;
+                width: 100%;
+                --iron-image-width: 100%;
+                pointer-events: none;
+
+                @apply(--paper-card-header-image);
+            }
+
+            .card-header .title-text {
+                padding: 16px;
+                font-size: 24px;
+                font-weight: 400;
+                color: var(--paper-card-header-color, #000);
+
+                @apply(--paper-card-header-text);
+            }
+
+            .card-header .title-text.over-image {
+                position: absolute;
+                bottom: 0px;
+
+                @apply(--paper-card-header-image-text);
+            }
+
+            :host .card-content {
+                padding: 16px;
+                position:relative;
+
+                @apply(--paper-card-content);
+            }
+
+            :host .card-actions {
+                border-top: 1px solid #e8e8e8;
+                padding: 5px 16px;
+                position: relative;
+
+                @apply(--paper-card-actions);
+            }
+
+            #show-toolbar {
+                /* In real cases it would make sense use fixed position for the element,
+                 * and then no need to position --paper-morph-dropdown and --paper-morph-content
+                 */
+                --paper-morph-background: var(--default-primary-color);
+                --paper-morph-dropdown: {
+                    position: static !important;  //didn't find alternative to !important for Safari 
+                }
+                --paper-morph-content: {
+                    /*position: absolute;*/
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    overflow: visible;
+                }
+            }
+
+            #show-toolbar paper-fab {
+                position: absolute;
+                bottom: 16px;
+                right: 16px;
+                --paper-fab-background: var(--default-primary-color);
+            }
+
+            plutonium-article-form {
+                margin: 24px;
+            }   
+        </style>
+        <app-route route="{{route}}" pattern="/:articleId" data="{{articleEditorRouteData}}"></app-route>
+        <iron-ajax id="articleAjax" url="[[apiUrl]]/content-management/article" 
+                   params="[[articleAjaxParams]]" last-response="{{contentModel}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[edit]]"></iron-ajax>
+        <iron-ajax id="parentCandidatesAjax" url="[[apiUrl]]/content-management/candidates/parent" 
+                   last-response="{{parentCandidates}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto></iron-ajax>
+        <!--Share content-->
+        <iron-ajax id="shareAjax" url="[[apiUrl]]/content-management/[[accountId]]/save"
+                   body="{{contentModel}}" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+
+        <paper-material id="propertiesCardTitle" elevation="1" heading="Properties"  name="props" class="layout vertical main-action-fab-container">
+            <div class="card-header layout horizontal">
+                <paper-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}"></paper-input>
+            </div>
+            <div class="card-content layout horizontal">
+                <div class="layout vertical flex">
+                    <paper-dropdown-menu 
+                        id="parentDdLabel"
+                        label="Parent">
+                        <paper-listbox id="parentCandidatesList"
+                                       class="dropdown-content"
+                                       attr-for-selected="id"
+                                       items="[[parentCandidates]]"
+                                       as="parent"
+                                       selected="{{selectedParent}}">
+                            <template is="dom-repeat" items="[[parentCandidates]]">
+                                <paper-item id="[[item.id]]" class="item pad">
+                                    <label>[[item.title]]</label> 
+                                </paper-item>
+                            </template>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <paper-checkbox id="draftIndicator" checked="{{contentModel.draft}}">Draft</paper-checkbox>
+                <paper-fab-morph id="show-toolbar" vertical-align="top" horizontal-align="left">
+                    <paper-fab icon="wonderjam-icons:[[articleContentType]]" class="dropdown-trigger"></paper-fab>
+                    <paper-toolbar class="dropdown-content">
+                        <paper-tabs attr-for-selected="name" selected="{{articleContentType}}" class="flex" autoselect>
+                            <paper-tab text-id="fileContentTabLabel" name="embedded">Upload</paper-tab>
+                            <paper-tab text-id="folderContentTabLabel" name="linked">Folder</paper-tab>
+                            <paper-tab text-id="articleContentTabLabel" name="assembled">Assemble</paper-tab>
+                        </paper-tabs>
+                    </paper-toolbar>
+                </paper-fab-morph>
+            </div>
+            <iron-pages class="card-content" selected="{{articleContentType}}" attr-for-selected="name">
+
+                <plutonium-cms-form id="sectionEditor"
+                                    name="assembled"
+                                    content-model="{{contentModel}}"></plutonium-cms-form>
+
+                <!--<paper-card id="propertiesCardTitle" name="embedded" class="card-content layout horizontal" elevation="1" heading="Upload article">-->
+                <div id="propertiesCardTitle" name="embedded" class="layout vertical center" heading="Upload article">
+                    <file-upload 
+                        id="uploadFileText"
+                        drop-text="Drop any PDF file here."
+                        error-text="File upload failed."
+                        droppable="true" 
+                        raised="true" 
+                        multi="false" 
+                        method="POST"
+                        target="{{fileUploadTarget}}">Choose File</file-upload>
+                </div>
+                <div id="propertiesCardTitle" name="linked" class="layout vertical center" heading="Upload article">
+                    Select articles.
+                </div>
+
+            </iron-pages>
+        </paper-material>
+
+    </template>
+
+    <script>
+
+        Polymer({
+            is: 'wonderjam-share-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior,
+                PlutoniumBehaviors.WidgetBoundBehavior
+            ],
+            properties: {
+                edit: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                articleAjaxParams: {
+                    type: Object,
+                    notify: true
+                },
+                shareAjaxRequest: {
+                },
+                pageDto: {
+                    type: Object,
+                    notify: true
+                },
+                contentModel: {
+                    type: Object,
+                    notify: true,
+                    value: {
+                        sections: [
+                        ]
+                    }
+                },
+                shareModel: {
+                    type: Object,
+                    notify: true,
+                    value: {
+                        recipients: []
+                    }
+                },
+                selectedItemIds: {
+                    type: Array,
+                    notify: true
+                },
+                selectedMetaAction: {
+                    type: String,
+                    notify: true,
+                    value: 'content'
+                },
+                articleContentType: {
+                    type: String,
+                    notify: true,
+                    value: 'assembled'
+                },
+                articleContentHeading: {
+                    type: String,
+                    notify: true,
+                    computed: 'computeHeader(articleContentType)'
+                },
+                recipients: {
+                    type: String,
+                    notify: true,
+                    value: ''
+                },
+                parentCandidates: {
+                    type: Array,
+                    notify: true
+                }
+            },
+            observers: [
+                'observePageId(articleEditorRouteData.articleId)',
+                'itemsAddedOrRemoved(selectedItemIds.splices)'
+            ],
+            listeners: {
+//                'create': 'onSectionCreate',
+//                'remove': 'onRemoveItem',
+//                'share': 'onShare',
+//                'shareAjax.error': 'onShareError',
+//                'shareAjax.response': 'onShareResponse'
+            },
+            observePageId: function (pageId) {
+
+//            },
+//            observeSections: function (splices) {
+//                console.log(this.is + ' observe sections.');
+//            },
+//            observeArticleAjaxParameters: function (pageId) {
+                if (pageId) {
+                    this.edit = true;
+                    this.articleAjaxParams = {
+                        pageId: pageId
+                    };
+                } else {
+                    this.edit = false;
+                    this.contentModel = {
+                        sections: [
+                        ]
+                    };
+                }
+            },
+            ready: function () {
+                console.log(this.is + ' is ready.');
+            },
+            submit: function () {
+                console.log('Share article ...');
+                this.$.shareAjax.generateRequest();
+            },
+//            updateModel: function (sections) {
+//                this.pageDto = {
+//                };
+//            },
+            onClear: function () {
+
+            },
+            onSectionCreate: function (event, detail) {
+                this.$.pcf.onCreateSectionInParent(event, detail);
+            },
+            onShare: function (e, details) {
+                console.log('Save content: ' + JSON.stringify(this.contentModel));
+                this.contentModel.leaf = true;
+                this.fire('fetch-data', {
+                    ids: ['shareAjax']
+                });
+//                this.fire('share', {
+//                    content: this.contentModel,
+//                    recipients: this.selectedContactIds,
+//                    message: this.message
+//                });
+            },
+            onNewArticle: function () {
+                this.contentModel = {
+                    sections: [
+                    ]
+                };
+            },
+            onOpenRecipientsDialog: function () {
+                console.log(this.is + ' send event pick-recipients.');
+                this.fire('pick-recipients', {});
+            },
+            /**
+             * Tap clear input event handler.
+             *
+             */
+            onClearRecipients: function () {
+                this.splice('selectedItemIds', 0, this.selectedItemIds.length);
+                console.log('mlm-recipient-picker clear recipients.');
+            },
+            itemsAddedOrRemoved: function (splice) {
+                if (splice === undefined || splice === null)
+                    return;
+                console.log('mlm-recipient-picker change recipients: ' + JSON.stringify(this.selectedItemIds));
+                var recipientslabel = '';
+                if (this.items !== undefined && this.items !== null) {
+                    this.items.forEach(function (item, index) {
+                        if (this.selectedItemIds.indexOf(item.id) > -1) {
+                            recipientslabel += item.name + ' ';
+                        }
+                    }, this);
+                }
+                this.recipients = recipientslabel;
+            },
+            onRemoveItem: function (event, detail) {
+                event.stopPropagation();
+                this.splice('selectedItemIds', this.selectedItemIds.indexOf(event.currentTarget.member), 1);
+            },
+            computeHeader: function (articleContentHeading) {
+                return ('assembled' === articleContentHeading) ? 'Edit content' : 'Attach file';
+            },
+            onOnlySaveContent: function (event, detail) {
+                console.log('Save content.');
+            },
+            onSendMessage: function (event, detail) {
+                this.shareModel.recipients = this.selectedItemIds;
+                this.shareModel.message = this.message;
+                this.shareModel.contentId = this.contentModel.id;
+
+                this.fire('fetch-data', {
+                    ids: ['messageSendAjax']
+                });
+            },
+            getUserName: function (id) {
+                if (this.items !== undefined && this.items !== null) {
+                    var name = 'Unknown';
+                    this.items.forEach(function (item, index) {
+                        if (item.id === id) {
+                            name = item.name;
+                        }
+                    }, this);
+                    return name;
+                }
+            },
+            getUserEmail: function (id) {
+                if (this.items !== undefined && this.items !== null) {
+                    var name = 'Unknown';
+                    this.items.forEach(function (item, index) {
+                        if (item.id === id) {
+                            name = item.email;
+                        }
+                    }, this);
+                    return name;
+                }
+            },
+            getRoleIcon: function (id) {
+                if (this.items !== undefined && this.items !== null) {
+                    var name = 'Unknown';
+                    this.items.forEach(function (item, index) {
+                        if (item.id === id) {
+                            // TODO: remove #45
+                            // name = item.role.charAt(0).toUpperCase();
+                            name = 'M';
+                        }
+                    }, this);
+                    return name;
+                }
+            },
+            /**
+             * Fired when a section adder floating-action-button pushed.
+             *
+             * @event create
+             */
+
+            /**
+             * Add text-section handler.
+             */
+            onAddSection: function () {
+                console.log('Add section after field[' + 'section' + this.contentModel.sections.length + ']');
+                this.fire('create', {
+                    name: 'section' + this.contentModel.sections.length,
+                    type: 'plutonium-cm-editor-text',
+                    title: '',
+                    data: ''
+                });
+            },
+            /**
+             * Add video-section handler.
+             */
+            onEmbedVideo: function () {
+                console.log('Embed video to after field[' + 'section' + this.contentModel.sections.length + ']');
+                this.fire('create', {
+                    name: 'section' + this.contentModel.sections.length,
+                    type: 'plutonium-cm-editor-video',
+                    title: '',
+                    data: ''
+                });
+            },
+            /**
+             * Add image-section handler.
+             */
+            onEmbedImage: function () {
+                console.log('Embed image to after field[' + 'section' + this.contentModel.sections.length + ']');
+                this.fire('create', {
+                    name: this.name,
+                    type: 'plutonium-cm-editor-image',
+                    title: '',
+                    data: ''
+                });
+            },
+            /**
+             * Add link-section handler.
+             */
+            onEmbedLink: function () {
+                console.log('Embed link to after field[' + 'section' + this.contentModel.sections.length + ']');
+                this.fire('create', {
+                    name: 'section' + this.contentModel.sections.length,
+                    type: 'plutonium-cm-editor-link',
+                    title: '',
+                    data: ''
+                });
+            }
+//            itemsAddedOrRemoved: function (splice) {
+//                if (splice === undefined || splice === null)
+//                    return;
+//                console.log('mlm-recipient-picker change recipients: ' + JSON.stringify(this.selectedItemIds));
+//                var recipientsString = '';
+//                if (this.items !== undefined && this.items !== null) {
+//                    this.items.forEach(function (item, index) {
+//                        if (this.selectedItemIds.indexOf(item.id) > -1) {
+//                            recipientsString += item.name + ' ';
+//                        }
+//                    }, this);
+//                }
+//                this._recipients = recipientsString;
+//            }
+
+        });
+
+    </script>
+
+</dom-module>

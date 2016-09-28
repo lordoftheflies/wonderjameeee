@@ -1,0 +1,133 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="wonderjam-shared-styles.html">
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+
+<dom-module id="wonderjam-profile-view">
+    <template>
+        <style include="wonderjam-shared-styles">
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+                padding: 10px;
+            }
+        </style>
+
+        <paper-card id="accountHeading" heading="Account" class="layout vertical">
+            <div class="card-content">
+                <div>
+                    <paper-dropdown-menu id="preferredLanguageLabel" label="Preferred language">
+                        <paper-menu class="dropdown-content">
+                            <paper-menu class="dropdown-content" selected="{{profile.preferredLanguage}}" attr-for-selected="data-value">
+                                <template is="dom-repeat" items="[[locales]]" as="locale">
+                                    <paper-item data-value="[[locale.code]]">[[locale.name]]</paper-item>
+                                </template>
+                            </paper-menu>
+                        </paper-menu>
+                    </paper-dropdown-menu>
+                </div>
+            </div>
+            <div class="card-actions">
+                <paper-button id="changingDeviceButton" raised on-tap="openChangeDevicePrompt">Changing device</paper-button>
+            </div>
+        </paper-card>
+        <!--<br />-->
+        <paper-card id="tutorialsHeading" heading="Tutorials" class="layout vertical flex">
+            <p id="underDevelopmentText" class="card-content">Under development ...</p>
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'wonderjam-profile-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior,
+                PlutoniumBehaviors.WidgetBoundBehavior
+            ],
+            properties: {
+                locales: {
+                    type: Array,
+                    notify: true
+                },
+                _init: {
+                    type: Object,
+                    notify: true,
+                    value: false
+                },
+                changeLanguageModel: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            listeners: {
+                'iron-select': 'onSelect'
+            },
+            ready: function () {
+                console.log(this.is + ' is ready.');
+            },
+            attached: function () {
+
+            },
+            onSelect: function (event, details) {
+                if (this._init) {
+                    this.changeLanguageModel = {
+                        accountId: this.profile.id,
+                        language: this.profile.preferredLanguage
+                    };
+                    console.log('Change language request: ' + JSON.stringify(this.changeLanguageModel));
+                    this.fire('fetch-data', {
+                        ids: ['changeLanguageAjax']
+                    });
+                } else {
+                    this._init = true;
+                }
+            },
+            handleChangeLanguageResponse: function () {
+                var msg = 'Language changed successfully to ' + this.locales.filter(function (currentValue, index, arr) {
+                    return (currentValue.code === this.profile.preferredLanguage);
+                }, this)[0].name + '.';
+                console.log(msg);
+                var oldLang = document.querySelector('html').getAttribute('lang');
+                document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
+                var newLang = document.querySelector('html').getAttribute('lang');
+                console.log('Change from locale ' + oldLang + ' to ' + newLang);
+                this.fire('feedback', {
+                    message: msg
+                });
+            },
+            handleChangeLanguageError: function () {
+                var msg = 'Language changing failed.';
+                console.log(msg);
+                this.fire('feedback', {
+                    message: msg
+                });
+            },
+            onDeviceChangePrompted: function () {
+                this.fire('feedback', {
+                    message: 'Device changing request sent. Wait for your inviter\'s approval.'
+                });
+            },
+            openChangeDevicePrompt: function () {
+                this.fire('change-device', {});
+            }
+        });
+    </script>
+</dom-module>

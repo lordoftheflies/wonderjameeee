@@ -1,0 +1,17 @@
+{
+  "meta": {},
+  "model": {
+    "contentTitleInput": {
+      "label": "Title"
+    },
+    "parentDdLabel": {
+      "label": "Parent"
+    }
+  },
+  "draftIndicator": "Draft",
+  "fileContentTabLabel": "Upload",
+  "folderContentTabLabel": "Folder",
+  "articleContentTabLabel": "Assemble",
+  "uploadFileText": "Choose File",
+  "propertiesCardTitle": " Select articles. "
+}

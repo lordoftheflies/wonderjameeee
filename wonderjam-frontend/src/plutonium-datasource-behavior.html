@@ -1,0 +1,37 @@
+<script>
+    (function () {
+        'use strict';
+
+        window.PlutoniumBehaviors = window.PlutoniumBehaviors || {};
+
+        /**
+         * Provides datasource beahvior.
+         *
+         * @polymerBehavior
+         */
+        PlutoniumBehaviors.DatasourceBehavior = {
+            listeners: {
+                'fetch-data': 'onFetchData'
+            },
+            /**
+             * Fired when an operation needs display feedback.
+             *
+             * @event fetch-data
+             * @param {{ids: Array<String>}} detail Ids of the requests.
+             */
+
+            /**
+             * Feedback event handler.
+             * @param {{}} event
+             * @param {{message: String}} detail
+             * @returns {undefined}
+             */
+            onFetchData: function (event, detail) {
+                detail.ids.forEach(function (currentValue, index, arr) {
+                    this.$[currentValue].generateRequest();
+                }, this);
+            }
+
+        };
+    })();
+</script>

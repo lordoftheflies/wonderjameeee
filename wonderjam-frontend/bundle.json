@@ -1,0 +1,265 @@
+{
+  "wonderjam-about-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "authors-card:div:paper-item:paper-item-body:div": "Hegedűs László",
+    "authors-card:div:paper-item:paper-item-body:div_1": "laszlo.hegedus@cherubits.hu",
+    "authors-card:div:paper-item_1:paper-item-body:div": "Péczely Balázs",
+    "authors-card:div:paper-item_1:paper-item-body:div_1": "peczely.balazs@digitaldefense.hu"
+  },
+  "wonderjam-app": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {
+      "openMemberEditorFab": {
+        "title": "Edit member."
+      },
+      "sendMessageFab": {
+        "title": "Publish content"
+      },
+      "addSectionButton": {
+        "title": "Embedd text to the message content."
+      },
+      "addVideoButton": {
+        "title": "Embedd video to the message content."
+      },
+      "addImageButton": {
+        "title": "Embedd image to the message content."
+      },
+      "addLinkButton": {
+        "title": "Embedd a link to another message to the message content."
+      },
+      "sendNewContentFab": {
+        "title": "Cancel all changes & create new article."
+      }
+    },
+    "main-menu-label": "Menu",
+    "article-menu-label": "Articles",
+    "mailbox-menu-label": "Mailbox",
+    "members-menu-label": "Network",
+    "about-menu-label": "About",
+    "mainTitle": "Topflavon",
+    "english-language-label": "English",
+    "hungarian-language-label": "Magyar",
+    "polish-language-label": "Polski",
+    "profile-menu-label": "Profile",
+    "logout-label": "Logout",
+    "messagesPagePublicFolderTitle": "Public",
+    "messagesPageMyContentsFolderTitle": "Drafts",
+    "messagesPagePublishedFolderTitle": "Published",
+    "mailBoxPageInboxFolderTitle": [
+      " {1} ",
+      "Inbox"
+    ],
+    "sentItemsPageInboxFolderTitle": [
+      " {1} ",
+      "Sent items"
+    ],
+    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Person",
+    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Group"
+  },
+  "wonderjam-article-field": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {}
+  },
+  "wonderjam-article-form": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {}
+  },
+  "wonderjam-article-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "emptyChildrenText": "No content in the folder."
+  },
+  "wonderjam-login-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {
+      "signinEmailPassword": {
+        "label": "Password"
+      },
+      "signInSubmit": {
+        "title": "Sign in"
+      }
+    },
+    "rememberMeToggleButtonLabel": "Remember me",
+    "forgottenPasswordTitle": "Forgotten password",
+    "signOnSubmitTitle": "Sign on"
+  },
+  "wonderjam-mailbox-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "messageItemSenderLabel": "From:",
+    "messageItemReceiverLabel": "To:",
+    "emptyMailBoxFolderText": "No messages in the folder."
+  },
+  "wonderjam-member-editor": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {
+      "newMemberNameLabel": {
+        "label": "Name",
+        "error-message": "Member name must be specified."
+      },
+      "newMemberEmailLabel": {
+        "label": "Email",
+        "error-message": "Member email must be specified."
+      },
+      "newMemberParentLabel": {
+        "label": "Parent member"
+      },
+      "preferredLanguageLabel": {
+        "label": "Preferred language"
+      }
+    },
+    "newMemberTypeUserTitle": "User",
+    "newMemberTypeGroupTitle": "Group",
+    "newMemberTypeAdminTitle": "Admin"
+  },
+  "wonderjam-members-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "emptyChildrenText": "No children."
+  },
+  "wonderjam-profile-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {
+      "preferredLanguageLabel": {
+        "label": "Preferred language"
+      }
+    },
+    "changingDeviceButton": "Changing device",
+    "underDevelopmentText": "Under development ..."
+  },
+  "wonderjam-recipients-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "emptyChildrenText": "No children."
+  },
+  "wonderjam-share-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {
+      "contentTitleInput": {
+        "label": "Title"
+      },
+      "parentDdLabel": {
+        "label": "Parent"
+      }
+    },
+    "draftIndicator": "Draft",
+    "fileContentTabLabel": "Upload",
+    "folderContentTabLabel": "Folder",
+    "articleContentTabLabel": "Assemble",
+    "uploadFileText": "Choose File",
+    "propertiesCardTitle": " Select articles. "
+  },
+  "wonderjam-view401": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "text_1": " Oops you hit a forbidden (401) page. Please ",
+    "a_2": "sign in",
+    "text_3": " as admin. "
+  },
+  "wonderjam-view404": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "text_1": " Oops you hit a 404. ",
+    "a_2": "Head back to home."
+  },
+  "bundle": true
+}

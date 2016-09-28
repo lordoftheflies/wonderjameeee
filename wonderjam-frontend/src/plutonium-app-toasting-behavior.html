@@ -1,0 +1,38 @@
+<script>
+    (function () {
+        'use strict';
+
+        window.PlutoniumBehaviors = window.PlutoniumBehaviors || {};
+
+        /**
+         * Provides application toasing behavior with `<paper-toast id="mainToast">`.
+         *
+         * @polymerBehavior
+         */
+        PlutoniumBehaviors.AppToastingBehavior = {
+            listeners: {
+                'feedback': 'onFeedback',
+            },
+            /**
+             * Fired when an operation needs display feedback.
+             *
+             * @event feedback
+             * @param {{message: String}} detail Feedback details.
+             */
+
+            /**
+             * Feedback event handler.
+             * @param {{}} event
+             * @param {{message: String}} detail
+             * @returns {undefined}
+             */
+            onFeedback: function (event, detail) {
+                if (detail.message) {
+                    this.$.mainToast.text = detail.message;
+                    this.$.mainToast.show();
+                }
+            }
+
+        };
+    })();
+</script>

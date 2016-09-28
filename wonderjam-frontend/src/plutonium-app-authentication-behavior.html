@@ -1,0 +1,43 @@
+<script>
+    (function () {
+        'use strict';
+
+        window.PlutoniumBehaviors = window.PlutoniumBehaviors || {};
+
+        /**
+         * Provides application toasing behavior with `<paper-toast id="mainToast">`.
+         *
+         * @polymerBehavior
+         */
+        PlutoniumBehaviors.AppAuthenticationBehavior = {
+            properties: {
+                authHeaders: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            listeners: {
+                'sign-in': 'onSignIn',
+            },
+            /**
+             * Fired when an operation needs display feedback.
+             *
+             * @event feedback
+             * @param {{message: String}} detail Feedback details.
+             */
+//
+//            /**
+//             * Feedback event handler.
+//             * @param {{}} event
+//             * @param {{message: String}} detail
+//             * @returns {undefined}
+//             */
+//            onSignIn: function (event, headers) {
+//                this.authHeaders = headers;
+//                this.$.authenticationAjax.generateRequest();
+//            },
+//            onSignInResponse: funcio
+
+        };
+    })();
+</script>

@@ -1,0 +1,14 @@
+{
+  "meta": {},
+  "model": {
+    "signinEmailPassword": {
+      "label": "Password"
+    },
+    "signInSubmit": {
+      "title": "Sign in"
+    }
+  },
+  "rememberMeToggleButtonLabel": "Remember me",
+  "forgottenPasswordTitle": "Forgotten password",
+  "signOnSubmitTitle": "Sign on"
+}

@@ -1,0 +1,136 @@
+<link rel="import" href="plutonium-app-layout-behavior.html">
+
+<script>
+    (function () {
+        'use strict';
+
+        window.PlutoniumBehaviors = window.PlutoniumBehaviors || {};
+
+        /**
+         * Provides application routing behavior with `<app-route>`.
+         *
+         * @polymerBehavior
+         */
+        PlutoniumBehaviors.AppRoutingBehaviorImpl = {
+            properties: {
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged'
+                },
+                homePage: {
+                    type: String,
+                    notify: true
+                },
+                loginPage: {
+                    type: String,
+                    notify: true
+                },
+                applicationDomain: {
+                    type: String,
+                    notify: true
+                },
+                authenticated: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                }
+            },
+            observers: [
+                '_routePageChanged(routeData.page)',
+//                '_secureRoutePageChanged(routeData.page, authenticated)'
+            ],
+            listeners: {
+                'page-go': '_onNavigate'
+            },
+            attached: function () {
+                this.rememberMe = this.$.rememberMeCookie.readCookie();
+                this.xsrfToken = this.$.xsrfCookie.readCookie();
+                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
+                        this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
+//                this.rememberMe = this.$.rememberMeCookie.readCookie();
+////                this.session = this.$.sessionCookie.readCookie();
+//
+//                this.xsrfToken = this.$.xsrfCookie.readCookie();
+//                if (this.xsrfToken && this.rememberMe) {
+//                    this.authenticated = true;
+//                    if (!this.page)
+//                        this.page = this.homePage;
+//                    this.$.tokenAjax.generateRequest();
+//                    console.log(this.is, 'SYNCHING SESSION TOKEN');
+////                } else {
+////                    // Re-authenticate
+////                    this.$.tokenAjax.generateRequest();
+//                } else {
+////                    this.$.tokenAjax.generateRequest();
+//                    console.log(this.is, 'USER AUTHENTICATION');
+//                }
+            },
+            ready: function () {
+//                this._resetLayout();
+            },
+            /**
+             * Page changed event handler.
+             * @param {String} page
+             * @returns {undefined}
+             */
+            _routePageChanged: function (page) {
+//                console.log(this.is, 'navigate to', page);
+//                
+                if (this.authenticated) {
+//                    this.page = page || this.homePage;
+////                } else {
+////                    this.page = this.loginPage;
+////                }
+//            },
+//            _secureRoutePageChanged: function (page, authenticated) {
+                console.log(this.is, 'navigate to', page);
+                this.page = page || this.homePage;
+                
+                
+//                
+//                if (this.authenticated) {
+//                    this.page = page || this.homePage;
+                } else {
+                    this.page = page || this.loginPage;
+                }
+            },
+            /**
+             * Page changed observer.
+             * @param {String} page
+             * @returns {undefined}
+             */
+            _pageChanged: function (page) {
+                // Load page import on demand. Show 404 page if fails
+                var resolvedPageUrl = this.resolveUrl(this.applicationDomain + '-' + page + '.html');
+                this.importHref(resolvedPageUrl, null, this._showPage404, true);
+                console.log(this.is, 'page changed', page);
+                this._resetLayout();
+            },
+            /**
+             * Page 404.
+             * @param {String} page
+             * @returns {undefined}
+             */
+            _showPage404: function () {
+                console.log(this.is, 'not found', this.page, 'page');
+                this.page = 'view404';
+            },
+            _showPage401: function () {
+                console.log(this.is, 'forbidden', this.page, 'page');
+                this.page = 'view401';
+            },
+            _onNavigate: function (event, detail) {
+                console.log(this.is, 'navigate to', detail.page);
+//                this.set('route.path', '/' + detail.page);
+                this.page = detail.page;
+            }
+
+        };
+
+        PlutoniumBehaviors.AppRoutingBehavior = [
+            PlutoniumBehaviors.AppLayoutBehavior,
+            PlutoniumBehaviors.AppRoutingBehaviorImpl
+        ];
+    })();
+</script>

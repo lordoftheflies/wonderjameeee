@@ -1,0 +1,552 @@
+{
+  "wonderjam-about-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/authors-card:div:paper-item:paper-item-body:div",
+          "value": "Hegedűs László"
+        },
+        {
+          "op": "add",
+          "path": "/authors-card:div:paper-item_1:paper-item-body:div",
+          "value": "Péczely Balázs"
+        },
+        {
+          "op": "add",
+          "path": "/authors-card:div:paper-item_1:paper-item-body:div_1",
+          "value": "peczely.balazs@digitaldefense.hu"
+        },
+        {
+          "op": "replace",
+          "path": "/authors-card:div:paper-item:paper-item-body:div_1",
+          "value": "laszlo.hegedus@cherubits.hu"
+        }
+      ]
+    },
+    "model": {},
+    "authors-card:div:paper-item:paper-item-body:div": "Hegedűs László",
+    "authors-card:div:paper-item:paper-item-body:div_1": "laszlo.hegedus@cherubits.hu",
+    "authors-card:div:paper-item_1:paper-item-body:div": "Péczely Balázs",
+    "authors-card:div:paper-item_1:paper-item-body:div_1": "peczely.balazs@digitaldefense.hu"
+  },
+  "wonderjam-app": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/model/sendMessageFab/title",
+          "value": "Publish content"
+        },
+        {
+          "op": "add",
+          "path": "/model/addSectionButton/title",
+          "value": "Embedd text to the message content."
+        },
+        {
+          "op": "add",
+          "path": "/model/addVideoButton/title",
+          "value": "Embedd video to the message content."
+        },
+        {
+          "op": "add",
+          "path": "/model/addImageButton/title",
+          "value": "Embedd image to the message content."
+        },
+        {
+          "op": "add",
+          "path": "/model/addLinkButton/title",
+          "value": "Embedd a link to another message to the message content."
+        },
+        {
+          "op": "add",
+          "path": "/model/sendNewContentFab/title",
+          "value": "Cancel all changes & create new article."
+        },
+        {
+          "op": "add",
+          "path": "/main-menu-label",
+          "value": "Menu"
+        },
+        {
+          "op": "add",
+          "path": "/article-menu-label",
+          "value": "Articles"
+        },
+        {
+          "op": "add",
+          "path": "/mailbox-menu-label",
+          "value": "Mailbox"
+        },
+        {
+          "op": "add",
+          "path": "/members-menu-label",
+          "value": "Network"
+        },
+        {
+          "op": "add",
+          "path": "/about-menu-label",
+          "value": "About"
+        },
+        {
+          "op": "add",
+          "path": "/mainTitle",
+          "value": "Topflavon"
+        },
+        {
+          "op": "add",
+          "path": "/english-language-label",
+          "value": "English"
+        },
+        {
+          "op": "add",
+          "path": "/hungarian-language-label",
+          "value": "Magyar"
+        },
+        {
+          "op": "add",
+          "path": "/polish-language-label",
+          "value": "Polski"
+        },
+        {
+          "op": "add",
+          "path": "/profile-menu-label",
+          "value": "Profile"
+        },
+        {
+          "op": "add",
+          "path": "/logout-label",
+          "value": "Logout"
+        },
+        {
+          "op": "add",
+          "path": "/messagesPagePublicFolderTitle",
+          "value": "Public"
+        },
+        {
+          "op": "add",
+          "path": "/messagesPageMyContentsFolderTitle",
+          "value": "Drafts"
+        },
+        {
+          "op": "add",
+          "path": "/messagesPagePublishedFolderTitle",
+          "value": "Published"
+        },
+        {
+          "op": "add",
+          "path": "/mailBoxPageInboxFolderTitle",
+          "value": "Inbox"
+        },
+        {
+          "op": "add",
+          "path": "/sentItemsPageInboxFolderTitle",
+          "value": "Sent items"
+        },
+        {
+          "op": "add",
+          "path": "/headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab",
+          "value": "Person"
+        },
+        {
+          "op": "add",
+          "path": "/headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1",
+          "value": "Group"
+        },
+        {
+          "op": "add",
+          "path": "/model/openMemberEditorFab/title",
+          "value": "Edit member."
+        },
+        {
+          "op": "replace",
+          "path": "/mailBoxPageInboxFolderTitle/0",
+          "value": " {1} "
+        },
+        {
+          "op": "replace",
+          "path": "/mailBoxPageInboxFolderTitle/1",
+          "value": "Inbox"
+        },
+        {
+          "op": "replace",
+          "path": "/sentItemsPageInboxFolderTitle/0",
+          "value": " {1} "
+        },
+        {
+          "op": "replace",
+          "path": "/sentItemsPageInboxFolderTitle/1",
+          "value": "Sent items"
+        }
+      ]
+    },
+    "model": {
+      "openMemberEditorFab": {
+        "title": "Edit member."
+      },
+      "sendMessageFab": {
+        "title": "Publish content"
+      },
+      "addSectionButton": {
+        "title": "Embedd text to the message content."
+      },
+      "addVideoButton": {
+        "title": "Embedd video to the message content."
+      },
+      "addImageButton": {
+        "title": "Embedd image to the message content."
+      },
+      "addLinkButton": {
+        "title": "Embedd a link to another message to the message content."
+      },
+      "sendNewContentFab": {
+        "title": "Cancel all changes & create new article."
+      }
+    },
+    "main-menu-label": "Menu",
+    "article-menu-label": "Articles",
+    "mailbox-menu-label": "Mailbox",
+    "members-menu-label": "Network",
+    "about-menu-label": "About",
+    "mainTitle": "Topflavon",
+    "english-language-label": "English",
+    "hungarian-language-label": "Magyar",
+    "polish-language-label": "Polski",
+    "profile-menu-label": "Profile",
+    "logout-label": "Logout",
+    "messagesPagePublicFolderTitle": "Public",
+    "messagesPageMyContentsFolderTitle": "Drafts",
+    "messagesPagePublishedFolderTitle": "Published",
+    "mailBoxPageInboxFolderTitle": [
+      " {1} ",
+      "Inbox"
+    ],
+    "sentItemsPageInboxFolderTitle": [
+      " {1} ",
+      "Sent items"
+    ],
+    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Person",
+    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Group"
+  },
+  "wonderjam-article-field": {
+    "meta": {
+      "todo": []
+    },
+    "model": {}
+  },
+  "wonderjam-article-form": {
+    "meta": {
+      "todo": []
+    },
+    "model": {}
+  },
+  "wonderjam-article-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/emptyChildrenText",
+          "value": "No content in the folder."
+        }
+      ]
+    },
+    "model": {},
+    "emptyChildrenText": "No content in the folder."
+  },
+  "wonderjam-login-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/model/signinEmailPassword/label",
+          "value": "Password"
+        },
+        {
+          "op": "add",
+          "path": "/rememberMeToggleButtonLabel",
+          "value": "Remember me"
+        },
+        {
+          "op": "add",
+          "path": "/forgottenPasswordTitle",
+          "value": "Forgotten password"
+        },
+        {
+          "op": "add",
+          "path": "/signOnSubmitTitle",
+          "value": "Sign on"
+        },
+        {
+          "op": "add",
+          "path": "/model/signInSubmit/title",
+          "value": "Sign in"
+        }
+      ]
+    },
+    "model": {
+      "signinEmailPassword": {
+        "label": "Password"
+      },
+      "signInSubmit": {
+        "title": "Sign in"
+      }
+    },
+    "rememberMeToggleButtonLabel": "Remember me",
+    "forgottenPasswordTitle": "Forgotten password",
+    "signOnSubmitTitle": "Sign on"
+  },
+  "wonderjam-mailbox-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/emptyMailBoxFolderText",
+          "value": "No messages in the folder."
+        },
+        {
+          "op": "add",
+          "path": "/messageItemSenderLabel",
+          "value": "From:"
+        },
+        {
+          "op": "add",
+          "path": "/messageItemReceiverLabel",
+          "value": "To:"
+        }
+      ]
+    },
+    "model": {},
+    "messageItemSenderLabel": "Od",
+    "messageItemReceiverLabel": "Do",
+    "emptyMailBoxFolderText": "Brak wiadomości w folderze."
+  },
+  "wonderjam-member-editor": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/model/newMemberNameLabel/label",
+          "value": "Name"
+        },
+        {
+          "op": "add",
+          "path": "/model/newMemberNameLabel/error-message",
+          "value": "Member name must be specified."
+        },
+        {
+          "op": "add",
+          "path": "/model/newMemberEmailLabel/label",
+          "value": "Email"
+        },
+        {
+          "op": "add",
+          "path": "/model/newMemberEmailLabel/error-message",
+          "value": "Member email must be specified."
+        },
+        {
+          "op": "add",
+          "path": "/model/newMemberParentLabel/label",
+          "value": "Parent member"
+        },
+        {
+          "op": "add",
+          "path": "/model/preferredLanguageLabel/label",
+          "value": "Preferred language"
+        },
+        {
+          "op": "add",
+          "path": "/newMemberTypeUserTitle",
+          "value": "User"
+        },
+        {
+          "op": "add",
+          "path": "/newMemberTypeGroupTitle",
+          "value": "Group"
+        },
+        {
+          "op": "add",
+          "path": "/newMemberTypeAdminTitle",
+          "value": "Admin"
+        }
+      ]
+    },
+    "model": {
+      "newMemberNameLabel": {
+        "label": "Name",
+        "error-message": "Member name must be specified."
+      },
+      "newMemberEmailLabel": {
+        "label": "Email",
+        "error-message": "Member email must be specified."
+      },
+      "newMemberParentLabel": {
+        "label": "Parent member"
+      },
+      "preferredLanguageLabel": {
+        "label": "Preferred language"
+      }
+    },
+    "newMemberTypeUserTitle": "User",
+    "newMemberTypeGroupTitle": "Group",
+    "newMemberTypeAdminTitle": "Admin"
+  },
+  "wonderjam-members-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/emptyChildrenText",
+          "value": "No children."
+        }
+      ]
+    },
+    "model": {},
+    "emptyChildrenText": "No children."
+  },
+  "wonderjam-profile-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/model/preferredLanguageLabel/label",
+          "value": "Preferred language"
+        },
+        {
+          "op": "add",
+          "path": "/changingDeviceButton",
+          "value": "Changing device"
+        },
+        {
+          "op": "add",
+          "path": "/underDevelopmentText",
+          "value": "Under development ..."
+        }
+      ]
+    },
+    "model": {
+      "preferredLanguageLabel": {
+        "label": "Preferred language"
+      }
+    },
+    "changingDeviceButton": "Changing device",
+    "underDevelopmentText": "Under development ..."
+  },
+  "wonderjam-recipients-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/emptyChildrenText",
+          "value": "No children."
+        }
+      ]
+    },
+    "model": {},
+    "emptyChildrenText": "No children."
+  },
+  "wonderjam-share-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/model/contentTitleInput/label",
+          "value": "Title"
+        },
+        {
+          "op": "add",
+          "path": "/model/parentDdLabel/label",
+          "value": "Parent"
+        },
+        {
+          "op": "add",
+          "path": "/draftIndicator",
+          "value": "Draft"
+        },
+        {
+          "op": "add",
+          "path": "/fileContentTabLabel",
+          "value": "Upload"
+        },
+        {
+          "op": "add",
+          "path": "/folderContentTabLabel",
+          "value": "Folder"
+        },
+        {
+          "op": "add",
+          "path": "/articleContentTabLabel",
+          "value": "Assemble"
+        },
+        {
+          "op": "add",
+          "path": "/uploadFileText",
+          "value": "Choose File"
+        },
+        {
+          "op": "add",
+          "path": "/propertiesCardTitle",
+          "value": " Select articles. "
+        }
+      ]
+    },
+    "model": {
+      "contentTitleInput": {
+        "label": "Title"
+      },
+      "parentDdLabel": {
+        "label": "Parent"
+      }
+    },
+    "draftIndicator": "Draft",
+    "fileContentTabLabel": "Upload",
+    "folderContentTabLabel": "Folder",
+    "articleContentTabLabel": "Assemble",
+    "uploadFileText": "Choose File",
+    "propertiesCardTitle": " Select articles. "
+  },
+  "wonderjam-view401": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/text_1",
+          "value": " Oops you hit a forbidden (401) page. Please "
+        },
+        {
+          "op": "add",
+          "path": "/a_2",
+          "value": "sign in"
+        },
+        {
+          "op": "add",
+          "path": "/text_3",
+          "value": " as admin. "
+        }
+      ]
+    },
+    "model": {},
+    "text_1": " Oops you hit a forbidden (401) page. Please ",
+    "a_2": "sign in",
+    "text_3": " as admin. "
+  },
+  "wonderjam-view404": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/text_1",
+          "value": " Oops you hit a 404. "
+        },
+        {
+          "op": "add",
+          "path": "/a_2",
+          "value": "Head back to home."
+        }
+      ]
+    },
+    "model": {},
+    "text_1": " Oops you hit a 404. ",
+    "a_2": "Head back to home."
+  },
+  "bundle": true
+}

@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/text_1",
+        "value": " Oops you hit a forbidden (401) page. Please "
+      },
+      {
+        "op": "add",
+        "path": "/a_2",
+        "value": "sign in"
+      },
+      {
+        "op": "add",
+        "path": "/text_3",
+        "value": " as admin. "
+      }
+    ]
+  },
+  "model": {},
+  "text_1": " Oops you hit a forbidden (401) page. Please ",
+  "a_2": "sign in",
+  "text_3": " as admin. "
+}

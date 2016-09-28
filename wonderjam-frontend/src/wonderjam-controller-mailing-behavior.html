@@ -1,0 +1,79 @@
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+
+<script>
+    (function () {
+        'use strict';
+
+        window.WonderjamAppBehaviors = window.WonderjamAppBehaviors || {};
+
+        /**
+         * Publisher controller behavior,
+         *
+         * @polymerBehavior
+         */
+        WonderjamAppBehaviors.ControllerMailingBehaviorImpl = {
+            properties: {
+                /**
+                 * Selected folder on the mailbox.
+                 *
+                 * @type {String}
+                 */
+                selectedMailBoxFolder: {
+                    type: String,
+                    notify: true,
+                    value: 'inbox'
+                },
+                mailBoxModel: {
+                    type: Array,
+                    notify: true,
+                    value: []
+                },
+                recipientSelectionMode: {
+                    type: String,
+                    notify: true,
+                    value: 'person'
+                },
+                recipientsModel: {
+                    type: Array,
+                    notify: true
+                }
+            },
+            listeners: {
+                'pick-recipients': 'onOpenRecipientsPage'
+            },
+            onOpenRecipientsPage: function () {
+                this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
+                this.set('page', 'recipients-view');
+            },
+            onSendMessage: function () {
+                this.$.messageSendAjax.generateRequest();
+            },
+            onMessageSendResponse: function () {
+               this.fire('feedback', { message: 'Message sent successfully.'}); 
+               this.set('page', 'mailbox-view');
+            },
+            onMessageSendError: function () {
+               this.fire('feedback', { message: 'Sending message failed.'}); 
+            },
+            onNavigateToMessage: function () {
+                this.fire('page-go', {page: 'send-view'});
+            },
+            onBackToMailBox: function () {
+                this.fire('page-go', {page: 'mailbox-view'});
+            },
+            onBackToMessageEditor: function (event, detail) {
+                this.set('page', 'send-view');
+            },
+            onApplyRecipients: function (event, detail) {
+                this.set('page', 'send-view');
+            }
+        };
+
+
+        WonderjamAppBehaviors.ControllerMailingBehavior = [
+            PlutoniumBehaviors.WidgetBoundBehavior,
+            WonderjamAppBehaviors.ControllerMailingBehaviorImpl
+        ];
+
+    })();
+</script>

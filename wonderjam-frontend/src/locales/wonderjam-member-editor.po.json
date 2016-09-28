@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/model/newMemberNameLabel/label",
+        "value": "Name"
+      },
+      {
+        "op": "add",
+        "path": "/model/newMemberNameLabel/error-message",
+        "value": "Member name must be specified."
+      },
+      {
+        "op": "add",
+        "path": "/model/newMemberEmailLabel/label",
+        "value": "Email"
+      },
+      {
+        "op": "add",
+        "path": "/model/newMemberEmailLabel/error-message",
+        "value": "Member email must be specified."
+      },
+      {
+        "op": "add",
+        "path": "/model/newMemberParentLabel/label",
+        "value": "Parent member"
+      },
+      {
+        "op": "add",
+        "path": "/model/preferredLanguageLabel/label",
+        "value": "Preferred language"
+      },
+      {
+        "op": "add",
+        "path": "/newMemberTypeUserTitle",
+        "value": "User"
+      },
+      {
+        "op": "add",
+        "path": "/newMemberTypeGroupTitle",
+        "value": "Group"
+      },
+      {
+        "op": "add",
+        "path": "/newMemberTypeAdminTitle",
+        "value": "Admin"
+      }
+    ]
+  },
+  "model": {
+    "newMemberNameLabel": {
+      "label": "Name",
+      "error-message": "Member name must be specified."
+    },
+    "newMemberEmailLabel": {
+      "label": "Email",
+      "error-message": "Member email must be specified."
+    },
+    "newMemberParentLabel": {
+      "label": "Parent member"
+    },
+    "preferredLanguageLabel": {
+      "label": "Preferred language"
+    }
+  },
+  "newMemberTypeUserTitle": "User",
+  "newMemberTypeGroupTitle": "Group",
+  "newMemberTypeAdminTitle": "Admin"
+}

@@ -1,0 +1,46 @@
+<link rel="import" href="plutonium-app-secure-behavior.html">
+
+
+<script>
+    (function () {
+        'use strict';
+
+        window.PlutoniumBehaviors = window.PlutoniumBehaviors || {};
+
+        /**
+         * Provides application toasing behavior with `<paper-toast id="mainToast">`.
+         *
+         * @polymerBehavior
+         */
+        PlutoniumBehaviors.RoleBehaviorImpl = {
+            properties: {
+                role: {
+                    type: String,
+                    notify: true,
+                    reflectToAttribute: true
+                },
+                hasPrivileges: {
+                    type: Boolean,
+                    notify: true,
+                    reflectToAttribute: true,
+                    value: false
+                }
+            },
+            observers: [
+                'privilegesAddedOrRemoved(role, user.authorities.*)'
+            ],
+            privilegesAddedOrRemoved: function (role, splice) {
+                if (splice === undefined || splice === null)
+                    return;
+                console.log(this.is, '[', role, '] changed roles: ', JSON.stringify(splice.value));
+                this.hasPrivileges = (splice.value.indexOf(role) > -1);
+            }
+
+        };
+        
+        PlutoniumBehaviors.RoleBehavior = [
+            PlutoniumBehaviors.AppSecurityBehavior,
+            PlutoniumBehaviors.RoleBehaviorImpl
+        ]
+    })();
+</script>

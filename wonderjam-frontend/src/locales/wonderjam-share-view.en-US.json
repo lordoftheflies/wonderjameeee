@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/model/contentTitleInput/label",
+        "value": "Title"
+      },
+      {
+        "op": "add",
+        "path": "/model/parentDdLabel/label",
+        "value": "Parent"
+      },
+      {
+        "op": "add",
+        "path": "/draftIndicator",
+        "value": "Draft"
+      },
+      {
+        "op": "add",
+        "path": "/fileContentTabLabel",
+        "value": "Upload"
+      },
+      {
+        "op": "add",
+        "path": "/folderContentTabLabel",
+        "value": "Folder"
+      },
+      {
+        "op": "add",
+        "path": "/articleContentTabLabel",
+        "value": "Assemble"
+      },
+      {
+        "op": "add",
+        "path": "/uploadFileText",
+        "value": "Choose File"
+      },
+      {
+        "op": "add",
+        "path": "/propertiesCardTitle",
+        "value": " Select articles. "
+      }
+    ]
+  },
+  "model": {
+    "contentTitleInput": {
+      "label": "Title"
+    },
+    "parentDdLabel": {
+      "label": "Parent"
+    }
+  },
+  "draftIndicator": "Draft",
+  "fileContentTabLabel": "Upload",
+  "folderContentTabLabel": "Folder",
+  "articleContentTabLabel": "Assemble",
+  "uploadFileText": "Choose File",
+  "propertiesCardTitle": " Select articles. "
+}

@@ -1,0 +1,27 @@
+<script>
+    (function () {
+        'use strict';
+
+        window.PlutoniumBehaviors = window.PlutoniumBehaviors || {};
+
+        /**
+         * Provides application layout with `<app-header-layout id="headerLayout" has-scrolling-region>`.
+         *
+         * @polymerBehavior
+         */
+        PlutoniumBehaviors.AppLayoutBehavior = {
+            listeners: {
+                'reset-layout': '_resetLayout'
+            },
+            /**
+             * Page changed event handler.
+             * @param {String} page
+             * @returns {undefined}
+             */
+            _resetLayout: function() {
+//                  this.$.mainLayout.resetLayout();
+            }
+
+        };
+    })();
+</script>

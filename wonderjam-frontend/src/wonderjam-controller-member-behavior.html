@@ -1,0 +1,78 @@
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+
+<script>
+    (function () {
+        'use strict';
+
+        window.WonderjamAppBehaviors = window.WonderjamAppBehaviors || {};
+
+        /**
+         * Member controller behavior,
+         *
+         * @polymerBehavior
+         */
+        WonderjamAppBehaviors.ControllerMemberBehaviorImpl = {
+            properties: {
+                /**
+                 * Request parameter for member parents.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                genocideRequestParams: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Request parameters for member children.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                childrenRequestParams: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Sub-route parameters for members page.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                memberSubrouteData: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Array of selected member parents.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                parents: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Array of selected member children.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                children: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            observers: [
+                'observeMemberSubrouteData(memberSubrouteData)'
+            ],
+            /**
+             * Member page sub routing observer.
+             * @param {type} subroute
+             * @returns {undefined}
+             */
+            observeMemberSubrouteData: function (subroute) {
+                console.log(this.is, 'observe route', subroute);
+            }
+
+        };
+
+
+        WonderjamAppBehaviors.ControllerMemberBehavior = [
+            PlutoniumBehaviors.WidgetBoundBehavior,
+            WonderjamAppBehaviors.ControllerMemberBehaviorImpl
+        ];
+
+    })();
+</script>

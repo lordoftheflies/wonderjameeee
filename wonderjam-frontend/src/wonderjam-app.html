@@ -1,0 +1,589 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/polymer-cookie/polymer-cookie.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-fab-transitions/paper-fab-speed-dial.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../bower_components/plutonium-avatar-button/plutonium-avatar-button.html">
+<link rel="import" href="../bower_components/plutonium-language-picker/plutonium-language-picker.html">
+<link rel="import" href="../bower_components/plutonium-language-picker/plutonium-language-item.html">
+
+<link rel="import" href="wonderjam-icons.html">
+
+<link rel="import" href="plutonium-app-routing-behavior.html">
+<link rel="import" href="plutonium-app-toasting-behavior.html">
+<link rel="import" href="plutonium-datasource-behavior.html">
+<link rel="import" href="plutonium-role-behavior.html">
+<link rel="import" href="plutonium-app-secure-behavior.html">
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+<link rel="import" href="wonderjam-controller-article-behavior.html">
+<link rel="import" href="wonderjam-controller-publisher-behavior.html">
+<link rel="import" href="wonderjam-controller-member-behavior.html">
+<link rel="import" href="wonderjam-controller-manager-behavior.html">
+<link rel="import" href="wonderjam-controller-mailing-behavior.html">
+
+
+<link rel="import" href="../bower_components/plutonium-cms/plutonium-cms.html">
+
+<dom-module id="wonderjam-app">
+    <template>
+        <style include="iron-flex">
+            :host {
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
+
+                display: block;
+            }
+
+            app-header {
+                color: #fff;
+                background-color: var(--app-primary-color);
+            }
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            .drawer-list {
+                margin: 0 20px;
+            }
+
+            .drawer-list a {
+                display: block;
+
+                padding: 0 16px;
+
+                text-decoration: none;
+
+                color: var(--app-secondary-color);
+
+                line-height: 40px;
+            }
+
+            .drawer-list a.iron-selected {
+                color: black;
+
+                font-weight: bold;
+            }
+
+            .floating-action-bar {
+                position: absolute;
+                display: inline-block !important;
+                /*bottom: 0px;*/
+                right: 24px;
+                bottom: 24px;
+                /*margin-top: -24px;*/
+                /*left: -56px;*/
+            }
+
+            paper-fab {
+                margin-left: 8px;
+            }
+
+
+            a.link {
+                text-decoration: none;
+                color: white;
+                font-size: 14px;
+                @apply(--layout-horizontal);
+                @apply(--layout-center-center);
+
+            }
+
+            app-header[shadow] #mainTitle {
+                text-align: left;
+            }
+            app-header #mainTitle {
+                text-align: center;
+            }
+        </style>
+        <!--Get profile-->
+        <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
+                   last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
+                   handle-as="json" content-type="application/json"></iron-ajax>
+
+        <!--Get all members.-->
+        <iron-ajax id="recipientsAjax" url="[[apiUrl]]/addressbook/[[accountId]]/contacts" 
+                   last-response="{{recipientsModel}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
+        <!--Get all members.-->
+        <iron-ajax id="possibleParentsIronAjax" url="[[apiUrl]]/addressbook/all" 
+                   last-response="{{possibleParents}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[authenticated]]"></iron-ajax>
+        <!--Get network members.-->
+        <iron-ajax id="contactsAjax" url="[[apiUrl]]/addressbook/[[accountId]]/contacts" 
+                   last-response="{{contacts}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
+        <!--Save member-->
+        <iron-ajax id="memberSaveAjax" url="[[apiUrl]]/addressbook/save"
+                   body="{{memberModel}}" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+
+        <!--Get article info-->
+        <iron-ajax id="rootTocAjax" url="[[apiUrl]]/content-management/toc/info" 
+                   params="[[infoRequestParams]]" last-response="{{rootTocModel}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[infoRequestParams]]"></iron-ajax>
+        <!--Get parent articles-->
+        <iron-ajax id="parentTocAjax" url="[[apiUrl]]/content-management/toc/path" 
+                   params="[[tocRequestParams]]" last-response="{{parentTocModel}}" on-response="onParentTocAjaxResponse" on-error="onParentTocAjaxError" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[tocRequestParams]]"></iron-ajax>
+        <!--Get child contents of an article-->
+        <iron-ajax id="childTocAjax" url="[[apiUrl]]/content-management/toc" 
+                   params="[[tocRequestParams]]" last-response="{{childTocModel}}" on-response="onChildTocAjaxResponse" on-error="onChildTocAjaxError" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[tocRequestParams]]"></iron-ajax>
+
+        <!--Get mailbox folder-->
+        <iron-ajax id="mailBoxAjax" url="[[apiUrl]]/mailbox/[[accountId]]/[[selectedMailBoxFolder]]" 
+                   last-response="{{mailBoxModel}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
+
+        <iron-ajax id="articleAjax" url="[[apiUrl]]/content-management/article" 
+                   params="[[articleAjaxParams]]" last-response="{{articleDetailsModel}}" 
+                   on-response="onArticleAjaxResponse" on-error="onArticleAjaxError" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[articleDetailsActive]]"></iron-ajax>
+
+        <!--Get member parents.-->
+        <iron-ajax id="genocideIronAjax" url="[[apiUrl]]/addressbook/genocide" 
+                   params="[[genocideRequestParams]]" last-response="{{parents}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[genocideRequestParams.childId]]"></iron-ajax>
+        <!--Get member children.-->
+        <iron-ajax id="childrenIronAjax" url="[[apiUrl]]/addressbook/children" 
+                   params="[[childrenRequestParams]]" last-response="{{memberChildren}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[childrenRequestParams.parentId]]"></iron-ajax>
+        <!--Get profile-->
+        <iron-ajax id="memberDetailsAjax" url="[[apiUrl]]/addressbook/[[memberDetailsSubrouteData.accountId]]/profile" 
+                   last-response="{{memberDetailsModel}}" headers="[[headers]]" 
+                   auto="[[memberDetailsSubrouteData.accountId]]"></iron-ajax>
+
+        <!--Share content-->
+        <iron-ajax id="shareAjax" url="[[apiUrl]]/content-management/[[accountId]]/save"
+                   body="{{editedContentModel}}" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+
+        <!--Publish content-->
+        <iron-ajax id="publisherAjax" url="[[apiUrl]]/content-management/publish" 
+                   body="{{publisherModel}}" on-response="onPublisherAjaxResponse" on-error="onPublisherAjaxError" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        <!--Unpublish content-->
+        <iron-ajax id="unpublisherAjax" url="[[apiUrl]]/content-management/unpublish" 
+                   body="{{publisherModel}}" on-response="onUnpublisherAjaxResponse" on-error="onUnpublisherAjaxError" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        <!--Get locales-->
+        <iron-ajax id="localesAjax" url="[[apiUrl]]/localization/locales" 
+                   last-response="{{locales}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
+
+        <!--Change language-->
+        <iron-ajax id="changeLanguageAjax" url="[[apiUrl]]/localization/change" 
+                   body="{{changeLanguageModel}}" on-response="handleChangeLanguageResponse" on-error="handleChangeLanguageError" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        <iron-ajax id="parentCandidatesAjax" url="[[apiUrl]]/content-management/candidates/parent" 
+                   last-response="{{parentCandidates}}" headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
+
+        <!--Send message-->
+        <iron-ajax id="messageSendAjax" url="[[apiUrl]]/mailbox/[[accountId]]/send"
+                   body="{{messageSendModel}}" on-response="onMessageSendResponse" on-error="onMessageSendError" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        <!--Get token-->
+        <!--        <iron-ajax id="sessionAjax" url="[[apiUrl]]/authentication/session?token=[[accountId]]" 
+                           last-response="{{session}}" 
+                           auto></iron-ajax>-->
+        <iron-ajax id="tokenAjax" url="[[apiUrl]]/token" 
+                   last-response="{{token}}"  headers="[[headers]]"
+                   handle-as="json" content-type="application/json"></iron-ajax>
+        <iron-ajax id="userAjax" url="[[apiUrl]]/user" 
+                   last-response="{{user}}"  headers="[[headers]]"
+                   handle-as="json" content-type="application/json" auto="[[rememberMe]]"></iron-ajax>
+        <!--handle-as="json" content-type="application/json"  auto="[[authenticated]]"></iron-ajax>-->
+        <iron-ajax id="logoutAjax" url="[[apiUrl]]/logout" 
+                   headers="[[headers]]" on-response="onLogoutResponse" on-error="onLogoutError"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        <!--<iron-ajax id="rootArticlesAjax" url="http://localhost:8081/cms/root" headers="[[headers]]" last-response="{{rootArticlesModel}}" auto="[[token]]"></iron-ajax>-->
+        <!--<iron-ajax id="rootArticlesAjax" url="http://localhost:8081/cms/root" headers="[[headers]]" last-response="{{rootArticlesModel}}" auto="false"></iron-ajax>-->
+        <!--Routing-->
+        <app-location route="{{route}}" use-hash-as-path query-params="{{queryParams}}"></app-location>
+        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+                
+        
+        <app-route route="{{route}}" pattern="/article-view/:contentId" data="{{pageRouteData}}"></app-route>
+        <app-route route="{{route}}" pattern="/article-section/:pageId" data="{{articleSectionRouteData}}"></app-route>
+        <!--        <app-route route="{{route}}" pattern="/registrate" data="{{activationData}}"></app-route>
+                <app-route route="{{route}}" pattern="/login"></app-route>
+        <!--<app-route route="{{route}}" pattern="/article-section" data="{{contentSubrouteData}}"></app-route>-->
+        <!--        <app-route route="{{route}}" pattern="/article-section/:contentId" data="{{contentDetailsSubrouteData}}"></app-route>
+                <app-route route="{{route}}" pattern="/article-view/:contentId" data="{{contentSubrouteData}}"></app-route>
+                <app-route route="{{route}}" pattern="/members-view/:memberId" data="{{memberSubrouteData}}"></app-route>
+                <app-route route="{{route}}" pattern="/member-editor/:accountId" data="{{memberDetailsSubrouteData}}"></app-route>-->
+
+        <!--Cookies-->
+        <!--<polymer-cookie id="rememberMeCookie" name="rememberMe" value="{{rememberMe}}" time="1" format="d"></polymer-cookie>-->
+        <polymer-cookie id="rememberMeCookie" name="rememberMe" value="{{rememberMe}}" time="1" format="d"></polymer-cookie>
+        <!--<polymer-cookie id="tokenCookie" name="accountId" value="{{accountId}}" time="1" format="d" auto-set></polymer-cookie>-->
+        <polymer-cookie
+            id="xsrfCookie"
+            name="XSRF-TOKEN"
+            value="{{xsrfToken}}" auto-set>
+        </polymer-cookie>
+        <polymer-cookie
+            id="sessionCookie"
+            name="SESSION"
+            value="{{session}}">
+        </polymer-cookie>
+        <polymer-cookie
+            id="rememberMeCookie"
+            name="REMEMBERME">
+        </polymer-cookie>
+        <!--
+        -->
+        <!--Layout-->
+        <app-drawer-layout id="mainLayout" fullbleed force-narrow="[[!authenticated]]">
+            <!-- Drawer content -->
+            <app-drawer>
+                <app-toolbar text-id="main-menu-label">Menu</app-toolbar>
+                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                    <a text-id="article-menu-label" name="article-view" href="#/article-view/ROOT">Articles</a>
+                    <a text-id="mailbox-menu-label" name="mailbox-view" href="#/mailbox-view/[[selectedMailBoxFolder]]">Mailbox</a>
+                    <a text-id="members-menu-label" name="members-view" href="#/members-view/[[accountId]]" hidden="{{!hasPrivileges}}">Network</a>
+                    <a text-id="about-menu-label" name="about-view" href="#/about-view">About</a>
+                </iron-selector>
+            </app-drawer>
+
+            <!-- Main content -->
+            <app-header-layout id="headerLayout" has-scrolling-region>
+
+                <app-header fixed shadow="[[authenticated]]">
+                    <app-toolbar sticky>
+                        <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden="[[!authenticated]]"></paper-icon-button>
+                        <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
+                        <plutonium-language-picker>
+                            <!--<plutonium-language-item lang="en-US" text-id="english-language-label">English (US)</plutonium-language-item>-->
+                            <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
+                            <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
+                            <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
+                        </plutonium-language-picker>
+                        <plutonium-avatar-button 
+                            hidden="[[!authenticated]]"
+                            display-name-attribute="userName" display-unique-attribute="userName" user="[[user]]">
+                            <a href="#/profile-view" class="menu">
+                                <paper-item class="menu">
+                                    <iron-icon icon="account-circle" item-icon></iron-icon>
+                                    <span  text-id="profile-menu-label">Profile</span>
+                                </paper-item>
+                            </a>
+                            <a href="#" on-tap="onLogout" class="menu">
+                                <paper-item class="menu">
+                                    <iron-icon icon="markunread-mailbox" item-icon></iron-icon>
+                                    <span  text-id="logout-label">Logout</span>
+                                </paper-item>
+                            </a>
+                        </plutonium-avatar-button>
+                    </app-toolbar>
+                    <app-toolbar>
+                        <iron-pages   hidden="{{!hasPrivileges}}"
+                                      selected="[[page]]"
+                                      attr-for-selected="name"
+                                      fallback-selection="none"
+                                      class="flex"
+                                      role="header">
+                            <div name="none"></div>
+                            <!--hidden="[[!session.powerUser]]"-->
+                            <paper-tabs name="article-view" data-route="content-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
+                                <paper-tab text-id="messagesPagePublicFolderTitle" name="public">Public</paper-tab>
+                                <paper-tab text-id="messagesPageMyContentsFolderTitle" name="drafts">Drafts</paper-tab>
+                                <paper-tab text-id="messagesPagePublishedFolderTitle" name="published">Published</paper-tab>
+                            </paper-tabs>
+
+                            <paper-tabs name="mailbox-view" data-route="mailbox-view"  attr-for-selected="name" selected="{{selectedMailBoxFolder}}" style="width: 100%;" autoselect>
+                                <paper-tab text-id="mailBoxPageInboxFolderTitle" name="inbox" link>
+                                    <a href="#/mailbox-view/inbox" class="link" tabindex="-1">Inbox</a>
+                                </paper-tab> 
+                                <paper-tab text-id="sentItemsPageInboxFolderTitle" name="outbox" link>
+                                    <a href="#/mailbox-view/outbox" class="link" tabindex="-1">Sent items</a>
+                                </paper-tab>
+                            </paper-tabs>
+
+                            <paper-tabs selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" name="members-view" href="#/members-view/[[accountId]]">
+                                <template is="dom-repeat" items="[[parents]]">
+                                    <paper-tab name="[[item.id]]" role="[[item.role]]" link>
+                                        <iron-icon class="end-justified" icon="wonderjam-icons:[[getIcon(item.role)]]" href="#/members-view/{{item.id}}"></iron-icon>
+                                        <a class="member tab link" href="#/members-view/{{item.id}}">[[item.name]]</a>
+                                    </paper-tab>
+                                </template>
+                            </paper-tabs>
+                            <paper-tabs class="bottom flex" selected="{{recipientSelectionMode}}" attr-for-selected="name" name="recipients-view">
+                                <paper-tab name="person">Person</paper-tab>
+                                <paper-tab name="group">Group</paper-tab>
+                            </paper-tabs>
+
+
+                            <paper-tabs selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" name="article-section" href="#/members-view/[[accountId]]">
+                                <!--<template is="dom-repeat" items="[[parents]]">-->
+                                <paper-tab name="[[item.id]]" role="[[item.role]]" link>
+                                    <!--<iron-icon class="end-justified" icon="wonderjam-icons:[[getIcon(item.role)]]" href="#/members-view/{{item.id}}"></iron-icon>-->
+                                    <a class="member tab link" href="#/members-view/{{item.id}}">[[contentChildrenModel.title]]</a>
+                                </paper-tab>
+                                <!--</template>-->
+                            </paper-tabs>
+                        </iron-pages>
+                    </app-toolbar>
+                </app-header>
+
+
+
+                <iron-pages
+                    selected="[[page]]"
+                    attr-for-selected="name"
+                    fallback-selection="view404"
+                    role="main">
+                    <wonderjam-login-view 
+                        name="login-view"
+                        signed-in="{{authenticated}}"
+                        user="{{user}}"
+                        authentication-url="[[apiUrl]]/login">
+                    </wonderjam-login-view>
+                    <wonderjam-logon-view 
+                        name="logon-view"
+                        route="{{subroute}}"
+                        api-url="[[apiUrl]]"
+                        headers="[[headers]]"
+                        signed-in="{{authenticated}}"
+                        registration-url="[[apiUrl]]/authentication/signon">
+                    </wonderjam-logon-view>
+
+                    <wonderjam-about-view 
+                        name="about-view">
+                    </wonderjam-about-view>
+                    <wonderjam-article-view 
+                        name="article-view"
+                        account-id="[[accountId]]"
+                        selected-content-folder="[[selectedContentFolder]]"
+                        content-children-model="{{childTocModel}}">
+                    </wonderjam-article-view>
+                    <wonderjam-article-section
+                        name="article-section"
+                        article-details-model="[[articleDetailsModel]]"
+                        page-id="{{articleSectionRouteData.pageId}}"
+                        article-ajax-params="{{articleAjaxParams}}">
+                    </wonderjam-article-section>
+                    <wonderjam-mailbox-view 
+                        name="mailbox-view"
+                        account-id="[[accountId]]"
+                        mail-box-model="{{mailBoxModel}}"
+                        selected-mail-box-folder="{{selectedMailBoxFolder}}">
+
+                        <!---->
+                    </wonderjam-mailbox-view>
+                    <wonderjam-members-view 
+                        id="membersView"
+                        name="members-view"
+                        genocide-request-params="{{genocideRequestParams}}"
+                        children-request-params="{{childrenRequestParams}}"
+                        account-id="[[accountId]]" 
+                        parents="[[parents]]"
+                        member-children="[[memberChildren]]"
+                        selected-name="{{selectedName}}"
+                        selected-role="{{selectedRole}}"
+                        selected-account-id="{{memberSubrouteData.memberId}}">
+                    </wonderjam-members-view>
+                    <wonderjam-member-editor
+                        id="memberEditor"
+                        name="member-editor"
+                        headers="[[headers]]"
+                        action="[[apiUrl]]/addressbook/save"
+                        locales="[[locales]]"
+                        model="{{memberDetailsModel}}"
+                        possible-parents="[[possibleParents]]">
+                    </wonderjam-member-editor>
+                    <wonderjam-recipients-view
+                        id="recipientsView"
+                        name="recipients-view"
+                        selection-mode="[[recipientSelectionMode]]"
+                        selected-item-ids="{{recipients}}"
+                        recipients-model="{{recipientsModel}}">
+                    </wonderjam-recipients-view>
+                    <wonderjam-profile-view 
+                        name="profile-view"
+                        locales="[[locales]]"
+                        profile="[[profile]]"
+                        changeLanguageModel="[[changeLanguageModel]]"
+                        account-id="[[accountId]]">
+                    </wonderjam-profile-view>
+                    <wonderjam-send-view 
+                        name="send-view"
+                        items="{{contacts}}" 
+                        selected-item-ids="{{recipients}}"
+                        message-send-model="{{messageSendModel}}">
+                    </wonderjam-send-view>
+                    <wonderjam-share-view 
+                        id="shareView"
+                        name="share-view" 
+                        route="{{subroute}}"
+                        api-url="[[apiUrl]]"
+                        headers="[[headers]]"
+                        account-id="[[accountId]]" 
+                        selected-item-ids="{{recipients}}"
+                        selected-meta-action="{{selectedMetaAction}}">
+                    </wonderjam-share-view>
+                    <wonderjam-view401 
+                        name="view401">
+                    </wonderjam-view401>
+                    <wonderjam-view404 
+                        name="view404">
+                    </wonderjam-view404>
+                </iron-pages>
+
+            </app-header-layout>
+            <div class="floating-action-bar">
+                <iron-pages
+                    selected="[[page]]"
+                    attr-for-selected="name">
+                    <div name="article-view" class="layout horizontal wrap">
+                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor" hidden="{{!hasPrivileges}}"></paper-fab>
+                    </div>
+                    <div name="article-section" class="layout horizontal wrap">
+                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToEditor"></paper-fab>
+                    </div>
+                    <div name="mailbox-view" class="layout horizontal wrap">
+                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToMessage"></paper-fab>
+                    </div>
+                    <div name="member-editor" class="layout horizontal wrap">
+                        <paper-fab mini id="newMemberDialogCancelButton" icon="wonderjam-icons:close" on-tap="onCancelMemberEditor"></paper-fab>
+                        <paper-fab mini id="newMemberDialogCreateAndRepeatButton" icon="wonderjam-icons:add" on-tap="onCreateMemberRepeat"></paper-fab>
+                        <paper-fab id="newMemberDialogCreateButton" icon="wonderjam-icons:save" on-tap="onCreateMember"></paper-fab>
+                    </div>
+                    <div name="members-view" class="layout horizontal wrap">
+                        <!--<paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToMailBox" title="Back to mailbox" id="sendMessageFab"></paper-fab>-->
+                        <paper-fab icon="wonderjam-icons:edit" mini on-tap="onOpenMemberEditor" title="Edit member." id="openMemberEditorFab"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:add" on-tap="onOpenCreateMember"></paper-fab>
+                        <template is="dom-if" if="[[!isMeIndicator]]">
+                            <paper-fab icon="wonderjam-icons:remove" on-tap="onDeleteMember"></paper-fab>
+
+                            <paper-fab icon="icons:send" on-tap="onSendToMember"></paper-fab>
+                            <template is="dom-if" if="[[isUserIndicator]]">
+                                <paper-fab icon="wonderjam-icons:star" on-tap="onPromoteMember"></paper-fab>
+                            </template>
+                            <template is="dom-if" if="[[isAdminIndicator]]">
+                                <paper-fab icon="wonderjam-icons:star-border" on-tap="onDemoteMember"></paper-fab>
+                            </template>
+                        </template>
+
+                    </div>
+                    <div name="recipients-view" class="layout horizontal wrap">
+                        <paper-fab icon="wonderjam-icons:close" mini on-tap="onBackToMessageEditor"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:accept" on-tap="onApplyRecipients"></paper-fab>
+                    </div>
+                    <div name="send-view" class="layout horizontal wrap">
+                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToMailBox" title="Back to mailbox" id="sendMessageFab"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:send" on-tap="onSendMessage" title="Publish content" id="sendMessageFab"></paper-fab>
+                    </div>
+                    <div name="share-view" class="layout horizontal wrap">
+                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
+
+                        <paper-fab icon="wonderjam-icons:save" on-tap="onShare" title="Publish content" id="sendMessageFab"></paper-fab>
+
+                        <paper-fab-speed-dial direction="top" class="bottom-right">
+                            <paper-fab icon="add" class="dropdown-trigger"></paper-fab>
+                            <div class="dropdown-content">
+                                <paper-fab id="addSectionButton" mini on-tap="onAddSection" icon="wonderjam-icons:text" class="minor-action-fab" title="Embedd text to the message content."></paper-fab>
+                                <paper-fab id="addVideoButton" mini on-tap="onEmbedVideo" icon="wonderjam-icons:video" class="minor-action-fab" title="Embedd video to the message content."></paper-fab>
+                                <paper-fab id="addImageButton" mini on-tap="onEmbedImage" icon="wonderjam-icons:image"  class="minor-action-fab" title="Embedd image to the message content."></paper-fab>
+                                <paper-fab id="addLinkButton" mini on-tap="onEmbedLink" icon="wonderjam-icons:link" class="minor-action-fab" title="Embedd a link to another message to the message content."></paper-fab>
+                            </div>
+                        </paper-fab-speed-dial>
+
+
+                        <paper-fab class="minor-action-fab" icon="wonderjam-icons:send" on-tap="onNavigateToMessage" title="Publish content" id="sendMessageFab"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:delete" on-tap="onClear" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>
+
+                    </div>
+                </iron-pages>
+            </div>
+        </app-drawer-layout>
+
+
+        <paper-toast id="mainToast"></paper-toast>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'wonderjam-app',
+            behaviors: [
+                PlutoniumBehaviors.DatasourceBehavior,
+                PlutoniumBehaviors.AppRoutingBehavior,
+                PlutoniumBehaviors.AppToastingBehavior,
+                PlutoniumBehaviors.AppSecurityBehavior,
+                PlutoniumBehaviors.RoleBehavior,
+                BehaviorsStore.I18nBehavior,
+                WonderjamAppBehaviors.ControllerArticleBehavior,
+                WonderjamAppBehaviors.ControllerPublicherBehavior,
+                WonderjamAppBehaviors.ControllerMemberBehavior,
+                WonderjamAppBehaviors.ControllerManagerBehavior,
+                WonderjamAppBehaviors.ControllerMailingBehavior
+            ],
+            properties: {
+                rootArticlesModel: {
+                    type: Object,
+                    notify: true
+                },
+                authenticated: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                apiUrl: {
+                    value: "/backend"
+//                    value: "http://localhost:8080/backend"
+                }
+            },
+            observers: [
+                'observeRootArticlesModel(rootArticlesModel)'
+            ],
+            ready: function () {
+                this.$.tokenAjax.generateRequest();
+            },
+            onOpenSpeedDial: function () {
+                this.$.asd.open();
+            },
+            getIcon: function (data) {
+                if (data === 'GROUP') {
+                    return 'group';
+                } else if (data === 'USER') {
+                    return 'person';
+                } else if (data === 'ADMIN') {
+                    return 'member';
+                }
+            },
+            observeRootArticlesModel: function (rootArticlesModel) {
+                console.log('KKKKKKKKKKKKKKKKKKKKKK ', rootArticlesModel);
+            }
+        });
+    </script>
+</dom-module>

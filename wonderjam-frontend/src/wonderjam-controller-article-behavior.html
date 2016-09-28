@@ -1,0 +1,181 @@
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+<link rel="import" href="plutonium-app-routing-behavior.html">
+
+<script>
+    (function () {
+        'use strict';
+
+        window.WonderjamAppBehaviors = window.WonderjamAppBehaviors || {};
+
+        /**
+         * Article controller behavior,
+         *
+         * @polymerBehavior
+         */
+        WonderjamAppBehaviors.ControllerArticleBehaviorImpl = {
+            properties: {
+                /**
+                 * Root article.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                rootModel: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Array for parent articles path.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                parentModel: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Array for article content chidren.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                contentChildrenModel: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Table of contents request parameters.
+                 * @type {{pageId: String, tag: String, owner: String}}
+                 */
+                tocRequestParams: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Article information request parameters.
+                 * @type {{pageId: String}}
+                 */
+                infoRequestParams: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Article information request parameters.
+                 * @type {{pageId: String}}
+                 */
+                articleAjaxParams: {
+                    type: Object,
+                    notify: true
+                },
+                selectedContentFolder: {
+                    type: String,
+                    notify: true,
+                    value: 'public'
+                },
+                /**
+                 * Sub-route parameters for members page.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                contentSubrouteData: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Sub-route parameters for members page.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                contentDetailsSubrouteData: {
+                    type: Object,
+                    notify: true
+                },
+            },
+            observers: [
+                'observeContentSubrouteData(accountId, pageRouteData.contentId, selectedContentFolder)',
+                'observeArticleDetails(articleSectionRouteData.pageId)'
+            ],
+            listeners: {
+                'article-details': 'onDetails'
+            },
+            /**
+             * Content page sub routing observer.
+             * @param {{contentId: String}} contentSubrouteData
+             * @param {String} selectedContentFolder
+             * @returns {undefined}
+             */
+            observeContentSubrouteData: function (accountId, contentId, selectedContentFolder) {
+                console.log(this.is, 'observe route', selectedContentFolder + '/' + contentId);
+                this.tocRequestParams.pageId = contentId;
+                this.tocRequestParams.tag = selectedContentFolder;
+                this.tocRequestParams.owner = accountId;
+                this.infoRequestParams.pageId = contentId;
+
+                this.fire('fetch-data', {
+                    ids: ['rootTocAjax', 'childTocAjax', 'parentTocAjax']
+                });
+            },
+            observeArticleDetails: function (pageId) {
+                console.log(this.is, 'fetch article details', pageId);
+                if (pageId) {
+                    this.articleAjaxParams = {
+                        pageId: pageId
+                    };
+                    this.fire('fetch-data', {
+                        ids: ['articleAjax']
+                    });
+                }
+            },
+            onDetails: function (event, details) {
+//                this.page = 'article-section';
+//                this.contentSubrouteData.contentId = contentSubrouteData.contentId;
+                this.set('route.path', ((details.type === 'LINKED') ? '/article-view/' : '/article-section/') + details.contentId);
+//                this.set('articleRouteData.pageId', details.contentId);
+//                this.set('page', 'article-section');
+//                this.set('contentDetailsSubrouteData.contentId', contentSubrouteData.contentId);
+
+            },
+            // AJAX HANDLER METHODS
+            /**
+             * Ajax response handler for `childTocAjax` element.
+             */
+            onArticleAjaxResponse: function (event, detail) {
+                console.log(this.is, 'fetched article details for', this.selectedContentFolder + '/' + this.articleSectionRouteData.pageId, ':', detail.response);
+            },
+            /**
+             * Ajax error handler for `childTocAjax` element.
+             */
+            onArticleAjaxError: function (event, detail) {
+
+                console.error(this.is, 'article details fetching failed for', this.selectedContentFolder + '/' + this.articleSectionRouteData.pageId, ':', detail.error);
+            },
+            /**
+             * Ajax response handler for `childTocAjax` element.
+             */
+            onChildTocAjaxResponse: function (event, detail) {
+                console.log(this.is, 'fetched article child contents for', this.selectedContentFolder + '/' + this.pageRouteData.contentId, ':', detail.response);
+            },
+            /**
+             * Ajax error handler for `childTocAjax` element.
+             */
+            onChildTocAjaxError: function (event, detail) {
+                console.error(this.is, 'article child contents fetching failed for', this.selectedContentFolder + '/' + this.pageRouteData.contentId, ':', detail.error);
+            },
+            /**
+             * Ajax response handler for `parentTocAjax` element.
+             */
+            onParentTocAjaxResponse: function (event, detail) {
+                console.log(this.is, 'fetched article parent path for', this.selectedContentFolder + '/' + this.pageRouteData.contentId, ':', detail.response);
+            },
+            /**
+             * Ajax error handler for `parentTocAjax` element.
+             */
+            onParentTocAjaxError: function (event, detail) {
+                console.error(this.is, 'article parent path fetching failed for', this.selectedContentFolder + '/' + this.pageRouteData.contentId, ':', detail.error);
+                this.selectedContentFolder = 'public';
+//                this._showPage401();
+            }
+        };
+
+
+        WonderjamAppBehaviors.ControllerArticleBehavior = [
+            PlutoniumBehaviors.WidgetBoundBehavior,
+            PlutoniumBehaviors.AppRoutingBehavior,
+            WonderjamAppBehaviors.ControllerArticleBehaviorImpl
+        ];
+
+    })();
+</script>

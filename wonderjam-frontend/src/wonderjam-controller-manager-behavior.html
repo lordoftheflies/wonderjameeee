@@ -1,0 +1,216 @@
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+<link rel="import" href="plutonium-app-secure-behavior.html">
+
+
+
+<script>
+    (function () {
+        'use strict';
+
+        window.WonderjamAppBehaviors = window.WonderjamAppBehaviors || {};
+
+        /**
+         * Member controller behavior,
+         *
+         * @polymerBehavior
+         */
+        WonderjamAppBehaviors.ControllerManagerBehaviorImpl = {
+            properties: {
+                /**
+                 * Root article.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                rootModel: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Array for parent articles path.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                parentModel: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Array for article content chidren.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                contentChildrenModel: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Model publisher.
+                 * @type {{}}
+                 */
+                publisherModel: {
+                },
+                /**
+                 * Table of contents request parameters.
+                 * @type {{pageId: String, tag: String, owner: String}}
+                 */
+                tocRequestParams: {
+                    type: Object,
+                    notify: true,
+                    value: {}
+                },
+                /**
+                 * Article information request parameters.
+                 * @type {{pageId: String}}
+                 */
+                infoRequestParams: {
+                    type: Object,
+                    notify: true,
+                    value: {}
+                },
+                /**
+                 * Sub-route parameters for members page.
+                 * @type {{elements: Array<HTMLElement>, level: number}}
+                 */
+                contentSubrouteData: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            observers: [
+                'observeMemberSubrouteData(memberSubrouteData)',
+//                'observeContentSubrouteData(contentSubrouteData, selectedContentFolder)'
+            ],
+            /**
+             * Open member creation dialog.
+             */
+            onOpenMemberEditor: function (event, detail) {
+                this.set('memberDetailsSubrouteData.accountId', this.$.membersView.selectedAccountId);
+                this.set('page', 'member-editor');
+            },
+            onOpenCreateMember: function (event, detail) {
+                this.fire('page-go', {
+                    page: 'member-editor'
+                });
+            },
+            onCreateMember: function(event, details) {
+                this.$.memberEditor.createMember();
+            },
+            onCreateMemberRepeat: function () {
+                this.$.memberEditor.createMemberRepeat();
+            },
+            onCancelMemberEditor: function () {
+                this.$.memberEditor.clear();
+                this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
+                this.set('page', 'members-view');
+            },
+            /**
+             * Ajax response handler for `createMemberAjax` element.
+             */
+            onCreateMemberAjaxResponse: function (event, details) {
+                console.log(this.is, 'member created successfully:', JSON.stringify(details.response));
+                // TODO: move to this
+                this.$.childrenIronAjax.generateRequest();
+                this.$.possibleParentsIronAjax.generateRequest();
+                this.fire('feedback', {
+                    message: 'Member created successfully'
+                });
+            },
+            /**
+             * Ajax error handler for `createMemberAjax` element.
+             */
+            onCreateMemberError: function (event, details) {
+                console.error(this.is, 'create-member error:', JSON.stringify(details.response));
+                this.fire('feedback', {
+                    message: 'Member creation failed.'
+                });
+            },
+            /**
+             * Open member delete dialog.
+             */
+            onOpenDeleteMember: function (event, detail) {
+                this.$.deleteMemberDialog.show();
+            },
+            /**
+             * Ajax response handler for `deleteMemberAjax` element.
+             */
+            onDeleteMemberAjaxResponse: function (event, details) {
+                console.log(this.si, 'member removed successfully:', JSON.stringify(details.response));
+                this.$.networkPage.selectedAccountId = this.session.token;
+//                this.$.childrenIronAjax.generateRequest();
+//                this.$.genocideIronAjax.generateRequest();
+                this.fire('feedback', {
+                    message: 'Member removed successfully.'
+                });
+            },
+            /**
+             * Ajax error handler for `deleteMemberAjax` element.
+             */
+            onDeleteMemberAjaxError: function (event, details) {
+                console.error(this.is, 'remove-member error:', JSON.stringify(details.response));
+                this.fire('feedback', {
+                    message: 'Member removing failed.'
+                });
+            },
+            /**
+             * Open member promote dialog.
+             */
+            onOpenPromoteMember: function (event, detail) {
+                this.$.promotionDialog.show();
+            },
+            /**
+             * Ajax response handler for `promoteMemberAjax` element.
+             */
+            onPromoteMemberAjaxResponse: function (event, details) {
+                console.log(this.is, 'member promoted successfully:', JSON.stringify(details.response));
+//                this.$.childrenIronAjax.generateRequest();
+//                this.$.genocideIronAjax.generateRequest();
+                this.selectedRole = 'ADMIN';
+                this.fire('feedback', {
+                    message: 'Member promoted successfully'
+                });
+            },
+            /**
+             * Ajax error handler for `promoteMemberAjax` element.
+             */
+            onPromoteMemberAjaxError: function (event, details) {
+                console.log(this.is, 'promote-member error:', JSON.stringify(details.response));
+                this.fire('feedback', {
+                    message: 'Member promoting failed.'
+                });
+            },
+            /**
+             * Open member demote dialog.
+             */
+            onOpenDemoteMember: function (event, detail) {
+                this.$.demotionDialog.show();
+            },
+            /**
+             * Ajax response handler for `demoteMemberAjax` element.
+             */
+            onDemoteMemberAjaxResponse: function (event, details) {
+                console.log(this.is, 'member demoted successfully:', JSON.stringify(details.response));
+//                this.$.childrenIronAjax.generateRequest();
+//                this.$.genocideIronAjax.generateRequest();
+                this.selectedRole = 'USER';
+                this.fire('feedback', {
+                    message: 'Member demoted successfully'
+                });
+            },
+            /**
+             * Ajax error handler for `demoteMemberAjax` element.
+             */
+            onDemoteMemberError: function (event, details) {
+                console.log(this.is, 'demote-member error:', JSON.stringify(details.response));
+                this.fire('feedback', {
+                    message: 'Member demoting failed.'
+                });
+            }
+
+        };
+
+
+        WonderjamAppBehaviors.ControllerManagerBehavior = [
+            PlutoniumBehaviors.WidgetBoundBehavior,
+            PlutoniumBehaviors.AppSecurityBehavior,
+            WonderjamAppBehaviors.ControllerManagerBehaviorImpl
+        ];
+
+    })();
+</script>

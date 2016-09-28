@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/model/sendMessageFab/title",
+        "value": "Publish content"
+      },
+      {
+        "op": "add",
+        "path": "/model/addSectionButton/title",
+        "value": "Embedd text to the message content."
+      },
+      {
+        "op": "add",
+        "path": "/model/addVideoButton/title",
+        "value": "Embedd video to the message content."
+      },
+      {
+        "op": "add",
+        "path": "/model/addImageButton/title",
+        "value": "Embedd image to the message content."
+      },
+      {
+        "op": "add",
+        "path": "/model/addLinkButton/title",
+        "value": "Embedd a link to another message to the message content."
+      },
+      {
+        "op": "add",
+        "path": "/model/sendNewContentFab/title",
+        "value": "Cancel all changes & create new article."
+      },
+      {
+        "op": "add",
+        "path": "/main-menu-label",
+        "value": "Menu"
+      },
+      {
+        "op": "add",
+        "path": "/article-menu-label",
+        "value": "Articles"
+      },
+      {
+        "op": "add",
+        "path": "/mailbox-menu-label",
+        "value": "Mailbox"
+      },
+      {
+        "op": "add",
+        "path": "/members-menu-label",
+        "value": "Network"
+      },
+      {
+        "op": "add",
+        "path": "/about-menu-label",
+        "value": "About"
+      },
+      {
+        "op": "add",
+        "path": "/mainTitle",
+        "value": "Topflavon"
+      },
+      {
+        "op": "add",
+        "path": "/english-language-label",
+        "value": "English"
+      },
+      {
+        "op": "add",
+        "path": "/hungarian-language-label",
+        "value": "Magyar"
+      },
+      {
+        "op": "add",
+        "path": "/polish-language-label",
+        "value": "Polski"
+      },
+      {
+        "op": "add",
+        "path": "/profile-menu-label",
+        "value": "Profile"
+      },
+      {
+        "op": "add",
+        "path": "/logout-label",
+        "value": "Logout"
+      },
+      {
+        "op": "add",
+        "path": "/messagesPagePublicFolderTitle",
+        "value": "Public"
+      },
+      {
+        "op": "add",
+        "path": "/messagesPageMyContentsFolderTitle",
+        "value": "Drafts"
+      },
+      {
+        "op": "add",
+        "path": "/messagesPagePublishedFolderTitle",
+        "value": "Published"
+      },
+      {
+        "op": "add",
+        "path": "/mailBoxPageInboxFolderTitle",
+        "value": "Inbox"
+      },
+      {
+        "op": "add",
+        "path": "/sentItemsPageInboxFolderTitle",
+        "value": "Sent items"
+      },
+      {
+        "op": "add",
+        "path": "/headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab",
+        "value": "Person"
+      },
+      {
+        "op": "add",
+        "path": "/headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1",
+        "value": "Group"
+      },
+      {
+        "op": "add",
+        "path": "/model/openMemberEditorFab/title",
+        "value": "Edit member."
+      },
+      {
+        "op": "replace",
+        "path": "/mailBoxPageInboxFolderTitle/0",
+        "value": " {1} "
+      },
+      {
+        "op": "replace",
+        "path": "/mailBoxPageInboxFolderTitle/1",
+        "value": "Inbox"
+      },
+      {
+        "op": "replace",
+        "path": "/sentItemsPageInboxFolderTitle/0",
+        "value": " {1} "
+      },
+      {
+        "op": "replace",
+        "path": "/sentItemsPageInboxFolderTitle/1",
+        "value": "Sent items"
+      }
+    ]
+  },
+  "model": {
+    "openMemberEditorFab": {
+      "title": "Edit member."
+    },
+    "sendMessageFab": {
+      "title": "Publish content"
+    },
+    "addSectionButton": {
+      "title": "Embedd text to the message content."
+    },
+    "addVideoButton": {
+      "title": "Embedd video to the message content."
+    },
+    "addImageButton": {
+      "title": "Embedd image to the message content."
+    },
+    "addLinkButton": {
+      "title": "Embedd a link to another message to the message content."
+    },
+    "sendNewContentFab": {
+      "title": "Cancel all changes & create new article."
+    }
+  },
+  "main-menu-label": "Menu",
+  "article-menu-label": "Articles",
+  "mailbox-menu-label": "Mailbox",
+  "members-menu-label": "Network",
+  "about-menu-label": "About",
+  "mainTitle": "Topflavon",
+  "english-language-label": "English",
+  "hungarian-language-label": "Magyar",
+  "polish-language-label": "Polski",
+  "profile-menu-label": "Profile",
+  "logout-label": "Logout",
+  "messagesPagePublicFolderTitle": "Public",
+  "messagesPageMyContentsFolderTitle": "Drafts",
+  "messagesPagePublishedFolderTitle": "Published",
+  "mailBoxPageInboxFolderTitle": [
+    " {1} ",
+    "Inbox"
+  ],
+  "sentItemsPageInboxFolderTitle": [
+    " {1} ",
+    "Sent items"
+  ],
+  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Person",
+  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Group"
+}

@@ -1,0 +1,311 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-overlay-behavior/iron-overlay-behavior.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+
+<link rel="import" href="plutonium-widget-bound-beavior.html">
+
+<link rel="import" href="wonderjam-shared-styles.html">
+<link rel="import" href="wonderjam-icons.html">
+
+<dom-module id="wonderjam-members-view">
+    <template>
+        <style include="wonderjam-shared-styles iron-flex">
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+                @apply(--layout-flex);
+                padding: 10px;
+            }
+            
+            span.item-title {
+                margin-left: 4px;
+            }
+
+
+        </style>
+
+        <div class="card-content" hidden="[[isEmpty(memberChildren)]]">
+            <template is="dom-repeat"  items="[[memberChildren]]" as="item">
+                <paper-item class="card-item flex layout horizontal" nodename="[[item.name]]"  nodeid="[[item.id]]" role="[[item.role]]" on-tap="onNavigateToChildren" tabindex="[[tabIndex]]">
+                        <iron-icon icon="wonderjam-icons:[[getIcon(item.role)]]"></iron-icon>
+                        <span class="item-title">[[item.name]]</span>
+                    </paper-item>
+            </template>
+        </div>
+        
+        <paper-material class="material-card">
+
+            <div class="card-content" hidden="[[!isEmpty(memberChildren)]]">
+                <div id="emptyChildrenText">No children.</div>
+            </div>
+        </paper-material>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'wonderjam-members-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior,
+                PlutoniumBehaviors.WidgetBoundBehavior
+            ],
+            properties: {
+                isMeIndicator: {
+                    type: Boolean,
+//                    notify: true,
+                    computed: 'isMe(selectedAccountId, accountId)'
+                },
+                isUserIndicator: {
+                    type: Boolean,
+                    notify: true,
+                    computed: 'isUser(selectedRole)'
+                },
+                isAdminIndicator: {
+                    type: Boolean,
+//                    notify: true,
+                    computed: 'isAdmin(selectedRole)'
+                },
+                genocideRequestParams: {
+                    type: Object,
+                    notify: true,
+                    reflectToAttribute: true
+//                    computed: 'computeGenocideRenocideRequestParams(selectedAccountId)'
+                },
+                childrenRequestParams: {
+                    type: Object,
+                    notify: true,
+                    reflectToAttribute: true
+//                    computed: 'computeChildrenRequestParams(selectedAccountId)'
+                },
+                /**
+                 * Account-id of the selected member.
+                 *
+                 * @type {string} 
+                 */
+                selectedAccountId: {
+                    type: String,
+                    notify: true,
+//                    reflectToAttribute: true
+                },
+                selectedRole: {
+                    type: String,
+                    notify: true,
+                    value: 'USER'
+                },
+                selectedName: {
+                    type: String,
+                    notify: true
+                },
+                possibleParents: {
+                    type: Array,
+                    notify: true
+                },
+                locales: {
+                    type: Array,
+                    notify: true
+                },
+                selectedType: {
+                    type: String,
+                    notify: true,
+                    value: 'USER'
+                },
+                /**
+                 * List of parent members.
+                 *
+                 * @type {Array<Object>}
+                 */
+                parents: {
+                    type: Array,
+                    notify: true
+                },
+                /**
+                 * List of child-members.
+                 *
+                 * @type {Array<Object>}
+                 */
+                memberChildren: {
+                    type: Array,
+                    notify: true
+                }
+            },
+            observers: [
+                'observeChildRequestParams(selectedAccountId)',
+                'observeGenocideRequestParams(selectedAccountId)',
+                'observeOwnerChange(accountId)'
+            ],
+            listeners: {
+//                'iron-select': 'onSelectMember',
+//                'network-tree-refresh': 'onRefresh'
+            },
+            ready: function () {
+                console.log(this.is + ' is ready.');
+            },
+            observeOwnerChange: function (accountId) {
+                this.selectedAccountId = accountId;
+            },
+            observeChildRequestParams: function (selectedAccountId) {
+                this.childrenRequestParams = {
+                    parentId: selectedAccountId
+                };
+//                this.memberChildrenRequestParams.parentId = selectedAccountId;
+                console.log(this.is, 'child request parameters updated:', this.childrenRequestParams);
+//                this.fire('fetch-data', {
+//                    ids: ['childrenIronAjax', 'genocideIronAjax']
+//                });
+
+            },
+            observeGenocideRequestParams: function (selectedAccountId) {
+//                this.genocideRequestParams.childId = selectedAccountId;
+
+//                this.fire('fetch-data', {
+//                    ids: ['childrenIronAjax', 'genocideIronAjax']
+//                });
+
+                this.genocideRequestParams = {
+                    childId: selectedAccountId
+                };
+                console.log(this.is + ' genocide request parameters updated:', this.genocideRequestParams);
+            },
+            computeChildrenRequestParams: function (selectedAccountId) {
+                return {
+                    parentId: selectedAccountId
+                };
+            },
+            computeGenocideRenocideRequestParams: function (selectedAccountId) {
+                return {
+                    childId: selectedAccountId
+                };
+            },
+            onSelectMember: function (event, details) {
+                console.log('Network-view select account:');
+                this.unusedCodes = details.item.unusedcodes;
+                this.selectedRole = details.item.role;
+//                    this.$.childrenIronAjax.generateRequest();
+//                    this.$.genocideIronAjax.generateRequest();
+//                    
+            },
+            onNavigateToChildren: function (event, details) {
+//                this.accountId = event.currentTarget.nodeid;
+                this.selectedAccountId = event.currentTarget.nodeid;
+                this.selectedRole = event.currentTarget.role;
+                this.selectedName = event.currentTarget.nodename;
+                console.log('Network-view navigate to children ');
+
+            },
+            /**
+             * Fired when data has to be fetched from the backend.
+             *
+             * @event fetch-data
+             * @param {{ ids: Array<string> }}
+             */
+
+
+//            onRefresh: function () {
+////                this.fire('fetch-data', {
+////                    ids: ['childrenIronAjax', 'genocideIronAjax']
+////                });
+//            },
+            /**
+             * Fired when the create new member floating-action-button pushed.
+             *
+             * @event new-member
+             */
+
+            /**
+             * New member tap handler.
+             */
+            onNewMember: function () {
+                this.fire('new-member');
+            },
+            /**
+             * Fired when the delete member floating-action-button pushed.
+             *
+             * @event delete-member
+             */
+
+            /**
+             * Delete member tap handler.
+             */
+            onDeleteMember: function () {
+                this.fire('delete-member');
+            },
+            /**
+             * Fired when the send-to-member floating-action-button pushed.
+             *
+             * @event send-to-member
+             */
+
+            /**
+             * Send to member tap handler.
+             */
+            onSendToMember: function () {
+                this.fire('send-to-member');
+            },
+            /**
+             * Fired when the promote-member floating-action-button pushed.
+             *
+             * @event promote-member
+             */
+
+            /**
+             * Promote-member tap handler.
+             */
+            onPromoteMember: function () {
+                this.fire('promote-member');
+            },
+            /**
+             * Fired when the demote-member floating-action-button pushed.
+             *
+             * @event demote-member
+             */
+
+            /**
+             * Demote-member tap handler.
+             */
+            onDemoteMember: function () {
+                this.fire('demote-member');
+            },
+            isEmpty: function (data) {
+                return data === undefined || data === null || data.length === 0;
+            },
+            isMe: function (accountId, token) {
+                return accountId === token;
+            },
+            isGroup: function (data) {
+                return data === 'GROUP';
+            },
+            isAdmin: function (data) {
+                return data === 'ADMIN';
+            },
+            isUser: function (data) {
+                return data === 'USER';
+            },
+            getIcon: function (data) {
+                if (data === 'GROUP') {
+                    return 'group';
+                } else if (data === 'USER') {
+                    return 'person';
+                } else if (data === 'ADMIN') {
+                    return 'member';
+                }
+            }
+        });
+    </script>
+</dom-module>

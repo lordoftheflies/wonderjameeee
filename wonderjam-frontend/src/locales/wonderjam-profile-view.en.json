@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/model/preferredLanguageLabel/label",
+        "value": "Preferred language"
+      },
+      {
+        "op": "add",
+        "path": "/changingDeviceButton",
+        "value": "Changing device"
+      },
+      {
+        "op": "add",
+        "path": "/underDevelopmentText",
+        "value": "Under development ..."
+      }
+    ]
+  },
+  "model": {
+    "preferredLanguageLabel": {
+      "label": "Preferred language"
+    }
+  },
+  "changingDeviceButton": "Changing device",
+  "underDevelopmentText": "Under development ..."
+}

@@ -1,0 +1,107 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/plutonium-cms/plutonium-cms.html">
+
+<link rel="import" href="wonderjam-shared-styles.html">
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <wonderjam-article-section></wonderjam-article-section>
+
+Example:
+
+    <wonderjam-article-section>
+      <h2>Hello wonderjam-article-section</h2>
+    </wonderjam-article-section>
+
+@demo demo/wonderjam-article-section-index.html
+@hero hero.svg
+-->
+
+<dom-module id="wonderjam-article-section">
+    <template>
+        <style include="wonderjam-shared-styles">
+            :host {
+                display: block;
+                /*@apply(--layout-vertical);*/
+                padding: 10px;
+            }
+        </style>
+        
+        <paper-material class="card">
+            <plutonium-cms-div content-model="{{articleDetailsModel}}"></plutonium-cms-div>
+        </paper-material>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'wonderjam-article-section',
+            properties: {
+                /**
+                 * Data-model of th form.
+                 */
+                articleDetailsModel: {
+                    type: Object,
+                    notify: true,
+                    //                    observer: 'renderContent'
+                },
+                articleAjaxParams: {
+                    type: Object,
+                    notify: true
+                },
+                pageId: {
+                    type: String,
+                    notify: true
+                }
+            },
+            observers: [
+                'observePageId(pageId)',
+//                'observeArticleAjaxParameters(pageId)',
+//                'observeSections(contentModel.sections.splices)'
+            ],
+            //            // Element Lifecycle
+            observePageId: function (pageId) {
+
+//            },
+//            observeSections: function (splices) {
+//                console.log(this.is + ' observe sections.');
+//            },
+//            observeArticleAjaxParameters: function (pageId) {
+                this.articleAjaxParams = {
+                    pageId: pageId
+                };
+            },
+            /**
+             * Ajax response handler for `childTocAjax` element.
+             */
+            onArticleAjaxResponse: function (event, detail) {
+                console.log(this.is, 'fetched article details for', this.articleAjaxParams);
+            },
+            /**
+             * Ajax error handler for `childTocAjax` element.
+             */
+            onArticleAjaxError: function (event, detail) {
+                console.error(this.is, 'article details fetching failed for', this.articleAjaxParams);
+            }
+        });
+    </script>
+</dom-module>

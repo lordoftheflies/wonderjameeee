@@ -1,0 +1,234 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-chip/paper-chip.html">
+
+<link rel="import" href="wonderjam-icons.html">
+<link rel="import" href="wonderjam-shared-styles.html">
+
+<!--
+`<wonderjam-send-view>` Send page of the application.
+
+In typical use, just slap some `<wonderjam-send-view>` at the top of your body:
+
+    <body>
+      <wonderjam-send-view></wonderjam-send-view>
+
+Wham! It's all awesome now!
+
+    @group Mlm Elements
+    @demo demo/wonderjam-send-view-index.html
+-->
+<dom-module id="wonderjam-send-view">
+
+    <template>
+
+        <style include="wonderjam-shared-styles">
+
+            /*            .main-action-fab-container {
+                            position: relative;
+                        }
+                        paper-fab.main-action-fab {
+                            position: absolute;
+                            bottom: -45px;
+                            right: 0px;
+                        }
+                        paper-fab.minor-action-fab {
+                            position: absolute;
+                            top: -65px;
+                            right: 0px;
+                        }*/
+        </style>
+
+        <paper-card elevation="1" name="share" heading="Share with others" class="layout vertical main-action-fab-container">
+            <div class="card-content layout horizontal">
+                <div class="flex layout vertical">
+                    <div class="layout horizontal">
+                        <paper-input-container id="recipientsInput" class="flex" always-float-label="true">
+                            <label>Recipients</label>
+                            <div class="paper-input-input layout horizontal wrap">
+                                <template is="dom-repeat" items="[[selectedItemIds]]">
+                                    <paper-chip member="[[item]]" style="margin-right: 10px; background-color: white; z-index: 2000;" removable>
+                                        <!--TODO: #45-->
+                                        <!--<div class="icon">[[getRoleIcon(item)]]</div>-->
+                                        <h1>[[getUserName(item)]]</h1>
+                                        <h2>[[getUserEmail(item)]]</h2>
+                                    </paper-chip>
+                                </template>
+                            </div>
+                        </paper-input-container>
+
+                        <!--<paper-input label="Recipients" class="flex" name="recipients" value="{{_recipients}}"></paper-input>-->
+                        <paper-icon-button icon="wonderjam-icons:group" title="Choose contacts." on-tap="onOpenRecipientsDialog"></paper-icon-button>
+                        <paper-icon-button icon="wonderjam-icons:clear" title="Clear recipients input." on-tap="onClearRecipients"></paper-icon-button>
+                    </div>
+                    <paper-textarea id="messageInput" rows="6" class="bottom title" label="Message" value="{{message}}"></paper-textarea>
+                </div>
+            </div>
+
+        </paper-card>
+    </template>
+
+    <script>
+
+        Polymer({
+            is: 'wonderjam-send-view',
+            behaviors: [
+            ],
+            properties: {
+                messageSendModel: {
+                    type: Object,
+                    notify: true,
+                    value: {
+                        recipients: []
+                    }
+                },
+                selectedItemIds: {
+                    type: Array,
+                    notify: true
+                },
+                recipients: {
+                    type: String,
+                    notify: true,
+                    value: ''
+                }
+            },
+            observers: [
+                'itemsAddedOrRemoved(selectedItemIds.splices)',
+                'observeMessageSendModel(message, recipients)'
+            ],
+            listeners: {
+//                'remove': 'onRemoveItem',
+//                'share': 'onShare',
+//                'shareAjax.error': 'onShareError',
+//                'shareAjax.response': 'onShareResponse'
+            },
+            ready: function () {
+                console.log(this.is + ' is ready.');
+            },
+//            updateModel: function (sections) {
+//                this.pageDto = {
+//                };
+//            },
+            
+            onOpenRecipientsDialog: function () {
+                console.log(this.is, ' send event pick-recipients.');
+                this.fire('pick-recipients', {});
+            },
+            /**
+             * Tap clear input event handler.
+             *
+             */
+            onClearRecipients: function () {
+                this.splice('selectedItemIds', 0, this.selectedItemIds.length);
+                console.log(this.is, 'clear recipients.');
+            },
+            itemsAddedOrRemoved: function (splice) {
+                if (splice === undefined || splice === null)
+                    return;
+                console.log(this.is, 'change recipients: ', JSON.stringify(this.selectedItemIds));
+                var recipientslabel = '';
+                if (this.items !== undefined && this.items !== null) {
+                    this.items.forEach(function (item, index) {
+                        if (this.selectedItemIds.indexOf(item.id) > -1) {
+                            recipientslabel += item.name + ' ';
+                        }
+                    }, this);
+                }
+                this.recipients = recipientslabel;
+            },
+            observeMessageSendModel: function(message, recipients) {
+                this.messageSendModel.recipients = this.selectedItemIds;
+                this.messageSendModel.message = this.message;
+            },
+            onRemoveItem: function (event, detail) {
+                event.stopPropagation();
+                this.splice('selectedItemIds', this.selectedItemIds.indexOf(event.currentTarget.member), 1);
+            },
+            computeHeader: function (articleContentHeading) {
+                return ('assembled' === articleContentHeading) ? 'Edit content' : 'Attach file';
+            },
+            onOnlySaveContent: function (event, detail) {
+                console.log('Save content.');
+            },
+            /**
+             * Submit the message.
+             */
+            onSendMessage: function (event, detail) {
+                this.messageSendModel.recipients = this.selectedItemIds;
+                this.messageSendModel.message = this.message;
+                this.messageSendModel.contentId = this.contentModel.id;
+//                Sthis.$.messageSendAjax.generateRequest();
+//                this.fire('fetch-data', {
+//                    ids: ['messageSendAjax']
+//                });
+            },
+            getUserName: function (id) {
+                if (this.items !== undefined && this.items !== null) {
+                    var name = 'Unknown';
+                    this.items.forEach(function (item, index) {
+                        if (item.id === id) {
+                            name = item.name;
+                        }
+                    }, this);
+                    return name;
+                }
+            },
+            getUserEmail: function (id) {
+                if (this.items !== undefined && this.items !== null) {
+                    var name = 'Unknown';
+                    this.items.forEach(function (item, index) {
+                        if (item.id === id) {
+                            name = item.email;
+                        }
+                    }, this);
+                    return name;
+                }
+            },
+            getRoleIcon: function (id) {
+                if (this.items !== undefined && this.items !== null) {
+                    var name = 'Unknown';
+                    this.items.forEach(function (item, index) {
+                        if (item.id === id) {
+                            // TODO: remove #45
+                            // name = item.role.charAt(0).toUpperCase();
+                            name = 'M';
+                        }
+                    }, this);
+                    return name;
+                }
+            },
+//            itemsAddedOrRemoved: function (splice) {
+//                if (splice === undefined || splice === null)
+//                    return;
+//                console.log('mlm-recipient-picker change recipients: ' + JSON.stringify(this.selectedItemIds));
+//                var recipientsString = '';
+//                if (this.items !== undefined && this.items !== null) {
+//                    this.items.forEach(function (item, index) {
+//                        if (this.selectedItemIds.indexOf(item.id) > -1) {
+//                            recipientsString += item.name + ' ';
+//                        }
+//                    }, this);
+//                }
+//                this._recipients = recipientsString;
+//            }
+
+        });
+
+    </script>
+
+</dom-module>

@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/text_1",
+        "value": " Oops you hit a 404. "
+      },
+      {
+        "op": "add",
+        "path": "/a_2",
+        "value": "Head back to home."
+      }
+    ]
+  },
+  "model": {},
+  "text_1": " Oops you hit a 404. ",
+  "a_2": "Head back to home."
+}

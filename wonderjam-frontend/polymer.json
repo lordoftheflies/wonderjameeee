@@ -1,0 +1,32 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/wonderjam-app.html",
+  "fragments": [
+    "src/wonderjam-about-view.html",
+    "src/wonderjam-article-view.html",
+    "src/wonderjam-article-section-view.html",
+    "src/wonderjam-login-view.html",
+    "src/wonderjam-logon-view.html",
+    "src/wonderjam-mailbox-view.html",
+    "src/wonderjam-member-editor.html",
+    "src/wonderjam-members-view.html",
+    "src/wonderjam-recipients-view.html",
+    "src/wonderjam-send-view.html",
+    "src/wonderjam-share-view.html",
+    "src/wonderjam-view401.html",
+    "src/wonderjam-view404.html"
+  ],
+  "sourceGlobs": [
+    "src/**/*",
+    "images/**/*",
+    "locales/*",
+    "xliff/*",
+    "bundle.json",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
+    "bower_components/intl/**/*"
+  ]
+}

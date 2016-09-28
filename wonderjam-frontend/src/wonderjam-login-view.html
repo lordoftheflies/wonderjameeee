@@ -1,0 +1,303 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/polymer-cookie/polymer-cookie.html">
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<dom-module id="wonderjam-login-view">
+    <template>
+        <style>
+            :host {
+                position: absolute;
+                top: 0px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: var(--app-primary-color);
+                /*transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);*/
+                z-index: 1;
+                /*color: var(--paper-purple-50);*/
+                @apply(--layout);
+                @apply(--layout-center-center);
+            }
+            /*            :host([signed-in]) {
+                            opacity: 0;
+                            pointer-events: none;
+                        }*/
+            paper-button > * {
+                vertical-align: middle;
+                text-transform: none;
+            }
+
+            form {
+                position: relative;
+            }
+
+            form paper-fab {
+                position: absolute;
+                top: -50px;
+                right: -40px;
+            }
+        </style>
+
+        <polymer-cookie
+            id="xsrfCookie"
+            name="XSRF-TOKEN"
+            value="{{xsrfToken}}">
+        </polymer-cookie>
+        <!--        <polymer-cookie
+                    id="sessionCookie"
+                    name="SESSION" auto-set
+                    value="{{session}}">
+                </polymer-cookie>
+        -->       
+        <polymer-cookie
+            id="rememberMeCookie"
+            name="REMEMBERME"
+            value="{{rememberMe}}">
+        </polymer-cookie>
+        <!--        <polymer-cookie
+                    id="userNameCookie"
+                    name="username"
+                    value="{{session}}">
+                </polymer-cookie>
+                <polymer-cookie
+                    id="passwordCookie"
+                    name="username"
+                    value="{{session}}">
+                </polymer-cookie>-->
+
+        <paper-card id="signinCard" heading="Login">
+            <paper-spinner id="spinner" hidden="[[!loading]]"></paper-spinner>
+            <div class="card-content">
+                <form is="iron-form" id="signInForm"  with-credentials
+                      method="POST"  action="[[authenticationUrl]]" headers="[[authHeaders]]" content-type="application/json"
+                      hidden="[[loading]]">
+                    <template is="dom-if" if="[[hasAuthenticationError]]">
+                        <div>{{authenticationError}}</div>
+                    </template>
+
+                    <gold-email-input 
+                        id="signinEmailInput" 
+                        name="userName" 
+                        label="Email" 
+                        tabindex="1"
+                        error-message="[[userNameError]]"
+                        value="{{credentials.userName}}" 
+                        required auto-validate></gold-email-input>
+                    <!--                    <paper-input 
+                                            id="signinUserNameInput" 
+                                            name="userName" 
+                                            label="Username" 
+                                            value="{{credentials.userName}}"
+                                            error-message="[[userNameError]]"
+                                            required 
+                                            auto-validate>
+                                        </paper-input>-->
+                    <paper-input 
+                        id="signinEmailPassword" 
+                        name="password" 
+                        label="Password" 
+                        value="{{credentials.password}}" 
+                        type="password"
+                        error-message="[[passwordError]]"
+                        tabindex="2"
+                        required 
+                        auto-validate>
+                    </paper-input>
+
+                    <paper-fab 
+                        id="signInSubmit" 
+                        icon="arrow-forward" 
+                        title="Sign in" 
+                        on-tap="onSignIn" 
+                        tabindex="3"
+                        dialog-confirm></paper-fab>
+                </form>
+            </div>
+            <div class="card-actions layout vertical">
+                <paper-toggle-button id="rememberMeToggleButtonLabel" tabindex="4" name="remember-me" checked="{{rememberMe}}" value="[[rememberMe]]">Remember me</paper-toggle-button>
+                <!--<div class="layout horizontal">-->
+                <br />
+                <paper-button on-tap="onForgottenPassword" tabindex="5" raised>
+                    <iron-icon icon="account-circle"></iron-icon>
+                    <span id="forgottenPasswordTitle">Forgotten password</span>
+                </paper-button>
+                <br />
+                <paper-button on-tap="onToSignOn" tabindex="6" raised>
+                    <iron-icon icon="account-circle"></iron-icon>
+                    <span id="signOnSubmitTitle">Sign on</span>
+                </paper-button>
+                <!--</div>-->
+            </div>
+
+
+        </paper-card>
+    </template>
+    <script>
+        Polymer({
+            is: 'wonderjam-login-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior
+            ],
+            properties: {
+                credentials: {
+                    type: Object,
+                    notify: true,
+                    value: {
+                        userName: null,
+                        password: null
+                    }
+                },
+                user: {
+                    type: Object,
+                    notify: true,
+                    reflectToAttribute: true,
+                    value: {}
+                },
+                rememberMe: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                session: {
+                    type: String,
+                    notify: true
+                },
+                xsrfToken: {
+                    type: String,
+                    notify: true
+                },
+                authHeaders: {
+                    type: Object,
+                    notify: true
+                },
+                disabled: {
+                    type: Boolean,
+                    computed: 'computeSignInDisabled(credentials.userName, credentials.password)',
+                    value: false
+                },
+                loading: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                signedIn: {
+                    type: Boolean,
+                    reflectToAttribute: true,
+                    notify: true
+                },
+                userNameError: {
+                    type: String,
+                    notify: true,
+                    value: 'Username is required.'
+                },
+                passwordError: {
+                    type: String,
+                    notify: true,
+                    value: 'Password is required.'
+                },
+                authenticationError: {
+                    type: String,
+                    notify: true,
+                    value: 'Sign-in failed.'
+                },
+                hasAuthenticationError: {
+                    type: String,
+                    notify: true,
+                    value: false
+                },
+                authenticationUrl: {
+                    type: String,
+                    notify: true,
+                    value: 'Username is required.'
+                }
+
+            },
+            listeners: {
+                'iron-form-response': 'onSigninFormResponse',
+                'iron-form-error': 'onSigninFormError'
+            },
+            observers: [
+                'observeAuthenticationHeaders(credentials.userName, credentials.password, xsrfToken)'
+            ],
+            attached: function () {
+                this.xsrfToken = this.$.xsrfCookie.readCookie();
+                this.rememberMe = this.$.rememberMeCookie.readCookie();
+            },
+            onSignIn: function (event, detail) {
+                this.loading = true;
+                console.log(this.is, 'sign-in request ...');
+                if (this.rememberMe) {
+                    this.$.rememberMeCookie.createCookie();
+                } else {
+                    this.$.rememberMeCookie.eraseCookie();
+                }
+                this.$.signInForm.submit();
+            },
+            onSigninFormResponse: function (event, detail) {
+                this.signedIn = detail.response.authenticated;
+//                this.session = btoa(this.credentials.userName + ':' + this.credentials.password);
+//                this.$.sessionCookie.createCookie();
+                this.loading = false;
+                this.user = detail.response.principal;
+                this.fire('fetch-data', {
+                    ids: ['tokenAjax']
+                });
+                this.fire('page-go', {
+                    page: 'article-view'
+                });
+                console.log(this.is, 'sign-in response', detail.response);
+            },
+            onSigninFormError: function (event, detail) {
+                this.signedIn = false;
+                this.loading = false;
+                this.credentials.userName = null;
+                this.credentials.password = null;
+                if (detail.request.status === 401) { // Unauthorized
+                    this.hasAuthenticationError = true;
+                    this.authenticationError = detail.request.statusText;
+                } else if (detail.request.status === 403) { // Forbidden
+                    this.hasAuthenticationError = true;
+                    this.authenticationError = detail.request.statusText;
+                } else if (detail.request.status === 404) { // Not found
+                    this.hasAuthenticationError = true;
+                    this.authenticationError = detail.request.statusText;
+                } else {
+                    this.hasAuthenticationError = true;
+                    this.authenticationError = detail.request.statusText;
+                }
+                console.error(this.is, 'sign-in error', detail.request.response);
+            },
+            computeSignInDisabled: function (userName, password) {
+                return userName === null || password === null || userName.length === 0 || password.length === 0;
+            },
+            observeAuthenticationHeaders: function (userName, password, xsrfToken) {
+                this.authHeaders = {
+                    'X-XSRF-TOKEN': xsrfToken,
+                    'authorization': 'Basic ' + btoa(userName + ':' + password)
+                };
+            },
+            onToSignOn: function() {
+                this.fire('registrate', {});
+            }
+        });
+    </script>
+</dom-module>
