@@ -1,0 +1,16 @@
+<html>
+    <body>
+        <img src="$applicationLogo" />
+        <h3>Drodzy $userName!</h3>
+        <p>Zapraszamy do zastosowania $inviter $applicationName!</p>
+        <p>
+            <label>W tych sposobów można korzystać z aplikacji:</label>
+            <ul>
+                <li>Za pośrednictwem przeglądarki na komputerze: <a href="$webFrontendLink">$webFrontendLink</a></li>
+                <li>Smartfon z Androidem: <a href="$androidInstallerLink">$androidInstallerLink</a> (W tym przypadku należy otworzyć link do swojego telefonu!)</li>
+            </ul>
+        </p>
+        <p>Po rejestracji instrukcji można znaleźć w profilu.</p>
+        <p>Pozdrawiam Zespół $organizationName!</p>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+<html>
+    <body>
+        <img src="$applicationLogo" />
+        <h3>Dear $userName!</h3>
+        <p>$inviter invite You, to $applicationName application!</p>
+        <p>
+            <label>You could use the application in the following ways:</label>
+            <ul>
+                <li>From a web-browser: <a href="$webFrontendLink">$webFrontendLink</a></li>
+                <li>Android smartphone: <a href="$androidInstallerLink">$androidInstallerLink</a> (In this case you should open the link on the device!)</li>
+            </ul>
+        </p>
+        <p>After registration, user documentation could reachable in the application under the Profile menu!</p>
+        <p>Best regards, $organizationName!</p>
+    </body>
+</html>

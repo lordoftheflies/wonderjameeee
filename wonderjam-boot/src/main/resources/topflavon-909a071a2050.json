@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "topflavon-paas",
+  "private_key_id": "909a071a2050b549b3fdb2eeae43cb8a27860d3d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCq2lsEw2BJJfWA\n/Npf789JdYoA4cNIQEvYCFbl4zibhMn58fWtA0BMNuEfoKDJgPGmIYPgC+zoTfOr\nsq+nfwm37oVGaRDxtvY/0exXeOt43v9gptL5eSWdkTLXVnbMobsuf+y6zQ8a5UDX\nup2Y4OvYMZqxJqDYmw1kYBmPDDs/RWpZmyNYeS8mxvkhQPqdoSTgEmbryh5JRRBs\nH/eD5hXGn71HMmnt9+x4NIIoFKK5Z2Whcr4KP9zY29RZOw4CnGcOdHIm74eOU/GW\nnmVEuqeaGKRZWdYPTmh608UA89GREz7Olx3QXdJ9NttF6ExV/jGwpRsoumokR7Jk\nt3T7IPQrAgMBAAECggEAL0pZPyxFDnovRhC28S8TlSWvmSbkQq9pTtagFumZ1ZIf\nxcsvUUBBH9dg4Lw5RQ0n1fAY7H7giDxrYe8Hp7kGG58tzJtwUTdvWaLlZCDYLJCs\n5zfF1b+upbp29Bu+rk1l3i0SfXIc6DjkhdHlpVc8cI7qXnZutwXT4yCmcm3USGKe\nZokbMWW7F1dZEraYhFXJdjMwDbeZIcoCDWIYviaBcrx3F+7NC+uYBxP4VPhYW+5t\n/cVcGMXYpL0DbM1UIiGHkyV7ATN11UJD4dvVdKOCb5GKrApz4P1Sb6FUAlWIgVUk\nfiuhvuq0A1IDuNe7mh5Cnv5DnELUWM/mAH6jszpewQKBgQDc2+upCxpMu3j+DnoY\nd97j7dM5Cq1w/nOVLiaOMm5a1SKLJUa8FjeIj6LwnY9XRHu74a2JPZ/TAWrMrsuy\n54ydwWQHBi1jS3ZCMGXaxEkvKnpyr4qYIcvTbg7SI57RO0DvqUfOOnFUt7LXS+hf\njrUeLvmXnPe0AaOY00/nQt/LKQKBgQDGCZM6eoR5IAXGi8DpGx0c0Y2c2NGdaQf1\nLqycECp0wjaqBr3T9ucdlzl1anKXUkcHOimpHMGpnVTNfy8L25atZ8AA6HFumHFJ\nDdMNzCD8bcFjF05srRV5CY4VpHcdBxtxQEqDijt6zr6uMF5b9WDxrOXnFnrXnXju\nt444DxoDMwKBgHUKLkZ01ckYCDRKI7XXwEx1edvepq8ciM/jlxb/7q9AB4BJjsSZ\n2XAK/kQYmx+Z8SBNphL2jz3YoGo7r0LtpfzrwUBfq6nVEaRd1XwrTMUr85vXHtEk\nB8nRpxUBP2aNygm3YZAONIS6nJGvbkNFcwG9zxLjYfkIbVPNl6hsLgCRAoGBALe5\nKl2WTFAS5UjNXqrj/J4/yqE4hT8Dsd5E7t3aIYkwpIYYuwNqi/9nzGah2q2IJ10N\nGJlLlF9HFuWOmJbnoWI+XmJ5QsLXqkGcEbE7L18Ac+j6NkecS89+jdKGQfssHMl0\nW6ytEYFdTIlNVjz56HZNcPxyXoSqEwdkQwy+9eMBAoGAB8gRCdnkgBYlvWyRTxBP\neCbra4RlF8XbYmy3zwTOxM2hrTp6DWDte1L59kCXZyzdTNry3ve/Qc/vQuzf1L9e\nOz+pHh/SLw0GWOkFgaD2zxts/zZgjcqkHX3wUwGV9lhC+KxxQSbafD0ySola33/4\naqFi8XfK9OrI02kd618pBNM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "notification-service@topflavon-paas.iam.gserviceaccount.com",
+  "client_id": "115316731247565641946",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/notification-service%40topflavon-paas.iam.gserviceaccount.com"
+}

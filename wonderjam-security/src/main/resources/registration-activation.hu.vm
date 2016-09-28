@@ -1,0 +1,16 @@
+<html>
+    <body>
+        <img src="$applicationLogo" />
+        <h3>Tisztelt $userName!</h3>
+        <p>Önt $inviter meghívta a $applicationName alkalmazásba!</p>
+        <p>
+            <label>Az alábbi módokon használhatja az alkalmazást:</label>
+            <ul>
+                <li>A Számítógépe böngészőjén keresztül: <a href="$webFrontendLink">$webFrontendLink</a></li>
+                <li>Androidos okostelefonon: <a href="$androidInstallerLink">$androidInstallerLink</a> (Ebben az esetben a készülékén nyissa meg a linket!)</li>
+            </ul>
+        </p>
+        <p>Használati útmutatót a regisztráció követően a Profiljára kattintva az Útmutató menüpontban talál!</p>
+        <p>Üdvözlettel $organizationName!</p>
+    </body>
+</html>
