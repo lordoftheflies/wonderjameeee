@@ -22,6 +22,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {
+    DatabaseConfiguration.class,
+    WebConfig.class,
     SwaggerConfiguration.class,
     AuthConfig.class,
     MailConfig.class,
@@ -59,11 +61,11 @@ public class Application extends SpringBootServletInitializer {
     public Map<String, String> token(HttpSession session) {
         return Collections.singletonMap("token", (session.getId() == null) ? "" : session.getId());
     }
-    
+
     @ResponseBody
     @RequestMapping(path = "/user", method = RequestMethod.GET,
-            consumes = { MediaType.APPLICATION_JSON_VALUE },
-            produces = { MediaType.APPLICATION_JSON_VALUE })
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity user(HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(auth.getPrincipal(), HttpStatus.OK);
