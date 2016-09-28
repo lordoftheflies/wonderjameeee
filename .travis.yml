@@ -6,5 +6,5 @@ addons:
 services:
   - postgresql
 before_script:
-  - psql -c 'CREATE DATABASE wonderjam-test;' -U postgres
+  - psql -c 'CREATE DATABASE topflavon;' -U postgres
 
