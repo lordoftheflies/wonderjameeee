@@ -227,8 +227,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!--Routing-->
         <app-location route="{{route}}" use-hash-as-path query-params="{{queryParams}}"></app-location>
         <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
-                
-        
+
+
         <app-route route="{{route}}" pattern="/article-view/:contentId" data="{{pageRouteData}}"></app-route>
         <app-route route="{{route}}" pattern="/article-section/:pageId" data="{{articleSectionRouteData}}"></app-route>
         <!--        <app-route route="{{route}}" pattern="/registrate" data="{{activationData}}"></app-route>
@@ -302,8 +302,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </a>
                         </plutonium-avatar-button>
                     </app-toolbar>
-                    <app-toolbar>
-                        <iron-pages   hidden="{{!hasPrivileges}}"
+                    <app-toolbar hidden="[[minorToolbarHidden]]">
+                        <iron-pages
                                       selected="[[page]]"
                                       attr-for-selected="name"
                                       fallback-selection="none"
@@ -311,7 +311,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                       role="header">
                             <div name="none"></div>
                             <!--hidden="[[!session.powerUser]]"-->
-                            <paper-tabs name="article-view" data-route="content-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
+                            <paper-tabs hidden="{{!hasPrivileges}}" name="article-view" data-route="content-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
                                 <paper-tab text-id="messagesPagePublicFolderTitle" name="public">Public</paper-tab>
                                 <paper-tab text-id="messagesPageMyContentsFolderTitle" name="drafts">Drafts</paper-tab>
                                 <paper-tab text-id="messagesPagePublishedFolderTitle" name="published">Published</paper-tab>
@@ -326,7 +326,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 </paper-tab>
                             </paper-tabs>
 
-                            <paper-tabs selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" name="members-view" href="#/members-view/[[accountId]]">
+                            <paper-tabs hidden="{{!hasPrivileges}}" selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" name="members-view" href="#/members-view/[[accountId]]">
                                 <template is="dom-repeat" items="[[parents]]">
                                     <paper-tab name="[[item.id]]" role="[[item.role]]" link>
                                         <iron-icon class="end-justified" icon="wonderjam-icons:[[getIcon(item.role)]]" href="#/members-view/{{item.id}}"></iron-icon>
@@ -509,7 +509,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                         <paper-fab icon="wonderjam-icons:save" on-tap="onShare" title="Publish content" id="sendMessageFab"></paper-fab>
 
-                        <paper-fab-speed-dial direction="top" class="bottom-right">
+                        <paper-fab-speed-dial direction="top" mini class="bottom-right">
                             <paper-fab icon="add" class="dropdown-trigger"></paper-fab>
                             <div class="dropdown-content">
                                 <paper-fab id="addSectionButton" mini on-tap="onAddSection" icon="wonderjam-icons:text" class="minor-action-fab" title="Embedd text to the message content."></paper-fab>
@@ -520,8 +520,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-fab-speed-dial>
 
 
-                        <paper-fab class="minor-action-fab" icon="wonderjam-icons:send" on-tap="onNavigateToMessage" title="Publish content" id="sendMessageFab"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:delete" on-tap="onClear" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>
+                        <paper-fab mini class="minor-action-fab" icon="wonderjam-icons:send" on-tap="onNavigateToMessage" title="Publish content" id="sendMessageFab"></paper-fab>
+                        <paper-fab mini icon="wonderjam-icons:delete" on-tap="onClear" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>
 
                     </div>
                 </iron-pages>
@@ -561,6 +561,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 apiUrl: {
                     value: "/backend"
 //                    value: "http://localhost:8080/backend"
+                },
+                minorToolbarHidden: {
+                    type: Boolean,
+                    computed: 'computeMinorToolbarHidden(authenticated, page)'
                 }
             },
             observers: [
@@ -583,6 +587,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
             observeRootArticlesModel: function (rootArticlesModel) {
                 console.log('KKKKKKKKKKKKKKKKKKKKKK ', rootArticlesModel);
+            },
+            patchOverlay: function (e) {
+                if (e.target.withBackdrop) {
+                    e.target.parentNode.insertBefore(e.target._backdrop, e.target);
+                }
+            },
+            computeMinorToolbarHidden: function (authenticated, page) {
+                return !authenticated || (page === 'about-view' ||
+                        page === 'profile-view') ||
+                        (page === 'article-view' && this.user.authorities.indexOf('ADMIN') === -1);
             }
         });
     </script>

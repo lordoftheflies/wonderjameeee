@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,7 +67,7 @@ public class CmsDataService {
      * @return Video stream.
      * @throws FileNotFoundException When the file not found.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/{video:.+}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{video:.+}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public StreamingResponseBody stream(@PathVariable String video)
             throws FileNotFoundException {
         File videoFile = videos.get(video);
