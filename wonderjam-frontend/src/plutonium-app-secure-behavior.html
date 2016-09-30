@@ -66,7 +66,7 @@
                 if (token) {
                     this.user.principal = token;
                     this.accountId = token.token;
-                    // If we are on Android, then fire an event.
+                    // If we are on Android, then fire session event.
                     if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
                         var iosLoginEvent = {accountId: token.token};
                         console.log(this.is, 'IOS event:', iosLoginEvent);
