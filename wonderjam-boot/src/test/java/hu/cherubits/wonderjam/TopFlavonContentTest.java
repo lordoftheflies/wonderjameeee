@@ -379,7 +379,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video2Container.setPublicIndicator(true);
         video2Container.setTitle("Dr. Leonard Ariel Lado");
         video2Container = containerContentRepository.save(video2Container);
-        video(video2Container, null,    "/backend/DrLeonardArielLado_kepekkel.mp4", 1);
+        video(video2Container, null,    "/backend/video/DrLeonardArielLado_kepekkel.mp4", 1);
         
         ContainerContentEntity video3Container = new ContainerContentEntity();
         video3Container.setContentType(ContentType.LINKED);
@@ -392,12 +392,12 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         
         ContainerContentEntity video4Container = new ContainerContentEntity();
         video4Container.setContentType(ContentType.LINKED);
-        video4Container.setParent(videosContainer);
+        video4Container.setParent(productsContainer);
         video4Container.setNode(heglasNode);
         video4Container.setPublicIndicator(true);
-        video4Container.setTitle("Test video");
+        video4Container.setTitle("Flavon");
         video4Container = containerContentRepository.save(video4Container);
-        video(video4Container, null, "https://www.youtube.com/watch?v=iB3tg6AZkGw", 3);
+        video(video4Container, null, "https://www.youtube.com/watch?v=MArvZyBm_bU", 3);
     
     }
     private VideoContentEntity video(ContainerContentEntity container, String title, String content, int index) {
