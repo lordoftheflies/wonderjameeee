@@ -42,9 +42,9 @@
 //                'observeSessionSync(token)'
             ],
             listeners: {
-              'registrate': 'onRegistrate',  
-              'registrated': 'onRegistrated',  
-              'login': 'onLogin'  
+                'registrate': 'onRegistrate',
+                'registrated': 'onRegistrated',
+                'login': 'onLogin'
             },
             observeAuthorizationHeaders: function (token, xsrfToken) {
                 this.headers = {};
@@ -66,6 +66,11 @@
                 if (token) {
                     this.user.principal = token;
                     this.accountId = token.token;
+                    if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
+                        var iosLoginEvent = {accountId: token.token};
+                        console.log(this.is, 'IOS event:', iosLoginEvent);
+                        window.webkit.messageHandlers.interOp.postMessage(iosLoginEvent);
+                    }
                 }
             },
             observeAccountId: function (user) {
@@ -82,6 +87,7 @@
                 this.fire('page-go', {
                     page: 'login-view'
                 });
+
             },
             onLogoutError: function () {
 
@@ -89,22 +95,22 @@
                     text: 'Logout failed.'
                 });
             },
-            
-            onLogin: function() {
+            onLogin: function () {
                 this.authenticated = false;
                 this.set('route.path', '/login-view');
             },
-            onRegistrate: function() {
+            onRegistrate: function () {
                 this.authenticated = false;
                 this.set('route.path', '/logon-view');
             },
-            onRegistrated: function(event, c) {
+            onRegistrated: function (event, c) {
                 this.authenticated = true;
-                
-                if (!this.headers) this.headers = {};
-                this.headers.authorization =  'Basic ' + btoa(c.userName + ':' + c.password);
+
+                if (!this.headers)
+                    this.headers = {};
+                this.headers.authorization = 'Basic ' + btoa(c.userName + ':' + c.password);
                 this.$.userAjax.generateRequest();
-              
+
                 this.set('route.path', '/article-view/ROOT');
             }
         };
