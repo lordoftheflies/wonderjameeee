@@ -112,7 +112,18 @@
                 this.$.userAjax.generateRequest();
 
                 this.set('route.path', '/article-view/ROOT');
-            }
+            },
+            
+            onTokenAjaxResponse: function(event, detail) {
+                console.log(this.is, 'SYNCHING SESSION TOKEN', detail.response);
+            },
+            onTokenAjaxError: function(event, detail) {
+                if (detail.request.status === 401) { // Unauthorized
+                    this.authenticated = false;
+                    this.set('route.path', '/logon-view');
+                    console.log(this.is, 'USER AUTHENTICATION', detail.error);
+                }
+            },
         };
     })();
 </script>

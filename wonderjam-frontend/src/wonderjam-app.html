@@ -218,7 +218,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                            auto></iron-ajax>-->
         <iron-ajax id="tokenAjax" url="[[apiUrl]]/token" 
                    last-response="{{token}}"  headers="[[headers]]"
-                   handle-as="json" content-type="application/json"></iron-ajax>
+                   handle-as="json" content-type="application/json"
+                   on-response="onTokenAjaxResponse" on-error="onTokenAjaxError"></iron-ajax>
         <iron-ajax id="userAjax" url="[[apiUrl]]/user" 
                    last-response="{{user}}"  headers="[[headers]]"
                    handle-as="json" content-type="application/json" auto="[[rememberMe]]"></iron-ajax>
