@@ -146,7 +146,7 @@ public class ContentManagementServiceTest extends ChristeamServerApplicationTest
      *
      * @throws java.lang.Exception
      */
-    @Test
+//    @Test
     public void testPage() throws Exception {
         System.out.println("Test /page");
 //        PageDto dto = contentManagementServiceMock.page(containerContentId.toString());
@@ -174,7 +174,7 @@ public class ContentManagementServiceTest extends ChristeamServerApplicationTest
 //        fail("The test case is a prototype.");
     }
 
-    @Test
+//    @Test
     public void atestCleanUp() {
         messageRepository.deleteAll();
         contentRepository.deleteAll();

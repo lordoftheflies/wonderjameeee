@@ -107,7 +107,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
     public void ctestNetwork() {
 
         AccountEntity heglas = new AccountEntity();
-        heglas.setEmail("heglas11@gmail.com");
+        heglas.setEmail("admin@topflavon.net");
         heglas.setName("Teszt adminisztrátor");
         heglas.setPassword("qwe123");
         heglas.setPreferredLanguage("en");
@@ -124,7 +124,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         mailBoxRepository.save(heglasMb);
 
         AccountEntity balazspeczely = new AccountEntity();
-        balazspeczely.setEmail("laszlo.hegedus@cherubits.hu");
+        balazspeczely.setEmail("webmaster@topflavon.net");
         balazspeczely.setName("Teszt felhasználó");
         balazspeczely.setPassword("qwe123");
         balazspeczely.setPreferredLanguage("hu");
@@ -132,7 +132,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         balazspeczelyNode = new NetworkNodeEntity();
         balazspeczelyNode.setActive(true);
         balazspeczelyNode.setCodes(2);
-        balazspeczely.setState(NetworkNodeType.ADMIN);
+        balazspeczely.setState(NetworkNodeType.USER);
         balazspeczelyNode = networkRepo.save(balazspeczelyNode);
         balazspeczely.setNode(balazspeczelyNode);
         balazspeczely = accountRepo.save(balazspeczely);
