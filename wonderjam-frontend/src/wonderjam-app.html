@@ -124,6 +124,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
                    last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
                    handle-as="json" content-type="application/json"></iron-ajax>
+        <!--Profile-->
+        <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[accountId]]/profile" 
+                   last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
+                   handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
 
         <!--Get all members.-->
         <iron-ajax id="recipientsAjax" url="[[apiUrl]]/addressbook/[[accountId]]/contacts" 
@@ -231,6 +235,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <app-route route="{{route}}" pattern="/article-view/:contentId" data="{{pageRouteData}}"></app-route>
         <app-route route="{{route}}" pattern="/article-section/:pageId" data="{{articleSectionRouteData}}"></app-route>
+        <app-route route="{{route}}" pattern="/members-view/:memberId" data="{{memberSubrouteData}}"></app-route>
         <!--        <app-route route="{{route}}" pattern="/registrate" data="{{activationData}}"></app-route>
                 <app-route route="{{route}}" pattern="/login"></app-route>
         <!--<app-route route="{{route}}" pattern="/article-section" data="{{contentSubrouteData}}"></app-route>-->
@@ -304,11 +309,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </app-toolbar>
                     <app-toolbar hidden="[[minorToolbarHidden]]">
                         <iron-pages
-                                      selected="[[page]]"
-                                      attr-for-selected="name"
-                                      fallback-selection="none"
-                                      class="flex"
-                                      role="header">
+                            selected="[[page]]"
+                            attr-for-selected="name"
+                            fallback-selection="none"
+                            class="flex"
+                            role="header">
                             <div name="none"></div>
                             <!--hidden="[[!session.powerUser]]"-->
                             <paper-tabs hidden="{{!hasPrivileges}}" name="article-view" data-route="content-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
@@ -429,7 +434,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         name="profile-view"
                         locales="[[locales]]"
                         profile="[[profile]]"
-                        changeLanguageModel="[[changeLanguageModel]]"
+                        changeLanguageModel="{{changeLanguageModel}}"
                         account-id="[[accountId]]">
                     </wonderjam-profile-view>
                     <wonderjam-send-view 
@@ -570,6 +575,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             observers: [
                 'observeRootArticlesModel(rootArticlesModel)'
             ],
+            listeners: {
+                'change-language': 'onChangeLocale'
+            },
             ready: function () {
                 this.$.tokenAjax.generateRequest();
             },
@@ -597,6 +605,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 return !authenticated || (page === 'about-view' ||
                         page === 'profile-view') ||
                         (page === 'article-view' && this.user.authorities.indexOf('ADMIN') === -1);
+            },
+            handleChangeLanguageResponse: function () {
+                var msg = 'Language changed successfully to ' + this.locales.filter(function (currentValue, index, arr) {
+                    return (currentValue.code === this.profile.preferredLanguage);
+                }, this)[0].name + '.';
+                console.log(msg);
+                var oldLang = document.querySelector('html').getAttribute('lang');
+                document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
+                var newLang = document.querySelector('html').getAttribute('lang');
+                console.log('Change from locale ' + oldLang + ' to ' + newLang);
+                this.fire('feedback', {
+                    message: msg
+                });
+            },
+            handleChangeLanguageError: function () {
+                var msg = 'Language changing failed.';
+                console.log(msg);
+                this.fire('feedback', {
+                    message: msg
+                });
+            },
+            onProfileIronAjaxError: function(event, details) {
+                
+            },
+            onProfileIronAjaxResponse: function(event, details) {
+                
+            },
+            onChangeLocale: function(event, details) {
+                this.changeLanguageModel = details;
+                this.$.changeLanguageAjax.generateRequest();
             }
         });
     </script>

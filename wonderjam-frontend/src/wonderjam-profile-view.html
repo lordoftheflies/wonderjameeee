@@ -63,6 +63,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 PlutoniumBehaviors.WidgetBoundBehavior
             ],
             properties: {
+                profile: {
+                    type: Object,
+                    notify: true
+                },
                 locales: {
                     type: Array,
                     notify: true
@@ -74,7 +78,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 },
                 changeLanguageModel: {
                     type: Object,
-                    notify: true
+                    notify: true,
+                    reflectToAttribute: true,
+                    value: {
+                        accountId: null,
+                        language: null
+                    }
                 }
             },
             listeners: {
@@ -93,32 +102,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         language: this.profile.preferredLanguage
                     };
                     console.log('Change language request: ' + JSON.stringify(this.changeLanguageModel));
-                    this.fire('fetch-data', {
-                        ids: ['changeLanguageAjax']
-                    });
+                    this.fire('change-language', this.changeLanguageModel);
                 } else {
                     this._init = true;
                 }
-            },
-            handleChangeLanguageResponse: function () {
-                var msg = 'Language changed successfully to ' + this.locales.filter(function (currentValue, index, arr) {
-                    return (currentValue.code === this.profile.preferredLanguage);
-                }, this)[0].name + '.';
-                console.log(msg);
-                var oldLang = document.querySelector('html').getAttribute('lang');
-                document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
-                var newLang = document.querySelector('html').getAttribute('lang');
-                console.log('Change from locale ' + oldLang + ' to ' + newLang);
-                this.fire('feedback', {
-                    message: msg
-                });
-            },
-            handleChangeLanguageError: function () {
-                var msg = 'Language changing failed.';
-                console.log(msg);
-                this.fire('feedback', {
-                    message: msg
-                });
             },
             onDeviceChangePrompted: function () {
                 this.fire('feedback', {
