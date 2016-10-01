@@ -187,7 +187,7 @@
     },
     "model": {
       "openMemberEditorFab": {
-        "title": "Edit member."
+        "title": "Tag szerkesztése."
       },
       "sendMessageFab": {
         "title": "Cikk publikálása"
@@ -205,7 +205,7 @@
         "title": "Hivatkozás más tartalomra."
       },
       "sendNewContentFab": {
-        "title": "Cancel all changes & create new article."
+        "title": "Változások elvetése & Új cikk létrehozása."
       }
     },
     "main-menu-label": "Menü",
@@ -213,7 +213,7 @@
     "mailbox-menu-label": "Levelesláda",
     "members-menu-label": "Hálózat",
     "about-menu-label": "Rólunk",
-    "legal-menu-label": "Terms & services",
+    "legal-menu-label": "Felhasználási szabályzat",
     "mainTitle": "Topflavon",
     "english-language-label": "Angol",
     "hungarian-language-label": "Magyar",
@@ -225,14 +225,14 @@
     "messagesPagePublishedFolderTitle": "Publikált",
     "mailBoxPageInboxFolderTitle": [
       " {1} ",
-      "Inbox"
+      "Beérkező"
     ],
     "sentItemsPageInboxFolderTitle": [
       " {1} ",
-      "Sent items"
+      "Elküldött"
     ],
-    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Person",
-    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Group"
+    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Személy",
+    "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Csoport"
   },
   "wonderjam-article-field": {
     "meta": {
@@ -294,12 +294,12 @@
         "label": "Jelszó"
       },
       "signInSubmit": {
-        "title": "Sign in"
+        "title": "Bejelentkezés"
       }
     },
-    "rememberMeToggleButtonLabel": "Remember me",
-    "forgottenPasswordTitle": "Forgotten password",
-    "signOnSubmitTitle": "Sign on"
+    "rememberMeToggleButtonLabel": "Emlékezz rám",
+    "forgottenPasswordTitle": "Elfelejtett jelszó",
+    "signOnSubmitTitle": "Bejelentkezés"
   },
   "wonderjam-mailbox-view": {
     "meta": {
@@ -378,22 +378,22 @@
     },
     "model": {
       "newMemberNameLabel": {
-        "label": "Name",
-        "error-message": "Member name must be specified."
+        "label": "Név",
+        "error-message": "Tag nevének megadása kötelező."
       },
       "newMemberEmailLabel": {
         "label": "Email",
-        "error-message": "Member email must be specified."
+        "error-message": "Tag email címének megadása kötelező."
       },
       "newMemberParentLabel": {
-        "label": "Parent member"
+        "label": "Szülő"
       },
       "preferredLanguageLabel": {
-        "label": "Preferred language"
+        "label": "Preferált nyelv"
       }
     },
-    "newMemberTypeUserTitle": "User",
-    "newMemberTypeGroupTitle": "Group",
+    "newMemberTypeUserTitle": "Felhasználó",
+    "newMemberTypeGroupTitle": "Csoport",
     "newMemberTypeAdminTitle": "Admin"
   },
   "wonderjam-members-view": {
@@ -407,7 +407,7 @@
       ]
     },
     "model": {},
-    "emptyChildrenText": "No children."
+    "emptyChildrenText": "Nincsenek gyermek elemek."
   },
   "wonderjam-profile-view": {
     "meta": {
@@ -451,15 +451,15 @@
     },
     "model": {
       "preferredLanguageLabel": {
-        "label": "Preferred language"
+        "label": "Preferált nyelv"
       }
     },
-    "device-change-prompt-title": "Are you surely change the device which connected to your acccount?",
-    "device-change-prompt-text": "Until your supevisor not accept the device change login will be denied.",
+    "device-change-prompt-title": "Biztosan cserélni szeretné a fiókjához rendelt eszközt?",
+    "device-change-prompt-text": "Amíg felettese nem fogadta el az eszközcsere kérelmet, addig nem fog tudni bejelentkezni.",
     "device-change-prompt-confirm": "Ok",
-    "device-change-prompt-dismiss": "Cancel",
-    "changingDeviceButton": "Changing device",
-    "underDevelopmentText": "Under development ..."
+    "device-change-prompt-dismiss": "Elvetés",
+    "changingDeviceButton": "Eszközcsere",
+    "underDevelopmentText": "Fejlesztés alatt ..."
   },
   "wonderjam-recipients-view": {
     "meta": {
@@ -472,7 +472,7 @@
       ]
     },
     "model": {},
-    "emptyChildrenText": "No children."
+    "emptyChildrenText": "Nincsenek gyermek elemek."
   },
   "wonderjam-share-view": {
     "meta": {
@@ -521,18 +521,18 @@
     },
     "model": {
       "contentTitleInput": {
-        "label": "Title"
+        "label": "Cím"
       },
       "parentDdLabel": {
-        "label": "Parent"
+        "label": "Szülő"
       }
     },
-    "draftIndicator": "Draft",
-    "fileContentTabLabel": "Upload",
-    "folderContentTabLabel": "Folder",
-    "articleContentTabLabel": "Assemble",
-    "uploadFileText": "Choose File",
-    "propertiesCardTitle": " Select articles. "
+    "draftIndicator": "Piszkozat",
+    "fileContentTabLabel": "Feltöltés",
+    "folderContentTabLabel": "Mappa",
+    "articleContentTabLabel": "Összeállítás",
+    "uploadFileText": "Fájl kiválasztása",
+    "propertiesCardTitle": "Válasszon cikkeket."
   },
   "wonderjam-view401": {
     "meta": {
@@ -555,9 +555,9 @@
       ]
     },
     "model": {},
-    "text_1": " Oops you hit a forbidden (401) page. Please ",
-    "a_2": "sign in",
-    "text_3": " as admin. "
+    "text_1": "Nincs jogosultsága az oldalhoz (401). Please ",
+    "a_2": "jelenkezzen be",
+    "text_3": "adminisztrátorként"
   },
   "wonderjam-view404": {
     "meta": {
@@ -575,8 +575,8 @@
       ]
     },
     "model": {},
-    "text_1": " Oops you hit a 404. ",
-    "a_2": "Head back to home."
+    "text_1": " Az oldal nem található (404). ",
+    "a_2": "Vissza a főoldalra."
   },
   "bundle": true
 }

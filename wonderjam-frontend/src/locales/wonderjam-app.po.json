@@ -155,50 +155,50 @@
   },
   "model": {
     "openMemberEditorFab": {
-      "title": "Edit member."
+      "title": "Edycja członkiem."
     },
     "sendMessageFab": {
-      "title": "Publish content"
+      "title": "Publikowanie treści"
     },
     "addSectionButton": {
-      "title": "Embedd text to the message content."
+      "title": "Embedd tekst do treści wiadomości."
     },
     "addVideoButton": {
-      "title": "Embedd video to the message content."
+      "title": "Embedd wideo do treści wiadomości."
     },
     "addImageButton": {
-      "title": "Embedd image to the message content."
+      "title": "Embedd obrazu do treści wiadomości."
     },
     "addLinkButton": {
-      "title": "Embedd a link to another message to the message content."
+      "title": "Embedd link do innej wiadomości do treści wiadomości."
     },
     "sendNewContentFab": {
-      "title": "Cancel all changes & create new article."
+      "title": "Anuluj wszystkie zmiany & stworzyć nowy artykuł."
     }
   },
   "main-menu-label": "Menu",
-  "article-menu-label": "Articles",
-  "mailbox-menu-label": "Mailbox",
-  "members-menu-label": "Network",
-  "about-menu-label": "About",
-  "legal-menu-label": "Terms & services",
+  "article-menu-label": "Artykuły",
+  "mailbox-menu-label": "Skrzynka pocztowa",
+  "members-menu-label": "Sieć",
+  "about-menu-label": "O",
+  "legal-menu-label": "Warunki i usługi",
   "mainTitle": "Topflavon",
-  "english-language-label": "English",
-  "hungarian-language-label": "Magyar",
+  "english-language-label": "Angielski",
+  "hungarian-language-label": "Węgierski",
   "polish-language-label": "Polski",
-  "profile-menu-label": "Profile",
-  "logout-label": "Logout",
-  "messagesPagePublicFolderTitle": "Public",
-  "messagesPageMyContentsFolderTitle": "Drafts",
-  "messagesPagePublishedFolderTitle": "Published",
+  "profile-menu-label": "Profil",
+  "logout-label": "Wyloguj",
+  "messagesPagePublicFolderTitle": "Publiczny",
+  "messagesPageMyContentsFolderTitle": "Warcaby",
+  "messagesPagePublishedFolderTitle": "Opublikowany",
   "mailBoxPageInboxFolderTitle": [
     " {1} ",
-    "Inbox"
+    "W pudełku"
   ],
   "sentItemsPageInboxFolderTitle": [
     " {1} ",
-    "Sent items"
+    "Wysłane"
   ],
-  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Person",
-  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Group"
+  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Osoba",
+  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Grupa"
 }

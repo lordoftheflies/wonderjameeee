@@ -30,13 +30,13 @@
   },
   "model": {
     "signinEmailPassword": {
-      "label": "Password"
+      "label": "Hasło"
     },
     "signInSubmit": {
-      "title": "Sign in"
+      "title": "Zaloguj"
     }
   },
-  "rememberMeToggleButtonLabel": "Remember me",
-  "forgottenPasswordTitle": "Forgotten password",
-  "signOnSubmitTitle": "Sign on"
+  "rememberMeToggleButtonLabel": "Zapamiętaj mnie",
+  "forgottenPasswordTitle": "Zapomniane hasło",
+  "signOnSubmitTitle": "Zapisać się"
 }

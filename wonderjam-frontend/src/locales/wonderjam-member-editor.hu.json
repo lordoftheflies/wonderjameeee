@@ -50,21 +50,21 @@
   },
   "model": {
     "newMemberNameLabel": {
-      "label": "Name",
-      "error-message": "Member name must be specified."
+      "label": "Név",
+      "error-message": "Tag nevének megadása kötelező."
     },
     "newMemberEmailLabel": {
       "label": "Email",
-      "error-message": "Member email must be specified."
+      "error-message": "Tag email címének megadása kötelező."
     },
     "newMemberParentLabel": {
-      "label": "Parent member"
+      "label": "Szülő"
     },
     "preferredLanguageLabel": {
-      "label": "Preferred language"
+      "label": "Preferált nyelv"
     }
   },
-  "newMemberTypeUserTitle": "User",
-  "newMemberTypeGroupTitle": "Group",
+  "newMemberTypeUserTitle": "Felhasználó",
+  "newMemberTypeGroupTitle": "Csoport",
   "newMemberTypeAdminTitle": "Admin"
 }

@@ -40,13 +40,13 @@
   },
   "model": {
     "preferredLanguageLabel": {
-      "label": "Preferred language"
+      "label": "Preferowany język"
     }
   },
-  "device-change-prompt-title": "Are you surely change the device which connected to your acccount?",
-  "device-change-prompt-text": "Until your supevisor not accept the device change login will be denied.",
+  "device-change-prompt-title": "Czy na pewno zmienić urządzenie, które podłączone do acccount?",
+  "device-change-prompt-text": "Dopóki supevisor nie akceptują logowania Zmiana urządzenie zostanie odrzucona.",
   "device-change-prompt-confirm": "Ok",
-  "device-change-prompt-dismiss": "Cancel",
-  "changingDeviceButton": "Changing device",
-  "underDevelopmentText": "Under development ..."
+  "device-change-prompt-dismiss": "Anuluj",
+  "changingDeviceButton": "Urządzenie Zmiana",
+  "underDevelopmentText": "W budowie ..."
 }

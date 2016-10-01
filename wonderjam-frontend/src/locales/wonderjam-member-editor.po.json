@@ -50,21 +50,21 @@
   },
   "model": {
     "newMemberNameLabel": {
-      "label": "Name",
-      "error-message": "Member name must be specified."
+      "label": "Nazwa",
+      "error-message": "Nazwa użytkownika musi zostać określona."
     },
     "newMemberEmailLabel": {
-      "label": "Email",
-      "error-message": "Member email must be specified."
+      "label": "E-mail",
+      "error-message": "E-mail użytkownika musi być określony."
     },
     "newMemberParentLabel": {
-      "label": "Parent member"
+      "label": "Członek rodzic"
     },
     "preferredLanguageLabel": {
-      "label": "Preferred language"
+      "label": "Preferowany język"
     }
   },
-  "newMemberTypeUserTitle": "User",
-  "newMemberTypeGroupTitle": "Group",
+  "newMemberTypeUserTitle": "Użytkownik",
+  "newMemberTypeGroupTitle": "Grupa",
   "newMemberTypeAdminTitle": "Admin"
 }

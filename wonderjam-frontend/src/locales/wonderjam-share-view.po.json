@@ -45,16 +45,16 @@
   },
   "model": {
     "contentTitleInput": {
-      "label": "Title"
+      "label": "Tytuł"
     },
     "parentDdLabel": {
-      "label": "Parent"
+      "label": "Roślina mateczna"
     }
   },
-  "draftIndicator": "Draft",
-  "fileContentTabLabel": "Upload",
-  "folderContentTabLabel": "Folder",
-  "articleContentTabLabel": "Assemble",
-  "uploadFileText": "Choose File",
-  "propertiesCardTitle": " Select articles. "
+  "draftIndicator": "Wersja robocza",
+  "fileContentTabLabel": "Przekazać plik",
+  "folderContentTabLabel": "Teczka",
+  "articleContentTabLabel": "Gromadzić",
+  "uploadFileText": "Wybierz plik",
+  "propertiesCardTitle": "Wybierz artykuły."
 }

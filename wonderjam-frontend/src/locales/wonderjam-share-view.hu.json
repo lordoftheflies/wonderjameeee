@@ -45,16 +45,16 @@
   },
   "model": {
     "contentTitleInput": {
-      "label": "Title"
+      "label": "Cím"
     },
     "parentDdLabel": {
-      "label": "Parent"
+      "label": "Szülő"
     }
   },
-  "draftIndicator": "Draft",
-  "fileContentTabLabel": "Upload",
-  "folderContentTabLabel": "Folder",
-  "articleContentTabLabel": "Assemble",
-  "uploadFileText": "Choose File",
-  "propertiesCardTitle": " Select articles. "
+  "draftIndicator": "Piszkozat",
+  "fileContentTabLabel": "Feltöltés",
+  "folderContentTabLabel": "Mappa",
+  "articleContentTabLabel": "Összeállítás",
+  "uploadFileText": "Fájl kiválasztása",
+  "propertiesCardTitle": "Válasszon cikkeket."
 }

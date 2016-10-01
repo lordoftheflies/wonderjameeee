@@ -33,10 +33,10 @@
       "label": "Jelszó"
     },
     "signInSubmit": {
-      "title": "Sign in"
+      "title": "Bejelentkezés"
     }
   },
-  "rememberMeToggleButtonLabel": "Remember me",
-  "forgottenPasswordTitle": "Forgotten password",
-  "signOnSubmitTitle": "Sign on"
+  "rememberMeToggleButtonLabel": "Emlékezz rám",
+  "forgottenPasswordTitle": "Elfelejtett jelszó",
+  "signOnSubmitTitle": "Bejelentkezés"
 }

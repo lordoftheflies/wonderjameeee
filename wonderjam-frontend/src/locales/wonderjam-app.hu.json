@@ -155,7 +155,7 @@
   },
   "model": {
     "openMemberEditorFab": {
-      "title": "Edit member."
+      "title": "Tag szerkesztése."
     },
     "sendMessageFab": {
       "title": "Cikk publikálása"
@@ -173,7 +173,7 @@
       "title": "Hivatkozás más tartalomra."
     },
     "sendNewContentFab": {
-      "title": "Cancel all changes & create new article."
+      "title": "Változások elvetése & Új cikk létrehozása."
     }
   },
   "main-menu-label": "Menü",
@@ -181,7 +181,7 @@
   "mailbox-menu-label": "Levelesláda",
   "members-menu-label": "Hálózat",
   "about-menu-label": "Rólunk",
-  "legal-menu-label": "Terms & services",
+  "legal-menu-label": "Felhasználási szabályzat",
   "mainTitle": "Topflavon",
   "english-language-label": "Angol",
   "hungarian-language-label": "Magyar",
@@ -193,12 +193,12 @@
   "messagesPagePublishedFolderTitle": "Publikált",
   "mailBoxPageInboxFolderTitle": [
     " {1} ",
-    "Inbox"
+    "Beérkező"
   ],
   "sentItemsPageInboxFolderTitle": [
     " {1} ",
-    "Sent items"
+    "Elküldött"
   ],
-  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Person",
-  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Group"
+  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab": "Személy",
+  "headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1": "Csoport"
 }
