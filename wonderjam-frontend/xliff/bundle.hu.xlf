@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.model.openMemberEditorFab.title">
         <source>Edit member.</source>
-        <target state="new">Edit member.</target>
+        <target state="new">Tag szerkesztése.</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.model.sendMessageFab.title">
         <source>Publish content</source>
@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.model.sendNewContentFab.title">
         <source>Cancel all changes &amp; create new article.</source>
-        <target state="new">Cancel all changes &amp; create new article.</target>
+        <target state="new">Változások elvetése &amp; Új cikk létrehozása.</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.main-menu-label">
         <source>Menu</source>
@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.legal-menu-label">
         <source>Terms &amp; services</source>
-        <target state="new">Terms &amp; services</target>
+        <target state="new">Felhasználási szabályzat</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.mainTitle">
         <source>Topflavon</source>
@@ -116,7 +116,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.mailBoxPageInboxFolderTitle.1">
         <source>Inbox</source>
-        <target state="needs-translation">Inbox</target>
+        <target state="needs-translation">Beérkező</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.sentItemsPageInboxFolderTitle.0">
         <source> {1} </source>
@@ -124,15 +124,15 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.sentItemsPageInboxFolderTitle.1">
         <source>Sent items</source>
-        <target state="needs-translation">Sent items</target>
+        <target state="needs-translation">Elküldött</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab">
         <source>Person</source>
-        <target state="new">Person</target>
+        <target state="new">Személy</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.headerLayout:app-header:app-toolbar_1:iron-pages:paper-tabs_4:paper-tab_1">
         <source>Group</source>
-        <target state="new">Group</target>
+        <target state="new">Csoport</target>
       </trans-unit>
       <trans-unit id="wonderjam-article-view.emptyChildrenText">
         <source>No content in the folder.</source>
@@ -144,19 +144,19 @@
       </trans-unit>
       <trans-unit id="wonderjam-login-view.model.signInSubmit.title">
         <source>Sign in</source>
-        <target state="new">Sign in</target>
+        <target state="new">Bejelentkezés</target>
       </trans-unit>
       <trans-unit id="wonderjam-login-view.rememberMeToggleButtonLabel">
         <source>Remember me</source>
-        <target state="new">Remember me</target>
+        <target state="new">Emlékezz rám</target>
       </trans-unit>
       <trans-unit id="wonderjam-login-view.forgottenPasswordTitle">
         <source>Forgotten password</source>
-        <target state="new">Forgotten password</target>
+        <target state="new">Elfelejtett jelszó</target>
       </trans-unit>
       <trans-unit id="wonderjam-login-view.signOnSubmitTitle">
         <source>Sign on</source>
-        <target state="new">Sign on</target>
+        <target state="new">Bejelentkezés</target>
       </trans-unit>
       <trans-unit id="wonderjam-mailbox-view.messageItemSenderLabel">
         <source>From:</source>
@@ -172,11 +172,11 @@
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.model.newMemberNameLabel.label">
         <source>Name</source>
-        <target state="new">Name</target>
+        <target state="new">Név</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.model.newMemberNameLabel.error-message">
         <source>Member name must be specified.</source>
-        <target state="new">Member name must be specified.</target>
+        <target state="new">Tag nevének megadása kötelező.</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.model.newMemberEmailLabel.label">
         <source>Email</source>
@@ -184,23 +184,23 @@
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.model.newMemberEmailLabel.error-message">
         <source>Member email must be specified.</source>
-        <target state="new">Member email must be specified.</target>
+        <target state="new">Tag email címének megadása kötelező.</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.model.newMemberParentLabel.label">
         <source>Parent member</source>
-        <target state="new">Parent member</target>
+        <target state="new">Szülő</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.model.preferredLanguageLabel.label">
         <source>Preferred language</source>
-        <target state="new">Preferred language</target>
+        <target state="new">Preferált nyelv</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.newMemberTypeUserTitle">
         <source>User</source>
-        <target state="new">User</target>
+        <target state="new">Felhasználó</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.newMemberTypeGroupTitle">
         <source>Group</source>
-        <target state="new">Group</target>
+        <target state="new">Csoport</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.newMemberTypeAdminTitle">
         <source>Admin</source>
@@ -208,19 +208,19 @@
       </trans-unit>
       <trans-unit id="wonderjam-members-view.emptyChildrenText">
         <source>No children.</source>
-        <target state="new">No children.</target>
+        <target state="new">Nincsenek gyermek elemek.</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.model.preferredLanguageLabel.label">
         <source>Preferred language</source>
-        <target state="new">Preferred language</target>
+        <target state="new">Preferált nyelv</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.device-change-prompt-title">
         <source>Are you surely change the device which connected to your acccount?</source>
-        <target state="new">Are you surely change the device which connected to your acccount?</target>
+        <target state="new">Biztosan cserélni szeretné a fiókjához rendelt eszközt?</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.device-change-prompt-text">
         <source>Until your supevisor not accept the device change login will be denied.</source>
-        <target state="new">Until your supevisor not accept the device change login will be denied.</target>
+        <target state="new">Amíg felettese nem fogadta el az eszközcsere kérelmet, addig nem fog tudni bejelentkezni.</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.device-change-prompt-confirm">
         <source>Ok</source>
@@ -228,71 +228,71 @@
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.device-change-prompt-dismiss">
         <source>Cancel</source>
-        <target state="new">Cancel</target>
+        <target state="new">Elvetés</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.changingDeviceButton">
         <source>Changing device</source>
-        <target state="new">Changing device</target>
+        <target state="new">Eszközcsere</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.underDevelopmentText">
         <source>Under development ...</source>
-        <target state="new">Under development ...</target>
+        <target state="new">Fejlesztés alatt ...</target>
       </trans-unit>
       <trans-unit id="wonderjam-recipients-view.emptyChildrenText">
         <source>No children.</source>
-        <target state="new">No children.</target>
+        <target state="new">Nincsenek gyermek elemek.</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.model.contentTitleInput.label">
         <source>Title</source>
-        <target state="new">Title</target>
+        <target state="new">Cím</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.model.parentDdLabel.label">
         <source>Parent</source>
-        <target state="new">Parent</target>
+        <target state="new">Szülő</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.draftIndicator">
         <source>Draft</source>
-        <target state="new">Draft</target>
+        <target state="new">Piszkozat</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.fileContentTabLabel">
         <source>Upload</source>
-        <target state="new">Upload</target>
+        <target state="new">Feltöltés</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.folderContentTabLabel">
         <source>Folder</source>
-        <target state="new">Folder</target>
+        <target state="new">Mappa</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.articleContentTabLabel">
         <source>Assemble</source>
-        <target state="new">Assemble</target>
+        <target state="new">Összeállítás</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.uploadFileText">
         <source>Choose File</source>
-        <target state="new">Choose File</target>
+        <target state="new">Fájl kiválasztása</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.propertiesCardTitle">
         <source> Select articles. </source>
-        <target state="new"> Select articles. </target>
+        <target state="new">Válasszon cikkeket.</target>
       </trans-unit>
       <trans-unit id="wonderjam-view401.text_1">
         <source> Oops you hit a forbidden (401) page. Please </source>
-        <target state="new"> Oops you hit a forbidden (401) page. Please </target>
+        <target state="new">Nincs jogosultsága az oldalhoz (401). Please </target>
       </trans-unit>
       <trans-unit id="wonderjam-view401.a_2">
         <source>sign in</source>
-        <target state="new">sign in</target>
+        <target state="new">jelenkezzen be</target>
       </trans-unit>
       <trans-unit id="wonderjam-view401.text_3">
         <source> as admin. </source>
-        <target state="new"> as admin. </target>
+        <target state="new">adminisztrátorként</target>
       </trans-unit>
       <trans-unit id="wonderjam-view404.text_1">
         <source> Oops you hit a 404. </source>
-        <target state="new"> Oops you hit a 404. </target>
+        <target state="new"> Az oldal nem található (404). </target>
       </trans-unit>
       <trans-unit id="wonderjam-view404.a_2">
         <source>Head back to home.</source>
-        <target state="new">Head back to home.</target>
+        <target state="new">Vissza a főoldalra.</target>
       </trans-unit>
     </body>
   </file>
