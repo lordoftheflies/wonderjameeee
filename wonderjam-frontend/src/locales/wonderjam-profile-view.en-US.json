@@ -15,6 +15,26 @@
         "op": "add",
         "path": "/underDevelopmentText",
         "value": "Under development ..."
+      },
+      {
+        "op": "add",
+        "path": "/device-change-prompt-title",
+        "value": "Are you surely change the device which connected to your acccount?"
+      },
+      {
+        "op": "add",
+        "path": "/device-change-prompt-text",
+        "value": "Until your supevisor not accept the device change login will be denied."
+      },
+      {
+        "op": "add",
+        "path": "/device-change-prompt-confirm",
+        "value": "Ok"
+      },
+      {
+        "op": "add",
+        "path": "/device-change-prompt-dismiss",
+        "value": "Cancel"
       }
     ]
   },
@@ -23,6 +43,10 @@
       "label": "Preferred language"
     }
   },
+  "device-change-prompt-title": "Are you surely change the device which connected to your acccount?",
+  "device-change-prompt-text": "Until your supevisor not accept the device change login will be denied.",
+  "device-change-prompt-confirm": "Ok",
+  "device-change-prompt-dismiss": "Cancel",
   "changingDeviceButton": "Changing device",
   "underDevelopmentText": "Under development ..."
 }

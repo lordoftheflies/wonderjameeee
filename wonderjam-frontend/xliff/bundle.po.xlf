@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-09-30T00:18:44Z" product-name="messages">
+  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-10-01T13:36:48Z" product-name="messages">
     <header>
       <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
     </header>
@@ -209,6 +209,22 @@
       <trans-unit id="wonderjam-profile-view.model.preferredLanguageLabel.label">
         <source>Preferred language</source>
         <target state="new">Preferred language</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-profile-view.device-change-prompt-title">
+        <source>Are you surely change the device which connected to your acccount?</source>
+        <target state="new">Are you surely change the device which connected to your acccount?</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-profile-view.device-change-prompt-text">
+        <source>Until your supevisor not accept the device change login will be denied.</source>
+        <target state="new">Until your supevisor not accept the device change login will be denied.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-profile-view.device-change-prompt-confirm">
+        <source>Ok</source>
+        <target state="new">Ok</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-profile-view.device-change-prompt-dismiss">
+        <source>Cancel</source>
+        <target state="new">Cancel</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.changingDeviceButton">
         <source>Changing device</source>

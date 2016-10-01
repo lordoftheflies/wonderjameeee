@@ -195,6 +195,10 @@
         "label": "Preferred language"
       }
     },
+    "device-change-prompt-title": "Are you surely change the device which connected to your acccount?",
+    "device-change-prompt-text": "Until your supevisor not accept the device change login will be denied.",
+    "device-change-prompt-confirm": "Ok",
+    "device-change-prompt-dismiss": "Cancel",
     "changingDeviceButton": "Changing device",
     "underDevelopmentText": "Under development ..."
   },
