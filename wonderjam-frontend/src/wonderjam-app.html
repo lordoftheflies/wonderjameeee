@@ -285,7 +285,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <app-toolbar sticky>
                         <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden="[[!authenticated]]"></paper-icon-button>
                         <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
-                        <plutonium-language-picker>
+                        <plutonium-language-picker id="languagePicker" lang="{{profile.preferredLanguage}}">
                             <!--<plutonium-language-item lang="en-US" text-id="english-language-label">English (US)</plutonium-language-item>-->
                             <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
                             <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
@@ -616,6 +616,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
                 var newLang = document.querySelector('html').getAttribute('lang');
                 console.log('Change from locale ' + oldLang + ' to ' + newLang);
+                this.$.languagePicker.lang = this.profile.preferredLanguage;
                 this.fire('feedback', {
                     message: msg
                 });
