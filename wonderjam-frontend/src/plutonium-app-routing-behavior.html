@@ -46,13 +46,13 @@
             attached: function () {
                 this.rememberMe = this.$.rememberMeCookie.readCookie();
                 this.xsrfToken = this.$.xsrfCookie.readCookie();
-                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
-                        this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
+//                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
+                 this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
 //                this.rememberMe = this.$.rememberMeCookie.readCookie();
 ////                this.session = this.$.sessionCookie.readCookie();
 //
 //                this.xsrfToken = this.$.xsrfCookie.readCookie();
-//                if (this.xsrfToken && this.rememberMe) {
+                if (this.authenticated) {
 //                    this.authenticated = true;
 //                    if (!this.page)
 //                        this.page = this.homePage;
@@ -64,9 +64,13 @@
 //                } else {
 ////                    this.$.tokenAjax.generateRequest();
 //                    console.log(this.is, 'USER AUTHENTICATION');
-//                }
+                }
             },
             ready: function () {
+//                this.rememberMe = this.$.rememberMeCookie.readCookie();
+//                this.xsrfToken = this.$.xsrfCookie.readCookie();
+////                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
+//                 this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
 //                this._resetLayout();
             },
             /**
@@ -76,7 +80,12 @@
              */
             _routePageChanged: function (page) {
 //                console.log(this.is, 'navigate to', page);
-//                
+                this.rememberMe = this.$.rememberMeCookie.readCookie();
+                this.xsrfToken = this.$.xsrfCookie.readCookie();
+//                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
+                 this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
+
+
                 if (this.authenticated) {
 //                    this.page = page || this.homePage;
 ////                } else {
