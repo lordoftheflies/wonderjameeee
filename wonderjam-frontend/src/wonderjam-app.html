@@ -119,6 +119,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             app-header #mainTitle {
                 text-align: center;
             }
+            
+            #legalContainer {
+                position: absolute;
+                bottom: 125px;
+                left: 10px;
+                z-index: 1000;
+            }
+            #legalContainer a {
+                font-size: 12px;
+            }
         </style>
         <!--Get profile-->
         <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
@@ -276,6 +286,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <a text-id="members-menu-label" name="members-view" href="#/members-view/[[accountId]]" hidden="{{!hasPrivileges}}">Network</a>
                     <a text-id="about-menu-label" name="about-view" href="#/about-view">About</a>
                 </iron-selector>
+                <div id="legalContainer" class="terms-container">
+                    <a text-id="legal-menu-label" href="#/legal-view">Terms & services</a>
+                </div>
             </app-drawer>
 
             <!-- Main content -->
@@ -454,6 +467,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         selected-item-ids="{{recipients}}"
                         selected-meta-action="{{selectedMetaAction}}">
                     </wonderjam-share-view>
+                    <wonderjam-legal-view
+                        name="legal-view">
+                    </wonderjam-legal-view>
                     <wonderjam-view401 
                         name="view401">
                     </wonderjam-view401>
@@ -603,7 +619,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             },
             computeMinorToolbarHidden: function (authenticated, page) {
-                return !authenticated || (page === 'about-view' ||
+                return !authenticated || (page === 'about-view' || page === 'legal-view' ||
                         page === 'profile-view') ||
                         (page === 'article-view' && this.user.authorities.indexOf('ADMIN') === -1);
             },
@@ -628,13 +644,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     message: msg
                 });
             },
-            onProfileIronAjaxError: function(event, details) {
-                
+            onProfileIronAjaxError: function (event, details) {
+
             },
-            onProfileIronAjaxResponse: function(event, details) {
-                
+            onProfileIronAjaxResponse: function (event, details) {
+
             },
-            onChangeLocale: function(event, details) {
+            onChangeLocale: function (event, details) {
                 this.changeLanguageModel = details;
                 this.$.changeLanguageAjax.generateRequest();
             }

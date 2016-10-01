@@ -145,6 +145,11 @@
         "op": "replace",
         "path": "/sentItemsPageInboxFolderTitle/1",
         "value": "Sent items"
+      },
+      {
+        "op": "add",
+        "path": "/legal-menu-label",
+        "value": "Terms & services"
       }
     ]
   },
@@ -176,6 +181,7 @@
   "mailbox-menu-label": "Mailbox",
   "members-menu-label": "Network",
   "about-menu-label": "About",
+  "legal-menu-label": "Terms & services",
   "mainTitle": "Topflavon",
   "english-language-label": "English",
   "hungarian-language-label": "Magyar",
