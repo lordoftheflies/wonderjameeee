@@ -294,6 +294,6 @@
         <source>Head back to home.</source>
         <target state="new">Wrócić do domu.</target>
       </trans-unit>
-    </body>
+    </body> 
   </file>
 </xliff>
