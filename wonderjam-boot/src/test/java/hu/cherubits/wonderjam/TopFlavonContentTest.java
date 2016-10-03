@@ -412,7 +412,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video3ContainerYoutube.setParent(videosContainer);
         video3ContainerYoutube.setNode(heglasNode);
         video3ContainerYoutube.setPublicIndicator(true);
-        video3ContainerYoutube.setTitle("Dr. Brian Thornburg");
+        video3ContainerYoutube.setTitle("Dr. Brian Thornburg (Youtube)");
         video3ContainerYoutube = containerContentRepository.save(video3ContainerYoutube);
         video(video3ContainerYoutube, null, "https://youtu.be/DyS2jC0DLZc", 2);
 
