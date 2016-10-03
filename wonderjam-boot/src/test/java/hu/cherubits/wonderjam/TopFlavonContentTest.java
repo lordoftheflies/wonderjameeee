@@ -141,13 +141,13 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         mailBoxRepository.save(balazspeczelyMb);
 
         AccountEntity cseszkupopoveszku = new AccountEntity();
-        cseszkupopoveszku.setEmail("cseszku@popoveszku.com");
-        cseszkupopoveszku.setName("Cseszku popoveszku");
+        cseszkupopoveszku.setEmail("blaise.peczely@gmail.com");
+        cseszkupopoveszku.setName("Péczely Balázs (Adminisztrátor)");
         cseszkupopoveszku.setPassword("qwe123");
-        cseszkupopoveszku.setPreferredLanguage("po");
+        cseszkupopoveszku.setPreferredLanguage("en");
         cseszkupopoveszku = accountRepo.save(cseszkupopoveszku);
         NetworkNodeEntity cseszkupopoveszkuNode = new NetworkNodeEntity();
-        cseszkupopoveszku.setState(NetworkNodeType.USER);
+        cseszkupopoveszku.setState(NetworkNodeType.ADMIN);
         cseszkupopoveszkuNode.setActive(true);
         cseszkupopoveszkuNode.setCodes(3);
         cseszkupopoveszkuNode = networkRepo.save(cseszkupopoveszkuNode);
@@ -158,8 +158,8 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         mailBoxRepository.save(cseszkupopoveszkuMb);
 
         AccountEntity parazita = new AccountEntity();
-        parazita.setEmail("zita.para@gmail.com");
-        parazita.setName("Para Zita");
+        parazita.setEmail("balazs.peczely.sp@gmail.com ");
+        parazita.setName("Péczely Balázs (Felhasználó)");
         parazita.setPassword("qwe123");
         parazita.setPreferredLanguage("hu");
         parazita = accountRepo.save(parazita);
@@ -209,7 +209,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         mailBoxRepository.save(feriahegyrolMb);
 
         AccountEntity romanok = new AccountEntity();
-        romanok.setName("Románia");
+        romanok.setName("Digitális Védelem");
         romanok = accountRepo.save(romanok);
         NetworkNodeEntity romanokNode = new NetworkNodeEntity();
         romanokNode.setActive(true);
@@ -255,7 +255,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         networkRepo.save(tesztelekNode);
         feriahegyrolNode.setParent(balazspeczelyNode);
         networkRepo.save(feriahegyrolNode);
-        parazitaNode.setParent(balazspeczelyNode);
+        parazitaNode.setParent(romanokNode);
         networkRepo.save(parazitaNode);
 
     }
