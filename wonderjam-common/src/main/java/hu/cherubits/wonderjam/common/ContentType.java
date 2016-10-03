@@ -10,7 +10,7 @@ package hu.cherubits.wonderjam.common;
  * @author lordoftheflies
  */
 public enum ContentType {
-    ASSEMBLED("assembled"), EMBEDDED("embedded"), LINKED("linked");
+    assembled("assembled"), embedded("embedded"), linked("linked");
     private final String key;
 
     private ContentType(String key) {

@@ -33,11 +33,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -99,14 +101,23 @@ public class ContentManagementService {
             this.node = node;
         }
 
+        private int parseInt(Map<String, String> p, String key) {
+            try {
+                return Integer.parseInt(p.get(key));
+            } catch (NullPointerException | NumberFormatException ex) {
+                LOG.log(Level.WARNING, "Could not parse {0} property.", key);
+                return 0;
+            }
+        }
+
         private void initialSetup(ContentEntity entity, ContentDto s, ContainerContentEntity parent, UUID id) {
             entity.setContent(s.getData());
             entity.setId(id);
             entity.setTitle(s.getTitle());
             entity.setJustification(s.getProperties().get("justification"));
-            entity.setWidth(Integer.parseInt(s.getProperties().get("width")));
-            entity.setHeight(Integer.parseInt(s.getProperties().get("height")));
-            entity.setFontSize(Integer.parseInt(s.getProperties().get("fontSize")));
+            entity.setWidth(parseInt(s.getProperties(), "width"));
+            entity.setHeight(parseInt(s.getProperties(), "height"));
+            entity.setFontSize(parseInt(s.getProperties(), "fontSize"));
             entity.setParent(parent);
             entity.setOrderIndex(index++);
         }
@@ -152,7 +163,7 @@ public class ContentManagementService {
 
         private ContainerContentEntity createAssembledContent(String title, String value, ContainerContentEntity parent, int index, UUID id) {
             ContainerContentEntity entity = new ContainerContentEntity();
-            entity.setContentType(ContentType.ASSEMBLED);
+            entity.setContentType(ContentType.assembled);
             entity.setId(id);
             entity.setTitle(title);
             entity.setParent(parent);
@@ -162,7 +173,7 @@ public class ContentManagementService {
 
         private ContainerContentEntity createEmbeddedContent(String title, String value, ContainerContentEntity parent, int index, UUID id) {
             ContainerContentEntity entity = new ContainerContentEntity();
-            entity.setContentType(ContentType.EMBEDDED);
+            entity.setContentType(ContentType.embedded);
             entity.setId(id);
             entity.setTitle(title);
             entity.setParent(parent);
@@ -172,7 +183,7 @@ public class ContentManagementService {
 
         private ContainerContentEntity createLinkedContent(String title, String value, ContainerContentEntity parent, int index, UUID id) {
             ContainerContentEntity entity = new ContainerContentEntity();
-            entity.setContentType(ContentType.LINKED);
+            entity.setContentType(ContentType.linked);
             entity.setId(id);
             entity.setTitle(title);
             entity.setParent(parent);
@@ -249,7 +260,7 @@ public class ContentManagementService {
 
     private void publicArticles(String pageId, PageDto dto) throws ContentNotFoundException {
         if (ROOT_PSEUDO_ID.equals(pageId)) {
-            dto.setContentType(ContentType.LINKED);
+            dto.setContentType(ContentType.linked);
             dto.setSections(contentContainerRepository
                     .findPublicRoots()
                     .stream()
@@ -263,7 +274,7 @@ public class ContentManagementService {
         } else {
             ContainerContentEntity container = contentContainerRepository.findOne(UUID.fromString(pageId));
             dto.setContentType(container.getContentType());
-            if (container.getContentType().equals(ContentType.EMBEDDED)) {
+            if (container.getContentType().equals(ContentType.embedded)) {
             } else {
                 dto.setTitle(container.getTitle());
                 dto.setId(container.getId());
@@ -295,7 +306,7 @@ public class ContentManagementService {
         ContainerContentEntity container = contentContainerRepository.findOne(UUID.fromString(pageId));
         dto.setId(container.getId());
         dto.setContentType(container.getContentType());
-        if (container.getContentType().equals(ContentType.EMBEDDED)) {
+        if (container.getContentType().equals(ContentType.embedded)) {
             // Redirect to upload
         } else {
             dto.setTitle(container.getTitle());
@@ -320,7 +331,7 @@ public class ContentManagementService {
 
     private void ownArticles(UUID accountId, String pageId, PageDto dto) throws ContentNotFoundException {
         if (ROOT_PSEUDO_ID.equals(pageId)) {
-            dto.setContentType(ContentType.LINKED);
+            dto.setContentType(ContentType.linked);
             dto.setSections(containerContentRepository
                     .findDraftRoots(accountId)
                     .stream()
@@ -335,7 +346,7 @@ public class ContentManagementService {
             ContainerContentEntity container = contentContainerRepository.findOne(UUID.fromString(pageId));
             dto.setDraft(container.isDraft());
             dto.setContentType(container.getContentType());
-            if (container.getContentType().equals(ContentType.EMBEDDED)) {
+            if (container.getContentType().equals(ContentType.embedded)) {
 
             } else {
                 dto.setTitle(container.getTitle());
@@ -366,9 +377,9 @@ public class ContentManagementService {
                 .stream()
                 .map((ContainerContentEntity entity) -> new SectionDto(
                         entity.getId(),
-                        ContentType.LINKED,
+                        ContentType.linked,
                         entity.getTitle(),
-                        ContentType.LINKED.toString(),
+                        ContentType.linked.toString(),
                         null,
                         null,
                         0,
@@ -382,7 +393,7 @@ public class ContentManagementService {
 
     private void publishedArticles(String pageId, PageDto dto) throws ContentNotFoundException {
         if (ROOT_PSEUDO_ID.equals(pageId)) {
-            dto.setContentType(ContentType.LINKED);
+            dto.setContentType(ContentType.linked);
             dto.setSections(contentContainerRepository
                     .findPublishedRoots()
                     .stream()
@@ -396,7 +407,7 @@ public class ContentManagementService {
         } else {
             ContainerContentEntity container = contentContainerRepository.findOne(UUID.fromString(pageId));
 //            dto.setHasEmbeddedFile(container.isHasEmbeddedFile());
-            if (container.getContentType().equals(ContentType.EMBEDDED)) {
+            if (container.getContentType().equals(ContentType.embedded)) {
 //                dto.setEmbeddedFileName(container.getContent());
             } else {
                 dto.setTitle(container.getTitle());
@@ -460,7 +471,7 @@ public class ContentManagementService {
 
         if (ROOT_PSEUDO_ID.equals(pageId)) {
             dto.setTitle(ROOT_PLACEHOLDER);
-            dto.setSections(Arrays.asList(new PageDto(null, "ROOT", ContentType.LINKED)));
+            dto.setSections(Arrays.asList(new PageDto(null, "ROOT", ContentType.linked)));
         } else if (!containerContentRepository.exists(UUID.fromString(pageId))) {
             throw new ContentNotFoundException();
         } else {
@@ -480,7 +491,7 @@ public class ContentManagementService {
                 item = contentRepository.findByChild(item.getId());
             }
 
-            sections.add(new SectionDto(null, ContentType.LINKED, ROOT_PLACEHOLDER, null, "ROOT", null, 0, 0, 0));
+            sections.add(new SectionDto(null, ContentType.linked, ROOT_PLACEHOLDER, null, "ROOT", null, 0, 0, 0));
             dto.setSections(sections);
 
             Collections.reverse(dto.getSections());
@@ -507,54 +518,54 @@ public class ContentManagementService {
         ContainerContentEntity container = factory.createAssembledContent(dto.getTitle(), null, null, 0, dto.getId());
 
         switch (dto.getContentType()) {
-            case ASSEMBLED:
+            case assembled:
                 LOG.log(Level.INFO, "Created new assembled page[{0}].", container.getId());
                 contentContainerRepository.save(container);
                 dto.getSections().forEach(s -> {
+                    ContentEntity ce = null;
+                    UUID sectionId = null;
                     try {
-                        ContentEntity ce = null;
-                        UUID sectionId = null;
-                        try {
 
-                            sectionId = s.getId();
-                            LOG.log(Level.INFO, "Section id presented, modify {0} section", s.getType());
-                            ContentEntity sectionEntity = contentRepository.findOne(sectionId);
-                            sectionEntity.setContent(s.getData());
-                            sectionEntity.setTitle(s.getTitle());
-                            factory.initialSetup(sectionEntity, s, container, sectionId);
-                            contentRepository.save(sectionEntity);
-                        } catch (IllegalArgumentException parseEx) {
-                            LOG.log(Level.INFO, "Section id not presented, create {0} section", s.getType());
-                            switch (s.getType()) {
+                        // try {
+                        sectionId = s.getId();
+                        LOG.log(Level.INFO, "Section id presented, modify {0} section", s.getType());
+                        ContentEntity sectionEntity = contentRepository.findOne(sectionId);
+                        sectionEntity.setContent(s.getData());
+                        sectionEntity.setTitle(s.getTitle());
+                        factory.initialSetup(sectionEntity, s, container, sectionId);
+                        contentRepository.save(sectionEntity);
+                    } catch (InvalidDataAccessApiUsageException | IllegalArgumentException parseEx) {
+                        LOG.log(Level.INFO, "Section id not presented, create {0} section", s.getType());
+                        switch (s.getType()) {
 //                                case "video":
-                                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_VIDEO:
+                            case ViewConstants.CONTENT_MANAGEMENT_WIDGET_VIDEO:
 
-                                    ce = factory.createVideo(s, container, sectionId);
-                                    break;
+                                ce = factory.createVideo(s, container, sectionId);
+                                break;
 //                                case "image":
-                                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_IMAGE:
-                                    ce = factory.createImage(s, container, sectionId);
-                                    break;
+                            case ViewConstants.CONTENT_MANAGEMENT_WIDGET_IMAGE:
+                                ce = factory.createImage(s, container, sectionId);
+                                break;
 //                                case "link":
-                                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_LINK:
-                                    ce = factory.createReference(s, container, sectionId);
-                                    break;
+                            case ViewConstants.CONTENT_MANAGEMENT_WIDGET_LINK:
+                                ce = factory.createReference(s, container, sectionId);
+                                break;
 //                                case "text":
-                                case ViewConstants.CONTENT_MANAGEMENT_WIDGET_TEXT:
-                                default:
-                                    ce = factory.createText(s, container, sectionId);
-                                    break;
-                            }
-
-                            LOG.log(Level.INFO, "Created new {0}-content[{1}].", new Object[]{s.getType(), ce.getId()});
+                            case ViewConstants.CONTENT_MANAGEMENT_WIDGET_TEXT:
+                            default:
+                                ce = factory.createText(s, container, sectionId);
+                                break;
                         }
+
+                        LOG.log(Level.INFO, "Created new {0}-content[{1}].", new Object[]{s.getType(), ce.getId()});
+
                     } catch (Exception ex) {
                         LOG.log(Level.SEVERE, "Failed to persist section.", ex);
                     }
 
                 });
                 break;
-            case EMBEDDED:
+            case embedded:
                 container.setEmbeddedFile(dto.getEmbeddedFile());
                 contentContainerRepository.save(container);
                 break;
@@ -606,10 +617,10 @@ public class ContentManagementService {
     public List<PageDto> parentCandidates() {
         List<PageDto> pages = containerContentRepository.findAll()
                 .stream()
-                .filter(e -> ContentType.LINKED.equals(e.getContentType()))
+                .filter(e -> ContentType.linked.equals(e.getContentType()))
                 .map((ContainerContentEntity e) -> new PageDto(e.getId(), e.getTitle(), e.getContentType()))
                 .collect(Collectors.toList());
-        pages.add(new PageDto(null, ROOT_PLACEHOLDER, ContentType.LINKED));
+        pages.add(new PageDto(null, ROOT_PLACEHOLDER, ContentType.linked));
         return pages;
     }
 
@@ -622,7 +633,7 @@ public class ContentManagementService {
     public List<PageDto> childCandidates() {
         List<PageDto> pages = containerContentRepository.findAll()
                 .stream()
-                .filter(e -> ContentType.LINKED.equals(e.getContentType()))
+                .filter(e -> ContentType.linked.equals(e.getContentType()))
                 .map((ContainerContentEntity e) -> new PageDto(e.getId(), e.getTitle(), e.getContentType()))
                 .collect(Collectors.toList());
         return pages;

@@ -268,7 +268,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         System.out.println("publish");
 
         ContainerContentEntity productsContainer = new ContainerContentEntity();
-        productsContainer.setContentType(ContentType.LINKED);
+        productsContainer.setContentType(ContentType.linked);
         productsContainer.setNode(heglasNode);
         productsContainer.setPublicIndicator(true);
         productsContainer.setTitle("Products");
@@ -277,7 +277,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         
         
         ContainerContentEntity flavonEndActiveContainer = new ContainerContentEntity();
-        flavonEndActiveContainer.setContentType(ContentType.ASSEMBLED);
+        flavonEndActiveContainer.setContentType(ContentType.assembled);
         flavonEndActiveContainer.setDraft(false);
         flavonEndActiveContainer.setNode(heglasNode);
         flavonEndActiveContainer.setPublicIndicator(true);
@@ -297,7 +297,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "</ul>", 5);
         
         ContainerContentEntity flavonGreenContainer = new ContainerContentEntity();
-        flavonGreenContainer.setContentType(ContentType.ASSEMBLED);
+        flavonGreenContainer.setContentType(ContentType.assembled);
         flavonGreenContainer.setDraft(false);
         flavonGreenContainer.setNode(heglasNode);
         flavonGreenContainer.setPublicIndicator(true);
@@ -317,7 +317,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "</ul>", 5);
         
         ContainerContentEntity flavonMaxContainer = new ContainerContentEntity();
-        flavonMaxContainer.setContentType(ContentType.ASSEMBLED);
+        flavonMaxContainer.setContentType(ContentType.assembled);
         flavonMaxContainer.setDraft(false);
         flavonMaxContainer.setNode(heglasNode);
         flavonMaxContainer.setPublicIndicator(true);
@@ -337,7 +337,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "</ul>", 5);
         
         ContainerContentEntity flavonJoyContainer = new ContainerContentEntity();
-        flavonJoyContainer.setContentType(ContentType.ASSEMBLED);
+        flavonJoyContainer.setContentType(ContentType.assembled);
         flavonJoyContainer.setDraft(false);
         flavonJoyContainer.setNode(heglasNode);
         flavonJoyContainer.setPublicIndicator(true);
@@ -357,14 +357,14 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "</ul>", 5);
     
         ContainerContentEntity videosContainer = new ContainerContentEntity();
-        videosContainer.setContentType(ContentType.LINKED);
+        videosContainer.setContentType(ContentType.linked);
         videosContainer.setNode(heglasNode);
         videosContainer.setPublicIndicator(true);
         videosContainer.setTitle("Medical presentations");
         videosContainer = containerContentRepository.save(videosContainer);
         
         ContainerContentEntity video1Container = new ContainerContentEntity();
-        video1Container.setContentType(ContentType.LINKED);
+        video1Container.setContentType(ContentType.linked);
         video1Container.setParent(videosContainer);
         video1Container.setNode(heglasNode);
         video1Container.setPublicIndicator(true);
@@ -373,7 +373,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video(video1Container, null,         "/backend/video/LisaAnnRobinson_kepekkel.mp4", 0);
         
         ContainerContentEntity video2Container = new ContainerContentEntity();
-        video2Container.setContentType(ContentType.LINKED);
+        video2Container.setContentType(ContentType.linked);
         video2Container.setParent(videosContainer);
         video2Container.setNode(heglasNode);
         video2Container.setPublicIndicator(true);
@@ -382,7 +382,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video(video2Container, null,    "/backend/video/DrLeonardArielLado_kepekkel.mp4", 1);
         
         ContainerContentEntity video3Container = new ContainerContentEntity();
-        video3Container.setContentType(ContentType.LINKED);
+        video3Container.setContentType(ContentType.linked);
         video3Container.setParent(videosContainer);
         video3Container.setNode(heglasNode);
         video3Container.setPublicIndicator(true);
@@ -391,7 +391,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video(video3Container, null, "/backend/video/DrBrianThornburg_kepekkel.mp4", 2);
         
         ContainerContentEntity video4Container = new ContainerContentEntity();
-        video4Container.setContentType(ContentType.LINKED);
+        video4Container.setContentType(ContentType.linked);
         video4Container.setParent(productsContainer);
         video4Container.setNode(heglasNode);
         video4Container.setPublicIndicator(true);

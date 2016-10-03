@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-view401.text_1">
         <source> Oops you hit a forbidden (401) page. Please </source>
-        <target state="new"> Ups trafisz zakazaną stronę (401). Proszę </target>
+        <target x state="new"> Ups trafisz zakazaną stronę (401). Proszę </target>
       </trans-unit>
       <trans-unit id="wonderjam-view401.a_2">
         <source>sign in</source>

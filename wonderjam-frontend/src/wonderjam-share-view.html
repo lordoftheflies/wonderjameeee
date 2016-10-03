@@ -330,6 +330,8 @@ Wham! It's all awesome now!
             },
             submit: function () {
                 console.log('Share article ...');
+                this.contentModel.contentType = this.articleContentType;
+                this.contentModel.leaf = true;
                 this.$.shareAjax.generateRequest();
             },
 //            updateModel: function (sections) {

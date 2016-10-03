@@ -33,7 +33,7 @@ public class SectionDto extends ContentDto {
         this.height = height;
     }
 
-    private ContentType contentType = ContentType.ASSEMBLED;
+    private ContentType contentType = ContentType.assembled;
 
     public ContentType getContentType() {
         return contentType;

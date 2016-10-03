@@ -50,7 +50,7 @@
              */
             onEmbedVideo: function () {
                 console.log('Embed video to after field[' + 'section' + this.contentModel.sections.length + ']');
-               this.$.shareView.$.sectionEditor.createVideoSection();
+                this.$.shareView.$.sectionEditor.createVideoSection();
 //                 this.$.shareView.$.sectionEditor.fire('create', {
 //                    name: 'section' + this.contentModel.sections.length,
 //                    type: 'plutonium-cm-editor-video',
@@ -63,7 +63,7 @@
              */
             onEmbedImage: function () {
                 console.log('Embed image to after field[' + 'section' + this.contentModel.sections.length + ']');
-              this.$.shareView.$.sectionEditor.createImageSection();
+                this.$.shareView.$.sectionEditor.createImageSection();
 //                  this.$.shareView.$.sectionEditor.fire('create', {
 //                    name: this.name,
 //                    type: 'plutonium-cm-editor-image',
@@ -124,9 +124,17 @@
                 this.set('route.path', '/share-view');
 //                this.fire('page-go', {page: 'share-view'});
             },
-            onShare: function() {
+            onNavigateToCreator: function () {
+                this.$.shareView.contentModel = {
+                    sections: []
+                };
+                this.set('route.path', '/share-view');
+
+//                this.fire('page-go', {page: 'share-view'});
+            },
+            onShare: function () {
                 this.$.shareView.submit();
-                this.set('route.path', '/article-view/' + ((this.$.shareView.selectedParent !== null && this.$.shareView.selectedParent !== 'null') ? this.$.shareView.selectedParent: 'ROOT'));
+                this.set('route.path', '/article-view/' + ((this.$.shareView.selectedParent !== null && this.$.shareView.selectedParent !== 'null') ? this.$.shareView.selectedParent : 'ROOT'));
             },
             onBackToContents: function () {
                 this.set('route.path', '/article-view');
