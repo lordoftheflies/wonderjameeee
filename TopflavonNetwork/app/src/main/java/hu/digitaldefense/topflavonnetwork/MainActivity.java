@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -36,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(webView != null){
-            webViewParentViewGroup.removeView(webView);
-
-            setContentView(R.layout.activity_minor);
-
-            webViewParentViewGroup = (ViewGroup) findViewById(R.id.minorViewGroup);
-            webViewParentViewGroup.addView(this.webView);
-        } else {
+//        if(webView != null){
+//            webViewParentViewGroup.removeView(webView);
+//
+//            setContentView(R.layout.activity_minor);
+//
+//            webViewParentViewGroup = (ViewGroup) findViewById(R.id.minorViewGroup);
+//            webViewParentViewGroup.addView(this.webView);
+//        } else {
             setContentView(R.layout.activity_main);
 
             webViewParentViewGroup = (ViewGroup) findViewById(R.id.mainViewGroup);
@@ -52,6 +54,24 @@ public class MainActivity extends AppCompatActivity {
 
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
+            webView.getSettings().setAllowContentAccess(true);
+            webView.getSettings().setAllowFileAccess(true);
+            webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+            webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
+            webView.clearHistory();
+            webView.clearFormData();
+            webView.clearCache(true);
+
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+                @Override
+                public void onReceiveValue(Boolean value) {
+                    Log.d(TAG, "Cleared application cookies: " + value);
+                }
+            });
 
             webView.setWebChromeClient(new WebChromeClient());
             webView.setWebViewClient(new AppWebViewClients(this.progressBar));
@@ -70,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             //webView.setWebChromeClient(new WebChromeClient());
 
             // Set our webclient
-        }
+//        }
     }
 
     @Override
@@ -101,6 +121,22 @@ public class MainActivity extends AppCompatActivity {
         public AppWebViewClients(ProgressBar progressBar) {
             this.progressBar = progressBar;
             progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            //// TODO Auto-generated method stub
+            //view.loadUrl(url);
+            //return true;
+
+            // Handle local URLs.
+            if (Uri.parse(url).getHost().length() == 0) {
+                return false;
+            }
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            view.getContext().startActivity(intent);
+            return true;
         }
 
         @Override
