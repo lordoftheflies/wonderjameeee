@@ -59,10 +59,10 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
 
     @Autowired
     private MessageRepository messageRepository;
-    
+
     @Autowired
     private LocaleRepository localeDao;
-    
+
     @Autowired
     private ResourceRepository resourceDao;
 
@@ -84,19 +84,19 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
     private NetworkNodeEntity heglasNode;
 
     private NetworkNodeEntity balazspeczelyNode;
-    
+
     @Test
     public void btestLocale() {
         LocaleEntity englishLocale = new LocaleEntity();
         englishLocale.setDisplayName("English");
         englishLocale.setLanguageCode("en");
         localeDao.save(englishLocale);
-        
+
         LocaleEntity polishLocale = new LocaleEntity();
         polishLocale.setDisplayName("Polskie");
         polishLocale.setLanguageCode("po");
         localeDao.save(polishLocale);
-        
+
         LocaleEntity hungarianLocale = new LocaleEntity();
         hungarianLocale.setDisplayName("Magyar");
         hungarianLocale.setLanguageCode("hu");
@@ -273,9 +273,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         productsContainer.setPublicIndicator(true);
         productsContainer.setTitle("Products");
         productsContainer = containerContentRepository.save(productsContainer);
-        
-        
-        
+
         ContainerContentEntity flavonEndActiveContainer = new ContainerContentEntity();
         flavonEndActiveContainer.setContentType(ContentType.assembled);
         flavonEndActiveContainer.setDraft(false);
@@ -295,7 +293,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "<li>who wants to successfully meet the challenges of the 21st century</li>"
                 + "<li>who would like to enjoy the benefits of today’s super fruits</li>"
                 + "</ul>", 5);
-        
+
         ContainerContentEntity flavonGreenContainer = new ContainerContentEntity();
         flavonGreenContainer.setContentType(ContentType.assembled);
         flavonGreenContainer.setDraft(false);
@@ -315,7 +313,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "<li>who would like to consume vegetables in a new form they have not tried before</li>"
                 + "<li>who is a conscientious consumer and would like to complete a modern diet</li>"
                 + "</ul>", 5);
-        
+
         ContainerContentEntity flavonMaxContainer = new ContainerContentEntity();
         flavonMaxContainer.setContentType(ContentType.assembled);
         flavonMaxContainer.setDraft(false);
@@ -335,7 +333,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "<li>who takes good care of the their own and their family’s health</li>"
                 + "<li>who wants to enjoy and take advantage of an innovative product</li>"
                 + "</ul>", 5);
-        
+
         ContainerContentEntity flavonJoyContainer = new ContainerContentEntity();
         flavonJoyContainer.setContentType(ContentType.assembled);
         flavonJoyContainer.setDraft(false);
@@ -355,14 +353,14 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
                 + "<li>who would like to satisfy their desire for sweets in a healthy way</li>"
                 + "<li>who wants to make a conscious choice of cocoa bean, ancient spices and the synergy of super fruits and vegetables</li>"
                 + "</ul>", 5);
-    
+
         ContainerContentEntity videosContainer = new ContainerContentEntity();
         videosContainer.setContentType(ContentType.linked);
         videosContainer.setNode(heglasNode);
         videosContainer.setPublicIndicator(true);
         videosContainer.setTitle("Medical presentations");
         videosContainer = containerContentRepository.save(videosContainer);
-        
+
         ContainerContentEntity video1Container = new ContainerContentEntity();
         video1Container.setContentType(ContentType.linked);
         video1Container.setParent(videosContainer);
@@ -370,8 +368,17 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video1Container.setPublicIndicator(true);
         video1Container.setTitle("Lisa Ann Robinson");
         video1Container = containerContentRepository.save(video1Container);
-        video(video1Container, null,         "/backend/video/LisaAnnRobinson.mp4", 0);
+        video(video1Container, null, "/backend/video/LisaAnnRobinson.mp4", 0);
         
+        ContainerContentEntity video1ContainerYoutube = new ContainerContentEntity();
+        video1ContainerYoutube.setContentType(ContentType.linked);
+        video1ContainerYoutube.setParent(videosContainer);
+        video1ContainerYoutube.setNode(heglasNode);
+        video1ContainerYoutube.setPublicIndicator(true);
+        video1ContainerYoutube.setTitle("Lisa Ann Robinson (Youtube)");
+        video1ContainerYoutube = containerContentRepository.save(video1ContainerYoutube);
+        video(video1ContainerYoutube, null, "https://youtu.be/v7Osy8OpoOk", 0);
+
         ContainerContentEntity video2Container = new ContainerContentEntity();
         video2Container.setContentType(ContentType.linked);
         video2Container.setParent(videosContainer);
@@ -379,8 +386,18 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video2Container.setPublicIndicator(true);
         video2Container.setTitle("Dr. Leonard Ariel Lado");
         video2Container = containerContentRepository.save(video2Container);
-        video(video2Container, null,    "/backend/video/DrLeonardArielLado.mp4", 1);
+        video(video2Container, null, "/backend/video/DrLeonardArielLado.mp4", 1);
         
+        
+        ContainerContentEntity video2ContainerYoutube = new ContainerContentEntity();
+        video2ContainerYoutube.setContentType(ContentType.linked);
+        video2ContainerYoutube.setParent(videosContainer);
+        video2ContainerYoutube.setNode(heglasNode);
+        video2ContainerYoutube.setPublicIndicator(true);
+        video2ContainerYoutube.setTitle("Dr. Leonard Ariel Lado (Youtube)");
+        video2ContainerYoutube = containerContentRepository.save(video2ContainerYoutube);
+        video(video2ContainerYoutube, null, "https://youtu.be/8Fua1F_RYWM", 1);
+
         ContainerContentEntity video3Container = new ContainerContentEntity();
         video3Container.setContentType(ContentType.linked);
         video3Container.setParent(videosContainer);
@@ -390,6 +407,15 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video3Container = containerContentRepository.save(video3Container);
         video(video3Container, null, "/backend/video/DrBrianThornburg.mp4", 2);
         
+        ContainerContentEntity video3ContainerYoutube = new ContainerContentEntity();
+        video3ContainerYoutube.setContentType(ContentType.linked);
+        video3ContainerYoutube.setParent(videosContainer);
+        video3ContainerYoutube.setNode(heglasNode);
+        video3ContainerYoutube.setPublicIndicator(true);
+        video3ContainerYoutube.setTitle("Dr. Brian Thornburg");
+        video3ContainerYoutube = containerContentRepository.save(video3ContainerYoutube);
+        video(video3ContainerYoutube, null, "https://youtu.be/DyS2jC0DLZc", 2);
+
         ContainerContentEntity video4Container = new ContainerContentEntity();
         video4Container.setContentType(ContentType.linked);
         video4Container.setParent(productsContainer);
@@ -398,8 +424,9 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         video4Container.setTitle("Flavon");
         video4Container = containerContentRepository.save(video4Container);
         video(video4Container, null, "https://www.youtube.com/watch?v=MArvZyBm_bU", 3);
-    
+
     }
+
     private VideoContentEntity video(ContainerContentEntity container, String title, String content, int index) {
         VideoContentEntity flavonEndActiveParagraph0 = new VideoContentEntity();
         flavonEndActiveParagraph0.setTitle(title);
@@ -412,6 +439,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         flavonEndActiveParagraph0 = contentRepository.save(flavonEndActiveParagraph0);
         return flavonEndActiveParagraph0;
     }
+
     private TextContentEntity text(ContainerContentEntity container, String title, String content, int index) {
         TextContentEntity flavonEndActiveParagraph0 = new TextContentEntity();
         flavonEndActiveParagraph0.setTitle(title);
@@ -456,7 +484,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
     private static final String FLAVON_ACTIVE_PNG = "flavon_active.png";
     private static final int FLAVON_ACTIVE_CAN = 1523760;
     private static final int FLAVON_ACTIVE_SPOON = 38094;
-    
+
     private static final String FLAVON_GREEN_OETI = "OÉTI notification number: 10027/2011";
     private static final String FLAVON_GREEN_T3_ENG = "The consumption of Flavon Green is recommended for adults";
     private static final String FLAVON_GREEN_P2_ENG = "Although numerous researches prove that regular vegetable consumption protects our health, only a few people consume the required amount day by day. Flavon Green can be the solution, because we can cover the significant part of the daily vegetable intake with a product constituted of only well-selected ingredients of high quality.";
@@ -465,7 +493,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
     private static final String FLAVON_GREEN_PNG = "flavon_green.png";
     private static final int FLAVON_GREEN_CAN = 482880;
     private static final int FLAVON_GREEN_SPOON = 12072;
-    
+
     private static final String FLAVON_MAX_OETI = "OÉTI notification number: 10029/2011";
     private static final String FLAVON_MAX_T3_ENG = "The consumption of Flavon Max is recommended for everybody";
     private static final String FLAVON_MAX_P2_ENG = "Flavon max was created for the people of the 21st century. It is a health-conscious product that supports life quality and its plant ingredients help the proper function of the antioxidant defence system and suitably support the function of the immune system.";
@@ -474,7 +502,7 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
     private static final String FLAVON_MAX_PNG = "flavon_max.png";
     private static final int FLAVON_MAX_CAN = 435840;
     private static final int FLAVON_MAX_SPOON = 10896;
-    
+
     private static final String FLAVON_JOY_OETI = "OÉTI notification number: 16853/2015";
     private static final String FLAVON_JOY_T3_ENG = "The consumption of Flavon Joy is recommended for everyone";
     private static final String FLAVON_JOY_P2_ENG = "Flavon Joy delivers polyphenols to our body in a complex way to keep it healthy, and in case of health conscious consuming, not only does it protect the health of our organism, it may also boost our mental/psychical characteristics, learning skills and shock absorbing capacity.";
