@@ -89,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="card-content">
                 <form is="iron-form" id="signInForm"  with-credentials
                       method="POST"  action="[[authenticationUrl]]" headers="[[authHeaders]]" content-type="application/json"
-                      hidden="[[loading]]">
+                      >
                     <template is="dom-if" if="[[hasAuthenticationError]]">
                         <div>{{authenticationError}}</div>
                     </template>
