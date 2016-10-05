@@ -250,7 +250,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 } else {
                     this.$.rememberMeCookie.eraseCookie();
                 }
-                this.$.signInForm.submit();
+                if (this.$.signInForm.validate()) {
+                    this.$.signInForm.submit();
+                } else {
+                    this.fire('feedback', {
+                        message: 'Please refill invalid fields.'
+                    });
+                }
             },
             onSigninFormResponse: function (event, detail) {
                 this.signedIn = detail.response.authenticated;

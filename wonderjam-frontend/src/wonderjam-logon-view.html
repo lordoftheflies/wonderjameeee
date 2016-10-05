@@ -194,7 +194,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
             onSignOn: function () {
                 console.log(this.is, 'registrate user ...');
-                this.$.form.submit();
+                if (this.$.form.validate()) {
+                    this.$.form.submit();
+                } else {
+                    this.fire('feedback', {
+                        message: 'Please refill invalid fields.'
+                    });
+                }
             },
             onProfileIronAjaxResponse: function (event, details) {
                 this.$.form.$$('[name="name"]').value = details.response.name;
