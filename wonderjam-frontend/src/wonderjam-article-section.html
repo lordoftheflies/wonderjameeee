@@ -41,13 +41,14 @@ Example:
     <template>
         <style include="wonderjam-shared-styles">
             :host {
-                display: block;
-                /*@apply(--layout-vertical);*/
+                display: inline-block;
+                @apply(--layout-horizontal);
                 padding: 10px;
+                min-height: 100px;
             }
         </style>
         
-        <paper-material class="card">
+        <paper-material class="card flex layout vertical">
             <plutonium-cms-div content-model="{{articleDetailsModel}}"></plutonium-cms-div>
         </paper-material>
     </template>

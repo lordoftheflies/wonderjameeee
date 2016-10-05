@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-10-01T18:07:58Z" product-name="messages">
+  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-10-05T14:19:46Z" product-name="messages">
     <header>
       <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
     </header>
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-view401.text_1">
         <source> Oops you hit a forbidden (401) page. Please </source>
-        <target x state="new"> Ups trafisz zakazaną stronę (401). Proszę </target>
+        <target state="new"> Ups trafisz zakazaną stronę (401). Proszę </target>
       </trans-unit>
       <trans-unit id="wonderjam-view401.a_2">
         <source>sign in</source>
@@ -294,6 +294,6 @@
         <source>Head back to home.</source>
         <target state="new">Wrócić do domu.</target>
       </trans-unit>
-    </body> 
+    </body>
   </file>
 </xliff>

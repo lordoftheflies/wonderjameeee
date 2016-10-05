@@ -38,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        if(webView != null){
-//            webViewParentViewGroup.removeView(webView);
-//
-//            setContentView(R.layout.activity_minor);
-//
-//            webViewParentViewGroup = (ViewGroup) findViewById(R.id.minorViewGroup);
-//            webViewParentViewGroup.addView(this.webView);
-//        } else {
+        if(webView != null){
+            webViewParentViewGroup.removeView(webView);
+
+            setContentView(R.layout.activity_minor);
+
+            webViewParentViewGroup = (ViewGroup) findViewById(R.id.minorViewGroup);
+            webViewParentViewGroup.addView(this.webView);
+        } else {
             setContentView(R.layout.activity_main);
 
             webViewParentViewGroup = (ViewGroup) findViewById(R.id.mainViewGroup);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             //webView.setWebChromeClient(new WebChromeClient());
 
             // Set our webclient
-//        }
+        }
     }
 
     @Override
