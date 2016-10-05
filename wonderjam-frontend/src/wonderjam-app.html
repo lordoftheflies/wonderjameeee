@@ -242,8 +242,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!--Routing-->
         <app-location route="{{route}}" use-hash-as-path query-params="{{queryParams}}"></app-location>
         <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
-
-
+        
+        <app-route route="{{route}}" pattern="/logon-view/:activationCode" data="{{registrationSubrouteData}}"></app-route>
         <app-route route="{{route}}" pattern="/article-view/:contentId" data="{{pageRouteData}}"></app-route>
         <app-route route="{{route}}" pattern="/article-section/:pageId" data="{{articleSectionRouteData}}"></app-route>
         <app-route route="{{route}}" pattern="/members-view/:memberId" data="{{memberSubrouteData}}"></app-route>
@@ -385,6 +385,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <wonderjam-logon-view 
                         name="logon-view"
                         route="{{subroute}}"
+                        registration-subroute-data="[[registrationSubrouteData]]"
                         api-url="[[apiUrl]]"
                         headers="[[headers]]"
                         signed-in="{{authenticated}}"

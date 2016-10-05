@@ -57,8 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 right: -40px;
             }
         </style>
-        <app-route route="{{route}}" pattern="/:activationCode" data="{{registrationSubrouteData}}"></app-route>
-
+        
         <!--Get profile-->
         <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
                    last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
@@ -117,7 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <br />
                 <paper-button on-tap="onToSignIn" tabindex="6" raised>
                     <iron-icon icon="account-circle"></iron-icon>
-                    <span id="signOnSubmitTitle">Sign on</span>
+                    <span id="signOnSubmitTitle">Sign in</span>
                 </paper-button>
                 <!--</div>-->
             </div>
