@@ -75,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <div class="layout vertical">
                         <paper-input id="registrateNameLabel" 
                                      name="name" label="Name" type="text" 
-                                     auto-validate pattern="[a-zA-Z. áÁéÉóÓöÖúÚüÜűŰíÍ]*" error-message="Invalid name.">
+                                     auto-validate pattern="[a-zA-Z. áÁéÉóÓöÖúÚüÜűŰíÍ]*" required error-message="Invalid name.">
                         </paper-input>
                         <gold-email-input id="registrateEmailLabel" 
                                           name="email" label="Email address"
@@ -84,25 +84,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </gold-email-input>
                         <paper-input id="registratePhoneNumberLabel" 
                                      name="phone" label="Phone" type="text" 
-                                     auto-validate pattern="[0-9\-+]*" error-message="Invalid phone number.">
+                                     auto-validate pattern="[0-9\-+]*" required error-message="Invalid phone number.">
                             <iron-icon icon="account-circle" prefix></iron-icon>
                         </paper-input>
                         <plutonium-password-match-validator other="[[password]]"></plutonium-password-match-validator>
                         <paper-input id="registratePasswordLabel" 
                                      name="password" label="Password" type="password" value="{{password}}"
-                                     auto-validate minlength="6" maxlength="16" pattern="[0-9a-zA-Z. ]*" error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
+                                     auto-validate minlength="6" maxlength="16" required pattern="[0-9a-zA-Z. ]*" error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
                             <iron-icon icon="lock" prefix></iron-icon>
                         </paper-input>
                         <paper-input id="registratePasswordConfirmLabel" 
                                      name="passwordConfirm" label="Password confirmation" type="password"
                                      validator="plutonium-password-match-validator"
-                                     auto-validate  error-message="Passwords not match.">
+                                     auto-validate required  error-message="Passwords not match.">
                             <iron-icon icon="lock" prefix></iron-icon>
                         </paper-input>
                         <paper-input id="registrateCodeLabel" 
                                      name="code" label="Activation code" type="text" 
                                      auto-validate error-message="Activation code."
-                                     value="{{activationCode}}">
+                                     required  value="{{activationCode}}">
                             <iron-icon icon="lock" prefix></iron-icon>
                         </paper-input>
                     </div>
