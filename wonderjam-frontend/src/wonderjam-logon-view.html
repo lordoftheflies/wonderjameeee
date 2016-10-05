@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/polymer-cookie/polymer-cookie.html">
 <link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="plutonium-password-match-validator.html">
 <dom-module id="wonderjam-logon-view">
     <template>
         <style>
@@ -57,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 right: -40px;
             }
         </style>
-        
+
         <!--Get profile-->
         <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
                    last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
@@ -74,29 +75,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <div class="layout vertical">
                         <paper-input id="registrateNameLabel" 
                                      name="name" label="Name" type="text" 
-                                     auto-validate pattern="{{namePattern}}" error-message="Invalid name.">
+                                     auto-validate pattern="[a-zA-Z. ]*" error-message="Invalid name.">
                         </paper-input>
                         <gold-email-input id="registrateEmailLabel" 
-                                          name="email" label="Email address">
+                                          name="email" label="Email address"
+                                          auto-validate>
                             <iron-icon icon="account-circle" prefix></iron-icon>
                         </gold-email-input>
                         <paper-input id="registratePhoneNumberLabel" 
                                      name="phone" label="Phone" type="text" 
-                                     auto-validate pattern="{{phonePattern}}" error-message="Invalid phone number.">
+                                     auto-validate pattern="[0-9\-+]*" error-message="Invalid phone number.">
                             <iron-icon icon="account-circle" prefix></iron-icon>
                         </paper-input>
+                        <plutonium-password-match-validator other="[[password]]"></plutonium-password-match-validator>
                         <paper-input id="registratePasswordLabel" 
-                                     name="password" label="Password" type="password" 
-                                     auto-validate pattern="{{passPattern}}" error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
+                                     name="password" label="Password" type="password" value="{{password}}"
+                                     auto-validate minlength="6" maxlength="16" pattern="[0-9a-zA-Z. ]*" error-message="Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.">
                             <iron-icon icon="lock" prefix></iron-icon>
                         </paper-input>
                         <paper-input id="registratePasswordConfirmLabel" 
-                                     name="passwordConfirm" label="Password confirmation" type="password">
+                                     name="passwordConfirm" label="Password confirmation" type="password"
+                                     validator="plutonium-password-match-validator"
+                                     auto-validate  error-message="Passwords not match.">
                             <iron-icon icon="lock" prefix></iron-icon>
                         </paper-input>
                         <paper-input id="registrateCodeLabel" 
                                      name="code" label="Activation code" type="text" 
-                                     auto-validate pattern="{{passPattern}}" error-message="Activation code."
+                                     auto-validate error-message="Activation code."
                                      value="{{activationCode}}">
                             <iron-icon icon="lock" prefix></iron-icon>
                         </paper-input>
@@ -142,7 +147,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 profileUrl: {
                     type: String,
                     notify: true
-                }
+                },
+                namePattern: '[a-zA-Z]*',
+                phonePattern: '^[A-Za-z]+\d+.*$',
+                passPattern: '^[A-Za-z]+\d+.*$'
+
             },
             listeners: {
                 'form.iron-form-response': 'onRegistrationResponse',
@@ -155,6 +164,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 'observeActivationCodeParam(registrationSubrouteData.activationCode)',
 //                'observeActivationCode(activationCode)'
             ],
+            attached: function () {
+
+            },
             observeActivationCodeParam: function (activationCode) {
                 if (activationCode) {
                     this.$.profileIronAjax.generateRequest();

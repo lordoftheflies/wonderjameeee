@@ -190,7 +190,7 @@ public class AddressBookService {
             accountEntity.setPhone(dto.getPhone());
             accountEntity.setPreferredLanguage(dto.getPreferredLanguage());
             // TODO: generate a strong password.
-            accountEntity.setPassword(null);
+            accountEntity.setPassword(UUID.randomUUID().toString());
 
             accountEntity = accountRepository.save(accountEntity);
 
