@@ -86,7 +86,7 @@
                  this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
 
 
-                if (this.authenticated) {
+                if (this.authenticated || page === 'logon-view') {
 //                    this.page = page || this.homePage;
 ////                } else {
 ////                    this.page = this.loginPage;
@@ -102,7 +102,7 @@
 //                    this.page = page || this.homePage;
                 } else {
 //                    this.page = page || this.loginPage;
-                    this.page = page === 'logon-view' ? page : this.loginPage;
+                    this.page = page || this.loginPage;
                 }
             },
             /**

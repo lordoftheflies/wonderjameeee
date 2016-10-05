@@ -121,7 +121,7 @@
             onTokenAjaxError: function(event, detail) {
                 if (detail.request.status === 401) { // Unauthorized
                     this.authenticated = false;
-                    this.set('route.path', '/logon-view');
+                    this.set('route.path', '/login-view');
                     console.log(this.is, 'USER AUTHENTICATION', detail.error);
                 }
             },
