@@ -71,25 +71,57 @@
                 contentSubrouteData: {
                     type: Object,
                     notify: true
+                },
+                memberEditorCreateMode: {
+                    type: Boolean,
+                    notify: true,
+                    value: true
+                },
+                deleteMemberPromptSubject: {
+                    type: String,
+                    computed: 'computeDeleteMemberPromptSubject(memberDetailsModel)'
+                },
+                deleteMemberModel: {
+                    type: Object,
+                    notify: true,
+                    computed: 'computeDeleteMemberModel(memberDetailsModel, accountId)'
                 }
             },
             observers: [
                 'observeMemberSubrouteData(memberSubrouteData)',
 //                'observeContentSubrouteData(contentSubrouteData, selectedContentFolder)'
             ],
+            computeDeleteMemberModel: function (memberDetailsModel, accountId) {
+                return {
+                    owner: accountId,
+                    subject: memberDetailsModel.id
+                }
+            },
+            computeDeleteMemberPromptSubject: function (memberDetailsModel) {
+                return memberDetailsModel.name;
+            },
             /**
              * Open member creation dialog.
              */
             onOpenMemberEditor: function (event, detail) {
-                this.set('memberDetailsSubrouteData.accountId', this.$.membersView.selectedAccountId);
-                this.set('page', 'member-editor');
+
+                this.memberEditorCreateMode = this.$.membersView.selectedAccountId === this.accountId;
+//                this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
+//                this.$.
+                this.set('route.path', '/member-editor/' + this.$.membersView.selectedAccountId);
+                this.$.memberDetailsAjax.generateRequest();
+                this.$.possibleParentsIronAjax.generateRequest();
+//                this.set('memberDetailsSubrouteData.accountId', this.$.membersView.selectedAccountId);
+//                this.set('page', 'member-editor');
             },
             onOpenCreateMember: function (event, detail) {
-                this.fire('page-go', {
-                    page: 'member-editor'
-                });
+//                this.fire('page-go', {
+//                    page: 'member-editor'
+//                });
+                this.memberEditorCreateMode = true;
+                this.set('route.path', '/member-editor/');
             },
-            onCreateMember: function(event, details) {
+            onCreateMember: function (event, details) {
                 this.$.memberEditor.createMember();
             },
             onCreateMemberRepeat: function () {
@@ -97,8 +129,9 @@
             },
             onCancelMemberEditor: function () {
                 this.$.memberEditor.clear();
-                this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
-                this.set('page', 'members-view');
+                this.set('route.path', '/members-view/' + this.$.membersView.selectedAccountId);
+//                this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
+//                this.set('page', 'members-view');
             },
             /**
              * Ajax response handler for `createMemberAjax` element.
@@ -125,14 +158,21 @@
              * Open member delete dialog.
              */
             onOpenDeleteMember: function (event, detail) {
-                this.$.deleteMemberDialog.show();
+                this.$.deleteMemberPrompt.open();
+            },
+            /**
+             * Open member delete dialog.
+             */
+            onDeleteMember: function (event, detail) {
+                this.$.deleteMemberAjax.generateRequest();
             },
             /**
              * Ajax response handler for `deleteMemberAjax` element.
              */
             onDeleteMemberAjaxResponse: function (event, details) {
                 console.log(this.si, 'member removed successfully:', JSON.stringify(details.response));
-                this.$.networkPage.selectedAccountId = this.session.token;
+                this.set('route.path', '/members-view/' + this.$.membersView.selectedAccountId);
+//                this.$.networkPage.selectedAccountId = this.session.token;
 //                this.$.childrenIronAjax.generateRequest();
 //                this.$.genocideIronAjax.generateRequest();
                 this.fire('feedback', {

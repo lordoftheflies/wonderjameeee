@@ -2,10 +2,10 @@
 
 
 <link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
-
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-input/iron-input.html">
-
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/iron-overlay-behavior/iron-overlay-behavior.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
@@ -14,12 +14,8 @@
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
-<link rel="import" href="../bower_components/iron-list/iron-list.html">
-
 <link rel="import" href="wonderjam-shared-styles.html">
 <link rel="import" href="wonderjam-icons.html">
-
-
 <link rel="import" href="wonderjam-language-validator.html">
 
 
@@ -36,7 +32,13 @@
 
         </style>
 
-        <paper-card id="memberEditor"  heading="Edit member">
+        <paper-material id="memberEditor" class="card">
+            <template is="dom-if" if="[[created]]">
+                <h2 text-id="member-editor-create-title">Create new member</h2>
+            </template>
+            <template is="dom-if" if="[[!created]]">
+                <h2 text-id="member-editor-edit-title">Edit [[selectedName]]</h2>
+            </template>
             <form id="memberForm" is="iron-form" class="card-content" verbose 
                   content-type="application/json" method="POST" action="[[action]]" headers="{{headers}}"
                   handle-as="json">
@@ -45,12 +47,14 @@
                              label="Name" error-message="Member name must be specified." 
                              value="{{selectedName}}"
                              type="text" required auto-validate></paper-input>
-                <paper-input id="newMemberEmailLabel" name="email" 
-                             label="Email" error-message="Member email must be specified." 
-                             value="{{selectedEmail}}"
-                             type="email" required auto-validate>
-                    <!--hidden="[[isGroup(selectedType)]]"-->
-                </paper-input>
+                <template is="dom-if" if="[[!isGroup]]">
+                    <paper-input id="newMemberEmailLabel" name="email" 
+                                 label="Email" error-message="Member email must be specified." 
+                                 value="{{selectedEmail}}"
+                                 type="email" required auto-validate>
+                        <!--hidden="[[isGroup(selectedType)]]"-->
+                    </paper-input>
+                </template>
                 <input name="role" type="hidden" value="{{selectedType}}" />
                 <paper-radio-group label="Type" attr-for-selected="name" selected="{{selectedType}}">
                     <paper-radio-button id="newMemberTypeUserTitle" name="USER">User</paper-radio-button>
@@ -64,8 +68,7 @@
                                      label="Parent member" error-message="Parent member must selected."
                                      required>
                     <paper-menu
-                        class="dropdown-content" selected="{{selectedParent}}" attr-for-selected="value"
-                        attr-for-selected="id">
+                        class="dropdown-content" selected="{{selectedParent}}" attr-for-selected="value">
                         <template is="dom-repeat" items="{{possibleParents}}">
                             <paper-item value="{{item.id}}">{{item.name}}</paper-item>
                         </template>
@@ -89,7 +92,7 @@
                 </paper-dropdown-menu>
                 <!--</div>-->
             </form>
-        </paper-card>
+        </paper-material>
 
     </template>
 
@@ -142,13 +145,26 @@
                     type: Array,
                     notify: true
                 },
-                model: {
+                memberModel: {
                     type: Object,
                     notify: true
+                },
+                created: {
+                    type: Boolean,
+                    notify: true
+                },
+                isGroup: {
+                    type: Boolean,
+                    computed: 'computeIsGroup(selectedType)'
+                },
+                createAndRepeatIndicator: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
                 }
             },
             observers: [
-              'observeModel(model)'  
+                'observeModel(memberModel)'
             ],
             listeners: {
                 'iron-form-response': 'onIronFormResponse',
@@ -157,14 +173,17 @@
 //            ready: function () {
 ////                this.$.preferredLanguageValid.validate = this.$.preferredLanguageValid.bind(this);
 //            },
-            observeModel: function(model) {
-                this.preferredLanguage = model.preferredLanguage;
-                this.selectedParent = model.parent;
-                this.selectedType = model.role;
-                this.selectedName = model.name;
-                this.selectedEmail = model.email;
-                this.selectedAccountId = model.id;
-//                this.model.role = selectedType;
+            observeModel: function (memberModel) {
+                this.preferredLanguage = memberModel.preferredLanguage;
+                this.selectedParent = memberModel.parent;
+                this.selectedType = memberModel.role;
+                this.selectedName = memberModel.name;
+                this.selectedEmail = memberModel.email;
+                this.selectedAccountId = memberModel.id;
+//                this.memberModel.role = selectedType;
+            },
+            computeIsGroup: function (selectedType) {
+                return selectedType === 'GROUP';
             },
             validateLanguage: function (val) {
                 return true;
@@ -172,12 +191,13 @@
             createMember: function () {
                 if (this.$.memberForm.validate()) {
                     this.$.memberForm.submit();
+
                 }
             },
             createMemberRepeat: function () {
                 if (this.$.memberForm.validate()) {
                     this.$.memberForm.submit();
-
+                    this.createAndRepeatIndicator = true;
                 }
 
             },
@@ -195,6 +215,13 @@
                 this.$.memberForm.reset();
                 this.$.memberForm.role = 'USER';
                 console.log(this.is, 'member created successfully:', JSON.stringify(details.response));
+                if (this.createAndRepeatIndicator) {
+
+                } else {
+                    this.fire('page-go', {
+                        page: '/members-view/' + this.selectedParent
+                    });
+                }
                 // TODO: move to this
                 this.fire('fetch-data', {
                     ids: ['childrenIronAjax', 'possibleParentsIronAjax']

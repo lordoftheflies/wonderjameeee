@@ -14,7 +14,8 @@
       "error-message": "Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number."
     },
     "registratePasswordConfirmLabel": {
-      "label": "Password confirmation"
+      "label": "Password confirmation",
+      "error-message": "Passwords not match."
     },
     "registrateCodeLabel": {
       "label": "Activation code",
@@ -25,5 +26,5 @@
     }
   },
   "forgottenPasswordTitle": "Forgotten password",
-  "signOnSubmitTitle": "Sign on"
+  "signOnSubmitTitle": "Sign in"
 }

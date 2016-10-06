@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file xml:space="default" source-language="en" target-language="en" datatype="plaintext" original="messages" date="2016-10-05T14:19:46Z" product-name="messages">
+  <file xml:space="default" source-language="en" target-language="en" datatype="plaintext" original="messages" date="2016-10-06T00:44:52Z" product-name="messages">
     <header>
       <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
     </header>
@@ -49,6 +49,26 @@
       <trans-unit id="wonderjam-app.model.sendNewContentFab.title">
         <source>Cancel all changes &amp; create new article.</source>
         <target state="new">Cancel all changes &amp; create new article.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.delete-member-prompt-title">
+        <source>Delete member</source>
+        <target state="new">Delete member</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.delete-member-prompt-dialog-text.0">
+        <source>You want to delete member {1}</source>
+        <target state="new">You want to delete member {1}</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.delete-member-prompt-dialog-text.1">
+        <source>[[deleteMemberPromptSubject]]</source>
+        <target state="new">[[deleteMemberPromptSubject]]</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.prompt-dialog-cancel-button">
+        <source>Cancel</source>
+        <target state="new">Cancel</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-app.prompt-dialog-ok-button">
+        <source>OK</source>
+        <target state="new">OK</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.main-menu-label">
         <source>Menu</source>
@@ -193,6 +213,18 @@
       <trans-unit id="wonderjam-member-editor.model.preferredLanguageLabel.label">
         <source>Preferred language</source>
         <target state="new">Preferred language</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.member-editor-create-title">
+        <source>Create new member</source>
+        <target state="new">Create new member</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.member-editor-edit-title.0">
+        <source>Edit {1}</source>
+        <target state="new">Edit {1}</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-member-editor.member-editor-edit-title.1">
+        <source>[[selectedName]]</source>
+        <target state="new">[[selectedName]]</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.newMemberTypeUserTitle">
         <source>User</source>

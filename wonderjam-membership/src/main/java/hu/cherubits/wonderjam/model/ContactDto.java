@@ -19,21 +19,13 @@ public class ContactDto extends ContactInfoDto {
     public ContactDto() {
     }
 
-    public ContactDto(UUID id, UUID parent, String name, String email, int codes, String phone, NetworkNodeType role) {
+    public ContactDto(UUID id, UUID parent, String name, String email, String phone, NetworkNodeType role, boolean active, String preferredLanguage) {
         super(id, name, email);
         this.parent = parent;
-        this.codes = codes;
         this.phone = phone;
         this.role = role.name();
-    }
-
-    public ContactDto(UUID parent, int codes, String phone, UUID id, String name, String email, boolean active, String preferredLanguage) {
-        super(id, name, email);
         this.active = active;
         this.preferredLanguage = preferredLanguage;
-        this.parent = parent;
-        this.codes = codes;
-        this.phone = phone;
     }
 
     private boolean active;

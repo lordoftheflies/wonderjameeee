@@ -34,4 +34,6 @@ public interface AccountRepository extends CrudRepository<AccountEntity, UUID> {
     AccountEntity findBySubscriptionId(@Param("subscriptionId") String subscriptionId);
     AccountEntity findByCredentials(@Param("email") String email, @Param("password") String password);
     NetworkNodeType findRoleById(@Param("id") UUID id);
+
+    AccountEntity findParent(@Param("id") UUID id);
 }	

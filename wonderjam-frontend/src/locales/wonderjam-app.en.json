@@ -150,6 +150,31 @@
         "op": "add",
         "path": "/legal-menu-label",
         "value": "Terms & services"
+      },
+      {
+        "op": "add",
+        "path": "/prompt-dialog-cancel-button",
+        "value": "Cancel"
+      },
+      {
+        "op": "add",
+        "path": "/prompt-dialog-ok-button",
+        "value": "OK"
+      },
+      {
+        "op": "add",
+        "path": "/delete-member-prompt-title",
+        "value": "Delete member"
+      },
+      {
+        "op": "add",
+        "path": "/delete-member-prompt-dialog-text/0",
+        "value": "You want to delete member {1}"
+      },
+      {
+        "op": "add",
+        "path": "/delete-member-prompt-dialog-text/1",
+        "value": "[[deleteMemberPromptSubject]]"
       }
     ]
   },
@@ -176,6 +201,13 @@
       "title": "Cancel all changes & create new article."
     }
   },
+  "delete-member-prompt-title": "Delete member",
+  "delete-member-prompt-dialog-text": [
+    "You want to delete member {1}",
+    "[[deleteMemberPromptSubject]]"
+  ],
+  "prompt-dialog-cancel-button": "Cancel",
+  "prompt-dialog-ok-button": "OK",
   "main-menu-label": "Menu",
   "article-menu-label": "Articles",
   "mailbox-menu-label": "Mailbox",

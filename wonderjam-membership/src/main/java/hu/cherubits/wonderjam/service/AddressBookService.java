@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -86,14 +87,16 @@ public class AddressBookService {
             method = RequestMethod.GET)
     public List<ContactDto> getRoots() {
         return accountRepository.findRootAccounts().stream()
-                .map((AccountEntity a) -> new ContactDto(
-                        a.getId(),
-                        (networkTreeRepository.isRoot(a.getId())) ? null : accountRepository.getParent(a.getId()).getId(),
-                        a.getName(),
-                        a.getEmail(),
-                        nullSafeGet(networkTreeRepository.findByAccount(a.getId()).getCodes()),
-                        a.getPhone(),
-                        accountRepository.findRoleById(a.getId())))
+                .filter((AccountEntity t) -> t.isEnabled())
+                .map((AccountEntity entity) -> new ContactDto(
+                        entity.getId(),
+                        (networkTreeRepository.isRoot(entity.getId())) ? null : accountRepository.findParent(entity.getId()).getId(),
+                        entity.getName(),
+                        entity.getEmail(),
+                        entity.getPhone(),
+                        entity.getState(),
+                        entity.isEnabled(),
+                        entity.getPreferredLanguage()))
                 .collect(Collectors.toList());
     }
 
@@ -105,26 +108,29 @@ public class AddressBookService {
             method = RequestMethod.GET)
     public List<ContactDto> getAll() {
         return accountRepository.findAll().stream()
-                .map((AccountEntity a) -> new ContactDto(
-                        a.getId(),
-                        (networkTreeRepository.isRoot(a.getId())) ? null : accountRepository.getParent(a.getId()).getId(),
-                        a.getName(),
-                        a.getEmail(),
-                        nullSafeGet(networkTreeRepository.findByAccount(a.getId()).getCodes()),
-                        a.getPhone(),
-                        accountRepository.findRoleById(a.getId())))
+                .filter((AccountEntity t) -> t.isEnabled() && !NetworkNodeType.USER.equals(t.getState()))
+                .map((AccountEntity entity) -> new ContactDto(
+                        entity.getId(),
+                        (networkTreeRepository.isRoot(entity.getId())) ? null : accountRepository.findParent(entity.getId()).getId(),
+                        entity.getName(),
+                        entity.getEmail(),
+                        entity.getPhone(),
+                        entity.getState(),
+                        entity.isEnabled(),
+                        entity.getPreferredLanguage()))
                 .collect(Collectors.toList());
     }
 
     private List<ContactDto> retrieveParent(AccountEntity a, List<ContactDto> accumulator) {
         accumulator.add(new ContactDto(
                 a.getId(),
-                (networkTreeRepository.isRoot(a.getId())) ? null : accountRepository.getParent(a.getId()).getId(),
+                (networkTreeRepository.isRoot(a.getId())) ? null : accountRepository.findParent(a.getId()).getId(),
                 a.getName(),
                 a.getEmail(),
-                nullSafeGet(networkTreeRepository.findByAccount(a.getId()).getCodes()),
                 a.getPhone(),
-                accountRepository.findRoleById(a.getId())));
+                a.getState(),
+                a.isEnabled(),
+                a.getPreferredLanguage()));
         if (networkTreeRepository.isRoot(a.getId())) {
             return accumulator;
         } else {
@@ -150,28 +156,32 @@ public class AddressBookService {
     public List<ContactDto> getChildren(@RequestParam(name = "parentId", required = true) String parentId) throws AccountNotExistException {
         if (ROOT_KEY.equals(parentId)) {
             return networkTreeRepository.findContactsOfRootNodes().stream()
-                    .map((AccountEntity a) -> new ContactDto(
-                            a.getId(),
-                            (networkTreeRepository.isRoot(a.getId())) ? null : accountRepository.getParent(a.getId()).getId(),
-                            a.getName(),
-                            a.getEmail(),
-                            nullSafeGet(networkTreeRepository.findByAccount(a.getId()).getCodes()),
-                            a.getPhone(),
-                            accountRepository.findRoleById(a.getId())))
+                    .filter((AccountEntity t) -> t.isEnabled())
+                    .map((AccountEntity entity) -> new ContactDto(
+                            entity.getId(),
+                            (networkTreeRepository.isRoot(entity.getId())) ? null : accountRepository.findParent(entity.getId()).getId(),
+                            entity.getName(),
+                            entity.getEmail(),
+                            entity.getPhone(),
+                            entity.getState(),
+                            entity.isEnabled(),
+                            entity.getPreferredLanguage()))
                     .collect(Collectors.toList());
         } else {
 
             final UUID id = UUID.fromString(parentId);
             if (accountRepository.exists(id)) {
                 return networkTreeRepository.findContactsOfChildNodes(id).stream()
-                        .map((AccountEntity a) -> new ContactDto(
-                                a.getId(),
-                                (networkTreeRepository.isRoot(a.getId())) ? null : accountRepository.getParent(a.getId()).getId(),
-                                a.getName(),
-                                a.getEmail(),
-                                nullSafeGet(networkTreeRepository.findByAccount(a.getId()).getCodes()),
-                                a.getPhone(),
-                                accountRepository.findRoleById(a.getId())))
+                        .filter((AccountEntity t) -> t.isEnabled())
+                        .map((AccountEntity entity) -> new ContactDto(
+                                entity.getId(),
+                                (networkTreeRepository.isRoot(entity.getId())) ? null : accountRepository.findParent(entity.getId()).getId(),
+                                entity.getName(),
+                                entity.getEmail(),
+                                entity.getPhone(),
+                                entity.getState(),
+                                entity.isEnabled(),
+                                entity.getPreferredLanguage()))
                         .collect(Collectors.toList());
             } else {
                 throw new AccountNotExistException(parentId);
@@ -183,36 +193,18 @@ public class AddressBookService {
     @RequestMapping(path = "/save",
             method = RequestMethod.POST)
     public void save(@RequestBody ContactDto dto) throws AccountNotExistException {
+        NetworkNodeEntity nodeEntity;
+        AccountEntity accountEntity;
         if (dto.getId() == null || !accountRepository.exists(dto.getId())) {
-            AccountEntity accountEntity = new AccountEntity();
-            accountEntity.setEmail(dto.getEmail());
-            accountEntity.setName(dto.getName());
-            accountEntity.setPhone(dto.getPhone());
-            accountEntity.setPreferredLanguage(dto.getPreferredLanguage());
-            // TODO: generate a strong password.
+            accountEntity = new AccountEntity();
+            nodeEntity = new NetworkNodeEntity();
+
             accountEntity.setPassword(UUID.randomUUID().toString());
 
-            accountEntity = accountRepository.save(accountEntity);
-
-            NetworkNodeEntity nodeEntity = new NetworkNodeEntity();
-            nodeEntity.setActive(true);
-            nodeEntity.setContact(accountEntity);
-            nodeEntity.setCodes(dto.getCodes());
-            accountEntity.setState(NetworkNodeType.valueOf(dto.getRole()));
-            networkTreeRepository.save(nodeEntity);
-
-            NetworkNodeEntity parentEntity = networkTreeRepository.findByAccount(dto.getParent());
-
-            nodeEntity.setParent(parentEntity);
-            if (parentEntity.getChildren() == null) {
-                parentEntity.setChildren(new ArrayList<>());
-            }
-            parentEntity.getChildren().add(nodeEntity);
-            networkTreeRepository.save(nodeEntity);
-            networkTreeRepository.save(parentEntity);
-
+            nodeEntity = networkTreeRepository.save(nodeEntity);
             accountEntity.setNode(nodeEntity);
-            accountRepository.save(accountEntity);
+
+            accountEntity = accountRepository.save(accountEntity);
 
             MailBoxEntity mbEntity = new MailBoxEntity();
             mbEntity.setOwner(nodeEntity);
@@ -237,7 +229,33 @@ public class AddressBookService {
                         String.format(androidInstallerLink, accountEntity.getId().toString()),
                         accountEntity.getPreferredLanguage());
             }
+        } else {
+            accountEntity = accountRepository.findOne(dto.getId());
+            nodeEntity = networkTreeRepository.findByAccount(dto.getId());
         }
+
+        accountEntity.setEmail(dto.getEmail());
+        accountEntity.setName(dto.getName());
+        accountEntity.setPhone(dto.getPhone());
+        accountEntity.setPreferredLanguage(dto.getPreferredLanguage());
+        accountRepository.save(accountEntity);
+
+        nodeEntity.setActive(true);
+        nodeEntity.setContact(accountEntity);
+        nodeEntity.setCodes(dto.getCodes());
+        accountEntity.setState(NetworkNodeType.valueOf(dto.getRole()));
+        networkTreeRepository.save(nodeEntity);
+
+        NetworkNodeEntity parentEntity = networkTreeRepository.findByAccount(dto.getParent());
+
+        nodeEntity.setParent(parentEntity);
+        if (parentEntity.getChildren() == null) {
+            parentEntity.setChildren(new ArrayList<>());
+        }
+        parentEntity.getChildren().add(nodeEntity);
+        networkTreeRepository.save(nodeEntity);
+        networkTreeRepository.save(parentEntity);
+
     }
 
     @RequestMapping(path = "/{id}/profile",
@@ -246,12 +264,14 @@ public class AddressBookService {
     public ResponseEntity profile(@PathVariable("id") String id) {
         try {
             AccountEntity entity = accountRepository.findOne(UUID.fromString(id));
-            ContactDto dto = new ContactDto(null, 0,
-                    entity.getPhone(),
-                    entity.getId(),
+
+            ContactDto dto = new ContactDto(entity.getId(),
+                    (networkTreeRepository.isRoot(entity.getId())) ? null : accountRepository.findParent(entity.getId()).getId(),
                     entity.getName(),
                     entity.getEmail(),
-                    true,
+                    entity.getPhone(),
+                    entity.getState(),
+                    entity.isEnabled(),
                     entity.getPreferredLanguage());
 
             return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -342,12 +362,25 @@ public class AddressBookService {
     public void erase(@RequestBody PermissionChangeDto dto) throws InsufficientCodesException, AccountNotExistException {
         NetworkNodeEntity destination = networkTreeRepository.findByAccount(dto.getSubject());
         NetworkNodeEntity source = networkTreeRepository.findByAccount(dto.getOwner());
-        destination.setActive(false);
-        networkTreeRepository.save(destination);
 
-        LOG.log(Level.INFO, "{0} delete member {1}", new Object[]{
-            dto.getOwner(),
-            dto.getSubject()
-        });
+        AccountEntity owner = accountRepository.findOne(dto.getOwner());
+        AccountEntity subject = accountRepository.findOne(dto.getSubject());
+
+        if (NetworkNodeType.ADMIN.equals(owner.getState())) {
+            destination.setActive(false);
+            subject.setEmail(ROOT_KEY);
+            networkTreeRepository.save(destination);
+
+            LOG.log(Level.INFO, "{0} delete member {1}", new Object[]{
+                owner.getEmail(),
+                subject.getEmail()
+            });
+
+        } else {
+            LOG.log(Level.WARNING, "{0} could not delete member {1}, because not have rights", new Object[]{
+                owner.getEmail(),
+                subject.getEmail()
+            });
+        }
     }
 }

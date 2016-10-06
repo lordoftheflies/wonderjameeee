@@ -132,8 +132,8 @@
             },
             _onNavigate: function (event, detail) {
                 console.log(this.is, 'navigate to', detail.page);
-//                this.set('route.path', '/' + detail.page);
-                this.page = detail.page;
+                this.set('route.path', detail.page);
+//                this.page = detail.page;
             }
 
         };

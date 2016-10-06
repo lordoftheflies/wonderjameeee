@@ -55,6 +55,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 top: -50px;
                 right: -40px;
             }
+            
+            div.error {
+                color: red;
+            }
         </style>
 
         <polymer-cookie
@@ -88,10 +92,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-spinner id="spinner" hidden="[[!loading]]"></paper-spinner>
             <div class="card-content">
                 <form is="iron-form" id="signInForm"  with-credentials
-                      method="POST"  action="[[authenticationUrl]]" headers="[[authHeaders]]" content-type="application/json"
-                      >
+                      method="POST"  action="[[authenticationUrl]]" headers="[[authHeaders]]" content-type="application/json">
                     <template is="dom-if" if="[[hasAuthenticationError]]">
-                        <div>{{authenticationError}}</div>
+                        <div class="error">{{authenticationError}}</div>
                     </template>
 
                     <gold-email-input 

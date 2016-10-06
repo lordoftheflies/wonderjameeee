@@ -16,6 +16,11 @@
       "label": "Preferred language"
     }
   },
+  "member-editor-create-title": "Create new member",
+  "member-editor-edit-title": [
+    "Edit {1}",
+    "[[selectedName]]"
+  ],
   "newMemberTypeUserTitle": "User",
   "newMemberTypeGroupTitle": "Group",
   "newMemberTypeAdminTitle": "Admin"

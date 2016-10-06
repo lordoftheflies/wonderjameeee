@@ -182,6 +182,31 @@
           "op": "add",
           "path": "/legal-menu-label",
           "value": "Terms & services"
+        },
+        {
+          "op": "add",
+          "path": "/prompt-dialog-cancel-button",
+          "value": "Cancel"
+        },
+        {
+          "op": "add",
+          "path": "/prompt-dialog-ok-button",
+          "value": "OK"
+        },
+        {
+          "op": "add",
+          "path": "/delete-member-prompt-title",
+          "value": "Delete member"
+        },
+        {
+          "op": "add",
+          "path": "/delete-member-prompt-dialog-text/0",
+          "value": "You want to delete member {1}"
+        },
+        {
+          "op": "add",
+          "path": "/delete-member-prompt-dialog-text/1",
+          "value": "[[deleteMemberPromptSubject]]"
         }
       ]
     },
@@ -208,6 +233,13 @@
         "title": "Változások elvetése & Új cikk létrehozása."
       }
     },
+    "delete-member-prompt-title": "Delete member",
+    "delete-member-prompt-dialog-text": [
+      "You want to delete member {1}",
+      "[[deleteMemberPromptSubject]]"
+    ],
+    "prompt-dialog-cancel-button": "Cancel",
+    "prompt-dialog-ok-button": "OK",
     "main-menu-label": "Menü",
     "article-menu-label": "Cikkek",
     "mailbox-menu-label": "Levelesláda",
@@ -373,6 +405,21 @@
           "op": "add",
           "path": "/newMemberTypeAdminTitle",
           "value": "Admin"
+        },
+        {
+          "op": "add",
+          "path": "/member-editor-create-title",
+          "value": "Create new member"
+        },
+        {
+          "op": "add",
+          "path": "/member-editor-edit-title/0",
+          "value": "Edit {1}"
+        },
+        {
+          "op": "add",
+          "path": "/member-editor-edit-title/1",
+          "value": "[[selectedName]]"
         }
       ]
     },
@@ -392,6 +439,11 @@
         "label": "Preferált nyelv"
       }
     },
+    "member-editor-create-title": "Create new member",
+    "member-editor-edit-title": [
+      "Edit {1}",
+      "[[selectedName]]"
+    ],
     "newMemberTypeUserTitle": "Felhasználó",
     "newMemberTypeGroupTitle": "Csoport",
     "newMemberTypeAdminTitle": "Admin"
