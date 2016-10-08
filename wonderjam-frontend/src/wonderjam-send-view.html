@@ -39,6 +39,12 @@ Wham! It's all awesome now!
 
         <style include="wonderjam-shared-styles">
 
+            :host paper-chip {
+                margin-right: 10px; 
+                /*background-color: white;*/ 
+                z-index: 2000;
+            }
+            
             /*            .main-action-fab-container {
                             position: relative;
                         }
@@ -54,7 +60,7 @@ Wham! It's all awesome now!
                         }*/
         </style>
 
-        <paper-card elevation="1" name="share" heading="Share with others" class="layout vertical main-action-fab-container">
+        <paper-card elevation="1" name="share" heading="Share with others" class="layout vertical main-action-fab-container card">
             <div class="card-content layout horizontal">
                 <div class="flex layout vertical">
                     <div class="layout horizontal">
@@ -62,11 +68,11 @@ Wham! It's all awesome now!
                             <label>Recipients</label>
                             <div class="paper-input-input layout horizontal wrap">
                                 <template is="dom-repeat" items="[[selectedItemIds]]">
-                                    <paper-chip member="[[item]]" style="margin-right: 10px; background-color: white; z-index: 2000;" removable>
+                                    <paper-chip member="[[item]]"  removable animated>
                                         <!--TODO: #45-->
-                                        <!--<div class="icon">[[getRoleIcon(item)]]</div>-->
-                                        <h1>[[getUserName(item)]]</h1>
-                                        <h2>[[getUserEmail(item)]]</h2>
+                                        <!--<iron-icon class="icon">[[getRoleIcon(item)]]</iron-icon>-->
+                                        <div class="label">[[getUserName(item)]]</div>
+                                        <div class="caption">[[getUserEmail(item)]]</div>
                                     </paper-chip>
                                 </template>
                             </div>
@@ -201,12 +207,12 @@ Wham! It's all awesome now!
             },
             getRoleIcon: function (id) {
                 if (this.items !== undefined && this.items !== null) {
-                    var name = 'Unknown';
+                    var name = 'user';
                     this.items.forEach(function (item, index) {
                         if (item.id === id) {
                             // TODO: remove #45
                             // name = item.role.charAt(0).toUpperCase();
-                            name = 'M';
+//                            name = item.role.toLowerCase();
                         }
                     }, this);
                     return name;
