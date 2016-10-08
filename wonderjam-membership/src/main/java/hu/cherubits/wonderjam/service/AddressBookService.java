@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,6 +103,56 @@ public class AddressBookService {
 
     private int nullSafeGet(Integer i) {
         return (i == null) ? 0 : i;
+    }
+
+    private void buildTree(UUID parentId, AccountEntity t, final List<ContactDto> result) {
+        result.add(new ContactDto(t.getId(), parentId, t.getName(), t.getEmail(), t.getPhone(), t.getState(), t.isEnabled(), t.getPreferredLanguage()));
+
+        List<AccountEntity> accounts = accountRepository.findChildren(t.getId());
+
+        accounts.forEach(new Consumer<AccountEntity>() {
+            @Override
+            public void accept(AccountEntity t2) {
+                buildTree(t.getId(), t2, result);
+            }
+        });
+    }
+
+    @RequestMapping(path = "/{id}/group", method = RequestMethod.GET)
+    public List<ContactDto> getGroups(@PathVariable("id") UUID id) {
+        List<ContactDto> result = new ArrayList<>();
+        AccountEntity parent = accountRepository.findParent(id);
+
+        if (parent != null) {
+            result.add(new ContactDto(parent.getId(), null, parent.getName(), parent.getEmail(), parent.getPhone(), parent.getState(), parent.isEnabled(), parent.getPreferredLanguage()));
+        }
+
+        this.buildTree(parent == null ? null : parent.getId(), accountRepository.findOne(id), result);
+        return result.stream().filter(new Predicate<ContactDto>() {
+            @Override
+            public boolean test(ContactDto t) {
+                return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+            }
+        }).collect(Collectors.toList());
+//        return result;
+    }
+
+    @RequestMapping(path = "/{id}/person", method = RequestMethod.GET)
+    public List<ContactDto> getPersons(@PathVariable("id") UUID id) {
+        List<ContactDto> result = new ArrayList<>();
+        AccountEntity parent = accountRepository.findParent(id);
+
+        if (parent != null) {
+            result.add(new ContactDto(parent.getId(), null, parent.getName(), parent.getEmail(), parent.getPhone(), parent.getState(), parent.isEnabled(), parent.getPreferredLanguage()));
+        }
+
+        this.buildTree(parent == null ? null : parent.getId(), accountRepository.findOne(id), result);
+        return result.stream().filter(new Predicate<ContactDto>() {
+            @Override
+            public boolean test(ContactDto t) {
+                return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+            }
+        }).collect(Collectors.toList());
     }
 
     @RequestMapping(path = "/all",

@@ -3,6 +3,7 @@
 
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
@@ -30,24 +31,30 @@
 
         </style>
 
+        <iron-ajax
+            url="[[apiUrl]]/addressbook/[[accountId]]/[[selectionMode]]" last-response="{{contacts}}" headers="[[headers]]"
+            on-response="onRecipientAjaxResponse" on-error="onRecipientAjaxError"
+            auto="[[selectionMode]]">
+        </iron-ajax>
+        
         <paper-material class="material-card">
             <form>
-                    <iron-pages selected="{{selectionMode}}" attr-for-selected="name" class="layout vertical">
+                    <!--<iron-pages selected="{{selectionMode}}" attr-for-selected="name" class="layout vertical">-->
                         <paper-listbox id="contactList"
                                        name="person"
                                        class="layout flex"
                                        attr-for-selected="id"
                                        multi
-                                       items="[[model]]"
+                                       items="[[contacts]]"
                                        as="item"
                                        selected-values="{{selectedItemIds}}">
-                            <template is="dom-repeat" items="[[recipientsModel]]">
+                            <template is="dom-repeat" items="[[contacts]]">
                                 <paper-item id="[[item.id]]" class="layout horizontal">
                                     <label>[[item.name]]</label>
                                 </paper-item>
                             </template>
                         </paper-listbox>
-                        <paper-listbox id="contactList"
+<!--                        <paper-listbox id="contactList"
                                        class="layout flex"
                                        attr-for-selected="id"
                                        name="group"
@@ -61,7 +68,7 @@
                                 </paper-item>
                             </template>
                         </paper-listbox>
-                    </iron-pages>
+                    </iron-pages>-->
                 <!--</paper-dialog-scrollable>-->
                 
             </form>
@@ -115,6 +122,12 @@
             },
             isEmpty: function (data) {
                 return data === undefined || data === null || data.length === 0;
+            },
+            onRecipientAjaxResponse: function() {
+                console.debug(this.is, 'fetch', this.selectionMode);
+            },
+            onRecipientAjaxError: function() {
+                console.warn(this.is, 'fetch', this.selectionMode, 'failed');
             }
         });
     </script>
