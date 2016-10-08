@@ -215,6 +215,28 @@ public class AddressBookService {
 
             AccountEntity parentAccountEntity = accountRepository.findOne(dto.getParent());
 
+            accountEntity.setEmail(dto.getEmail());
+            accountEntity.setName(dto.getName());
+            accountEntity.setPhone(dto.getPhone());
+            accountEntity.setPreferredLanguage(dto.getPreferredLanguage());
+            accountRepository.save(accountEntity);
+
+            nodeEntity.setActive(true);
+            nodeEntity.setContact(accountEntity);
+            nodeEntity.setCodes(dto.getCodes());
+            accountEntity.setState(NetworkNodeType.valueOf(dto.getRole()));
+            networkTreeRepository.save(nodeEntity);
+
+            NetworkNodeEntity parentEntity = networkTreeRepository.findByAccount(dto.getParent());
+
+            nodeEntity.setParent(parentEntity);
+            if (parentEntity.getChildren() == null) {
+                parentEntity.setChildren(new ArrayList<>());
+            }
+            parentEntity.getChildren().add(nodeEntity);
+            networkTreeRepository.save(nodeEntity);
+            networkTreeRepository.save(parentEntity);
+
             LOG.log(Level.INFO, "Created new member for {0}", dto.getEmail());
             LOG.log(Level.INFO, "\t- Account: {0}", accountEntity.getId());
             LOG.log(Level.INFO, "\t- Node: {0}", nodeEntity.getId());
@@ -232,29 +254,29 @@ public class AddressBookService {
         } else {
             accountEntity = accountRepository.findOne(dto.getId());
             nodeEntity = networkTreeRepository.findByAccount(dto.getId());
+
+            accountEntity.setEmail(dto.getEmail());
+            accountEntity.setName(dto.getName());
+            accountEntity.setPhone(dto.getPhone());
+            accountEntity.setPreferredLanguage(dto.getPreferredLanguage());
+            accountRepository.save(accountEntity);
+
+            nodeEntity.setActive(true);
+            nodeEntity.setContact(accountEntity);
+            nodeEntity.setCodes(dto.getCodes());
+            accountEntity.setState(NetworkNodeType.valueOf(dto.getRole()));
+            networkTreeRepository.save(nodeEntity);
+
+            NetworkNodeEntity parentEntity = networkTreeRepository.findByAccount(dto.getParent());
+
+            nodeEntity.setParent(parentEntity);
+            if (parentEntity.getChildren() == null) {
+                parentEntity.setChildren(new ArrayList<>());
+            }
+            parentEntity.getChildren().add(nodeEntity);
+            networkTreeRepository.save(nodeEntity);
+            networkTreeRepository.save(parentEntity);
         }
-
-        accountEntity.setEmail(dto.getEmail());
-        accountEntity.setName(dto.getName());
-        accountEntity.setPhone(dto.getPhone());
-        accountEntity.setPreferredLanguage(dto.getPreferredLanguage());
-        accountRepository.save(accountEntity);
-
-        nodeEntity.setActive(true);
-        nodeEntity.setContact(accountEntity);
-        nodeEntity.setCodes(dto.getCodes());
-        accountEntity.setState(NetworkNodeType.valueOf(dto.getRole()));
-        networkTreeRepository.save(nodeEntity);
-
-        NetworkNodeEntity parentEntity = networkTreeRepository.findByAccount(dto.getParent());
-
-        nodeEntity.setParent(parentEntity);
-        if (parentEntity.getChildren() == null) {
-            parentEntity.setChildren(new ArrayList<>());
-        }
-        parentEntity.getChildren().add(nodeEntity);
-        networkTreeRepository.save(nodeEntity);
-        networkTreeRepository.save(parentEntity);
 
     }
 

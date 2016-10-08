@@ -6,9 +6,7 @@
 <script>
     (function () {
         'use strict';
-
         window.WonderjamAppBehaviors = window.WonderjamAppBehaviors || {};
-
         /**
          * Member controller behavior,
          *
@@ -85,6 +83,10 @@
                     type: Object,
                     notify: true,
                     computed: 'computeDeleteMemberModel(memberDetailsModel, accountId)'
+                },
+                memberDetailsModel: {
+                    type: Object,
+                    notify: true
                 }
             },
             observers: [
@@ -119,6 +121,17 @@
 //                    page: 'member-editor'
 //                });
                 this.memberEditorCreateMode = true;
+//                this.memberDetailsModel = {};
+//                this.memberDetailsModel.id = null;
+//                this.memberDetailsModel.name = null;
+//                this.memberDetailsModel.email = null;
+//                this.memberDetailsModel.active = true;
+//                this.memberDetailsModel.preferredLanguage = this.profile.preferredLanguage;
+//                this.memberDetailsModel.parent = this.$.membersView.selectedAccountId;
+//                this.memberDetailsModel.role = "USER";
+//                this.memberDetailsModel.codes = 0;
+//                this.memberDetailsModel.phone = null;
+               
                 this.set('route.path', '/member-editor/');
             },
             onCreateMember: function (event, details) {
@@ -128,8 +141,8 @@
                 this.$.memberEditor.createMemberRepeat();
             },
             onCancelMemberEditor: function () {
-                this.$.memberEditor.clear();
                 this.set('route.path', '/members-view/' + this.$.membersView.selectedAccountId);
+                this.$.memberEditor.clear();
 //                this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
 //                this.set('page', 'members-view');
             },
@@ -244,13 +257,10 @@
             }
 
         };
-
-
         WonderjamAppBehaviors.ControllerManagerBehavior = [
             PlutoniumBehaviors.WidgetBoundBehavior,
             PlutoniumBehaviors.AppRoutingBehavior,
             WonderjamAppBehaviors.ControllerManagerBehaviorImpl
         ];
-
     })();
 </script>

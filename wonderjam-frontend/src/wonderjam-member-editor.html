@@ -1,12 +1,14 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-
 <link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-input/iron-input.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/iron-overlay-behavior/iron-overlay-behavior.html">
+
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
@@ -14,11 +16,29 @@
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+
 <link rel="import" href="wonderjam-shared-styles.html">
+
 <link rel="import" href="wonderjam-icons.html">
+
 <link rel="import" href="wonderjam-language-validator.html">
 
+<!--
+`<wonderjam-member-editor>` is a view for editing member details.
 
+In typical use, just slap some `<wonderjam-member-editor>` at the top of your body:
+
+    <body>
+       <wonderjam-member-editor
+            created="{{memberEditorCreateMode}}"
+            name="member-editor"
+            headers="[[headers]]"
+            action="[[apiUrl]]/addressbook/save"
+            locales="[[locales]]"
+            member-model="{{memberDetailsModel}}"
+            possible-parents="[[possibleParents]]">
+       </wonderjam-member-editor>
+-->
 <dom-module id="wonderjam-member-editor">
 
     <template>
@@ -28,8 +48,6 @@
                 @apply(--layout-vertical);
                 padding: 10px;
             }
-
-
         </style>
 
         <paper-material id="memberEditor" class="card">
@@ -37,38 +55,37 @@
                 <h2 text-id="member-editor-create-title">Create new member</h2>
             </template>
             <template is="dom-if" if="[[!created]]">
-                <h2 text-id="member-editor-edit-title">Edit [[selectedName]]</h2>
+                <h2 text-id="member-editor-edit-title">Edit [[memberModel.name]]</h2>
             </template>
             <form id="memberForm" is="iron-form" class="card-content" verbose 
                   content-type="application/json" method="POST" action="[[action]]" headers="{{headers}}"
                   handle-as="json">
-                <input name="id" type="hidden" value="{{selectedAccountId}}" />
+                <input name="id" type="hidden" value="{{memberModel.id}}" />
                 <paper-input id="newMemberNameLabel" name="name" 
                              label="Name" error-message="Member name must be specified." 
-                             value="{{selectedName}}"
+                             value="{{memberModel.name}}"
                              type="text" required auto-validate></paper-input>
                 <template is="dom-if" if="[[!isGroup]]">
-                    <paper-input id="newMemberEmailLabel" name="email" 
-                                 label="Email" error-message="Member email must be specified." 
-                                 value="{{selectedEmail}}"
-                                 type="email" required auto-validate>
-                        <!--hidden="[[isGroup(selectedType)]]"-->
-                    </paper-input>
+                    <gold-email-input id="newMemberEmailLabel" name="email" 
+                                      label="Email" error-message="Member email must be specified." 
+                                      value="{{memberModel.email}}"
+                                      type="email" required auto-validate>
+                    </gold-email-input>
                 </template>
-                <input name="role" type="hidden" value="{{selectedType}}" />
-                <paper-radio-group label="Type" attr-for-selected="name" selected="{{selectedType}}">
-                    <paper-radio-button id="newMemberTypeUserTitle" name="USER">User</paper-radio-button>
-                    <paper-radio-button id="newMemberTypeGroupTitle" name="GROUP">Group</paper-radio-button>
-                    <paper-radio-button id="newMemberTypeAdminTitle" name="ADMIN">Admin</paper-radio-button>
+                <input name="role" type="hidden" value="{{memberModel.role}}" />
+                <paper-radio-group label="Type" attr-for-selected="role" selected="{{memberModel.role}}">
+                    <paper-radio-button id="newMemberTypeUserTitle" role="USER">User</paper-radio-button>
+                    <paper-radio-button id="newMemberTypeGroupTitle" role="GROUP">Group</paper-radio-button>
+                    <paper-radio-button id="newMemberTypeAdminTitle" role="ADMIN">Admin</paper-radio-button>
                 </paper-radio-group>
 
                 <!--                <div>-->
-                <input name="parent" value="{{selectedParent}}" type="hidden" />
+                <input name="parent" value="{{memberModel.parent}}" type="hidden" />
                 <paper-dropdown-menu id="newMemberParentLabel"  class="flex"
                                      label="Parent member" error-message="Parent member must selected."
                                      required>
                     <paper-menu
-                        class="dropdown-content" selected="{{selectedParent}}" attr-for-selected="value">
+                        class="dropdown-content" selected="{{memberModel.parent}}" attr-for-selected="value">
                         <template is="dom-repeat" items="{{possibleParents}}">
                             <paper-item value="{{item.id}}">{{item.name}}</paper-item>
                         </template>
@@ -77,13 +94,12 @@
                 <!--                </div>
                                 <div>-->
                 <wonderjam-language-validator></wonderjam-language-validator>
-                <input name="preferredLanguage" value="{{preferredLanguage}}" type="hidden" validator="wonderjam-language-validator" />
+                <input name="preferredLanguage" value="{{memberModel.preferredLanguage}}" type="hidden" validator="wonderjam-language-validator" />
                 <paper-dropdown-menu id="preferredLanguageLabel"
                                      label="Preferred language"  error-message="You must choose the language of registration emails."
                                      required>
-                    <!--<iron-meta type="validator" key="wonderjam-language-validator" value="preferredLanguageValid"></iron-meta>-->
                     <paper-menu class="dropdown-content">
-                        <paper-menu class="dropdown-content" selected="{{preferredLanguage}}" attr-for-selected="data-value">
+                        <paper-menu class="dropdown-content" selected="{{memberModel.preferredLanguage}}" attr-for-selected="data-value">
                             <template is="dom-repeat" items="[[locales]]" as="locale">
                                 <paper-item data-value="[[locale.code]]">[[locale.name]]</paper-item>
                             </template>
@@ -104,47 +120,27 @@
                 BehaviorsStore.I18nBehavior,
             ],
             properties: {
+                /** Url where the persited member submit request sent. */
                 action: {
                     type: String,
                     notify: true
                 },
+                /** Headers which used the persited member submit request sent*/
                 headers: {
                     type: Object,
                     notify: true
                 },
-                preferredLanguage: {
-                    type: String,
-                    notify: true
-                },
-                selectedName: {
-                    type: String,
-                    notify: true
-                },
-                selectedEmail: {
-                    type: String,
-                    notify: true
-                },
-                selectedParent: {
-                    type: String,
-                    notify: true
-                },
-                selectedAccountId: {
-                    type: String,
-                    notify: true
-                },
-                selectedType: {
-                    type: String,
-                    notify: true,
-                    value: 'USER'
-                },
+                /** List of possible parent elements. */
                 possibleParents: {
                     type: Array,
                     notify: true
                 },
+                /** List of locales.*/
                 locales: {
                     type: Array,
                     notify: true
                 },
+                /** Model object */
                 memberModel: {
                     type: Object,
                     notify: true
@@ -155,7 +151,7 @@
                 },
                 isGroup: {
                     type: Boolean,
-                    computed: 'computeIsGroup(selectedType)'
+                    computed: 'computeIsGroup(memberModel.role)'
                 },
                 createAndRepeatIndicator: {
                     type: Boolean,
@@ -164,23 +160,14 @@
                 }
             },
             observers: [
-                'observeModel(memberModel)'
+                'observeModel(created)'
             ],
             listeners: {
                 'iron-form-response': 'onIronFormResponse',
                 'iron-form-error': 'onIronFormError'
             },
-//            ready: function () {
-////                this.$.preferredLanguageValid.validate = this.$.preferredLanguageValid.bind(this);
-//            },
-            observeModel: function (memberModel) {
-                this.preferredLanguage = memberModel.preferredLanguage;
-                this.selectedParent = memberModel.parent;
-                this.selectedType = memberModel.role;
-                this.selectedName = memberModel.name;
-                this.selectedEmail = memberModel.email;
-                this.selectedAccountId = memberModel.id;
-//                this.memberModel.role = selectedType;
+            observeModel: function (created) {
+                console.trace(this.is, 'oberve member-model', memberModel);
             },
             computeIsGroup: function (selectedType) {
                 return selectedType === 'GROUP';
@@ -219,7 +206,7 @@
 
                 } else {
                     this.fire('page-go', {
-                        page: '/members-view/' + this.selectedParent
+                        page: '/members-view/' + this.memberModel.parent
                     });
                 }
                 // TODO: move to this
