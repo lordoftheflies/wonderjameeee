@@ -13,16 +13,6 @@
       },
       {
         "op": "add",
-        "path": "/forgottenPasswordTitle",
-        "value": "Forgotten password"
-      },
-      {
-        "op": "add",
-        "path": "/signOnSubmitTitle",
-        "value": "Sign on"
-      },
-      {
-        "op": "add",
         "path": "/model/signInSubmit/title",
         "value": "Sign in"
       }
@@ -36,7 +26,5 @@
       "title": "Zaloguj"
     }
   },
-  "rememberMeToggleButtonLabel": "Zapamiętaj mnie",
-  "forgottenPasswordTitle": "Zapomniane hasło",
-  "signOnSubmitTitle": "Zapisać się"
+  "rememberMeToggleButtonLabel": "Zapamiętaj mnie"
 }

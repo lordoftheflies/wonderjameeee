@@ -1,8 +1,6 @@
 {
   "meta": {},
   "model": {},
-  "authors-card:div:paper-item:paper-item-body:div": "Hegedűs László",
-  "authors-card:div:paper-item:paper-item-body:div_1": "laszlo.hegedus@cherubits.hu",
-  "authors-card:div:paper-item_1:paper-item-body:div": "Péczely Balázs",
-  "authors-card:div:paper-item_1:paper-item-body:div_1": "peczely.balazs@digitaldefense.hu"
+  "user-manual-title": "Help",
+  "user-manual-missing-label": "Missing user documentation."
 }

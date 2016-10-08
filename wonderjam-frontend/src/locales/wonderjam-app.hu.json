@@ -78,11 +78,6 @@
       },
       {
         "op": "add",
-        "path": "/profile-menu-label",
-        "value": "Profile"
-      },
-      {
-        "op": "add",
         "path": "/logout-label",
         "value": "Logout"
       },
@@ -175,6 +170,11 @@
         "op": "add",
         "path": "/delete-member-prompt-dialog-text/1",
         "value": "[[deleteMemberPromptSubject]]"
+      },
+      {
+        "op": "replace",
+        "path": "/help-menu-label",
+        "value": "Help"
       }
     ]
   },
@@ -212,13 +212,13 @@
   "article-menu-label": "Cikkek",
   "mailbox-menu-label": "Levelesláda",
   "members-menu-label": "Hálózat",
+  "help-menu-label": "Help",
   "about-menu-label": "Rólunk",
   "legal-menu-label": "Felhasználási szabályzat",
   "mainTitle": "Topflavon",
   "english-language-label": "Angol",
   "hungarian-language-label": "Magyar",
   "polish-language-label": "Lengyel",
-  "profile-menu-label": "Profil",
   "logout-label": "Kijelentkezés",
   "messagesPagePublicFolderTitle": "Publikus",
   "messagesPageMyContentsFolderTitle": "Piszkozat",

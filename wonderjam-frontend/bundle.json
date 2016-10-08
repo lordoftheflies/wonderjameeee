@@ -9,10 +9,8 @@
       ]
     },
     "model": {},
-    "authors-card:div:paper-item:paper-item-body:div": "Hegedűs László",
-    "authors-card:div:paper-item:paper-item-body:div_1": "laszlo.hegedus@cherubits.hu",
-    "authors-card:div:paper-item_1:paper-item-body:div": "Péczely Balázs",
-    "authors-card:div:paper-item_1:paper-item-body:div_1": "peczely.balazs@digitaldefense.hu"
+    "user-manual-title": "Help",
+    "user-manual-missing-label": "Missing user documentation."
   },
   "wonderjam-app": {
     "meta": {
@@ -57,13 +55,13 @@
     "article-menu-label": "Articles",
     "mailbox-menu-label": "Mailbox",
     "members-menu-label": "Network",
+    "help-menu-label": "Help",
     "about-menu-label": "About",
     "legal-menu-label": "Terms & services",
     "mainTitle": "Topflavon",
     "english-language-label": "English",
     "hungarian-language-label": "Magyar",
     "polish-language-label": "Polski",
-    "profile-menu-label": "Profile",
     "logout-label": "Logout",
     "messagesPagePublicFolderTitle": "Public",
     "messagesPageMyContentsFolderTitle": "Drafts",
@@ -113,6 +111,21 @@
     "model": {},
     "emptyChildrenText": "No content in the folder."
   },
+  "wonderjam-legal-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {},
+    "terms-card": [
+      " {1} ",
+      " Terms and services of TopFlavon application. Under development ... "
+    ]
+  },
   "wonderjam-login-view": {
     "meta": {
       "locales": [
@@ -130,9 +143,42 @@
         "title": "Sign in"
       }
     },
-    "rememberMeToggleButtonLabel": "Remember me",
-    "forgottenPasswordTitle": "Forgotten password",
-    "signOnSubmitTitle": "Sign on"
+    "rememberMeToggleButtonLabel": "Remember me"
+  },
+  "wonderjam-logon-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {
+      "registrateNameLabel": {
+        "label": "Name",
+        "error-message": "Invalid name."
+      },
+      "registratePhoneNumberLabel": {
+        "label": "Phone",
+        "error-message": "Invalid phone number."
+      },
+      "registratePasswordLabel": {
+        "label": "Password",
+        "error-message": "Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number."
+      },
+      "registratePasswordConfirmLabel": {
+        "label": "Password confirmation",
+        "error-message": "Passwords not match."
+      },
+      "registrateCodeLabel": {
+        "label": "Activation code",
+        "error-message": "Activation code."
+      },
+      "registrateButton": {
+        "title": "Sign on"
+      }
+    }
   },
   "wonderjam-mailbox-view": {
     "meta": {
@@ -193,6 +239,29 @@
     },
     "model": {},
     "emptyChildrenText": "No children."
+  },
+  "wonderjam-passwordreset-view": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {
+      "passwordResetNewLabel": {
+        "label": "New password"
+      },
+      "passwordResetNewConfirmLabel": {
+        "label": "New password confirmation"
+      },
+      "passwordResetButton": {
+        "title": "Reset password"
+      }
+    },
+    "passwordResetLoginButton": "Sign-in",
+    "passwordResetRegistrateButton": "Sign-on"
   },
   "wonderjam-profile-view": {
     "meta": {

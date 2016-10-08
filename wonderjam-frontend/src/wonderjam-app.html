@@ -303,9 +303,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <a text-id="article-menu-label" name="article-view" href="#/article-view/ROOT">Articles</a>
                     <a text-id="mailbox-menu-label" name="mailbox-view" href="#/mailbox-view/[[selectedMailBoxFolder]]">Mailbox</a>
                     <a text-id="members-menu-label" name="members-view" href="#/members-view/[[accountId]]" hidden="{{!hasPrivileges}}">Network</a>
-                    <a text-id="about-menu-label" name="about-view" href="#/about-view">About</a>
+                    <a text-id="help-menu-label" name="help-view" href="#/help-view">Help</a>
                 </iron-selector>
                 <div id="legalContainer" class="terms-container">
+                    <a text-id="about-menu-label" href="#/about-view">About</a>
                     <a text-id="legal-menu-label" href="#/legal-view">Terms & services</a>
                 </div>
             </app-drawer>
@@ -326,12 +327,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <plutonium-avatar-button 
                             hidden="[[!authenticated]]"
                             display-name-attribute="userName" display-unique-attribute="userName" user="[[user]]">
-                            <a href="#/profile-view" class="menu">
+<!--                            <a href="#/profile-view" class="menu">
                                 <paper-item class="menu">
                                     <iron-icon icon="account-circle" item-icon></iron-icon>
                                     <span  text-id="profile-menu-label">Profile</span>
                                 </paper-item>
-                            </a>
+                            </a>-->
                             <a href="#" on-tap="onLogout" class="menu">
                                 <paper-item class="menu">
                                     <iron-icon icon="markunread-mailbox" item-icon></iron-icon>
@@ -414,6 +415,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <wonderjam-about-view 
                         name="about-view">
                     </wonderjam-about-view>
+                    <wonderjam-help-view 
+                        name="help-view">
+                    </wonderjam-help-view>
                     <wonderjam-article-view 
                         name="article-view"
                         account-id="[[accountId]]"
@@ -638,7 +642,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             },
             computeMinorToolbarHidden: function (authenticated, page) {
-                return !authenticated || (page === 'about-view' || page === 'legal-view' || page === 'member-editor' ||
+                return !authenticated || (page === 'about-view' || page === 'help-view' || page === 'legal-view' || page === 'member-editor' ||
                         page === 'profile-view') ||
                         (page === 'article-view' && this.user.authorities.indexOf('ADMIN') === -1);
             },

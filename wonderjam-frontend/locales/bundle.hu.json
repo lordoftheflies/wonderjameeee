@@ -4,31 +4,19 @@
       "todo": [
         {
           "op": "add",
-          "path": "/authors-card:div:paper-item:paper-item-body:div",
-          "value": "Hegedűs László"
+          "path": "/user-manual-title",
+          "value": "Help"
         },
         {
           "op": "add",
-          "path": "/authors-card:div:paper-item_1:paper-item-body:div",
-          "value": "Péczely Balázs"
-        },
-        {
-          "op": "add",
-          "path": "/authors-card:div:paper-item_1:paper-item-body:div_1",
-          "value": "peczely.balazs@digitaldefense.hu"
-        },
-        {
-          "op": "replace",
-          "path": "/authors-card:div:paper-item:paper-item-body:div_1",
-          "value": "laszlo.hegedus@cherubits.hu"
+          "path": "/user-manual-missing-label",
+          "value": "Missing user documentation."
         }
       ]
     },
     "model": {},
-    "authors-card:div:paper-item:paper-item-body:div": "Hegedűs László",
-    "authors-card:div:paper-item:paper-item-body:div_1": "laszlo.hegedus@cherubits.hu",
-    "authors-card:div:paper-item_1:paper-item-body:div": "Péczely Balázs",
-    "authors-card:div:paper-item_1:paper-item-body:div_1": "peczely.balazs@digitaldefense.hu"
+    "user-manual-title": "Help",
+    "user-manual-missing-label": "Missing user documentation."
   },
   "wonderjam-app": {
     "meta": {
@@ -107,11 +95,6 @@
           "op": "add",
           "path": "/polish-language-label",
           "value": "Polski"
-        },
-        {
-          "op": "add",
-          "path": "/profile-menu-label",
-          "value": "Profile"
         },
         {
           "op": "add",
@@ -207,6 +190,11 @@
           "op": "add",
           "path": "/delete-member-prompt-dialog-text/1",
           "value": "[[deleteMemberPromptSubject]]"
+        },
+        {
+          "op": "replace",
+          "path": "/help-menu-label",
+          "value": "Help"
         }
       ]
     },
@@ -244,13 +232,13 @@
     "article-menu-label": "Cikkek",
     "mailbox-menu-label": "Levelesláda",
     "members-menu-label": "Hálózat",
+    "help-menu-label": "Help",
     "about-menu-label": "Rólunk",
     "legal-menu-label": "Felhasználási szabályzat",
     "mainTitle": "Topflavon",
     "english-language-label": "Angol",
     "hungarian-language-label": "Magyar",
     "polish-language-label": "Lengyel",
-    "profile-menu-label": "Profil",
     "logout-label": "Kijelentkezés",
     "messagesPagePublicFolderTitle": "Publikus",
     "messagesPageMyContentsFolderTitle": "Piszkozat",
@@ -291,6 +279,27 @@
     "model": {},
     "emptyChildrenText": "A mappában nincs tartalom."
   },
+  "wonderjam-legal-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/terms-card/0",
+          "value": " {1} "
+        },
+        {
+          "op": "add",
+          "path": "/terms-card/1",
+          "value": " Terms and services of TopFlavon application. Under development ... "
+        }
+      ]
+    },
+    "model": {},
+    "terms-card": [
+      " {1} ",
+      " Terms and services of TopFlavon application. Under development ... "
+    ]
+  },
   "wonderjam-login-view": {
     "meta": {
       "todo": [
@@ -303,16 +312,6 @@
           "op": "add",
           "path": "/rememberMeToggleButtonLabel",
           "value": "Remember me"
-        },
-        {
-          "op": "add",
-          "path": "/forgottenPasswordTitle",
-          "value": "Forgotten password"
-        },
-        {
-          "op": "add",
-          "path": "/signOnSubmitTitle",
-          "value": "Sign on"
         },
         {
           "op": "add",
@@ -329,9 +328,93 @@
         "title": "Bejelentkezés"
       }
     },
-    "rememberMeToggleButtonLabel": "Emlékezz rám",
-    "forgottenPasswordTitle": "Elfelejtett jelszó",
-    "signOnSubmitTitle": "Bejelentkezés"
+    "rememberMeToggleButtonLabel": "Emlékezz rám"
+  },
+  "wonderjam-logon-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/model/registrateNameLabel/label",
+          "value": "Name"
+        },
+        {
+          "op": "add",
+          "path": "/model/registrateNameLabel/error-message",
+          "value": "Invalid name."
+        },
+        {
+          "op": "add",
+          "path": "/model/registratePhoneNumberLabel/label",
+          "value": "Phone"
+        },
+        {
+          "op": "add",
+          "path": "/model/registratePhoneNumberLabel/error-message",
+          "value": "Invalid phone number."
+        },
+        {
+          "op": "add",
+          "path": "/model/registratePasswordLabel/label",
+          "value": "Password"
+        },
+        {
+          "op": "add",
+          "path": "/model/registratePasswordLabel/error-message",
+          "value": "Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number."
+        },
+        {
+          "op": "add",
+          "path": "/model/registratePasswordConfirmLabel/label",
+          "value": "Password confirmation"
+        },
+        {
+          "op": "add",
+          "path": "/model/registratePasswordConfirmLabel/error-message",
+          "value": "Passwords not match."
+        },
+        {
+          "op": "add",
+          "path": "/model/registrateCodeLabel/label",
+          "value": "Activation code"
+        },
+        {
+          "op": "add",
+          "path": "/model/registrateCodeLabel/error-message",
+          "value": "Activation code."
+        },
+        {
+          "op": "add",
+          "path": "/model/registrateButton/title",
+          "value": "Sign on"
+        }
+      ]
+    },
+    "model": {
+      "registrateNameLabel": {
+        "label": "Name",
+        "error-message": "Invalid name."
+      },
+      "registratePhoneNumberLabel": {
+        "label": "Phone",
+        "error-message": "Invalid phone number."
+      },
+      "registratePasswordLabel": {
+        "label": "Password",
+        "error-message": "Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number."
+      },
+      "registratePasswordConfirmLabel": {
+        "label": "Password confirmation",
+        "error-message": "Passwords not match."
+      },
+      "registrateCodeLabel": {
+        "label": "Activation code",
+        "error-message": "Activation code."
+      },
+      "registrateButton": {
+        "title": "Sign on"
+      }
+    }
   },
   "wonderjam-mailbox-view": {
     "meta": {
@@ -460,6 +543,50 @@
     },
     "model": {},
     "emptyChildrenText": "Nincsenek gyermek elemek."
+  },
+  "wonderjam-passwordreset-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/model/passwordResetNewLabel/label",
+          "value": "New password"
+        },
+        {
+          "op": "add",
+          "path": "/model/passwordResetNewConfirmLabel/label",
+          "value": "New password confirmation"
+        },
+        {
+          "op": "add",
+          "path": "/model/passwordResetButton/title",
+          "value": "Reset password"
+        },
+        {
+          "op": "add",
+          "path": "/passwordResetLoginButton",
+          "value": "Sign-in"
+        },
+        {
+          "op": "add",
+          "path": "/passwordResetRegistrateButton",
+          "value": "Sign-on"
+        }
+      ]
+    },
+    "model": {
+      "passwordResetNewLabel": {
+        "label": "New password"
+      },
+      "passwordResetNewConfirmLabel": {
+        "label": "New password confirmation"
+      },
+      "passwordResetButton": {
+        "title": "Reset password"
+      }
+    },
+    "passwordResetLoginButton": "Sign-in",
+    "passwordResetRegistrateButton": "Sign-on"
   },
   "wonderjam-profile-view": {
     "meta": {

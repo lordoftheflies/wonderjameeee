@@ -78,11 +78,6 @@
       },
       {
         "op": "add",
-        "path": "/profile-menu-label",
-        "value": "Profile"
-      },
-      {
-        "op": "add",
         "path": "/logout-label",
         "value": "Logout"
       },
@@ -175,6 +170,11 @@
         "op": "add",
         "path": "/delete-member-prompt-dialog-text/1",
         "value": "[[deleteMemberPromptSubject]]"
+      },
+      {
+        "op": "replace",
+        "path": "/help-menu-label",
+        "value": "Help"
       }
     ]
   },
@@ -212,13 +212,13 @@
   "article-menu-label": "Artykuły",
   "mailbox-menu-label": "Skrzynka pocztowa",
   "members-menu-label": "Sieć",
+  "help-menu-label": "Help",
   "about-menu-label": "O",
   "legal-menu-label": "Warunki i usługi",
   "mainTitle": "Topflavon",
   "english-language-label": "Angielski",
   "hungarian-language-label": "Węgierski",
   "polish-language-label": "Polski",
-  "profile-menu-label": "Profil",
   "logout-label": "Wyloguj",
   "messagesPagePublicFolderTitle": "Publiczny",
   "messagesPageMyContentsFolderTitle": "Warcaby",

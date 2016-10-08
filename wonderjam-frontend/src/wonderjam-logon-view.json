@@ -24,7 +24,5 @@
     "registrateButton": {
       "title": "Sign on"
     }
-  },
-  "forgottenPasswordTitle": "Forgotten password",
-  "signOnSubmitTitle": "Sign in"
+  }
 }

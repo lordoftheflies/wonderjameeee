@@ -78,11 +78,6 @@
       },
       {
         "op": "add",
-        "path": "/profile-menu-label",
-        "value": "Profile"
-      },
-      {
-        "op": "add",
         "path": "/logout-label",
         "value": "Logout"
       },
@@ -175,6 +170,11 @@
         "op": "add",
         "path": "/delete-member-prompt-dialog-text/1",
         "value": "[[deleteMemberPromptSubject]]"
+      },
+      {
+        "op": "replace",
+        "path": "/help-menu-label",
+        "value": "Help"
       }
     ]
   },
@@ -212,13 +212,13 @@
   "article-menu-label": "Articles",
   "mailbox-menu-label": "Mailbox",
   "members-menu-label": "Network",
+  "help-menu-label": "Help",
   "about-menu-label": "About",
   "legal-menu-label": "Terms & services",
   "mainTitle": "Topflavon",
   "english-language-label": "English",
   "hungarian-language-label": "Magyar",
   "polish-language-label": "Polski",
-  "profile-menu-label": "Profile",
   "logout-label": "Logout",
   "messagesPagePublicFolderTitle": "Public",
   "messagesPageMyContentsFolderTitle": "Drafts",

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/terms-card/0",
+        "value": " {1} "
+      },
+      {
+        "op": "add",
+        "path": "/terms-card/1",
+        "value": " Terms and services of TopFlavon application. Under development ... "
+      }
+    ]
+  },
+  "model": {},
+  "terms-card": [
+    " {1} ",
+    " Terms and services of TopFlavon application. Under development ... "
+  ]
+}

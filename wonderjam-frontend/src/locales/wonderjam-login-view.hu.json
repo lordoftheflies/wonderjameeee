@@ -13,16 +13,6 @@
       },
       {
         "op": "add",
-        "path": "/forgottenPasswordTitle",
-        "value": "Forgotten password"
-      },
-      {
-        "op": "add",
-        "path": "/signOnSubmitTitle",
-        "value": "Sign on"
-      },
-      {
-        "op": "add",
         "path": "/model/signInSubmit/title",
         "value": "Sign in"
       }
@@ -36,7 +26,5 @@
       "title": "Bejelentkezés"
     }
   },
-  "rememberMeToggleButtonLabel": "Emlékezz rám",
-  "forgottenPasswordTitle": "Elfelejtett jelszó",
-  "signOnSubmitTitle": "Bejelentkezés"
+  "rememberMeToggleButtonLabel": "Emlékezz rám"
 }
