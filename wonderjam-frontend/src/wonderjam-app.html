@@ -155,8 +155,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
         <!--Save member-->
         <iron-ajax id="memberSaveAjax" url="[[apiUrl]]/addressbook/save"
-                   body="{{memberModel}}" headers="[[headers]]"
+                   body="{{memberDetailsModel}}" headers="[[headers]]"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        <!--Get profile-->
+        <iron-ajax id="memberDetailsAjax" url="[[apiUrl]]/addressbook/[[memberDetailsSubrouteData.accountId]]/profile" 
+                   last-response="{{memberDetailsModel}}" headers="[[headers]]" 
+                   auto="[[memberDetailsSubrouteData.accountId]]"></iron-ajax>
 
         <!--Get article info-->
         <iron-ajax id="rootTocAjax" url="[[apiUrl]]/content-management/toc/info" 
@@ -189,16 +193,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-ajax id="childrenIronAjax" url="[[apiUrl]]/addressbook/children" 
                    params="[[childrenRequestParams]]" last-response="{{memberChildren}}" headers="[[headers]]"
                    handle-as="json" content-type="application/json" auto="[[childrenRequestParams.parentId]]"></iron-ajax>
-        <!--Get profile-->
-        <iron-ajax id="memberDetailsAjax" url="[[apiUrl]]/addressbook/[[memberDetailsSubrouteData.accountId]]/profile" 
-                   last-response="{{memberDetailsModel}}" headers="[[headers]]" 
-                   auto="[[memberDetailsSubrouteData.accountId]]"></iron-ajax>
+
 
         <!--Share content-->
         <iron-ajax id="deleteMemberAjax" url="[[apiUrl]]/addressbook/delete"
                    body="{{deleteMemberModel}}" headers="[[headers]]"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
-        
+
         <!--Share content-->
         <iron-ajax id="shareAjax" url="[[apiUrl]]/content-management/[[accountId]]/save"
                    body="{{editedContentModel}}" headers="[[headers]]"
@@ -295,7 +296,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-dialog>
 
         <!--Layout-->
-        <app-drawer-layout id="mainLayout" fullbleed force-narrow="[[!authenticated]]">
+        <app-drawer-layout id="mainLayout" fullbleed force-narrow="[[forceNarrow]]">
             <!-- Drawer content -->
             <app-drawer>
                 <app-toolbar text-id="main-menu-label">Menu</app-toolbar>
@@ -314,7 +315,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- Main content -->
             <app-header-layout id="headerLayout" has-scrolling-region>
 
-                <app-header fixed shadow="[[authenticated]]">
+                <app-header fixed shadow="[[authenticated]]" hidden="[[fullScreenContent]]">
                     <app-toolbar sticky>
                         <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden="[[!authenticated]]"></paper-icon-button>
                         <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
@@ -327,12 +328,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <plutonium-avatar-button 
                             hidden="[[!authenticated]]"
                             display-name-attribute="userName" display-unique-attribute="userName" user="[[user]]">
-<!--                            <a href="#/profile-view" class="menu">
-                                <paper-item class="menu">
-                                    <iron-icon icon="account-circle" item-icon></iron-icon>
-                                    <span  text-id="profile-menu-label">Profile</span>
-                                </paper-item>
-                            </a>-->
+                            <!--                            <a href="#/profile-view" class="menu">
+                                                            <paper-item class="menu">
+                                                                <iron-icon icon="account-circle" item-icon></iron-icon>
+                                                                <span  text-id="profile-menu-label">Profile</span>
+                                                            </paper-item>
+                                                        </a>-->
                             <a href="#" on-tap="onLogout" class="menu">
                                 <paper-item class="menu">
                                     <iron-icon icon="markunread-mailbox" item-icon></iron-icon>
@@ -502,7 +503,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </iron-pages>
 
             </app-header-layout>
-            <div class="floating-action-bar">
+            <div class="floating-action-bar" hidden="[[fullScreenContent]]">
                 <iron-pages
                     selected="[[page]]"
                     attr-for-selected="name">
@@ -610,13 +611,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 minorToolbarHidden: {
                     type: Boolean,
                     computed: 'computeMinorToolbarHidden(authenticated, page)'
+                },
+                fullScreenContent: {
+                    type: Boolean,
+                    notify: true,
+                    value: false,
+                },
+                forceNarrow: {
+                    type: Boolean,
+                    computed: 'computeForceNarrow(authenticated, fullScreenContent)'
                 }
             },
             observers: [
                 'observeRootArticlesModel(rootArticlesModel)'
             ],
             listeners: {
-                'change-language': 'onChangeLocale'
+                'change-language': 'onChangeLocale',
+                'plutonium-fullscreen': 'onFullscreen'
             },
             ready: function () {
                 this.$.tokenAjax.generateRequest();
@@ -633,6 +644,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     return 'member';
                 }
             },
+            computeForceNarrow: function(authenticated, fullScreenContent) {
+                return !authenticated || fullScreenContent;
+            },
             observeRootArticlesModel: function (rootArticlesModel) {
                 console.log('KKKKKKKKKKKKKKKKKKKKKK ', rootArticlesModel);
             },
@@ -644,7 +658,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             computeMinorToolbarHidden: function (authenticated, page) {
                 return !authenticated || (page === 'about-view' || page === 'help-view' || page === 'legal-view' || page === 'member-editor' ||
                         page === 'profile-view') ||
-                        (page === 'article-view' && this.user.authorities.indexOf('ADMIN') === -1);
+                        (page === 'article-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1));
             },
             handleChangeLanguageResponse: function () {
                 var msg = 'Language changed successfully to ' + this.locales.filter(function (currentValue, index, arr) {
@@ -676,6 +690,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             onChangeLocale: function (event, details) {
                 this.changeLanguageModel = details;
                 this.$.changeLanguageAjax.generateRequest();
+            },
+            onFullscreen: function(event, details) {
+                this.fullScreenContent = !this.fullScreenContent;
             }
         });
     </script>
