@@ -83,6 +83,10 @@
                     type: Object,
                     notify: true
                 },
+                backNavigable: {
+                    type: Boolean,
+                    computed: 'computeRootArticleBackNavigable(pageRouteData.contentId)'
+                }
             },
             observers: [
                 'observeContentSubrouteData(accountId, pageRouteData.contentId, selectedContentFolder)',
@@ -173,12 +177,15 @@
 //                this._showPage401();
             },
             onBackToParentArticle: function () {
-                this.selectedArticleId = this.childTocModel.parentId === '00000000-0000-0000-0000-000000000000' ? 'ROOT' : this.childTocModel.parentId;
+                this.selectedArticleId = (this.childTocModel.parentId === null || this.childTocModel.parentId === '00000000-0000-0000-0000-000000000000') ? 'ROOT' : this.childTocModel.parentId;
                 console.log('Navigate to ', this.selectedArticleId);
                 this.fire('article-details', {
                     contentId: this.selectedArticleId,
                     type: 'linked'
                 });
+            },
+            computeRootArticleBackNavigable: function(selectedArticleId) {
+                return selectedArticleId !== 'ROOT';
             }
         };
 

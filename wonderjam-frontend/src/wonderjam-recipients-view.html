@@ -36,43 +36,24 @@
             on-response="onRecipientAjaxResponse" on-error="onRecipientAjaxError"
             auto="[[selectionMode]]">
         </iron-ajax>
-        
+
         <paper-material class="material-card">
             <form>
-                    <!--<iron-pages selected="{{selectionMode}}" attr-for-selected="name" class="layout vertical">-->
-                        <paper-listbox id="contactList"
-                                       name="person"
-                                       class="layout flex"
-                                       attr-for-selected="id"
-                                       multi
-                                       items="[[contacts]]"
-                                       as="item"
-                                       selected-values="{{selectedItemIds}}">
-                            <template is="dom-repeat" items="[[contacts]]">
-                                <paper-item id="[[item.id]]" class="layout horizontal">
-                                    <label>[[item.name]]</label>
-                                </paper-item>
-                            </template>
-                        </paper-listbox>
-<!--                        <paper-listbox id="contactList"
-                                       class="layout flex"
-                                       attr-for-selected="id"
-                                       name="group"
-                                       multi
-                                       items="[[model]]"
-                                       as="item"
-                                       selected-values="{{selectedItemIds}}">
-                            <template is="dom-repeat" items="[[recipientsModel]]">
-                                <paper-item id="[[item.id]]" class="layout horizontal">
-                                    <label>[[item.name]]</label>
-                                </paper-item>
-                            </template>
-                        </paper-listbox>
-                    </iron-pages>-->
-                <!--</paper-dialog-scrollable>-->
-                
+                <paper-listbox id="contactList"
+                               name="person"
+                               class="layout flex"
+                               attr-for-selected="id"
+                               multi
+                               items="[[contacts]]"
+                               as="item"
+                               selected-values="{{selectedItemIds}}">
+                    <template is="dom-repeat" items="[[contacts]]">
+                        <paper-item id="[[item.id]]" class="layout horizontal">
+                            <label>[[item.name]]</label>
+                        </paper-item>
+                    </template>
+                </paper-listbox>
             </form>
-
 
             <div class="card-content" hidden="[[!isEmpty(recipientsModel)]]">
                 <div id="emptyChildrenText">No children.</div>
@@ -100,12 +81,12 @@
                 selectedItemIds: {
                     type: Array,
                     notify: true,
-                    value:[]
+                    value: []
                 },
                 recipientsModel: {
                     type: Array,
                     notify: true,
-                    value:[]
+                    value: []
                 }
             },
             observers: [
@@ -123,10 +104,10 @@
             isEmpty: function (data) {
                 return data === undefined || data === null || data.length === 0;
             },
-            onRecipientAjaxResponse: function() {
+            onRecipientAjaxResponse: function () {
                 console.debug(this.is, 'fetch', this.selectionMode);
             },
-            onRecipientAjaxError: function() {
+            onRecipientAjaxError: function () {
                 console.warn(this.is, 'fetch', this.selectionMode, 'failed');
             }
         });
