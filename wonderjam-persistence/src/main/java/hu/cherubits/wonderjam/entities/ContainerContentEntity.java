@@ -32,6 +32,8 @@ import javax.persistence.OneToMany;
     @NamedQuery(name = "ContainerContentEntity.findPublicByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.publicIndicator = TRUE ORDER BY c.title"),
     @NamedQuery(name = "ContainerContentEntity.findPublishedByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.publicIndicator = FALSE ORDER BY c.title"),
 
+    @NamedQuery(name = "ContainerContentEntity.findByChild", query = "SELECT c.parent FROM ContainerContentEntity c WHERE c.id = :id"),
+    
     @NamedQuery(name = "ContainerContentEntity.findRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL"),
     @NamedQuery(name = "ContainerContentEntity.findDraftRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.node.contact.id = :accountId ORDER BY c.title"),
     @NamedQuery(name = "ContainerContentEntity.findPublicRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.publicIndicator = TRUE ORDER BY c.title"),

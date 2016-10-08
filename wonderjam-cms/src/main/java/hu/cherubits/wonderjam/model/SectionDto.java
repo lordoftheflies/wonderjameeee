@@ -21,10 +21,11 @@ public class SectionDto extends ContentDto {
         this.type = type;
     }
 
-    public SectionDto(UUID id, ContentType contentType, String title, String type, String data, String justification, int fontSize, int width, int height) {
+    public SectionDto(UUID id, UUID parentId, ContentType contentType, String title, String type, String data, String justification, int fontSize, int width, int height) {
         this.title = title;
         this.name = (id == null) ? "ROOT" : id.toString();
         this.id = id;
+        this.parentId = parentId;
         this.type = type;
         this.data = data;
         this.justification = justification;

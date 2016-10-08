@@ -25,6 +25,16 @@ public class ContentDto {
         this.id = id;
     }
     
+    protected UUID parentId;
+
+    public UUID getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(UUID parentId) {
+        this.parentId = parentId;
+    }
+    
     protected String title;
 
     public String getTitle() {

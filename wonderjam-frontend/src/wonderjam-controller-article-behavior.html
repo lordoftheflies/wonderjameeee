@@ -167,6 +167,14 @@
                 console.error(this.is, 'article parent path fetching failed for', this.selectedContentFolder + '/' + this.pageRouteData.contentId, ':', detail.error);
                 this.selectedContentFolder = 'public';
 //                this._showPage401();
+            },
+            onBackToParentArticle: function () {
+                this.selectedArticleId = this.childTocModel.parentId === '00000000-0000-0000-0000-000000000000' ? 'ROOT' : this.childTocModel.parentId;
+                console.log('Navigate to ', this.selectedArticleId);
+                this.fire('article-details', {
+                    contentId: this.selectedArticleId,
+                    type: 'linked'
+                });
             }
         };
 

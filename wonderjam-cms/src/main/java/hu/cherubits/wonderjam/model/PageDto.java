@@ -18,36 +18,37 @@ import java.util.UUID;
  */
 public class PageDto extends ContentDto {
 
+    
+    
     public PageDto() {
     }
     
-    public PageDto(UUID id, String title, ContentType ct) {
+    public PageDto(UUID id, UUID parentId, String title, ContentType ct) {
+        super();
         this.id = id;
+        this.parentId = parentId;
         this.title = title;
         this.contentType = ct;
     }
 
-    public PageDto(String title, ContentType ct) {
-        this.title = title;
-        this.contentType = ct;
-    }
-
-    public PageDto(UUID id, String title, Collection<SectionDto> sections, ContentType ct) {
+    public PageDto(UUID id, UUID parentId, String title, Collection<SectionDto> sections, ContentType ct) {
         this.title = title;
         this.id = id;
+        this.parentId = parentId;
         this.sections = new ArrayList<SectionDto>(sections);
         this.contentType = ct;
     }
 
-    public PageDto(UUID id, String title, ContentType ct, SectionDto... sections) {
+    public PageDto(UUID id, UUID parentId, String title, ContentType ct, SectionDto... sections) {
         this.title = title;
         this.id = id;
+        this.parentId = parentId;
         this.sections = Arrays.asList(sections);
         this.contentType = ct;
     }
 
     
-
+    
     private boolean draft;
 
     public boolean isDraft() {
