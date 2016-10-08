@@ -99,10 +99,14 @@
              */
             observeContentSubrouteData: function (accountId, contentId, selectedContentFolder) {
                 console.log(this.is, 'observe route', selectedContentFolder + '/' + contentId);
-                this.tocRequestParams.pageId = contentId;
-                this.tocRequestParams.tag = selectedContentFolder;
-                this.tocRequestParams.owner = accountId;
-                this.infoRequestParams.pageId = contentId;
+                this.set('tocRequestParams', {
+                    pageId: contentId,
+                    tag: selectedContentFolder,
+                    owner: accountId
+                });
+                this.set('infoRequestParams', {
+                    pageId: contentId
+                });
 
                 this.fire('fetch-data', {
                     ids: ['rootTocAjax', 'childTocAjax', 'parentTocAjax']

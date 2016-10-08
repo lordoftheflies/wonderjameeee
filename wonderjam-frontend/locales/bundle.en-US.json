@@ -4,19 +4,31 @@
       "todo": [
         {
           "op": "add",
-          "path": "/user-manual-title",
-          "value": "Help"
+          "path": "/authors-card:div:paper-item:paper-item-body:div",
+          "value": "Hegedűs László"
         },
         {
           "op": "add",
-          "path": "/user-manual-missing-label",
-          "value": "Missing user documentation."
+          "path": "/authors-card:div:paper-item:paper-item-body:div_1",
+          "value": "laszlo.hegedus@cherubits.hu"
+        },
+        {
+          "op": "add",
+          "path": "/authors-card:div:paper-item_1:paper-item-body:div",
+          "value": "Péczely Balázs"
+        },
+        {
+          "op": "add",
+          "path": "/authors-card:div:paper-item_1:paper-item-body:div_1",
+          "value": "peczely.balazs@digitaldefense.hu"
         }
       ]
     },
     "model": {},
-    "user-manual-title": "Help",
-    "user-manual-missing-label": "Missing user documentation."
+    "authors-card:div:paper-item:paper-item-body:div": "Hegedűs László",
+    "authors-card:div:paper-item:paper-item-body:div_1": "laszlo.hegedus@cherubits.hu",
+    "authors-card:div:paper-item_1:paper-item-body:div": "Péczely Balázs",
+    "authors-card:div:paper-item_1:paper-item-body:div_1": "peczely.balazs@digitaldefense.hu"
   },
   "wonderjam-app": {
     "meta": {
@@ -279,6 +291,25 @@
     "model": {},
     "emptyChildrenText": "No content in the folder."
   },
+  "wonderjam-help-view": {
+    "meta": {
+      "todo": [
+        {
+          "op": "add",
+          "path": "/user-manual-title",
+          "value": "Help"
+        },
+        {
+          "op": "add",
+          "path": "/user-manual-missing-label",
+          "value": "Missing user documentation."
+        }
+      ]
+    },
+    "model": {},
+    "user-manual-title": "Help",
+    "user-manual-missing-label": "Missing user documentation."
+  },
   "wonderjam-legal-view": {
     "meta": {
       "todo": [
@@ -456,16 +487,6 @@
         },
         {
           "op": "add",
-          "path": "/model/newMemberEmailLabel/label",
-          "value": "Email"
-        },
-        {
-          "op": "add",
-          "path": "/model/newMemberEmailLabel/error-message",
-          "value": "Member email must be specified."
-        },
-        {
-          "op": "add",
           "path": "/model/newMemberParentLabel/label",
           "value": "Parent member"
         },
@@ -500,9 +521,9 @@
           "value": "Edit {1}"
         },
         {
-          "op": "add",
+          "op": "replace",
           "path": "/member-editor-edit-title/1",
-          "value": "[[selectedName]]"
+          "value": "[[memberModel.name]]"
         }
       ]
     },
@@ -510,10 +531,6 @@
       "newMemberNameLabel": {
         "label": "Name",
         "error-message": "Member name must be specified."
-      },
-      "newMemberEmailLabel": {
-        "label": "Email",
-        "error-message": "Member email must be specified."
       },
       "newMemberParentLabel": {
         "label": "Parent member"
@@ -525,7 +542,7 @@
     "member-editor-create-title": "Create new member",
     "member-editor-edit-title": [
       "Edit {1}",
-      "[[selectedName]]"
+      "[[memberModel.name]]"
     ],
     "newMemberTypeUserTitle": "User",
     "newMemberTypeGroupTitle": "Group",

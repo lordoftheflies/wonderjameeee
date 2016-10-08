@@ -13,16 +13,6 @@
       },
       {
         "op": "add",
-        "path": "/model/newMemberEmailLabel/label",
-        "value": "Email"
-      },
-      {
-        "op": "add",
-        "path": "/model/newMemberEmailLabel/error-message",
-        "value": "Member email must be specified."
-      },
-      {
-        "op": "add",
         "path": "/model/newMemberParentLabel/label",
         "value": "Parent member"
       },
@@ -57,9 +47,9 @@
         "value": "Edit {1}"
       },
       {
-        "op": "add",
+        "op": "replace",
         "path": "/member-editor-edit-title/1",
-        "value": "[[selectedName]]"
+        "value": "[[memberModel.name]]"
       }
     ]
   },
@@ -67,10 +57,6 @@
     "newMemberNameLabel": {
       "label": "Nazwa",
       "error-message": "Nazwa użytkownika musi zostać określona."
-    },
-    "newMemberEmailLabel": {
-      "label": "E-mail",
-      "error-message": "E-mail użytkownika musi być określony."
     },
     "newMemberParentLabel": {
       "label": "Członek rodzic"
@@ -82,7 +68,7 @@
   "member-editor-create-title": "Create new member",
   "member-editor-edit-title": [
     "Edit {1}",
-    "[[selectedName]]"
+    "[[memberModel.name]]"
   ],
   "newMemberTypeUserTitle": "Użytkownik",
   "newMemberTypeGroupTitle": "Grupa",

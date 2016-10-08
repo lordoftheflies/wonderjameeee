@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file xml:space="default" source-language="en" target-language="hu" datatype="plaintext" original="messages" date="2016-10-08T09:36:35Z" product-name="messages">
+  <file xml:space="default" source-language="en" target-language="hu" datatype="plaintext" original="messages" date="2016-10-08T14:50:56Z" product-name="messages">
     <header>
       <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
     </header>
     <body>
-      <trans-unit id="wonderjam-about-view.user-manual-title">
-        <source>Help</source>
-        <target state="new">Help</target>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item:paper-item-body:div">
+        <source>Hegedűs László</source>
+        <target state="new">Hegedűs László</target>
       </trans-unit>
-      <trans-unit id="wonderjam-about-view.user-manual-missing-label">
-        <source>Missing user documentation.</source>
-        <target state="new">Missing user documentation.</target>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item:paper-item-body:div_1">
+        <source>laszlo.hegedus@cherubits.hu</source>
+        <target state="new">laszlo.hegedus@cherubits.hu</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item_1:paper-item-body:div">
+        <source>Péczely Balázs</source>
+        <target state="new">Péczely Balázs</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-about-view.authors-card:div:paper-item_1:paper-item-body:div_1">
+        <source>peczely.balazs@digitaldefense.hu</source>
+        <target state="new">peczely.balazs@digitaldefense.hu</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.model.openMemberEditorFab.title">
         <source>Edit member.</source>
@@ -150,6 +158,14 @@
         <source>No content in the folder.</source>
         <target state="new">A mappában nincs tartalom.</target>
       </trans-unit>
+      <trans-unit id="wonderjam-help-view.user-manual-title">
+        <source>Help</source>
+        <target state="new">Help</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-help-view.user-manual-missing-label">
+        <source>Missing user documentation.</source>
+        <target state="new">Missing user documentation.</target>
+      </trans-unit>
       <trans-unit id="wonderjam-legal-view.terms-card.0">
         <source> {1} </source>
         <target state="new"> {1} </target>
@@ -234,14 +250,6 @@
         <source>Member name must be specified.</source>
         <target state="new">Tag nevének megadása kötelező.</target>
       </trans-unit>
-      <trans-unit id="wonderjam-member-editor.model.newMemberEmailLabel.label">
-        <source>Email</source>
-        <target state="new">Email</target>
-      </trans-unit>
-      <trans-unit id="wonderjam-member-editor.model.newMemberEmailLabel.error-message">
-        <source>Member email must be specified.</source>
-        <target state="new">Tag email címének megadása kötelező.</target>
-      </trans-unit>
       <trans-unit id="wonderjam-member-editor.model.newMemberParentLabel.label">
         <source>Parent member</source>
         <target state="new">Szülő</target>
@@ -259,8 +267,8 @@
         <target state="new">Edit {1}</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.member-editor-edit-title.1">
-        <source>[[selectedName]]</source>
-        <target state="new">[[selectedName]]</target>
+        <source>[[memberModel.name]]</source>
+        <target state="needs-translation">[[memberModel.name]]</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.newMemberTypeUserTitle">
         <source>User</source>

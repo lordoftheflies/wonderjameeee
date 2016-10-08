@@ -3,17 +3,29 @@
     "todo": [
       {
         "op": "add",
-        "path": "/user-manual-title",
-        "value": "Help"
+        "path": "/authors-card:div:paper-item:paper-item-body:div",
+        "value": "Hegedűs László"
       },
       {
         "op": "add",
-        "path": "/user-manual-missing-label",
-        "value": "Missing user documentation."
+        "path": "/authors-card:div:paper-item:paper-item-body:div_1",
+        "value": "laszlo.hegedus@cherubits.hu"
+      },
+      {
+        "op": "add",
+        "path": "/authors-card:div:paper-item_1:paper-item-body:div",
+        "value": "Péczely Balázs"
+      },
+      {
+        "op": "add",
+        "path": "/authors-card:div:paper-item_1:paper-item-body:div_1",
+        "value": "peczely.balazs@digitaldefense.hu"
       }
     ]
   },
   "model": {},
-  "user-manual-title": "Help",
-  "user-manual-missing-label": "Missing user documentation."
+  "authors-card:div:paper-item:paper-item-body:div": "Hegedűs László",
+  "authors-card:div:paper-item:paper-item-body:div_1": "laszlo.hegedus@cherubits.hu",
+  "authors-card:div:paper-item_1:paper-item-body:div": "Péczely Balázs",
+  "authors-card:div:paper-item_1:paper-item-body:div_1": "peczely.balazs@digitaldefense.hu"
 }

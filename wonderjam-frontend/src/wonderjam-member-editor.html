@@ -166,6 +166,13 @@ In typical use, just slap some `<wonderjam-member-editor>` at the top of your bo
                 'iron-form-response': 'onIronFormResponse',
                 'iron-form-error': 'onIronFormError'
             },
+            attached: function() {
+                console.trace(this.is, 'attached');
+            },
+            detached: function() {
+                console.trace(this.is, 'detached');
+                
+            },
             observeModel: function (created) {
                 console.trace(this.is, 'oberve member-model', memberModel);
             },

@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "todo": [
+      {
+        "op": "add",
+        "path": "/user-manual-title",
+        "value": "Help"
+      },
+      {
+        "op": "add",
+        "path": "/user-manual-missing-label",
+        "value": "Missing user documentation."
+      }
+    ]
+  },
+  "model": {},
+  "user-manual-title": "Help",
+  "user-manual-missing-label": "Missing user documentation."
+}
