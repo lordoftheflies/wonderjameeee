@@ -512,9 +512,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </div>
                     <div name="article-section" class="layout horizontal wrap">
                         <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToEditor"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor" hidden="{{!hasPrivileges}}"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor" hidden="{{!hasPrivileges}}"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToDelete" hidden="{{!hasPrivileges}}"></paper-fab>
                     </div>
                     <div name="mailbox-view" class="layout horizontal wrap">
                         <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToMessage"></paper-fab>
