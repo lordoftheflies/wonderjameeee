@@ -56,10 +56,10 @@
                this.fire('feedback', { message: 'Sending message failed.'}); 
             },
             onNavigateToMessage: function () {
-                this.fire('page-go', {page: 'send-view'});
+                this.fire('page-go', {page: '/send-view'});
             },
             onBackToMailBox: function () {
-                this.fire('page-go', {page: 'mailbox-view'});
+                this.fire('page-go', {page: '/mailbox-view'});
             },
             onBackToMessageEditor: function (event, detail) {
                 this.set('page', 'send-view');

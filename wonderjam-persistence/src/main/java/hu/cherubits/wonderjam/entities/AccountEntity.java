@@ -30,6 +30,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 @Entity
 @NamedQueries({
+    @NamedQuery(name = "AccountEntity.findChildren", query = "SELECT n.contact FROM NetworkNodeEntity n WHERE n.parent IS NOT NULL AND n.parent.contact.id = :id"),
+//    @NamedQuery(name = "AccountEntity.findRoute", query = "SELECT node FROM NetworkNodeEntity node WHERE node.id NOT IN (SELECT DISTINCT child.id FROM NetworkNodeEntity node, IN(node.children) child)"),
+
+    
     @NamedQuery(name = "AccountEntity.findRoleById", query = "SELECT a.state FROM AccountEntity a WHERE a.id = :id"),
     @NamedQuery(name = "AccountEntity.findParent", query = "SELECT a.node.parent.contact FROM AccountEntity a WHERE a.node.parent IS NOT NULL AND a.id = :id"),
     @NamedQuery(name = "AccountEntity.findRootAccounts", query = "SELECT a FROM AccountEntity a WHERE a.node.parent IS NULL"),
@@ -218,7 +222,7 @@ public class AccountEntity implements Serializable, UserDetails {
     public String getUsername() {
         return this.email;
     }
-    
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -244,7 +248,5 @@ public class AccountEntity implements Serializable, UserDetails {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    
-    
 
 }

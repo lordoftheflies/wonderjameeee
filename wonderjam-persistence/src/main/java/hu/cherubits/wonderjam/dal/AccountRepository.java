@@ -20,6 +20,36 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends CrudRepository<AccountEntity, UUID> {
 
+    @Override
+    public void deleteAll();
+
+    @Override
+    public void delete(Iterable<? extends AccountEntity> entities);
+
+    @Override
+    public void delete(AccountEntity entity);
+
+    @Override
+    public void delete(UUID id);
+
+    @Override
+    public long count();
+
+    @Override
+    public Iterable<AccountEntity> findAll(Iterable<UUID> ids);
+
+    @Override
+    public boolean exists(UUID id);
+
+    @Override
+    public AccountEntity findOne(UUID id);
+
+    @Override
+    public <S extends AccountEntity> Iterable<S> save(Iterable<S> entities);
+
+    @Override
+    public AccountEntity save(AccountEntity entity);
+    
     AccountEntity getParent(@Param("childId") UUID childId);
     
     @Override
@@ -36,4 +66,11 @@ public interface AccountRepository extends CrudRepository<AccountEntity, UUID> {
     NetworkNodeType findRoleById(@Param("id") UUID id);
 
     AccountEntity findParent(@Param("id") UUID id);
+    
+    /**
+     * Find children in the organization tree.
+     * @param id Account id.
+     * @return List of child accounts.
+     */
+    List<AccountEntity> findChildren(@Param("id") UUID id);
 }	

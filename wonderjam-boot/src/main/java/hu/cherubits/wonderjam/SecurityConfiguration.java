@@ -100,6 +100,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         SWAGGER_UI,
                         SWAGGER_API).permitAll()
                 .anyRequest().authenticated().and()
+//                .anyRequest().permitAll().and()
                 .logout().permitAll().logoutSuccessUrl(BASE_URL).logoutUrl(LOGOUT_URL).deleteCookies(REMEMBER_ME_TOKEN, XXSRFTOKEN2)
 //                .and().formLogin().loginPage("http://localhost:8080/#/login-view").loginProcessingUrl("http://localhost:8080/backend/login").usernameParameter("userName").passwordParameter("password").defaultSuccessUrl("http://localhost:8080/")
                 .and().rememberMe().key(REMEMBER_ME_KEY).rememberMeServices(rememberMeServices)

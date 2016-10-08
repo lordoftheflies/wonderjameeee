@@ -32,77 +32,67 @@
                 },
                 authenticated: {
                     type: Boolean,
-                    notify: true,
-                    value: false
+                    notify: true
+                },
+                token: {
+                    type: Object,
+                    notify: true
+                },
+                headers: {
+                    type: Object,
+                    notify: true
+                },
+                user: {
+                    type: Object,
+                    notify: true
+                },
+                xsrfToken: {
+                    type: String,
+                    notify: true
+                },
+                session: {
+                    type: String,
+                    notify: true
                 }
             },
             observers: [
-                '_routePageChanged(routeData.page)',
-//                '_secureRoutePageChanged(routeData.page, authenticated)'
+                '_routePageChanged(routeData.page, authenticated)',
+                'observeAuthorizationHeaders(token.token, xsrfToken)',
+                'observeAccountId(user)',
             ],
             listeners: {
-                'page-go': '_onNavigate'
+                'page-go': '_onNavigate',
+                'registrate': 'onRegistrate',
+                'registrated': 'onRegistrated',
+                'login': 'onLogin'
             },
             attached: function () {
                 this.rememberMe = this.$.rememberMeCookie.readCookie();
                 this.xsrfToken = this.$.xsrfCookie.readCookie();
-//                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
-                 this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
-//                this.rememberMe = this.$.rememberMeCookie.readCookie();
-////                this.session = this.$.sessionCookie.readCookie();
-//
-//                this.xsrfToken = this.$.xsrfCookie.readCookie();
-                if (this.authenticated) {
-//                    this.authenticated = true;
-//                    if (!this.page)
-//                        this.page = this.homePage;
-//                    this.$.tokenAjax.generateRequest();
-//                    console.log(this.is, 'SYNCHING SESSION TOKEN');
-////                } else {
-////                    // Re-authenticate
-////                    this.$.tokenAjax.generateRequest();
-//                } else {
-////                    this.$.tokenAjax.generateRequest();
-//                    console.log(this.is, 'USER AUTHENTICATION');
-                }
-            },
-            ready: function () {
+                this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
+
 //                this.rememberMe = this.$.rememberMeCookie.readCookie();
 //                this.xsrfToken = this.$.xsrfCookie.readCookie();
-////                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
-//                 this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
-//                this._resetLayout();
+//                this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
+//                
             },
+//            created: function () {
+//                this.authenticated = false;
+//            },
             /**
              * Page changed event handler.
              * @param {String} page
              * @returns {undefined}
              */
-            _routePageChanged: function (page) {
-//                console.log(this.is, 'navigate to', page);
-                this.rememberMe = this.$.rememberMeCookie.readCookie();
-                this.xsrfToken = this.$.xsrfCookie.readCookie();
-//                this.authenticated = this.xsrfToken !== undefined && this.xsrfToken !== null && this.xsrfToken !== '' &&
-                 this.authenticated = this.rememberMe !== undefined && this.rememberMe !== null && this.rememberMe !== '';
-
-
-                if (this.authenticated || page === 'logon-view') {
-//                    this.page = page || this.homePage;
-////                } else {
-////                    this.page = this.loginPage;
-////                }
-//            },
-//            _secureRoutePageChanged: function (page, authenticated) {
-                console.log(this.is, 'navigate to', page);
-                this.page = page || this.homePage;
-                
-                
-//                
-//                if (this.authenticated) {
-//                    this.page = page || this.homePage;
+            _routePageChanged: function (page, authenticated) {
+                if (authenticated) {
+                    console.log(this.is, 'navigate to', page);
+                    this.page = page || this.homePage;
                 } else {
-//                    this.page = page || this.loginPage;
-                    this.page = page || this.loginPage;
+                    if (page === 'logon-view')
+                        this.page = page;
+                    else
+                        this.page = this.loginPage;
                 }
             },
             /**
@@ -134,6 +124,92 @@
                 console.log(this.is, 'navigate to', detail.page);
                 this.set('route.path', detail.page);
 //                this.page = detail.page;
+            },
+            observeAuthorizationHeaders: function (token, xsrfToken) {
+                this.headers = {};
+
+                if (token !== null && token !== undefined && token !== '') {
+                    this.headers['X-Auth-Token'] = token;
+                } else if (this.authenticated) {
+//                    this.$.tokenAjax.generateRequest();
+                }
+//                this.headers['X-XSRF-TOKEN'] = this.$.xsrfCookie.readCookie();
+                this.headers['X-XSRF-TOKEN'] = xsrfToken;
+                this.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+                console.log(this.is, 'X-XSRF-TOKEN', xsrfToken);
+                console.log(this.is, 'X-Auth-Token', token);
+
+            },
+            observeSessionSync: function (token) {
+                if (token) {
+                    this.user.principal = token;
+                    this.accountId = token.token;
+                    // If we are on Android, then fire session event.
+                    // TODO: not necessary
+                    // If we are on IOS, then fire session event.
+                    if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
+                        var iosLoginEvent = {accountId: token.token};
+                        console.log(this.is, 'IOS event:', iosLoginEvent);
+                        window.webkit.messageHandlers.interOp.postMessage(iosLoginEvent);
+                    }
+                }
+            },
+            observeAccountId: function (user) {
+                this.accountId = user.id;
+            },
+            onLogout: function () {
+                console.log(this.is, 'logout ...');
+                this.$.logoutAjax.generateRequest();
+//                this.$.tokenAjax.generateRequest();
+            },
+            onLogoutResponse: function () {
+                this.authenticated = false;
+                console.log(this.is, 'logout successful');
+                this.fire('page-go', {
+                    page: 'login-view'
+                });
+
+            },
+            onLogoutError: function () {
+
+                this.fire('feedback', {
+                    text: 'Logout failed.'
+                });
+            },
+            onLogin: function () {
+                this.authenticated = false;
+                this.set('route.path', '/login-view');
+            },
+            onRegistrate: function () {
+                this.authenticated = false;
+                this.set('route.path', '/logon-view');
+            },
+            onRegistrated: function (event, c) {
+                this.authenticated = true;
+
+                if (!this.headers)
+                    this.headers = {};
+                this.headers.authorization = 'Basic ' + btoa(c.userName + ':' + c.password);
+                this.$.userAjax.generateRequest();
+
+                this.set('route.path', '/');
+            },
+            onTokenAjaxResponse: function (event, detail) {
+                this.authenticated = true;
+                this.fire('page-go', {
+                    page: '/article-view/ROOT'
+                });
+//                this.set('route.path', '/article-view/ROOT');
+                console.log(this.is, 'SYNCHING SESSION TOKEN', detail.response);
+            },
+            onTokenAjaxError: function (event, detail) {
+                if (detail.request.status === 401) { // Unauthorized
+                    this.authenticated = false;
+                    this.set('route.path', '/login-view');
+                    console.log(this.is, 'USER AUTHENTICATION', detail.error);
+                } else {
+                }
             }
 
         };

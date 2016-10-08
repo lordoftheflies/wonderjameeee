@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 top: -50px;
                 right: -40px;
             }
-            
+
             div.error {
                 color: red;
             }
@@ -137,18 +137,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div class="card-actions layout vertical">
                 <paper-toggle-button id="rememberMeToggleButtonLabel" tabindex="4" name="remember-me" checked="{{rememberMe}}" value="[[rememberMe]]">Remember me</paper-toggle-button>
-                <!--<div class="layout horizontal">-->
-                <br />
-                <paper-button on-tap="onForgottenPassword" tabindex="5" raised>
-                    <iron-icon icon="account-circle"></iron-icon>
-                    <span id="forgottenPasswordTitle">Forgotten password</span>
-                </paper-button>
-                <br />
-                <paper-button on-tap="onToSignOn" tabindex="6" raised>
-                    <iron-icon icon="account-circle"></iron-icon>
-                    <span id="signOnSubmitTitle">Sign on</span>
-                </paper-button>
-                <!--</div>-->
+                <!--              <br />
+                            <paper-button on-tap="onForgottenPassword" tabindex="5" raised>
+                                 <iron-icon icon="account-circle"></iron-icon>
+                                 <span id="forgottenPasswordTitle">Forgotten password</span>
+                             </paper-button>
+                             <br />-->
+                <!--                <paper-button on-tap="onToSignOn" tabindex="6" raised>
+                                    <iron-icon icon="account-circle"></iron-icon>
+                                    <span id="signOnSubmitTitle">Sign on</span>
+                                </paper-button>-->
             </div>
 
 
@@ -271,7 +269,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     ids: ['tokenAjax']
                 });
                 this.fire('page-go', {
-                    page: 'article-view'
+                    page: '/article-view/ROOT'
                 });
                 console.log(this.is, 'sign-in response', detail.response);
             },
@@ -304,7 +302,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     'authorization': 'Basic ' + btoa(userName + ':' + password)
                 };
             },
-            onToSignOn: function() {
+            onToSignOn: function () {
                 this.fire('registrate', {});
             }
         });

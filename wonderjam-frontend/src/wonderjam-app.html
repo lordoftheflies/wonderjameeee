@@ -41,7 +41,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="plutonium-app-toasting-behavior.html">
 <link rel="import" href="plutonium-datasource-behavior.html">
 <link rel="import" href="plutonium-role-behavior.html">
-<link rel="import" href="plutonium-app-secure-behavior.html">
 <link rel="import" href="plutonium-widget-bound-beavior.html">
 <link rel="import" href="wonderjam-controller-article-behavior.html">
 <link rel="import" href="wonderjam-controller-publisher-behavior.html">
@@ -582,7 +581,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 PlutoniumBehaviors.DatasourceBehavior,
                 PlutoniumBehaviors.AppRoutingBehavior,
                 PlutoniumBehaviors.AppToastingBehavior,
-                PlutoniumBehaviors.AppSecurityBehavior,
                 PlutoniumBehaviors.RoleBehavior,
                 BehaviorsStore.I18nBehavior,
                 WonderjamAppBehaviors.ControllerArticleBehavior,
@@ -596,11 +594,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     type: Object,
                     notify: true
                 },
-                authenticated: {
-                    type: Boolean,
-                    notify: true,
-                    value: false
-                },
+//                authenticated: {
+//                    type: Boolean,
+//                    notify: true,
+//                    value: false
+//                },
                 apiUrl: {
                     value: "/backend"
 //                    value: "http://localhost:8080/backend"

@@ -89,7 +89,7 @@ public class NetworkNodeEntity implements Serializable {
         this.active = active;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private NetworkNodeEntity parent;
 
     public NetworkNodeEntity getParent() {
