@@ -116,6 +116,7 @@ public class AddressBookService {
                 buildTree(t.getId(), t2, result);
             }
         });
+
     }
 
     @RequestMapping(path = "/{id}/group", method = RequestMethod.GET)
@@ -127,13 +128,27 @@ public class AddressBookService {
             result.add(new ContactDto(parent.getId(), null, parent.getName(), parent.getEmail(), parent.getPhone(), parent.getState(), parent.isEnabled(), parent.getPreferredLanguage()));
         }
 
-        this.buildTree(parent == null ? null : parent.getId(), accountRepository.findOne(id), result);
-        return result.stream().filter(new Predicate<ContactDto>() {
-            @Override
-            public boolean test(ContactDto t) {
-                return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
-            }
-        }).collect(Collectors.toList());
+        AccountEntity entity = accountRepository.findOne(id);
+
+        if (NetworkNodeType.ADMIN.equals(entity.getState())) {
+
+            this.buildTree(parent == null ? null : parent.getId(), entity, result);
+            return result.stream().filter(new Predicate<ContactDto>() {
+                @Override
+                public boolean test(ContactDto t) {
+                    return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                }
+            }).collect(Collectors.toList());
+
+        } else {
+            result.add(new ContactDto(entity.getId(), parent.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getState(), entity.isEnabled(), entity.getPreferredLanguage()));
+            return result.stream().filter(new Predicate<ContactDto>() {
+                @Override
+                public boolean test(ContactDto t) {
+                    return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                }
+            }).collect(Collectors.toList());
+        }
 //        return result;
     }
 
@@ -146,13 +161,27 @@ public class AddressBookService {
             result.add(new ContactDto(parent.getId(), null, parent.getName(), parent.getEmail(), parent.getPhone(), parent.getState(), parent.isEnabled(), parent.getPreferredLanguage()));
         }
 
-        this.buildTree(parent == null ? null : parent.getId(), accountRepository.findOne(id), result);
-        return result.stream().filter(new Predicate<ContactDto>() {
-            @Override
-            public boolean test(ContactDto t) {
-                return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
-            }
-        }).collect(Collectors.toList());
+        AccountEntity entity = accountRepository.findOne(id);
+
+        if (NetworkNodeType.ADMIN.equals(entity.getState())) {
+
+            this.buildTree(parent == null ? null : parent.getId(), accountRepository.findOne(id), result);
+            return result.stream().filter(new Predicate<ContactDto>() {
+                @Override
+                public boolean test(ContactDto t) {
+                    return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                }
+            }).collect(Collectors.toList());
+
+        } else {
+//            result.add(new ContactDto(entity.getId(), parent.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getState(), entity.isEnabled(), entity.getPreferredLanguage()));
+            return result.stream().filter(new Predicate<ContactDto>() {
+                @Override
+                public boolean test(ContactDto t) {
+                    return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                }
+            }).collect(Collectors.toList());
+        }
     }
 
     @RequestMapping(path = "/all",

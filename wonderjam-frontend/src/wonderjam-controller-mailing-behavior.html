@@ -49,11 +49,12 @@
                 this.$.messageSendAjax.generateRequest();
             },
             onMessageSendResponse: function () {
-               this.fire('feedback', { message: 'Message sent successfully.'}); 
-               this.set('page', 'mailbox-view');
+                this.fire('feedback', {message: 'Message sent successfully.'});
+                this.$.mailBoxAjax.generateRequest();
+                this.fire('page-go', {page: '/mailbox-view'});
             },
             onMessageSendError: function () {
-               this.fire('feedback', { message: 'Sending message failed.'}); 
+                this.fire('feedback', {message: 'Sending message failed.'});
             },
             onNavigateToMessage: function () {
                 this.fire('page-go', {page: '/send-view'});

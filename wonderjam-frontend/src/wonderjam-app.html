@@ -660,6 +660,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             computeMinorToolbarHidden: function (authenticated, page) {
                 return !authenticated || (page === 'about-view' || page === 'help-view' || page === 'legal-view' || page === 'member-editor' ||
                         page === 'profile-view') ||
+                        page === 'send-view' ||
+                        page === 'share-view' ||
+                        (page === 'recipients-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1)) ||
                         (page === 'article-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1));
             },
             handleChangeLanguageResponse: function () {
