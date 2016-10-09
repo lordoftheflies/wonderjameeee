@@ -136,7 +136,7 @@ public class AddressBookService {
             return result.stream().filter(new Predicate<ContactDto>() {
                 @Override
                 public boolean test(ContactDto t) {
-                    return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                    return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase()) && !id.equals(t.getId());
                 }
             }).collect(Collectors.toList());
 
@@ -145,7 +145,7 @@ public class AddressBookService {
             return result.stream().filter(new Predicate<ContactDto>() {
                 @Override
                 public boolean test(ContactDto t) {
-                    return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                    return NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase()) && !id.equals(t.getId());
                 }
             }).collect(Collectors.toList());
         }
@@ -169,7 +169,7 @@ public class AddressBookService {
             return result.stream().filter(new Predicate<ContactDto>() {
                 @Override
                 public boolean test(ContactDto t) {
-                    return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                    return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase()) && !id.equals(t.getId());
                 }
             }).collect(Collectors.toList());
 
@@ -178,7 +178,7 @@ public class AddressBookService {
             return result.stream().filter(new Predicate<ContactDto>() {
                 @Override
                 public boolean test(ContactDto t) {
-                    return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase());
+                    return !NetworkNodeType.GROUP.getKey().equals(t.getRole().toLowerCase()) && !id.equals(t.getId());
                 }
             }).collect(Collectors.toList());
         }

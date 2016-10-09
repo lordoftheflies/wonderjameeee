@@ -1,24 +1,18 @@
 package hu.digitaldefense.topflavonnetwork;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -26,32 +20,41 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
 
-    private static ViewGroup webViewParentViewGroup = null;
-    private static WebView webView = null;
-
-    private ProgressBar progressBar;
+    private static ViewGroup viewGroup = null;
+    private static ViewGroup nonVideoLayout = null;
+    private static ViewGroup videoLayout = null;
+    private static VideoEnabledWebView webView = null;
+    private static VideoEnabledWebChromeClient webChromeClient = null;
+    private static ProgressBar progressBar = null;
+    private static View loadingView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
         if(webView != null){
-            webViewParentViewGroup.removeView(webView);
+            viewGroup.removeView(nonVideoLayout);
+            viewGroup.removeView(videoLayout);
 
             setContentView(R.layout.activity_minor);
 
-            webViewParentViewGroup = (ViewGroup) findViewById(R.id.minorViewGroup);
-            webViewParentViewGroup.addView(this.webView);
+            viewGroup = (ViewGroup) findViewById(R.id.minorViewGroup);
+
+            //nonVideoLayout = (ViewGroup) findViewById(R.id.nonVideoLayout);
+            //videoLayout = (ViewGroup) findViewById(R.id.videoLayout);
+
+            viewGroup.addView(nonVideoLayout);
+            viewGroup.addView(videoLayout);
         } else {
             setContentView(R.layout.activity_main);
 
-            webViewParentViewGroup = (ViewGroup) findViewById(R.id.mainViewGroup);
+            viewGroup = (ViewGroup) findViewById(R.id.mainViewGroup);
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
-            webView = (WebView) findViewById(R.id.webview);
+            nonVideoLayout = (ViewGroup) findViewById(R.id.nonVideoLayout);
+            videoLayout = (ViewGroup) findViewById(R.id.videoLayout); // Your own view, read class comments
+            loadingView = getLayoutInflater().inflate(R.layout.view_video_loading, null); // Your own view, read class comments
 
+            webView = (VideoEnabledWebView) findViewById(R.id.webView);
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
             webView.getSettings().setAllowContentAccess(true);
@@ -59,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
             webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
             webView.getSettings().setMediaPlaybackRequiresUserGesture(true);
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
             webView.clearHistory();
             webView.clearFormData();
             webView.clearCache(true);
@@ -73,7 +75,49 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            webView.setWebChromeClient(new WebChromeClient());
+            // Initialize the VideoEnabledWebChromeClient and set event handlers
+            //View nonVideoLayout = findViewById(R.id.nonVideoLayout); // Your own view, read class comments
+            webChromeClient = new VideoEnabledWebChromeClient(nonVideoLayout, videoLayout, loadingView, webView) // See all available constructors...
+            {
+                // Subscribe to standard events, such as onProgressChanged()...
+                @Override
+                public void onProgressChanged(WebView view, int progress)
+                {
+                    // Your code...
+                }
+            };
+            webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback()
+            {
+                @Override
+                public void toggledFullscreen(boolean fullscreen)
+                {
+                    // Your code to handle the full-screen change, for example showing and hiding the title bar. Example:
+                    if (fullscreen)
+                    {
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        if (android.os.Build.VERSION.SDK_INT >= 14)
+                        {
+                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                        }
+                    }
+                    else
+                    {
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        if (android.os.Build.VERSION.SDK_INT >= 14)
+                        {
+                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        }
+                    }
+
+                }
+            });
+            webView.setWebChromeClient(webChromeClient);
             webView.setWebViewClient(new AppWebViewClients(this.progressBar));
             webView.addJavascriptInterface(new AppJavaScriptProxy(this), "sessionProxy");
 
@@ -93,14 +137,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && this.webView.canGoBack()) {
-            this.webView.goBack();
-            return true;
-        }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if ((keyCode == KeyEvent.KEYCODE_BACK) && this.webView.canGoBack()) {
+//            this.webView.goBack();
+//            return true;
+//        }
+//
+//        return super.onKeyDown(keyCode, event);
+//    }
 
-        return super.onKeyDown(keyCode, event);
+    @Override
+    public void onBackPressed()
+    {
+        // Notify the VideoEnabledWebChromeClient, and handle it ourselves if it doesn't handle it
+        if (webChromeClient != null && !webChromeClient.onBackPressed())
+        {
+            if (webView.canGoBack())
+            {
+                webView.goBack();
+            }
+            else
+            {
+                // Close app (presumably)
+                super.onBackPressed();
+            }
+        }
     }
 
     @Override
@@ -115,65 +177,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class AppWebViewClients extends WebViewClient {
-        private ProgressBar progressBar;
-
-        public AppWebViewClients(ProgressBar progressBar) {
-            this.progressBar = progressBar;
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //// TODO Auto-generated method stub
-            //view.loadUrl(url);
-            //return true;
-
-            // Handle local URLs.
-            if (Uri.parse(url).getHost().length() == 0) {
-                return false;
-            }
-
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            view.getContext().startActivity(intent);
-            return true;
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            //// TODO Auto-generated method stub
-            //view.loadUrl(url);
-            //return true;
-
-            // Handle local URLs.
-            if (Uri.parse(request.getUrl().toString()).getHost().length() == 0) {
-                return false;
-            }
-
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(request.getUrl().toString()));
-            view.getContext().startActivity(intent);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            // TODO Auto-generated method stub
-            super.onPageFinished(view, url);
-            progressBar.setVisibility(View.GONE);
-        }
-    }
-
-    public class AppJavaScriptProxy {
-
-        private Activity activity = null;
-
-        public AppJavaScriptProxy(Activity activity) {
-            this.activity = activity;
-        }
-
-        @JavascriptInterface
-        public void showMessage(String message) {
-
-        }
-    }
 }
