@@ -15,9 +15,10 @@ public class AppWebViewClients extends WebViewClient {
 
     private ProgressBar progressBar;
 
-    public AppWebViewClients(ProgressBar progressBar) {
+    public AppWebViewClients(ProgressBar progressBar, View view) {
         this.progressBar = progressBar;
         progressBar.setVisibility(View.VISIBLE);
+        view.setVisibility(View.GONE);
     }
 
     @Override
@@ -48,5 +49,6 @@ public class AppWebViewClients extends WebViewClient {
         // TODO Auto-generated method stub
         super.onPageFinished(view, url);
         progressBar.setVisibility(View.GONE);
+        view.setVisibility(View.VISIBLE);
     }
 }

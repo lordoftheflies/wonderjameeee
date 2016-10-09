@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             webView.setWebChromeClient(webChromeClient);
-            webView.setWebViewClient(new AppWebViewClients(this.progressBar));
+            webView.setWebViewClient(new AppWebViewClients(progressBar, webView));
             webView.addJavascriptInterface(new AppJavaScriptProxy(this), "sessionProxy");
 
             webView.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {

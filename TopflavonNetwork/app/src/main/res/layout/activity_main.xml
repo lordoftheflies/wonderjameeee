@@ -24,12 +24,16 @@
     <RelativeLayout
         android:id="@+id/nonVideoLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/colorAppPrimaryColor">
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical|center_horizontal" />
 
         <hu.digitaldefense.topflavonnetwork.VideoEnabledWebView
@@ -37,7 +41,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 
