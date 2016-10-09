@@ -95,10 +95,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 position: absolute;
                 display: inline-block !important;
                 /*bottom: 0px;*/
-                right: 24px;
-                bottom: 24px;
+                right: 10px;
+                bottom: 10px;
                 /*margin-top: -24px;*/
                 /*left: -56px;*/
+            }
+            
+            .footer-placeholder {
+                height: 66px;
             }
 
             paper-fab {
@@ -315,12 +319,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- Main content -->
             <app-header-layout id="headerLayout" has-scrolling-region>
 
-                <app-header condenses reveals shadow="[[authenticated]]" hidden="[[fullScreenContent]]">
+                <app-header reveals shadow="[[authenticated]]" hidden="[[fullScreenContent]]">
                     <app-toolbar sticky>
                         <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden="[[!authenticated]]"></paper-icon-button>
                         <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
                         <plutonium-language-picker id="languagePicker" lang="{{profile.preferredLanguage}}">
-                            <!--<plutonium-language-item lang="en-US" text-id="english-language-label">English (US)</plutonium-language-item>-->
                             <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
                             <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
                             <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
@@ -328,12 +331,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <plutonium-avatar-button 
                             hidden="[[!authenticated]]"
                             display-name-attribute="userName" display-unique-attribute="userName" user="[[user]]">
-                            <!--                            <a href="#/profile-view" class="menu">
-                                                            <paper-item class="menu">
-                                                                <iron-icon icon="account-circle" item-icon></iron-icon>
-                                                                <span  text-id="profile-menu-label">Profile</span>
-                                                            </paper-item>
-                                                        </a>-->
                             <a href="#" on-tap="onLogout" class="menu">
                                 <paper-item class="menu">
                                     <iron-icon icon="markunread-mailbox" item-icon></iron-icon>
@@ -350,7 +347,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             class="flex"
                             role="header">
                             <div name="none"></div>
-                            <!--hidden="[[!session.powerUser]]"-->
                             <paper-tabs hidden="{{!hasPrivileges}}" name="article-view" data-route="content-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
                                 <paper-tab text-id="messagesPagePublicFolderTitle" name="public">Public</paper-tab>
                                 <paper-tab text-id="messagesPageMyContentsFolderTitle" name="drafts">Drafts</paper-tab>
@@ -378,16 +374,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <paper-tab name="person">Person</paper-tab>
                                 <paper-tab name="group">Group</paper-tab>
                             </paper-tabs>
-
-
-                            <!--                            <paper-tabs selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" name="article-section">
-                                                            <template is="dom-repeat" items="[[parents]]">
-                                                            <paper-tab name="[[item.id]]" role="[[item.role]]" link>
-                                                                <iron-icon class="end-justified" icon="wonderjam-icons:[[getIcon(item.role)]]" href="#/members-view/{{item.id}}"></iron-icon>
-                                                                <a class="member tab link" href="#/members-view/{{item.id}}">[[contentChildrenModel.title]]</a>
-                                                            </paper-tab>
-                                                            </template>
-                                                        </paper-tabs>-->
                         </iron-pages>
                     </app-toolbar>
                 </app-header>
@@ -503,7 +489,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         name="view404">
                     </wonderjam-view404>
                 </iron-pages>
-
+                <div class="footer-placeholder">
+                </div>
             </app-header-layout>
             <div class="floating-action-bar" hidden="[[fullScreenContent]]">
                 <iron-pages
