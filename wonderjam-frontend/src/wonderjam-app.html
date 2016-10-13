@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/paper-fab-transitions/paper-fab-speed-dial.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animations.html">
@@ -343,18 +343,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <app-toolbar hidden="[[minorToolbarHidden]]">
                         <iron-pages
                             selected="[[page]]"
-                            attr-for-selected="name"
+                            attr-for-selected="data-route"
                             fallback-selection="none"
                             class="flex"
                             role="header">
-                            <div name="none"></div>
-                            <paper-tabs hidden="{{!hasPrivileges}}" name="article-view" data-route="content-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
+                            <div data-route="none"></div>
+                            <paper-tabs hidden="{{!hasPrivileges}}" data-route="article-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
                                 <paper-tab text-id="messagesPagePublicFolderTitle" name="public">Public</paper-tab>
                                 <paper-tab text-id="messagesPageMyContentsFolderTitle" name="drafts">Drafts</paper-tab>
                                 <paper-tab text-id="messagesPagePublishedFolderTitle" name="published">Published</paper-tab>
                             </paper-tabs>
 
-                            <paper-tabs name="mailbox-view" data-route="mailbox-view"  attr-for-selected="name" selected="{{selectedMailBoxFolder}}" style="width: 100%;" autoselect>
+                            <paper-tabs data-route="mailbox-view"  attr-for-selected="name" selected="{{selectedMailBoxFolder}}" style="width: 100%;" autoselect>
                                 <paper-tab text-id="mailBoxPageInboxFolderTitle" name="inbox" link>
                                     <a href="#/mailbox-view/inbox" class="link" tabindex="-1">Inbox</a>
                                 </paper-tab> 
@@ -363,7 +363,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 </paper-tab>
                             </paper-tabs>
 
-                            <paper-tabs hidden="{{!hasPrivileges}}" selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" name="members-view" href="#/members-view/[[accountId]]">
+                            <paper-tabs hidden="{{!hasPrivileges}}" selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" data-route="members-view" href="#/members-view/[[accountId]]">
                                 <template is="dom-repeat" items="[[parents]]">
                                     <paper-tab name="[[item.id]]" role="[[item.role]]" link>
                                         <iron-icon class="end-justified" icon="wonderjam-icons:[[getIcon(item.role)]]" href="#/members-view/{{item.id}}"></iron-icon>
@@ -371,7 +371,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                     </paper-tab>
                                 </template>
                             </paper-tabs>
-                            <paper-tabs class="bottom flex" selected="{{recipientSelectionMode}}" attr-for-selected="name" name="recipients-view">
+                            <paper-tabs class="bottom flex" selected="{{recipientSelectionMode}}" attr-for-selected="name" data-route="recipients-view">
                                 <paper-tab name="person">Person</paper-tab>
                                 <paper-tab name="group">Group</paper-tab>
                             </paper-tabs>
@@ -379,6 +379,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </app-toolbar>
                 </app-header>
 
+                <div>KKKKKKKK  hidden={{!hasPrivileges}} folder={{selectedContentFolder}} selected=[[page]]</div>   
+               
                 <iron-pages
                     selected="[[page]]"
                     attr-for-selected="name"
