@@ -322,11 +322,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <app-header-layout id="headerLayout" has-scrolling-region>
 
                 <app-header reveals shadow="[[authenticated]]" hidden$="[[fullScreenContent]]">
-                    <app-toolbar sticky>
+                            <app-toolbar sticky>
                         <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden$="[[!authenticated]]"></paper-icon-button>
                         <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
                         <plutonium-language-picker id="languagePicker" lang$="{{profile.preferredLanguage}}">
-                            <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
+                                                   <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
                             <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
                             <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
                         </plutonium-language-picker>
@@ -342,7 +342,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </plutonium-avatar-button>
                     </app-toolbar>
                     <app-toolbar hidden$="[[minorToolbarHidden]]">
-                        <iron-pages
+                                 <iron-pages
                             selected="[[page]]"
                             attr-for-selected="data-route"
                             fallback-selection="none"
@@ -350,7 +350,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             role="header">
                             <div data-route="none"></div>
                             <paper-tabs hidden$="{{!hasPrivileges}}" data-route="article-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
-                                <paper-tab text-id="messagesPagePublicFolderTitle" name="public">Public</paper-tab>
+                                        <paper-tab text-id="messagesPagePublicFolderTitle" name="public">Public</paper-tab>
                                 <paper-tab text-id="messagesPageMyContentsFolderTitle" name="drafts">Drafts</paper-tab>
                                 <paper-tab text-id="messagesPagePublishedFolderTitle" name="published">Published</paper-tab>
                             </paper-tabs>
@@ -365,7 +365,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </paper-tabs>
 
                             <paper-tabs hidden$="{{!hasPrivileges}}" selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" data-route="members-view" href$="#/members-view/[[accountId]]">
-                                <template is="dom-repeat" items="[[parents]]">
+                                        <template is="dom-repeat" items="[[parents]]">
                                     <paper-tab name="[[item.id]]" role="[[item.role]]" link>
                                         <iron-icon class="end-justified" icon="wonderjam-icons:[[getIcon(item.role)]]" href="#/members-view/{{item.id}}"></iron-icon>
                                         <a class="member tab link" href="#/members-view/{{item.id}}">[[item.name]]</a>
@@ -435,15 +435,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </wonderjam-members-view>
                     <wonderjam-member-editor
                         id="memberEditor"
-                        name="member-editor">
+                        name="member-editor"
+                        created-entity="{{memberEditorCreateMode}}"
 
-                        <!--                        created="{{memberEditorCreateMode}}"
-                                                
-                                                headers="[[headers]]"
-                                                action="[[apiUrl]]/addressbook/save"
-                                                locales="[[locales]]"
-                                                member-model="{{memberDetailsModel}}"
-                                                possible-parents="[[possibleParents]]"-->
+                        headers="[[headers]]"
+                        action="[[apiUrl]]/addressbook/save"
+                        locales="[[locales]]"
+                        member-model="{{memberDetailsModel}}"
+                        possible-parents="[[possibleParents]]">
                     </wonderjam-member-editor>
                     <wonderjam-recipients-view
                         id="recipientsView"
@@ -491,7 +490,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
             </app-header-layout>
             <div class="floating-action-bar" hidden$="[[fullScreenContent]]">
-                <iron-pages
+                 <iron-pages
                     selected="[[page]]"
                     attr-for-selected="name">
                     <div name="article-view" class="layout horizontal wrap">

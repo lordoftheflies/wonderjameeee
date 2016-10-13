@@ -1,0 +1,254 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-overlay-behavior/iron-overlay-behavior.html">
+
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+
+<link rel="import" href="wonderjam-shared-styles.html">
+
+<link rel="import" href="wonderjam-icons.html">
+
+<link rel="import" href="wonderjam-language-validator.html">
+
+<!--
+`<wonderjam-member-details>` is a view for editing member details.
+
+In typical use, just slap some `<wonderjam-member-details>` at the top of your body:
+
+    <body>
+       <wonderjam-member-details
+            created="{{memberEditorCreateMode}}"
+            name="member-editor"
+            headers="[[headers]]"
+            action="[[apiUrl]]/addressbook/save"
+            locales="[[locales]]"
+            member-model="{{memberDetailsModel}}"
+            possible-parents="[[possibleParents]]">
+       </wonderjam-member-details>
+-->
+<dom-module id="wonderjam-member-details">
+
+    <template>
+        <!--        <style include="wonderjam-shared-styles iron-flex">
+                    :host {
+                        display: block;
+                        @apply(--layout-vertical);
+                        padding: 10px;
+                    }
+                </style>
+        
+                <paper-material id="memberEditor" class="card">
+                    <template is="dom-if" if="[[created]]">
+                        <h2 text-id="member-editor-create-title">Create new member</h2>
+                    </template>
+                    <template is="dom-if" if="[[!created]]">
+                        <h2 text-id="member-editor-edit-title">Edit [[memberModel.name]]</h2>
+                    </template>
+                    <form id="memberForm" is="iron-form" class="card-content" verbose 
+                          content-type="application/json" method="POST" action="[[action]]" headers="{{headers}}"
+                          handle-as="json">
+                        Member id
+                        <input name="id" type="hidden" value="{{memberModel.id}}" />
+                        
+                        Member name field
+                        <paper-input id="newMemberNameLabel" name="name" 
+                                     label="Name" error-message="Member name must be specified." 
+                                     value="{{memberModel.name}}"
+                                     type="text" required auto-validate></paper-input>
+                        
+                        Member email field
+                        <template is="dom-if" if="[[!isGroup]]">
+                            <gold-email-input id="newMemberEmailLabel" name="email" 
+                                              label="Email" error-message="Member email must be specified." 
+                                              value="{{memberModel.email}}"
+                                              type="email" required auto-validate>
+                            </gold-email-input>
+                        </template>
+                        
+                        Member role field
+                        <input name="role" type="hidden" value="{{memberModel.role}}" />
+                        <paper-radio-group label="Type" attr-for-selected="role" selected="{{memberModel.role}}">
+                            <paper-radio-button id="newMemberTypeUserTitle" role="USER">User</paper-radio-button>
+                            <paper-radio-button id="newMemberTypeGroupTitle" role="GROUP">Group</paper-radio-button>
+                            <paper-radio-button id="newMemberTypeAdminTitle" role="ADMIN">Admin</paper-radio-button>
+                        </paper-radio-group>
+                        
+                        Member parent field
+                        <input name="parent" value="{{memberModel.parent}}" type="hidden" />
+                        <paper-dropdown-menu 
+                            id="newMemberParentLabel"  class="flex"
+                            label="Parent member" error-message="Parent member must selected."
+                            required>
+                            <paper-menu
+                                class="dropdown-content" 
+                                selected="{{memberModel.parent}}" 
+                                attr-for-selected="value">
+                                <template is="dom-repeat" items="[[possibleParents]]">
+                                    <paper-item value="{{item.id}}">{{item.name}}</paper-item>
+                                </template>
+                            </paper-menu>
+                        </paper-dropdown-menu>
+                        
+                        Member preferred language
+                        <wonderjam-language-validator></wonderjam-language-validator>
+                        <input name="preferredLanguage" value="{{memberModel.preferredLanguage}}" type="hidden" validator="wonderjam-language-validator" />
+                        <paper-dropdown-menu 
+                            id="preferredLanguageLabel"
+                            label="Preferred language"  
+                            error-message="You must choose the language of registration emails."
+                            required>
+                            <paper-menu class="dropdown-content">
+                                <paper-menu 
+                                    class="dropdown-content" 
+                                    selected="{{memberModel.preferredLanguage}}" 
+                                    attr-for-selected="data-value">
+                                    <template is="dom-repeat" items="[[locales]]" as="locale">
+                                        <paper-item data-value="[[locale.code]]">[[locale.name]]</paper-item>
+                                    </template>
+                                </paper-menu>
+                            </paper-menu>
+                        </paper-dropdown-menu>
+                    </form>
+                </paper-material>-->
+
+    </template>
+
+    <script>
+
+        Polymer({
+            is: 'wonderjam-member-details',
+            behaviors: [
+//                BehaviorsStore.I18nBehavior,
+            ],
+            properties: {
+                /** Url where the persited member submit request sent. */
+                action: {
+                    type: String,
+                    notify: true
+                },
+                /** Headers which used the persited member submit request sent*/
+                headers: {
+                    type: Object,
+                    notify: true
+                },
+                /** List of possible parent elements. */
+                possibleParents: {
+                    type: Array,
+                    notify: true
+                },
+                /** List of locales.*/
+                locales: {
+                    type: Array,
+                    notify: true
+                },
+                /** Model object */
+                memberModel: {
+                    type: Object,
+                    notify: true
+                },
+//                created: {
+//                    type: Boolean,
+//                    notify: true
+//                },
+                isGroup: {
+                    type: Boolean,
+                    computed: 'computeIsGroup(memberModel.role)'
+                },
+                createAndRepeatIndicator: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                }
+            },
+//            observers: [
+//                'observeModel(created)'
+//            ],
+//            listeners: {
+//                'iron-form-response': 'onIronFormResponse',
+//                'iron-form-error': 'onIronFormError'
+//            },
+            attached: function () {
+                console.debug(this.is, 'attached');
+            },
+            detached: function () {
+                console.debug(this.is, 'detached');
+
+            },
+//            observeModel: function (created) {
+//                console.trace(this.is, 'oberve member-model', memberModel);
+//            },
+//            computeIsGroup: function (selectedType) {
+//                return selectedType === 'GROUP';
+//            },
+//            validateLanguage: function (val) {
+//                return true;
+//            },
+//            createMember: function () {
+//                if (this.$.memberForm.validate()) {
+//                    this.$.memberForm.submit();
+//
+//                }
+//            },
+//            createMemberRepeat: function () {
+//                if (this.$.memberForm.validate()) {
+//                    this.$.memberForm.submit();
+//                    this.createAndRepeatIndicator = true;
+//                }
+//
+//            },
+//            clear: function () {
+//                this.$.memberForm.reset();
+//                this.selectedType = 'USER';
+//                this.fire('feedback', {
+//                    message: 'Cancel editing member.'
+//                });
+//            },
+//            /**
+//             * Ajax response handler for `createMemberAjax` element.
+//             */
+//            onIronFormResponse: function (event, details) {
+//                this.$.memberForm.reset();
+//                this.$.memberForm.role = 'USER';
+//                console.log(this.is, 'member created successfully:', JSON.stringify(details.response));
+//                if (this.createAndRepeatIndicator) {
+//
+//                } else {
+//                    this.fire('page-go', {
+//                        page: '/members-view/' + this.memberModel.parent
+//                    });
+//                }
+//                // TODO: move to this
+//                this.fire('fetch-data', {
+//                    ids: ['childrenIronAjax', 'possibleParentsIronAjax']
+//                });
+//                this.fire('feedback', {
+//                    message: 'Member created successfully'
+//                });
+//            },
+//            /**
+//             * Ajax error handler for `createMemberAjax` element.
+//             */
+//            onIronFormError: function (event, details) {
+//                console.error(this.is, 'create-member error:', JSON.stringify(details.response));
+//                this.fire('feedback', {
+//                    message: 'Member creation failed.'
+//                });
+//            }
+        });
+
+    </script>
+
+</dom-module>

@@ -51,25 +51,20 @@ In typical use, just slap some `<wonderjam-member-editor>` at the top of your bo
         </style>
 
         <paper-material id="memberEditor" class="card">
-            <template is="dom-if" if="[[created]]">
+            <template is="dom-if" if="[[createdEntity]]">
                 <h2 text-id="member-editor-create-title">Create new member</h2>
             </template>
-            <template is="dom-if" if="[[!created]]">
+            <template is="dom-if" if="[[!createdEntity]]">
                 <h2 text-id="member-editor-edit-title">Edit [[memberModel.name]]</h2>
             </template>
             <form id="memberForm" is="iron-form" class="card-content" verbose 
                   content-type="application/json" method="POST" action="[[action]]" headers="{{headers}}"
                   handle-as="json">
-                <!--Member id-->
                 <input name="id" type="hidden" value="{{memberModel.id}}" />
-                
-                <!--Member name field-->
                 <paper-input id="newMemberNameLabel" name="name" 
                              label="Name" error-message="Member name must be specified." 
                              value="{{memberModel.name}}"
                              type="text" required auto-validate></paper-input>
-                
-                <!--Member email field-->
                 <template is="dom-if" if="[[!isGroup]]">
                     <gold-email-input id="newMemberEmailLabel" name="email" 
                                       label="Email" error-message="Member email must be specified." 
@@ -77,16 +72,12 @@ In typical use, just slap some `<wonderjam-member-editor>` at the top of your bo
                                       type="email" required auto-validate>
                     </gold-email-input>
                 </template>
-                
-                <!--Member role field-->
                 <input name="role" type="hidden" value="{{memberModel.role}}" />
                 <paper-radio-group label="Type" attr-for-selected="role" selected="{{memberModel.role}}">
                     <paper-radio-button id="newMemberTypeUserTitle" role="USER">User</paper-radio-button>
                     <paper-radio-button id="newMemberTypeGroupTitle" role="GROUP">Group</paper-radio-button>
                     <paper-radio-button id="newMemberTypeAdminTitle" role="ADMIN">Admin</paper-radio-button>
                 </paper-radio-group>
-                
-                <!--Member parent field-->
                 <input name="parent" value="{{memberModel.parent}}" type="hidden" />
                 <paper-dropdown-menu 
                     id="newMemberParentLabel"  class="flex"
@@ -101,8 +92,6 @@ In typical use, just slap some `<wonderjam-member-editor>` at the top of your bo
                         </template>
                     </paper-menu>
                 </paper-dropdown-menu>
-                
-                <!--Member preferred language-->
                 <wonderjam-language-validator></wonderjam-language-validator>
                 <input name="preferredLanguage" value="{{memberModel.preferredLanguage}}" type="hidden" validator="wonderjam-language-validator" />
                 <paper-dropdown-menu 
@@ -159,7 +148,7 @@ In typical use, just slap some `<wonderjam-member-editor>` at the top of your bo
                     type: Object,
                     notify: true
                 },
-                created: {
+                createdEntity: {
                     type: Boolean,
                     notify: true
                 },
@@ -174,21 +163,21 @@ In typical use, just slap some `<wonderjam-member-editor>` at the top of your bo
                 }
             },
             observers: [
-                'observeModel(created)'
+                'observeModel(createdEntity)'
             ],
             listeners: {
                 'iron-form-response': 'onIronFormResponse',
                 'iron-form-error': 'onIronFormError'
             },
             attached: function () {
-                console.trace(this.is, 'attached');
+                console.debug(this.is, 'attached');
             },
             detached: function () {
-                console.trace(this.is, 'detached');
+                console.debug(this.is, 'detached');
 
             },
             observeModel: function (created) {
-                console.trace(this.is, 'oberve member-model', memberModel);
+                console.debug(this.is, 'oberve member-model', this.memberModel);
             },
             computeIsGroup: function (selectedType) {
                 return selectedType === 'GROUP';
