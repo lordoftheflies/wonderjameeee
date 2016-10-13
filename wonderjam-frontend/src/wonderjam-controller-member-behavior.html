@@ -52,7 +52,15 @@
                 children: {
                     type: Object,
                     notify: true
-                }
+                },
+                memberChildren: {
+                    type: Object,
+                    notify: true
+                },
+                isMeIndicator: {
+                    type: Boolean,
+                    computed: 'isMe(memberSubrouteData.memberId, accountId)'
+                },
             },
             observers: [
                 'observeMemberSubrouteData(memberSubrouteData.memberId)'
@@ -64,6 +72,10 @@
              */
             observeMemberSubrouteData: function (subroute) {
                 console.log(this.is, 'observe route', subroute);
+            },
+            
+            isMe: function(memberId, accountId) {
+                return memberId === accountId;
             }
 
         };

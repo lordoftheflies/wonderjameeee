@@ -30,7 +30,26 @@
                     value: {
                         sections: []
                     }
+                },
+                shareAjaxUrl: {
+                    type: String,
+                    computed: 'computeShareAjaxUrl()'
+                },
+                editedContentModel: {
+                    type: Object,
+                    notify: true
+                },
+                parentCandidates: {
+                    type: Array,
+                    notify: true
+                },
+                selectedMetaAction: {
+                    type: String,
+                    notify: true
                 }
+            },
+            computeShareAjaxUrl: function (apiUrl, accountId) {
+                return apiUrl + '/content-management/' + accountId + '/save';
             },
             /**
              * Add text-section handler.
@@ -141,7 +160,7 @@
 //                this.fire('page-go', {page: 'article-view'});
             }
         };
-        
+
         /**
          * @polymerBehavior
          */

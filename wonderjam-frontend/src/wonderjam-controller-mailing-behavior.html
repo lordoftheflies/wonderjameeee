@@ -44,10 +44,25 @@
                 mailBoxAjaxUrl: {
                     type: String,
                     computed: 'computeMailBoxAjaxUrl(apiUrl, accountId, selectedMailBoxFolder)'
+                },
+                messageSendAjaxUrl: {
+                    type: String,
+                    computed: 'computeMessageSendAjaxUrl(apiUrl, accountId)'
+                },
+                messageSendModel: {
+                    type: Object,
+                    notify: true
+                },
+                recipients: {
+                    type: Array,
+                    notify: true
                 }
             },
             listeners: {
                 'pick-recipients': 'onOpenRecipientsPage'
+            },
+            computeMessageSendAjaxUrl: function (apiUrl, accountId) {
+                return apiUrl + '/mailbox/' + accountId + '/send';
             },
             computeMailBoxAjaxUrl: function (apiUrl, accountId, selectedMailBoxFolder) {
                 return apiUrl + '/mailbox/' + accountId + '/' + selectedMailBoxFolder;
