@@ -434,8 +434,8 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         flavonEndActiveParagraph0.setFontSize(12);
         flavonEndActiveParagraph0.setOrderIndex(index);
         flavonEndActiveParagraph0.setParent(container);
-        flavonEndActiveParagraph0.setWidth(300);
-        flavonEndActiveParagraph0.setHeight(200);
+        flavonEndActiveParagraph0.setWidth(1000);
+        flavonEndActiveParagraph0.setHeight(600);
         flavonEndActiveParagraph0 = contentRepository.save(flavonEndActiveParagraph0);
         return flavonEndActiveParagraph0;
     }
