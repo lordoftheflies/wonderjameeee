@@ -36,6 +36,10 @@
                 recipientsModel: {
                     type: Array,
                     notify: true
+                },
+                contacts: {
+                    type: Array,
+                    notify: true
                 }
             },
             listeners: {
@@ -70,7 +74,9 @@
             }
         };
 
-
+        /**
+         * @polymerBehavior
+         */
         WonderjamAppBehaviors.ControllerMailingBehavior = [
             PlutoniumBehaviors.WidgetBoundBehavior,
             WonderjamAppBehaviors.ControllerMailingBehaviorImpl

@@ -35,6 +35,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/plutonium-language-picker/plutonium-language-picker.html">
 <link rel="import" href="../bower_components/plutonium-language-picker/plutonium-language-item.html">
 
+<link rel="import" href="../bower_components/plutonium-cms/plutonium-cms.html">
+
 <link rel="import" href="wonderjam-icons.html">
 <link rel="import" href="wonderjam-shared-styles.html">
 
@@ -50,7 +52,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="wonderjam-controller-mailing-behavior.html">
 
 
-<link rel="import" href="../bower_components/plutonium-cms/plutonium-cms.html">
 
 <dom-module id="wonderjam-app">
     <template>
@@ -101,7 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 /*margin-top: -24px;*/
                 /*left: -56px;*/
             }
-            
+
             .footer-placeholder {
                 height: 66px;
             }
@@ -138,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         </style>
         <!--Get profile-->
-        <iron-ajax id="regProfileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
+        <iron-ajax id="regProfileIronAjax" url="[[regProfileAjaxUrl]]" 
                    last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
                    handle-as="json" content-type="application/json"></iron-ajax>
         <!--Profile-->
@@ -384,11 +385,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     attr-for-selected="name"
                     fallback-selection="view404"
                     role="main">
-                    <wonderjam-login-view 
-                        name="login-view"
-                        signed-in="{{authenticated}}"
-                        user="{{user}}"
-                        authentication-url="[[apiUrl]]/login">
+                    <wonderjam-login-view name="login-view" signed-in="{{authenticated}}" user="{{user}}" authentication-url="[[apiUrl]]/login">
                     </wonderjam-login-view>
                     <wonderjam-logon-view 
                         name="logon-view"
@@ -423,8 +420,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         account-id="[[accountId]]"
                         mail-box-model="{{mailBoxModel}}"
                         selected-mail-box-folder="{{selectedMailBoxFolder}}">
-
-                        <!---->
                     </wonderjam-mailbox-view>
                     <wonderjam-members-view 
                         id="membersView"
@@ -440,13 +435,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </wonderjam-members-view>
                     <wonderjam-member-editor
                         id="memberEditor"
-                        created="{{memberEditorCreateMode}}"
-                        name="member-editor"
-                        headers="[[headers]]"
-                        action="[[apiUrl]]/addressbook/save"
-                        locales="[[locales]]"
-                        member-model="{{memberDetailsModel}}"
-                        possible-parents="[[possibleParents]]">
+                        name="member-editor">
+
+                        <!--                        created="{{memberEditorCreateMode}}"
+                                                
+                                                headers="[[headers]]"
+                                                action="[[apiUrl]]/addressbook/save"
+                                                locales="[[locales]]"
+                                                member-model="{{memberDetailsModel}}"
+                                                possible-parents="[[possibleParents]]"-->
                     </wonderjam-member-editor>
                     <wonderjam-recipients-view
                         id="recipientsView"
@@ -595,7 +592,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 //                    value: false
 //                },
                 apiUrl: {
-                    value: "/backend"
+                    value: '/backend'
 //                    value: "http://localhost:8080/backend"
                 },
                 minorToolbarHidden: {
@@ -610,6 +607,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 forceNarrow: {
                     type: Boolean,
                     computed: 'computeForceNarrow(authenticated, fullScreenContent)'
+                },
+                regProfileAjaxUrl: {
+                    type: String,
+                    computed: 'computeRegProfileAjaxUrl(apiUrl, registrationSubrouteData.activationCode)'
                 }
             },
             observers: [
@@ -621,6 +622,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
             ready: function () {
                 this.$.tokenAjax.generateRequest();
+            },
+            computeRegProfileAjaxUrl: function (apiUrl, activationCode) {
+                return apiUrl + '/addressbook/' + activationCode + '/profile';
             },
             onOpenSpeedDial: function () {
                 this.$.asd.open();
@@ -634,7 +638,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     return 'member';
                 }
             },
-            computeForceNarrow: function(authenticated, fullScreenContent) {
+            computeForceNarrow: function (authenticated, fullScreenContent) {
                 return !authenticated || fullScreenContent;
             },
             observeRootArticlesModel: function (rootArticlesModel) {
@@ -684,7 +688,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.changeLanguageModel = details;
                 this.$.changeLanguageAjax.generateRequest();
             },
-            onFullscreen: function(event, details) {
+            onFullscreen: function (event, details) {
                 this.fullScreenContent = !this.fullScreenContent;
             }
         });

@@ -184,12 +184,14 @@
                     type: 'linked'
                 });
             },
-            computeRootArticleBackNavigable: function(selectedArticleId) {
+            computeRootArticleBackNavigable: function (selectedArticleId) {
                 return selectedArticleId !== 'ROOT';
             }
         };
 
-
+        /**
+         * @polymerBehavior
+         */
         WonderjamAppBehaviors.ControllerArticleBehavior = [
             PlutoniumBehaviors.WidgetBoundBehavior,
             PlutoniumBehaviors.AppRoutingBehavior,

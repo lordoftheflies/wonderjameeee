@@ -85,6 +85,10 @@
                 memberDetailsModel: {
                     type: Object,
                     notify: true
+                },
+                possibleParents: {
+                    type: Array,
+                    notify: true
                 }
             },
             observers: [
@@ -255,6 +259,10 @@
             }
 
         };
+
+        /**
+         * @polymerBehavior
+         */
         WonderjamAppBehaviors.ControllerManagerBehavior = [
             PlutoniumBehaviors.WidgetBoundBehavior,
             PlutoniumBehaviors.AppRoutingBehavior,
