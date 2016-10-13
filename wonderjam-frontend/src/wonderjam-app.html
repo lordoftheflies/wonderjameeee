@@ -164,7 +164,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    body="{{memberDetailsModel}}" headers="[[headers]]"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
         <!--Get profile-->
-        <iron-ajax id="memberDetailsAjax" url="[[apiUrl]]/addressbook/[[memberDetailsSubrouteData.accountId]]/profile" 
+        <iron-ajax id="memberDetailsAjax" url="[[memberDetailsAjaxUrl]]" 
                    last-response="{{memberDetailsModel}}" headers="[[headers]]" 
                    auto="[[memberDetailsSubrouteData.accountId]]"></iron-ajax>
 

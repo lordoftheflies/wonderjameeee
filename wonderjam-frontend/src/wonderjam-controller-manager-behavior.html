@@ -82,6 +82,11 @@
                     notify: true,
                     computed: 'computeDeleteMemberModel(memberDetailsModel, accountId)'
                 },
+                memberDetailsAjaxUrl: {
+                    type: Object,
+                    notify: true,
+                    computed: 'computeMemberDetailsAjax(apiUrl, memberDetailsSubrouteData.accountId)'
+                },
                 memberDetailsModel: {
                     type: Object,
                     notify: true
@@ -100,6 +105,9 @@
                     owner: accountId,
                     subject: memberDetailsModel.id
                 }
+            },
+            computeMemberDetailsAjax: function (apiUrl, accountId) {
+                return apiUrl + '/addressbook/' + accountId + '/profile';
             },
             computeDeleteMemberPromptSubject: function (memberDetailsModel) {
                 return memberDetailsModel.name;
@@ -133,7 +141,7 @@
 //                this.memberDetailsModel.role = "USER";
 //                this.memberDetailsModel.codes = 0;
 //                this.memberDetailsModel.phone = null;
-               
+
                 this.set('route.path', '/member-editor/');
             },
             onCreateMember: function (event, details) {
