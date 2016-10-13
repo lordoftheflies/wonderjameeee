@@ -1,18 +1,18 @@
 {
-  "name": "polymer-starter-kit-i18n",
-  "version": "0.0.0",
-  "description": "A starting point for Polymer 1.0 i18n apps",
+  "name": "wonderjam-frontend",
+  "version": "1.0.0",
+  "description": "MLM community application.",
   "scripts": {
     "test": "polymer test",
     "build": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:t2ym/polymer-starter-kit-i18n"
+    "url": "git@github.com:lordoftheflies/wonderjam.git"
   },
-  "license": "http://polymer.github.io/LICENSE.txt",
+  "license": "http://lordoftheflies.github.io/wonderjam/LICENSE.txt",
   "bugs": {
-    "url": "https://github.com/t2ym/polymer-starter-kit-i18n/issues"
+    "url": "https://github.com/lordoftheflies/wonderjam/issues"
   },
   "engines": {
     "node": ">=4.0"
