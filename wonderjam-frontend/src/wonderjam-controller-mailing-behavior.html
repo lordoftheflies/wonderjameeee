@@ -40,10 +40,17 @@
                 contacts: {
                     type: Array,
                     notify: true
+                },
+                mailBoxAjaxUrl: {
+                    type: String,
+                    computed: 'computeMailBoxAjaxUrl(apiUrl, accountId, selectedMailBoxFolder)'
                 }
             },
             listeners: {
                 'pick-recipients': 'onOpenRecipientsPage'
+            },
+            computeMailBoxAjaxUrl: function (apiUrl, accountId, selectedMailBoxFolder) {
+                return apiUrl + '/mailbox/' + accountId + '/' + selectedMailBoxFolder;
             },
             onOpenRecipientsPage: function () {
                 this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);

@@ -182,7 +182,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    handle-as="json" content-type="application/json" auto="[[tocRequestParams]]"></iron-ajax>
 
         <!--Get mailbox folder-->
-        <iron-ajax id="mailBoxAjax" url="[[apiUrl]]/mailbox/[[accountId]]/[[selectedMailBoxFolder]]" 
+        <iron-ajax id="mailBoxAjax" url="[[mailBoxAjaxUrl]]" 
                    last-response="{{mailBoxModel}}" headers="[[headers]]"
                    handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
 
