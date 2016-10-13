@@ -86,6 +86,27 @@
                 backNavigable: {
                     type: Boolean,
                     computed: 'computeRootArticleBackNavigable(pageRouteData.contentId)'
+                },
+                
+                rootTocModel: {
+                    type: Object,
+                    notify: true
+                },
+                parentTocModel: {
+                    type: Object,
+                    notify: true
+                },
+                childTocModel: {
+                    type: Object,
+                    notify: true
+                },
+                articleDetailsModel: {
+                    type: Object,
+                    notify: true
+                },
+                articleDetailsActive: {
+                    type: Boolean,
+                    notify: true
                 }
             },
             observers: [

@@ -164,7 +164,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    body="{{memberDetailsModel}}" headers="[[headers]]"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
         <!--Get profile-->
-        <iron-ajax id="memberDetailsAjax" url="[[apiUrl]]/addressbook/[[memberDetailsSubrouteData.accountId]]/profile" 
+        <iron-ajax id="memberDetailsAjax" url="[[memberDetailsAjaxUrl]]" 
                    last-response="{{memberDetailsModel}}" headers="[[headers]]" 
                    auto="[[memberDetailsSubrouteData.accountId]]"></iron-ajax>
 
@@ -182,7 +182,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    handle-as="json" content-type="application/json" auto="[[tocRequestParams]]"></iron-ajax>
 
         <!--Get mailbox folder-->
-        <iron-ajax id="mailBoxAjax" url="[[apiUrl]]/mailbox/[[accountId]]/[[selectedMailBoxFolder]]" 
+        <iron-ajax id="mailBoxAjax" url="[[mailBoxAjaxUrl]]" 
                    last-response="{{mailBoxModel}}" headers="[[headers]]"
                    handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
 
@@ -207,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
 
         <!--Share content-->
-        <iron-ajax id="shareAjax" url="[[apiUrl]]/content-management/[[accountId]]/save"
+        <iron-ajax id="shareAjax" url="[[shareAjaxUrl]]"
                    body="{{editedContentModel}}" headers="[[headers]]"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
 
@@ -233,7 +233,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
 
         <!--Send message-->
-        <iron-ajax id="messageSendAjax" url="[[apiUrl]]/mailbox/[[accountId]]/send"
+        <iron-ajax id="messageSendAjax" url="[[messageSendAjaxUrl]]"
                    body="{{messageSendModel}}" on-response="onMessageSendResponse" on-error="onMessageSendError" headers="[[headers]]"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
         <!--Get token-->
@@ -308,8 +308,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <app-toolbar text-id="main-menu-label">Menu</app-toolbar>
                 <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
                     <a text-id="article-menu-label" name="article-view" href="#/article-view/ROOT">Articles</a>
-                    <a text-id="mailbox-menu-label" name="mailbox-view" href="#/mailbox-view/[[selectedMailBoxFolder]]">Mailbox</a>
-                    <a text-id="members-menu-label" name="members-view" href="#/members-view/[[accountId]]" hidden="{{!hasPrivileges}}">Network</a>
+                    <a text-id="mailbox-menu-label" name="mailbox-view" href$="#/mailbox-view/[[selectedMailBoxFolder]]">Mailbox</a>
+                    <a text-id="members-menu-label" name="members-view" href$="#/members-view/[[accountId]]" hidden$="{{!hasPrivileges}}">Network</a>
                     <a text-id="help-menu-label" name="help-view" href="#/help-view">Help</a>
                 </iron-selector>
                 <div id="legalContainer" class="terms-container">
@@ -321,17 +321,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- Main content -->
             <app-header-layout id="headerLayout" has-scrolling-region>
 
-                <app-header reveals shadow="[[authenticated]]" hidden="[[fullScreenContent]]">
+                <app-header reveals shadow="[[authenticated]]" hidden$="[[fullScreenContent]]">
                     <app-toolbar sticky>
-                        <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden="[[!authenticated]]"></paper-icon-button>
+                        <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden$="[[!authenticated]]"></paper-icon-button>
                         <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
-                        <plutonium-language-picker id="languagePicker" lang="{{profile.preferredLanguage}}">
+                        <plutonium-language-picker id="languagePicker" lang$="{{profile.preferredLanguage}}">
                             <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
                             <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
                             <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
                         </plutonium-language-picker>
                         <plutonium-avatar-button 
-                            hidden="[[!authenticated]]"
+                            hidden$="[[!authenticated]]"
                             display-name-attribute="userName" display-unique-attribute="userName" user="[[user]]">
                             <a href="#" on-tap="onLogout" class="menu">
                                 <paper-item class="menu">
@@ -341,7 +341,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             </a>
                         </plutonium-avatar-button>
                     </app-toolbar>
-                    <app-toolbar hidden="[[minorToolbarHidden]]">
+                    <app-toolbar hidden$="[[minorToolbarHidden]]">
                         <iron-pages
                             selected="[[page]]"
                             attr-for-selected="data-route"
@@ -349,7 +349,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             class="flex"
                             role="header">
                             <div data-route="none"></div>
-                            <paper-tabs hidden="{{!hasPrivileges}}" data-route="article-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
+                            <paper-tabs hidden$="{{!hasPrivileges}}" data-route="article-view"  attr-for-selected="name" selected="{{selectedContentFolder}}" style="width: 100%;" autoselect>
                                 <paper-tab text-id="messagesPagePublicFolderTitle" name="public">Public</paper-tab>
                                 <paper-tab text-id="messagesPageMyContentsFolderTitle" name="drafts">Drafts</paper-tab>
                                 <paper-tab text-id="messagesPagePublishedFolderTitle" name="published">Published</paper-tab>
@@ -364,7 +364,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 </paper-tab>
                             </paper-tabs>
 
-                            <paper-tabs hidden="{{!hasPrivileges}}" selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" data-route="members-view" href="#/members-view/[[accountId]]">
+                            <paper-tabs hidden$="{{!hasPrivileges}}" selected="{{memberSubrouteData.memberId}}" class="flex" scrollable attr-for-selected="name" data-route="members-view" href$="#/members-view/[[accountId]]">
                                 <template is="dom-repeat" items="[[parents]]">
                                     <paper-tab name="[[item.id]]" role="[[item.role]]" link>
                                         <iron-icon class="end-justified" icon="wonderjam-icons:[[getIcon(item.role)]]" href="#/members-view/{{item.id}}"></iron-icon>
@@ -490,26 +490,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="footer-placeholder">
                 </div>
             </app-header-layout>
-            <div class="floating-action-bar" hidden="[[fullScreenContent]]">
+            <div class="floating-action-bar" hidden$="[[fullScreenContent]]">
                 <iron-pages
                     selected="[[page]]"
                     attr-for-selected="name">
                     <div name="article-view" class="layout horizontal wrap">
-                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToParentArticle" hidden="[[!backNavigable]]"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToCreator" hidden="{{!hasPrivileges}}"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToParentArticle" hidden$="[[!backNavigable]]"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToCreator" hidden$="{{!hasPrivileges}}"></paper-fab>
                     </div>
                     <div name="article-section" class="layout horizontal wrap">
                         <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor" hidden="{{!hasPrivileges}}"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor" hidden="{{!hasPrivileges}}"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToDelete" hidden="{{!hasPrivileges}}"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
+                        <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToDelete" hidden$="{{!hasPrivileges}}"></paper-fab>
                     </div>
                     <div name="mailbox-view" class="layout horizontal wrap">
                         <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToMessage"></paper-fab>
                     </div>
                     <div name="member-editor" class="layout horizontal wrap">
                         <paper-fab mini id="newMemberDialogCancelButton" icon="wonderjam-icons:arrow-back" on-tap="onCancelMemberEditor"></paper-fab>
-                        <paper-fab mini id="deleteMemberButton" hidden="[[memberEditorCreateMode]]" icon="wonderjam-icons:delete" on-tap="onOpenDeleteMember"></paper-fab>
+                        <paper-fab mini id="deleteMemberButton" hidden$="[[memberEditorCreateMode]]" icon="wonderjam-icons:delete" on-tap="onOpenDeleteMember"></paper-fab>
                         <paper-fab mini id="newMemberDialogCreateAndRepeatButton" icon="wonderjam-icons:add" on-tap="onCreateMemberRepeat"></paper-fab>
                         <paper-fab id="newMemberDialogCreateButton" icon="wonderjam-icons:save" on-tap="onCreateMember"></paper-fab>
                     </div>
@@ -611,6 +611,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 regProfileAjaxUrl: {
                     type: String,
                     computed: 'computeRegProfileAjaxUrl(apiUrl, registrationSubrouteData.activationCode)'
+                },
+                locales: {
+                    type: Array,
+                    notify: true
+                },
+                changeLanguageModel: {
+                    type: Object,
+                    notify: true
+                },
+                queryParams: {
+                    type: Object,
+                    notify: true
+                },
+                routeData: {
+                    type: Object,
+                    notify: true
+                },
+                pageRouteData: {
+                    type: Object,
+                    notify: true
+                },
+                articleSectionRouteData: {
+                    type: Object,
+                    notify: true
+                },
+                registrationSubrouteData: {
+                    type: Object,
+                    notify: true
+                },
+                subroute: {
+                    type: String,
+                    notify: true
                 }
             },
             observers: [
