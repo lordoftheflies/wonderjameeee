@@ -16,6 +16,18 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
@@ -32,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(webView != null){
+        if (webView != null) {
             viewGroup.removeView(nonVideoLayout);
             viewGroup.removeView(videoLayout);
 
@@ -81,36 +93,28 @@ public class MainActivity extends AppCompatActivity {
             {
                 // Subscribe to standard events, such as onProgressChanged()...
                 @Override
-                public void onProgressChanged(WebView view, int progress)
-                {
+                public void onProgressChanged(WebView view, int progress) {
                     // Your code...
                 }
             };
-            webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback()
-            {
+            webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback() {
                 @Override
-                public void toggledFullscreen(boolean fullscreen)
-                {
+                public void toggledFullscreen(boolean fullscreen) {
                     // Your code to handle the full-screen change, for example showing and hiding the title bar. Example:
-                    if (fullscreen)
-                    {
+                    if (fullscreen) {
                         WindowManager.LayoutParams attrs = getWindow().getAttributes();
                         attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
                         attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
                         getWindow().setAttributes(attrs);
-                        if (android.os.Build.VERSION.SDK_INT >= 14)
-                        {
+                        if (android.os.Build.VERSION.SDK_INT >= 14) {
                             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         WindowManager.LayoutParams attrs = getWindow().getAttributes();
                         attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
                         attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
                         getWindow().setAttributes(attrs);
-                        if (android.os.Build.VERSION.SDK_INT >= 14)
-                        {
+                        if (android.os.Build.VERSION.SDK_INT >= 14) {
                             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                         }
                     }
@@ -148,17 +152,12 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         // Notify the VideoEnabledWebChromeClient, and handle it ourselves if it doesn't handle it
-        if (webChromeClient != null && !webChromeClient.onBackPressed())
-        {
-            if (webView.canGoBack())
-            {
+        if (webChromeClient != null && !webChromeClient.onBackPressed()) {
+            if (webView.canGoBack()) {
                 webView.goBack();
-            }
-            else
-            {
+            } else {
                 // Close app (presumably)
                 super.onBackPressed();
             }
@@ -188,6 +187,30 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void updateAccountId(String value) {
             Log.d(TAG, "User logged in with account: " + value);
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+            String url = getResources().getString(R.string.base_url) + getResources().getString(R.string.subscription_path);
+
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("accountId", value);
+            params.put("subscriptionId", WonderjamFirebaseInstanceIDService.getToken());
+
+// Request a string response from the provided URL.
+            JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d(TAG, "Notification token synchronized: " + response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d(TAG, "Notification token synchronization failed: " + error);
+                        }
+                    });
+// Add the request to the RequestQueue.
+            queue.add(stringRequest);
         }
     }
 }
