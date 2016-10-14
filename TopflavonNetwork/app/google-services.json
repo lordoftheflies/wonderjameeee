@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "522589320362",
+    "firebase_url": "https://topflavon-paas.firebaseio.com",
+    "project_id": "topflavon-paas",
+    "storage_bucket": "topflavon-paas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522589320362:android:d2f2a3f6b9797c84",
+        "android_client_info": {
+          "package_name": "hu.digitaldefense.topflavon.topflavon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522589320362-qa3d9hel0o6dj520aqjbkesute6frn8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hu.digitaldefense.topflavon.topflavon",
+            "certificate_hash": "12FC93DDEFF16C51D772AC7D1C836F754480193B"
+          }
+        },
+        {
+          "client_id": "522589320362-f1pb53l7kutlnl9vmshnsm380a0tgnls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhMxkl46VJjmnxgBs5GkfITF8BCdAXQaY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522589320362-4q6ard9abqhl7jfqjoiffpbq8uk704ft.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.digitaldefense.TopFlavon"
+              }
+            },
+            {
+              "client_id": "522589320362-f1pb53l7kutlnl9vmshnsm380a0tgnls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522589320362:android:f59685c8330e06aa",
+        "android_client_info": {
+          "package_name": "hu.digitaldefense.topflavonnetwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522589320362-f1pb53l7kutlnl9vmshnsm380a0tgnls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhMxkl46VJjmnxgBs5GkfITF8BCdAXQaY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

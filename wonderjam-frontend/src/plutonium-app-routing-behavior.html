@@ -149,9 +149,15 @@
                     // TODO: not necessary
                     // If we are on IOS, then fire session event.
                     if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
+                    
                         var iosLoginEvent = {accountId: token.token};
                         console.log(this.is, 'IOS event:', iosLoginEvent);
                         window.webkit.messageHandlers.interOp.postMessage(iosLoginEvent);
+                    }
+
+                    if (typeof sessionProxy !== "undefined") {
+                        console.log(this.is, 'update account id');
+                        sessionProxy.updateAccountId(this.accountId);
                     }
                 }
             },
@@ -206,7 +212,8 @@
             onTokenAjaxError: function (event, detail) {
                 if (detail.request.status === 401) { // Unauthorized
                     this.authenticated = false;
-                    if (this.page !== 'logon-view') this.set('route.path', '/login-view');
+                    if (this.page !== 'logon-view')
+                        this.set('route.path', '/login-view');
                     console.log(this.is, 'USER AUTHENTICATION', detail.error);
                 } else {
                 }
