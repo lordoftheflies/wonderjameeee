@@ -204,8 +204,8 @@
              * Ajax response handler for `deleteMemberAjax` element.
              */
             onDeleteMemberAjaxResponse: function (event, details) {
-                console.log(this.si, 'member removed successfully:', JSON.stringify(details.response));
-                this.set('route.path', '/members-view/' + this.$.membersView.selectedAccountId);
+                console.log(this.is, 'member removed successfully:', JSON.stringify(details.response));
+                this.set('route.path', '/members-view/' + this.$.memberEditor.memberModel.parent);
 //                this.$.networkPage.selectedAccountId = this.session.token;
 //                this.$.childrenIronAjax.generateRequest();
 //                this.$.genocideIronAjax.generateRequest();

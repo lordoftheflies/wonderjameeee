@@ -203,7 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!--Share content-->
         <iron-ajax id="deleteMemberAjax" url="[[apiUrl]]/addressbook/delete"
-                   body="{{deleteMemberModel}}" headers="[[headers]]"
+                   body="{{deleteMemberModel}}" headers="[[headers]]" on-error="onDeleteMemberAjaxError" on-response="onDeleteMemberAjaxResponse"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
 
         <!--Share content-->
@@ -518,15 +518,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-fab icon="wonderjam-icons:edit" mini on-tap="onOpenMemberEditor" title="Edit member." id="openMemberEditorFab"></paper-fab>
                         <paper-fab icon="wonderjam-icons:add" on-tap="onOpenCreateMember"></paper-fab>
                         <template is="dom-if" if="[[!isMeIndicator]]">
-                            <paper-fab icon="wonderjam-icons:remove" on-tap="onDeleteMember"></paper-fab>
+                            <!--<paper-fab icon="wonderjam-icons:remove" on-tap="onDeleteMember"></paper-fab>-->
 
-                            <paper-fab icon="icons:send" on-tap="onSendToMember"></paper-fab>
-                            <template is="dom-if" if="[[isUserIndicator]]">
+                            <paper-fab icon="wonderjam-icons:send" on-tap="onSendToMember"></paper-fab>
+<!--                            <template is="dom-if" if="[[isUserIndicator]]">
                                 <paper-fab icon="wonderjam-icons:star" on-tap="onPromoteMember"></paper-fab>
                             </template>
                             <template is="dom-if" if="[[isAdminIndicator]]">
                                 <paper-fab icon="wonderjam-icons:star-border" on-tap="onDemoteMember"></paper-fab>
-                            </template>
+                            </template>-->
                         </template>
 
                     </div>
