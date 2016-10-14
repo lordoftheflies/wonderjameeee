@@ -1,16 +1,16 @@
 package hu.digitaldefense.topflavonnetwork;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             });
             webView.setWebChromeClient(webChromeClient);
             webView.setWebViewClient(new AppWebViewClients(progressBar, webView));
-            webView.addJavascriptInterface(new AppJavaScriptProxy(this), "sessionProxy");
+            webView.addJavascriptInterface(new AppJavaScriptProxy(), "sessionProxy");
 
             webView.evaluateJavascript("fromAndroid()", new ValueCallback<String>() {
                 @Override
@@ -177,4 +177,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Created by lordoftheflies on 2016.10.09..
+     */
+    public static class AppJavaScriptProxy {
+
+        public AppJavaScriptProxy() {
+        }
+
+        @JavascriptInterface
+        public void updateAccountId(String value) {
+            Log.d(TAG, "User logged in with account: " + value);
+        }
+    }
 }
