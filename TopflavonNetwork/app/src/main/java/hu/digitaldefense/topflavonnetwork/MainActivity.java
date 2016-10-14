@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Created by lordoftheflies on 2016.10.09..
      */
-    public static class AppJavaScriptProxy {
+    public class AppJavaScriptProxy {
 
         public AppJavaScriptProxy() {
         }

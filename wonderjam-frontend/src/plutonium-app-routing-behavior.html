@@ -152,17 +152,18 @@
             },
             observeAccountId: function (user) {
                 this.accountId = user.id;
-
-                // If we are on IOS, then fire session event.
-                if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
-                    var iosLoginEvent = {accountId: token.token};
-                    console.log(this.is, 'IOS event:', iosLoginEvent);
-                    window.webkit.messageHandlers.interOp.postMessage(iosLoginEvent);
-                }
-                // If we are on Android, then fire session event.
-                if (typeof sessionProxy !== "undefined") {
-                    console.log(this.is, 'update account id');
-                    sessionProxy.updateAccountId(this.accountId);
+                if (this.accountId) {
+                    // If we are on IOS, then fire session event.
+                    if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
+                        var iosLoginEvent = {accountId: token.token};
+                        console.log(this.is, 'IOS event:', iosLoginEvent);
+                        window.webkit.messageHandlers.interOp.postMessage(iosLoginEvent);
+                    }
+                    // If we are on Android, then fire session event.
+                    if (typeof sessionProxy !== "undefined") {
+                        console.log(this.is, 'update account id');
+                        sessionProxy.updateAccountId(this.accountId);
+                    }
                 }
             },
             onLogout: function () {
