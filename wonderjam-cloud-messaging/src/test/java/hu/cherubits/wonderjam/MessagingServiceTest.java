@@ -70,6 +70,6 @@ public class MessagingServiceTest {
         // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
     }
-    private static final String SUBSCRIPTION_ID = "fguHaWEqJRc:APA91bHE3SEOiNronjd27q8QPMyNgt557UZ1mKdH7whsCG8_V_vyt49k08l58YdEUjbkGFKtN199Vg4KntP5aqcGhq-mRDpAk4c1VaebHrVoOj_SM1hwZgrS-eN-ME-tcDYgqJPbmz68";
+    private static final String SUBSCRIPTION_ID = "daMOzexEdbs:APA91bH96NVBWi44b8G0fdVrIIZ3tULXrtG3HPHEAuNK-RmN20xTd-DXZXbBD0B7CIi6GMybPnYbSh1IMGtLrQYAZ-gHZ-E4Vco2s8eSWnLT1D8jNM01gTTkFakfJPvj7w0bpSyyzNz7";
 
 }

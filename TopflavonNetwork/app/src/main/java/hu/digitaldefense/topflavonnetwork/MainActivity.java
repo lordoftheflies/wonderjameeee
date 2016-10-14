@@ -186,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void updateAccountId(String value) {
-            Log.d(TAG, "User logged in with account: " + value);
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
             String url = getResources().getString(R.string.base_url) + getResources().getString(R.string.subscription_path);
@@ -194,7 +193,8 @@ public class MainActivity extends AppCompatActivity {
             HashMap<String, String> params = new HashMap<String, String>();
             params.put("accountId", value);
             params.put("subscriptionId", WonderjamFirebaseInstanceIDService.getToken());
-
+            Log.d(TAG, "User logged in with account: " + value);
+            Log.d(TAG, "Current Firebase token: " + WonderjamFirebaseInstanceIDService.getToken());
 // Request a string response from the provided URL.
             JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                     new Response.Listener<JSONObject>() {
