@@ -8,7 +8,7 @@ android {
         applicationId "hu.digitaldefense.topflavonnetwork"
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 7
+        versionCode 8
         versionName "1.2"
     }
     buildTypes {
@@ -24,3 +24,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.1'
 }
+
+// Add to the bottom of the file
+apply plugin: 'com.google.gms.google-services'
