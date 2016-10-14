@@ -140,7 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
         <!--Get profile-->
         <iron-ajax id="regProfileIronAjax" url="[[regProfileAjaxUrl]]" 
-                   last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
+                   last-response="{{regProfile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
                    handle-as="json" content-type="application/json"></iron-ajax>
         <!--Profile-->
         <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[accountId]]/profile" 
@@ -391,6 +391,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         name="logon-view"
                         route="{{subroute}}"
                         registration-subroute-data="[[registrationSubrouteData]]"
+                        
                         api-url="[[apiUrl]]"
                         headers="[[headers]]"
                         signed-in="{{authenticated}}"

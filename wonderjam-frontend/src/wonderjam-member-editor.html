@@ -177,7 +177,18 @@ In typical use, just slap some `<wonderjam-member-editor>` at the top of your bo
 
             },
             observeModel: function (created) {
+                if (created) {
+                    this.memberModel = {
+                        id: null,
+                        name: null,
+                        email: null,
+                        parent: null,
+                        role: null,
+                        preferredLanguage: null
+                    };
+                }
                 console.debug(this.is, 'oberve member-model', this.memberModel);
+
             },
             computeIsGroup: function (selectedType) {
                 return selectedType === 'GROUP';

@@ -60,9 +60,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
 
         <!--Get profile-->
-<!--        <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
+        <iron-ajax id="profileIronAjax" url="[[apiUrl]]/addressbook/[[registrationSubrouteData.activationCode]]/profile" 
                    last-response="{{profile}}" headers="[[headers]]" on-response="onProfileIronAjaxResponse" on-error="onProfileIronAjaxError"
-                   handle-as="json" content-type="application/json"></iron-ajax>-->
+                   handle-as="json" content-type="application/json"></iron-ajax>
 
         <paper-card id="signinCard" heading="Logon">
             <paper-spinner id="spinner" hidden="[[!loading]]"></paper-spinner>

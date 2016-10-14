@@ -141,8 +141,8 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         mailBoxRepository.save(balazspeczelyMb);
 
         AccountEntity cseszkupopoveszku = new AccountEntity();
-        cseszkupopoveszku.setEmail("blaise.peczely@gmail.com");
-        cseszkupopoveszku.setName("Péczely Balázs (Adminisztrátor)");
+        cseszkupopoveszku.setEmail("administrator@cherubits.hu");
+        cseszkupopoveszku.setName("Cherubits (Adminisztrátor)");
         cseszkupopoveszku.setPassword("qwe123");
         cseszkupopoveszku.setPreferredLanguage("en");
         cseszkupopoveszku = accountRepo.save(cseszkupopoveszku);
@@ -158,8 +158,8 @@ public class TopFlavonContentTest extends ChristeamServerApplicationTests {
         mailBoxRepository.save(cseszkupopoveszkuMb);
 
         AccountEntity parazita = new AccountEntity();
-        parazita.setEmail("balazs.peczely.sp@gmail.com ");
-        parazita.setName("Péczely Balázs (Felhasználó)");
+        parazita.setEmail("admin@cherubits.hu");
+        parazita.setName("Cherubits (Felhasználó)");
         parazita.setPassword("qwe123");
         parazita.setPreferredLanguage("hu");
         parazita = accountRepo.save(parazita);
