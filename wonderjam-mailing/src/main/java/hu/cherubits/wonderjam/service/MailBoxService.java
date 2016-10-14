@@ -125,26 +125,23 @@ public class MailBoxService {
     @RequestMapping(path = "/subscription", method = RequestMethod.POST)
     public ResponseEntity synchronizeSubscription(@RequestBody SubscriptionDto model) {
         try {
-            AccountEntity account = null;
-            if (model.getAccountId() != null) {
-                account = accountRepository.findOne(model.getAccountId());
-            } else if (model.getEmail() != null) {
-                account = accountRepository.findByEmail(model.getEmail());
+            AccountEntity account = accountRepository.findOne(model.getAccountId());
+            if (account != null) {
+                String oldSubscriptionId = account.getSubscriptionId();
+                account.setSubscriptionId(model.getSubscriptionId());
+                accountRepository.save(account);
+                LOG.log(Level.INFO, "{0} ({1}) synchronize subscription: {2} -> {3}", new Object[]{
+                    account.getName(),
+                    account.getId(),
+                    oldSubscriptionId,
+                    model.getSubscriptionId()
+                });
+                return new ResponseEntity(model, HttpStatus.OK);
             } else {
-                account = new AccountEntity();
+                return new ResponseEntity(new NullPointerException(model.getAccountId().toString()), HttpStatus.BAD_REQUEST);
             }
-
-            String oldSubscriptionId = account.getSubscriptionId();
-            account.setSubscriptionId(model.getSubscriptionId());
-            accountRepository.save(account);
-            LOG.log(Level.INFO, "{0} ({1}) synchronize subscription: {2} -> {3}", new Object[]{
-                account.getName(),
-                account.getId(),
-                oldSubscriptionId,
-                model.getSubscriptionId()
-            });
             // Respond to the sending.
-            return ResponseEntity.ok().build();
+
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
         }
@@ -182,7 +179,7 @@ public class MailBoxService {
                             LOG.log(Level.WARNING, "Content not added.", ex);
                         }
                     }
-                        message.setSender(sender);
+                    message.setSender(sender);
                     message.setMailBox(recipientMalboxEntity);
                     MessageEntity newMessage = messageRepository.save(message);
                     LOG.log(Level.INFO, "Add message[{0}] to inbox of recipient[{1}]", new Object[]{
