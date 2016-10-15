@@ -5,12 +5,14 @@
  */
 package hu.cherubits.wonderjam.services;
 
-import hu.cherubits.wonderjam.fcm.FcmSender;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.MulticastResult;
+import com.google.android.gcm.server.Notification;
 import com.google.android.gcm.server.Sender;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import hu.cherubits.wonderjam.fcm.FcmMessage;
+import hu.cherubits.wonderjam.fcm.FcmSender;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
@@ -56,33 +58,31 @@ public class NotificationService {
         }
     }
 
-    private void append(Message.Builder builder, String key, String value) {
-        builder.collapseKey(key).addData(key, value);
-    }
-
-    public void send(Map<String, String> props, String... to) {
+    public void send(String title, String body, String... to) throws IOException {
 
         try {
             LOG.log(Level.INFO, "SEND MESSAGE ...");
             LOG.log(Level.INFO, "FCM Server Key: {0}", fcmServerKey);
             LOG.log(Level.INFO, "FCM Sender ID: {0}", fcmSenderId);
-            LOG.log(Level.INFO, "Properties: {0}", props.toString());
+            
+            Notification notification = new Notification.Builder("myicon")
+                    .title(title)
+                    .body(body)
+                    .badge(5)
+                    .color("red")
+                    .clickAction("onClickNotification")
+                    .sound("default")
+                    .tag("notification")
+                    .build();
 
-            Sender sender = new FcmSender(fcmServerKey);
+            LOG.log(Level.INFO, "Properties: {0}", notification.toString());
 
-            Message.Builder builder = new Message.Builder()
-                    .timeToLive(3)
-                    .delayWhileIdle(true);
+            
+            FcmSender sender = new FcmSender(fcmServerKey);
 
-            props.forEach((String key, String value) -> append(builder, key, value));
+            sender.send(notification, Arrays.asList(to));
 
-            Message message = builder.build();
-
-            // Use the same token(or registration id) that was earlier
-            // used to send the message to the client directly from
-            // Firebase Console's Notification tab.
-            MulticastResult result = sender.send(message, Arrays.asList(to), 1);
-            LOG.log(Level.INFO, "Result: {0}", result.toString());
+//            LOG.log(Level.INFO, "Result: {0}", result.toString());
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Could not send message.", ex);
         }

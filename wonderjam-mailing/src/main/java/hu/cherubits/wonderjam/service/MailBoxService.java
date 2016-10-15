@@ -197,11 +197,10 @@ public class MailBoxService {
             // Try notify users.
             try {
                 String[] subscriptionArray = new String[subscriptionIds.size()];
-                HashMap<String, String> properties = new HashMap<>();
-                properties.put("sender", accountRepository.findOne(accountId).getName());
-                properties.put("text", model.getMessage());
-                properties.put("link", model.getContentId().toString());
-                notificationService.send(properties, subscriptionIds.toArray(subscriptionArray));
+                notificationService.send(
+                        accountRepository.findOne(id).getName() + " said", 
+                        model.getMessage(),
+                        subscriptionIds.toArray(subscriptionArray));
             } catch (Exception ex) {
                 LOG.log(Level.WARNING, "Cloud not notify recipient.", ex);
             }
