@@ -69,7 +69,7 @@ public class NotificationService {
                     .title(title)
                     .body(body)
                     .badge(5)
-                    .color("red")
+//                    .color("red")
                     .clickAction("onClickNotification")
                     .sound("default")
                     .tag("notification")
