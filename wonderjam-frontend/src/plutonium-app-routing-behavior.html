@@ -201,7 +201,7 @@
                 this.headers.authorization = 'Basic ' + btoa(c.userName + ':' + c.password);
                 this.$.userAjax.generateRequest();
 
-                this.set('route.path', '/');
+                this.set('route.path', '/article-view/ROOT');
             },
             onTokenAjaxResponse: function (event, detail) {
                 this.authenticated = true;
