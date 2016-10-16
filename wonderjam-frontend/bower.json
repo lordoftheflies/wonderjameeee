@@ -45,7 +45,6 @@
     "paper-menu": "PolymerElements/paper-menu#^1.2.2",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.3.5",
     "paper-dialog-scrollable": "polymerelements/paper-dialog-scrollable#^1.1.5",
-    "plutonium-manageable-content": "lordoftheflies/plutonium-manageable-content#^1.0.11",
     "iron-icons": "polymerelements/iron-icons#^1.1.3",
     "paper-input": "polymerelements/paper-input#^1.1.17",
     "file-upload": "^1.7.7",
@@ -57,7 +56,8 @@
     "iron-validator-behavior": "^1.0.1",
     "iron-meta": "polymerelements/iron-meta#^1.1.2",
     "plutonium-cms": "lordoftheflies/plutonium-cms",
-    "paper-chip": "lordoftheflies/paper-chip#^1.1.1"
+    "paper-chip": "lordoftheflies/paper-chip#^1.1.1",
+    "platinum-push-messaging": "PolymerElements/platinum-push-messaging#^1.0.5"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

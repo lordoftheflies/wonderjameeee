@@ -46,6 +46,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <meta name="msapplication-TileColor" content="#3f51b5">
         <meta name="msapplication-tap-highlight" content="no">
 
+
+
         <script>
             // Setup Polymer options
             window.Polymer = {
@@ -84,6 +86,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             })();
 
+            window.onload = function () {
+                // Show a warning if you're holding https wrong.
+                if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+                    console.warn('Service workers not supported only on https.');
+                }
+
+
+
+                var ppm = document.querySelector('platinum-push-messaging');
+                var previousSubscriptionId;
+                if (!ppm.supported) {
+                    console.warn('Service workers not supported only on https.');
+                }
+
+                ppm.addEventListener('subscription-changed', function (event) {
+                    // GCM always needs the subscriptionId passed separately. Note that as of M45,
+                    // the subscriptionId and the endpoint have merged.
+                    var subscriptionId = ppm.subscription ? ppm.subscription.subscriptionId : undefined;
+                    if (ppm.subscription && !ppm.subscription.subscriptionId) {
+                        var endpointSections = ppm.subscription.endpoint.split('/');
+                        subscriptionId = endpointSections[endpointSections.length - 1];
+                    }
+                    subscription.textContent = JSON.stringify(ppm.subscription || undefined, null, 2);
+                    if (subscriptionId)
+                        previousSubscriptionId = subscriptionId;
+                });
+
+
+                ppm.addEventListener('enabled-changed', function (event) {
+                    // <3 fetch() <3
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'https://www.topflavon.net:8443/backend/mailbox/subscription');
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+                    // There's no response in the success case.
+                    xhr.onerror = function () {
+                        console.log("Couldn't send subscription to server.");
+                    };
+                    xhr.send(JSON.stringify({
+                        accountId: "string",
+                        subscriptionId: "string"
+                    }));
+                });
+
+            }
+
 //            // Load pre-caching Service Worker
 //            if ('serviceWorker' in navigator) {
 //                window.addEventListener('load', function () {
@@ -93,6 +140,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </script>
 
         <link rel="import" href="/src/wonderjam-app.html">
+        <link rel="import" href="/bower_components/platinum-push-messaging/platinum-push-messaging.html">
+
 
         <style>
             body {
@@ -105,6 +154,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </style>
     </head>
     <body>
+
+    <platinum-push-messaging></platinum-push-messaging>
+
     <wonderjam-app id="app" 
                    role="ADMIN" api-url="/backend" application-domain="wonderjam" 
                    home-page="about-view" login-page="login-view">
