@@ -5,7 +5,7 @@
     "src/wonderjam-about-view.html",
     "src/wonderjam-help-view.html",
     "src/wonderjam-article-view.html",
-    "src/wonderjam-article-section-view.html",
+    "src/wonderjam-article-section.html",
     "src/wonderjam-login-view.html",
     "src/wonderjam-logon-view.html",
     "src/wonderjam-mailbox-view.html",
