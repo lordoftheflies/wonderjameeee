@@ -75,7 +75,7 @@ public class NotificationService {
                     .tag("notification")
                     .build();
 
-            LOG.log(Level.INFO, "Properties: {0}", notification.toString());
+            LOG.log(Level.INFO, "FCM Payload: {0}", notification.toString());
 
             
             FcmSender sender = new FcmSender(fcmServerKey);

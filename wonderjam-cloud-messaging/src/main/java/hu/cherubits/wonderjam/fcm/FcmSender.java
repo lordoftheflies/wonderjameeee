@@ -34,7 +34,7 @@ public class FcmSender extends Sender {
     private static final Logger LOG = Logger.getLogger(FcmSender.class.getName());
 
     String fcmUrl = "https://fcm.googleapis.com/fcm/send";
-    
+
     private String fcmKey;
 
     public FcmSender(String key) {
@@ -50,7 +50,7 @@ public class FcmSender extends Sender {
     public void send(Notification notification, List<String> regIds) throws IOException {
         regIds.forEach(id -> {
             try {
-                LOG.log(Level.INFO, "Sending notification ...");
+                LOG.log(Level.INFO, "Sending FCM notification to {0} ...", id);
                 HttpClient client = HttpClientBuilder.create().build();
                 HttpPost post = new HttpPost(fcmUrl);
                 post.setHeader("Content-type", "application/json");
@@ -58,7 +58,7 @@ public class FcmSender extends Sender {
                 JSONObject message = new JSONObject();
                 message.put("to", id);
                 message.put("priority", "high");
-                
+
                 JSONObject notificationJson = new JSONObject();
                 notificationJson.put("badge", notification.getBadge());
                 notificationJson.put("body", notification.getBody());
@@ -68,7 +68,7 @@ public class FcmSender extends Sender {
                 notificationJson.put("sound", notification.getSound());
                 notificationJson.put("tag", notification.getTag());
                 notificationJson.put("title", notification.getTitle());
-                
+
                 message.put("notification", notificationJson);
                 post.setEntity(new StringEntity(message.toString(), "UTF-8"));
                 HttpResponse response = client.execute(post);
