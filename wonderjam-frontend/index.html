@@ -131,16 +131,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             }
 
-//            // Load pre-caching Service Worker
-//            if ('serviceWorker' in navigator) {
-//                window.addEventListener('load', function () {
-//                    navigator.serviceWorker.register('/service-worker.js');
-//                });
-//            }
+            console.debug('Create service-worker ...');
+            // Load pre-caching Service Worker
+            if ('serviceWorker' in navigator) {
+                console.log('Service Worker is supported');
+
+                window.addEventListener('load', function () {
+                    window.addEventListener('fcm', function (e) {
+                        console.debug('FCM token:', e.detail);
+                        window.fcm = e.detail;
+                        document.querySelector('wonderjam-app').setAttribute('fcm', e.detail);
+                    });
+
+                    navigator.serviceWorker.register('service-worker.js').then(function () {
+                        return navigator.serviceWorker.ready;
+                    }).then(function (reg) {
+                        console.log('Service Worker is ready :^)', reg);
+                        reg.pushManager.subscribe({
+                            userVisibleOnly: true
+                        }).then(function (sub) {
+                            console.log('endpoint:', sub.endpoint);
+                            var fcmEndpoint = sub.endpoint.split('/');
+                            var fcmEvent = new CustomEvent('fcm', {
+                                detail: fcmEndpoint[fcmEndpoint.length - 1]
+                            });
+                            window.dispatchEvent(fcmEvent);
+                        });
+                    }).catch(function (error) {
+                        console.log('Service Worker error :^(', error);
+                    });
+                });
+            }
         </script>
 
-        <link rel="import" href="/src/wonderjam-app.html">
         <link rel="import" href="/bower_components/platinum-push-messaging/platinum-push-messaging.html">
+
+        <link rel="import" href="/src/wonderjam-app.html">
 
 
         <style>

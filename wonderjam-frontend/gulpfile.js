@@ -31,6 +31,8 @@ const i18nLeverage = require('gulp-i18n-leverage');
 const XliffConv = require('xliff-conv');
 const i18nAddLocales = require('gulp-i18n-add-locales');
 
+const gulpConcat = require('gulp-concat');
+
 // Got problems? Try logging 'em
 // const logging = require('plylog');
 // logging.setVerbose();
@@ -245,13 +247,33 @@ function dependencies() {
     .pipe(project.rejoin());
 }
 
+const pushUnbundled = gulp.task('push-unbundled', function() {
+    return gulp.src([
+        './build/unbundled/service-worker.js',
+        './service-worker.js' 
+    ])
+    .pipe(gulpConcat('service-worker.js'))
+    .pipe(gulp.dest('./build/unbundled/'));
+});
+
+const pushBundled = gulp.task('push-bundled', function() {
+    return gulp.src([
+        './build/bundled/service-worker.js',
+        './service-worker.js'
+    ])
+    .pipe(gulpConcat('service-worker.js'))
+    .pipe(gulp.dest('./build/bundled/'));
+});
+
 // Clean the build directory, split all source and dependency files into streams
 // and process them, and output bundled and unbundled versions of the project
 // with their own service workers
 gulp.task('default', gulp.series([
   clean.build,
   project.merge(source, dependencies),
-  project.serviceWorker
+  project.serviceWorker,
+  'push-unbundled',
+  'push-bundled'
 ]));
 
 // Gulp task to add locales to I18N-ready elements and pages

@@ -251,6 +251,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-ajax id="logoutAjax" url="[[apiUrl]]/logout" 
                    headers="[[headers]]" on-response="onLogoutResponse" on-error="onLogoutError"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        
+        <!--Subscription AJAX request-->
+        <iron-ajax id="subscriptionAjax" url="[[apiUrl]]/mailbox/subscription" 
+                   headers="[[headers]]" body="[[subscription]]" on-response="onSubscriptionAjaxResponse" on-error="onSubscriptionAjaxError"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        
         <!--<iron-ajax id="rootArticlesAjax" url="http://localhost:8081/cms/root" headers="[[headers]]" last-response="{{rootArticlesModel}}" auto="[[token]]"></iron-ajax>-->
         <!--<iron-ajax id="rootArticlesAjax" url="http://localhost:8081/cms/root" headers="[[headers]]" last-response="{{rootArticlesModel}}" auto="false"></iron-ajax>-->
         <!--Routing-->

@@ -50,8 +50,16 @@
                     type: String,
                     notify: true
                 },
+                fcm: {
+                    type: String,
+                    notify: true
+                },
                 session: {
                     type: String,
+                    notify: true
+                },
+                subscription: {
+                    type: Object,
                     notify: true
                 }
             },
@@ -59,6 +67,7 @@
                 '_routePageChanged(routeData.page, authenticated)',
                 'observeAuthorizationHeaders(token.token, xsrfToken)',
                 'observeAccountId(user)',
+                'observeSubscription(accountId, fcm)',
             ],
             listeners: {
                 'page-go': '_onNavigate',
@@ -156,15 +165,53 @@
                     // If we are on IOS, then fire session event.
                     if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
                         var iosLoginEvent = {accountId: token.token};
-                        console.log(this.is, 'IOS event:', iosLoginEvent);
+                        console.log(this.is, 'IOS synchronize account ...');
                         window.webkit.messageHandlers.interOp.postMessage(iosLoginEvent);
                     }
                     // If we are on Android, then fire session event.
                     if (typeof sessionProxy !== "undefined") {
-                        console.log(this.is, 'update account id');
+                        console.log(this.is, 'Android synchronize account ...');
                         sessionProxy.updateAccountId(this.accountId);
                     }
+
                 }
+            },
+            observeSubscription: function (accountId, fcmToken) {
+                var isMobile = {
+                    Android: function () {
+                        return navigator.userAgent.match(/Android/i);
+                    },
+                    BlackBerry: function () {
+                        return navigator.userAgent.match(/BlackBerry/i);
+                    },
+                    iOS: function () {
+                        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                    },
+                    Opera: function () {
+                        return navigator.userAgent.match(/Opera Mini/i);
+                    },
+                    Windows: function () {
+                        return navigator.userAgent.match(/IEMobile/i);
+                    },
+                    any: function () {
+                        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+                    }
+                };
+
+                if (!isMobile.any()) {
+                    console.log(this.is, 'Browser synchronize account ...');
+                    this.subscription = {
+                        accountId: accountId,
+                        subscriptionId: fcmToken
+                    }
+                    this.$.subscriptionAjax.generateRequest();
+                }
+            },
+            onSubscriptionAjaxResponse: function() {
+                console.debug(this.is, 'subscription id synchronized.');
+            },
+            onSubscriptionAjaxError: function() {
+                console.warn(this.is, 'subscription id synchronization failed.');
             },
             onLogout: function () {
                 console.log(this.is, 'logout ...');

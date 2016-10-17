@@ -93,6 +93,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         LOGON_PROCESSING_URL,
                         //                        TOKEN_URL,
                         SUBSCRIPTION_URL,
+                        NOTIFICATION_URL,
                         BASE_URL,
                         SERVICE_WORKER,
                         WEBJARS,
@@ -191,6 +192,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String BASE_URL = "/";
     private static final String BACKEND_URL = "/backend";
     private static final String SUBSCRIPTION_URL = "/mailbox/subscription";
+    private static final String NOTIFICATION_URL = "/mailbox/notifications";
     private static final String LOGON_PROCESSING_URL = "/authentication/signon";
     private static final String LOGON_URL = "/addressbook/*/profile";
     private static final String LOGIN_URL = "/login";
