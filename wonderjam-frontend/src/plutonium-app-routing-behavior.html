@@ -164,7 +164,7 @@
                 if (this.accountId) {
                     // If we are on IOS, then fire session event.
                     if (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.interOp) {
-                        var iosLoginEvent = {accountId: token.token};
+                        var iosLoginEvent = { accountId: this.accountId };
                         console.log(this.is, 'IOS synchronize account ...');
                         window.webkit.messageHandlers.interOp.postMessage(iosLoginEvent);
                     }
