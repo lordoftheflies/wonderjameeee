@@ -8,8 +8,8 @@ android {
         applicationId "hu.digitaldefense.topflavonnetwork"
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 10
-        versionName "1.4"
+        versionCode 12
+        versionName "1.6"
     }
     buildTypes {
         release {

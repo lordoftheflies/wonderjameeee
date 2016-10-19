@@ -19,6 +19,7 @@ import hu.cherubits.wonderjam.entities.NetworkNodeEntity;
 import hu.cherubits.wonderjam.entities.NetworkNodeType;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -220,14 +221,26 @@ public class AddressBookService {
 
     @RequestMapping(path = "/genocide",
             method = RequestMethod.GET)
-    public List<ContactDto> getParents(@RequestParam(name = "childId", required = true) String childId) {
+    public List<ContactDto> getParents(@RequestParam(name = "accountId", required = true) String accountId, @RequestParam(name = "childId", required = true) String childId) {
         if (ROOT_KEY.equals(childId)) {
             return new ArrayList<>();
         } else {
 
             final List<ContactDto> results = this.retrieveParent(accountRepository.findOne(UUID.fromString(childId)), new ArrayList<>());
             Collections.reverse(results);
-            return results;
+            boolean wasMe = false;
+            List<ContactDto> resultsFromMe = new ArrayList<>();
+            for (Iterator<ContactDto> iterator = results.iterator(); iterator.hasNext();) {
+                ContactDto next = iterator.next();
+                if (accountId.equals(next.getId().toString())) {
+                    wasMe = true;
+                }
+
+                if (wasMe) {
+                    resultsFromMe.add(next);
+                }
+            }
+            return resultsFromMe;
         }
     }
 
