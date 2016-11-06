@@ -59,6 +59,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             div.error {
                 color: red;
             }
+            
+            div.form-actions {
+                padding-bottom: 16px !important;
+            }
         </style>
 
         <polymer-cookie
@@ -135,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         dialog-confirm></paper-fab>
                 </form>
             </div>
-            <div class="card-actions layout vertical">
+            <div class="form-actions card-actions layout vertical">
                 <paper-toggle-button id="rememberMeToggleButtonLabel" tabindex="4" name="remember-me" checked="{{rememberMe}}" value="[[rememberMe]]">Remember me</paper-toggle-button>
                 <!--              <br />
                             <paper-button on-tap="onForgottenPassword" tabindex="5" raised>
