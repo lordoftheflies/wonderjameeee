@@ -33,13 +33,23 @@
       },
       {
         "op": "add",
-        "path": "/uploadFileText",
-        "value": "Choose File"
+        "path": "/propertiesCardTitle",
+        "value": " Select articles. "
       },
       {
         "op": "add",
-        "path": "/propertiesCardTitle",
-        "value": " Select articles. "
+        "path": "/fileUpload/chooseFile",
+        "value": "Choose file"
+      },
+      {
+        "op": "add",
+        "path": "/fileUpload/dropText",
+        "value": "Drop any PDF file here."
+      },
+      {
+        "op": "add",
+        "path": "/fileUpload/error-text",
+        "value": "File upload failed."
       }
     ]
   },
@@ -55,6 +65,10 @@
   "fileContentTabLabel": "Przekazać plik",
   "folderContentTabLabel": "Teczka",
   "articleContentTabLabel": "Gromadzić",
-  "uploadFileText": "Wybierz plik",
+  "fileUpload": {
+    "chooseFile": "Wybierz plik",
+    "dropText": "Upuść dowolny plik PDF tutaj.",
+    "error-text": "Przesyłanie pliku nie powiodło."
+  },
   "propertiesCardTitle": "Wybierz artykuły."
 }

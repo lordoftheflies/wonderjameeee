@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-11-08T12:03:57Z" product-name="messages">
+  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-11-08T12:49:29Z" product-name="messages">
     <header>
       <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
     </header>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.help-menu-label">
         <source>Help</source>
-        <target state="needs-translation">Help</target>
+        <target state="needs-translation">Pomoc</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.about-menu-label">
         <source>About</source>
@@ -362,9 +362,17 @@
         <source>Assemble</source>
         <target state="new">Gromadzić</target>
       </trans-unit>
-      <trans-unit id="wonderjam-share-view.uploadFileText">
-        <source>Choose File</source>
+      <trans-unit id="wonderjam-share-view.fileUpload.chooseFile">
+        <source>Choose file</source>
         <target state="new">Wybierz plik</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.fileUpload.dropText">
+        <source>Drop any PDF file here.</source>
+        <target state="new">Upuść dowolny plik PDF tutaj.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-share-view.fileUpload.error-text">
+        <source>File upload failed.</source>
+        <target state="new">Przesyłanie pliku nie powiodło.</target>
       </trans-unit>
       <trans-unit id="wonderjam-share-view.propertiesCardTitle">
         <source> Select articles. </source>

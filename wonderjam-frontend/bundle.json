@@ -209,6 +209,17 @@
     "messageItemReceiverLabel": "To:",
     "emptyMailBoxFolderText": "No messages in the folder."
   },
+  "wonderjam-member-details": {
+    "meta": {
+      "locales": [
+        "en",
+        "en-US",
+        "hu",
+        "po"
+      ]
+    },
+    "model": {}
+  },
   "wonderjam-member-editor": {
     "meta": {
       "locales": [
@@ -328,7 +339,11 @@
     "fileContentTabLabel": "Upload",
     "folderContentTabLabel": "Folder",
     "articleContentTabLabel": "Assemble",
-    "uploadFileText": "Choose File",
+    "fileUpload": {
+      "chooseFile": "Choose file",
+      "dropText": "Drop any PDF file here.",
+      "error-text": "File upload failed."
+    },
     "propertiesCardTitle": " Select articles. "
   },
   "wonderjam-view401": {

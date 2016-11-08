@@ -472,6 +472,12 @@
     "messageItemReceiverLabel": "To:",
     "emptyMailBoxFolderText": "No messages in the folder."
   },
+  "wonderjam-member-details": {
+    "meta": {
+      "todo": []
+    },
+    "model": {}
+  },
   "wonderjam-member-editor": {
     "meta": {
       "todo": [
@@ -705,13 +711,23 @@
         },
         {
           "op": "add",
-          "path": "/uploadFileText",
-          "value": "Choose File"
+          "path": "/propertiesCardTitle",
+          "value": " Select articles. "
         },
         {
           "op": "add",
-          "path": "/propertiesCardTitle",
-          "value": " Select articles. "
+          "path": "/fileUpload/chooseFile",
+          "value": "Choose file"
+        },
+        {
+          "op": "add",
+          "path": "/fileUpload/dropText",
+          "value": "Drop any PDF file here."
+        },
+        {
+          "op": "add",
+          "path": "/fileUpload/error-text",
+          "value": "File upload failed."
         }
       ]
     },
@@ -727,7 +743,11 @@
     "fileContentTabLabel": "Upload",
     "folderContentTabLabel": "Folder",
     "articleContentTabLabel": "Assemble",
-    "uploadFileText": "Choose File",
+    "fileUpload": {
+      "chooseFile": "Choose file",
+      "dropText": "Drop any PDF file here.",
+      "error-text": "File upload failed."
+    },
     "propertiesCardTitle": " Select articles. "
   },
   "wonderjam-view401": {

@@ -206,16 +206,22 @@ Wham! It's all awesome now!
                                     content-model="{{contentModel}}"></plutonium-cms-form>
 
                 <!--<paper-card id="propertiesCardTitle" name="embedded" class="card-content layout horizontal" elevation="1" heading="Upload article">-->
+                <json-data id="fileUpload">
+                    { "chooseFile": "Choose file", "dropText": "Drop any PDF file here.", "error-text": "File upload failed." }
+                </json-data>
                 <div id="propertiesCardTitle" name="embedded" class="layout vertical center" heading="Upload article">
                     <file-upload 
                         id="uploadFileText"
-                        drop-text="Drop any PDF file here."
-                        error-text="File upload failed."
+                        drop-text="[[text.fileUpload.dropText]]"
+                        error-text="[[text.fileUpload.errorText]]"
                         droppable="true" 
                         raised="true" 
                         multi="false" 
                         method="POST"
-                        target="{{fileUploadTarget}}">Choose File</file-upload>
+                        target="{{fileUploadTarget}}">
+
+                        [[text.fileUpload.chooseFile]]
+                    </file-upload>
                 </div>
                 <div id="propertiesCardTitle" name="linked" class="layout vertical center" heading="Upload article">
                     Select articles.
@@ -299,11 +305,12 @@ Wham! It's all awesome now!
                 'itemsAddedOrRemoved(selectedItemIds.splices)'
             ],
             listeners: {
-//                'create': 'onSectionCreate',
-//                'remove': 'onRemoveItem',
-//                'share': 'onShare',
-//                'shareAjax.error': 'onShareError',
-//                'shareAjax.response': 'onShareResponse'
+                'lang-updated': '_langUpdated'
+            },
+            _langUpdated: function (event) {
+                if (Polymer.dom(event).rootTarget === this) {
+                    this.model = deepcopy(this.text.model);
+                }
             },
             observePageId: function (pageId) {
 

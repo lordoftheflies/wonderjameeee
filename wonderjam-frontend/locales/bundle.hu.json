@@ -472,6 +472,12 @@
     "messageItemReceiverLabel": "Címzett",
     "emptyMailBoxFolderText": "Nincsenek üzenetek a mappában."
   },
+  "wonderjam-member-details": {
+    "meta": {
+      "todo": []
+    },
+    "model": {}
+  },
   "wonderjam-member-editor": {
     "meta": {
       "todo": [
@@ -705,13 +711,23 @@
         },
         {
           "op": "add",
-          "path": "/uploadFileText",
-          "value": "Choose File"
+          "path": "/propertiesCardTitle",
+          "value": " Select articles. "
         },
         {
           "op": "add",
-          "path": "/propertiesCardTitle",
-          "value": " Select articles. "
+          "path": "/fileUpload/chooseFile",
+          "value": "Choose file"
+        },
+        {
+          "op": "add",
+          "path": "/fileUpload/dropText",
+          "value": "Drop any PDF file here."
+        },
+        {
+          "op": "add",
+          "path": "/fileUpload/error-text",
+          "value": "File upload failed."
         }
       ]
     },
@@ -727,7 +743,11 @@
     "fileContentTabLabel": "Feltöltés",
     "folderContentTabLabel": "Mappa",
     "articleContentTabLabel": "Összeállítás",
-    "uploadFileText": "Fájl kiválasztása",
+    "fileUpload": {
+      "chooseFile": "Fájl kiválasztása",
+      "dropText": "Húzza ide a DPF fájlt.",
+      "error-text": "Fájl feltöltés sikertelen."
+    },
     "propertiesCardTitle": "Válasszon cikkeket."
   },
   "wonderjam-view401": {
