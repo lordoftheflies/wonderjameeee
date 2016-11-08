@@ -25,7 +25,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "MessageEntity.inboxByRecipient", query = "SELECT m FROM MessageEntity m WHERE m.mailBox.owner.contact.id = :recipientId"),
+    @NamedQuery(name = "MessageEntity.inboxByRecipient", query = "SELECT m FROM MessageEntity m WHERE m.mailBox.owner.contact.id = :recipientId ORDER BY m.read, m.ts DESC"),
     @NamedQuery(name = "MessageEntity.notificationInboxByRecipient", query = "SELECT DISTINCT m FROM MessageEntity m WHERE m.mailBox.owner.contact.subscriptionId = :subscriptionId AND m.notified = FALSE"),
     @NamedQuery(name = "MessageEntity.outboxByRecipient", query = "SELECT m FROM MessageEntity m WHERE m.sender.contact.id = :senderId")
 })

@@ -16,7 +16,7 @@ public class NotificationDto {
     public NotificationDto() {
     }
 
-    public NotificationDto(String id, String fromId, String fromName, String toName, Date ts, String subject, String contentTitle, String contentId, String msg) {
+    public NotificationDto(String id, String fromId, String fromName, String toName, Date ts, String subject, String contentTitle, String contentId, String msg, boolean read) {
         this.id = id;
         this.fromId = fromId;
         this.fromName = fromName;
@@ -26,8 +26,19 @@ public class NotificationDto {
         this.message = msg;
         this.toName = toName;
         this.ts = ts;
+        this.read = read;
+    }
+    
+    private boolean read;
+
+    public boolean isRead() {
+        return read;
     }
 
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+    
     private String message;
 
     public String getMessage() {

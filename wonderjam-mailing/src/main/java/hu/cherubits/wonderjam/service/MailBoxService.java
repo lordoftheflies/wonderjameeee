@@ -18,9 +18,9 @@ import hu.cherubits.wonderjam.entities.AccountEntity;
 import hu.cherubits.wonderjam.entities.MailBoxEntity;
 import hu.cherubits.wonderjam.entities.MessageEntity;
 import hu.cherubits.wonderjam.entities.NetworkNodeEntity;
+import hu.cherubits.wonderjam.model.MarkingModel;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -64,6 +64,24 @@ public class MailBoxService {
     @Autowired
     private NotificationService notificationService;
 
+    @RequestMapping(path = "/{accountId}/mark", method = RequestMethod.POST)
+    public NotificationDto markAsRead(@PathVariable("accountId") String accountId, @RequestBody MarkingModel model) {
+        UUID ai = UUID.fromString(accountId);
+        LOG.log(Level.INFO, "Member[{0}] mark message[{1}] read.", new Object[]{ai, model.getMessageId()});
+        MessageEntity e = messageRepository.findOne(model.getMessageId());
+        return new NotificationDto(
+                e.getId().toString(),
+                accountId,
+                accountRepository.findOne(ai).getName(),
+                e.getMailBox().getOwner().getContact().getName(),
+                e.getTs(),
+                e.getText(),
+                (e.getContent() != null) ? e.getContent().getTitle() : null,
+                (e.getContent() != null) ? e.getContent().getId().toString() : null,
+                e.getText(),
+                e.getRead());
+    }
+
     @RequestMapping(path = "/{accountId}/inbox", method = RequestMethod.GET)
     public List<NotificationDto> inbox(@PathVariable("accountId") String accountId) {
         UUID id = UUID.fromString(accountId);
@@ -78,7 +96,8 @@ public class MailBoxService {
                         e.getText(),
                         (e.getContent() != null) ? e.getContent().getTitle() : null,
                         (e.getContent() != null) ? e.getContent().getId().toString() : null,
-                        e.getText()))
+                        e.getText(),
+                        e.getRead()))
                 .collect(Collectors.toList());
     }
 
@@ -97,7 +116,8 @@ public class MailBoxService {
                             e.getText(),
                             (e.getContent() != null) ? e.getContent().getTitle() : null,
                             (e.getContent() != null) ? e.getContent().getId().toString() : null,
-                            e.getText());
+                            e.getText(),
+                            e.getRead());
                 })
                 .collect(Collectors.toList());
     }
@@ -115,7 +135,8 @@ public class MailBoxService {
                 "Message received",
                 (e.getContent() != null) ? e.getContent().getTitle() : null,
                 (e.getContent() != null) ? e.getContent().getId().toString() : null,
-                e.getText()))
+                e.getText(),
+                e.getRead()))
                 .collect(Collectors.toList()));
         messages.stream().forEach((MessageEntity e) -> e.setNotified(true));
         messageRepository.save(messages);
@@ -198,7 +219,7 @@ public class MailBoxService {
             try {
                 String[] subscriptionArray = new String[subscriptionIds.size()];
                 notificationService.send(
-                        accountRepository.findOne(id).getName() + " said", 
+                        accountRepository.findOne(id).getName() + " said",
                         model.getMessage(),
                         subscriptionIds.toArray(subscriptionArray));
             } catch (Exception ex) {
