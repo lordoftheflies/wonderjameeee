@@ -69,6 +69,8 @@ public class MailBoxService {
         UUID ai = UUID.fromString(accountId);
         LOG.log(Level.INFO, "Member[{0}] mark message[{1}] read.", new Object[]{ai, model.getMessageId()});
         MessageEntity e = messageRepository.findOne(model.getMessageId());
+        e.setRead(true);
+        messageRepository.save(e);
         return new NotificationDto(
                 e.getId().toString(),
                 accountId,

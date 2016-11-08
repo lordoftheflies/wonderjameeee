@@ -49,7 +49,15 @@
                     type: String,
                     computed: 'computeMessageSendAjaxUrl(apiUrl, accountId)'
                 },
+                markAsReadAjaxUrl: {
+                    type: String,
+                    computed: 'computeMarkAsReadAjaxUrl(apiUrl, accountId)'
+                },
                 messageSendModel: {
+                    type: Object,
+                    notify: true
+                },
+                markingModel: {
                     type: Object,
                     notify: true
                 },
@@ -59,7 +67,8 @@
                 }
             },
             listeners: {
-                'pick-recipients': 'onOpenRecipientsPage'
+                'pick-recipients': 'onOpenRecipientsPage',
+                'mark-as-read': 'onMarkAsRead'
             },
             computeMessageSendAjaxUrl: function (apiUrl, accountId) {
                 return apiUrl + '/mailbox/' + accountId + '/send';
@@ -67,9 +76,24 @@
             computeMailBoxAjaxUrl: function (apiUrl, accountId, selectedMailBoxFolder) {
                 return apiUrl + '/mailbox/' + accountId + '/' + selectedMailBoxFolder;
             },
+            computeMarkAsReadAjaxUrl: function (apiUrl, accountId) {
+                return apiUrl + '/mailbox/' + accountId + '/mark';
+            },
             onOpenRecipientsPage: function () {
                 this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
                 this.set('page', 'recipients-view');
+            },
+            onMarkAsRead: function (event, details) {
+                console.debug(this.is, 'mark message as read', details);
+                this.markingModel = details;
+                this.$.markAsReadAjax.generateRequest();
+            },
+            onMarkAsReadResponse: function (event) {
+                console.debug(this.is, 'marked message as read successfully');
+                this.$.mailBoxAjax.generateRequest();
+            },
+            onMarkAsReadError: function (event) {
+                console.warn(this.is, 'failed to mark this message');
             },
             onSendMessage: function () {
                 this.$.messageSendAjax.generateRequest();

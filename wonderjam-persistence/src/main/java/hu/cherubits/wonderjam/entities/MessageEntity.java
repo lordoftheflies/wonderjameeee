@@ -66,7 +66,7 @@ public class MessageEntity implements Serializable {
         this.id = id;
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date ts;
 
     public Date getTs() {

@@ -185,6 +185,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-ajax id="mailBoxAjax" url="[[mailBoxAjaxUrl]]" 
                    last-response="{{mailBoxModel}}" headers="[[headers]]"
                    handle-as="json" content-type="application/json" auto="[[accountId]]"></iron-ajax>
+        <iron-ajax id="markAsReadAjax" url="[[markAsReadAjaxUrl]]" 
+                   body="{{markingModel}}" headers="[[headers]]" on-response="onMarkAsReadResponse" on-error="onMarkAsReadError"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
 
         <iron-ajax id="articleAjax" url="[[apiUrl]]/content-management/article" 
                    params="[[articleAjaxParams]]" last-response="{{articleDetailsModel}}" 

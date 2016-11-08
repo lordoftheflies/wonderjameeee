@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
 
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 
@@ -19,9 +20,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 
+<link rel="import" href="wonderjam-icons.html">
 <link rel="import" href="wonderjam-shared-styles.html">
 
 <dom-module id="wonderjam-mailbox-view">
+    
+    <script src="../bower_components/moment/min/moment.min.js"></script>
+    
     <template>
 
         <style include="wonderjam-shared-styles iron-flex iron-flex-alignment">
@@ -32,27 +37,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 padding: 10px;
             }
 
+            .unread {
+                background-color: yellow;
+            }
 
+            .read {
+                background-color: white;
+            }
 
         </style>
         <div class="card-content" hidden="[[isEmpty(mailBoxModel)]]">
             <template is="dom-repeat" items="[[mailBoxModel]]" as="message"  class="layout vertical">
-                <paper-item class="card-item layout horizontal" tabindex="[[tabIndex]]">
+                <paper-item
+                    on-tap="onMarkMessage" message="[[message.id]]"
+                    class="card-item layout horizontal" tabindex="[[tabIndex]]" 
+                    hidden$="[[isOutbox(selectedMailBoxFolder)]]">
                     <!--<paper-material class="layout horizontal">-->
                     <div class="flex">
                         <div class="layout horizontal">
+                            <iron-icon icon$="[[getReadState(message)]]"></iron-icon>
                             <div class="flex">
-                                <label hidden="[[isOutbox(selectedMailBoxFolder)]]">
+                                <label>
                                     <span id="messageItemSenderLabel">From:</span>
                                     <span id="messageItemSenderValue">[[message.fromName]]</span>
                                 </label>
-                                <label hidden="[[isInbox(selectedMailBoxFolder)]]">
-                                    <span  id="messageItemReceiverLabel">To:</span> 
-                                    <span id="messageItemReceiverValue">[[message.toName]]</span>
-                                </label>
                             </div>
                             <div class="flex"></div>
-                            <span>[[message.ts]]</span>
+                            <span>[[formatDate(message.ts)]]</span>
                         </div>
                         <div class="secondary">
                             <span>[[message.message]]</span>
@@ -60,6 +71,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </div>
                     <!--</paper-material>-->
                 </paper-item>
+                
+                <paper-item
+                    class="card-item layout horizontal" tabindex="[[tabIndex]]" hidden$="[[isInbox(selectedMailBoxFolder)]]">
+                    <!--<paper-material class="layout horizontal">-->
+                    <div class="flex">
+                        <div class="layout horizontal">
+                            <iron-icon icon$="[[getReadState(message)]]"></iron-icon>
+                            <div class="flex">
+                                <label hidden="[[isInbox(selectedMailBoxFolder)]]">
+                                    <span  id="messageItemReceiverLabel">To:</span> 
+                                    <span id="messageItemReceiverValue">[[message.toName]]</span>
+                                </label>
+                            </div>
+                            <div class="flex"></div>
+                            <span>[[formatDate(message.ts)]]</span>
+                        </div>
+                        <div class="secondary">
+                            <span>[[message.message]]</span>
+                        </div>
+                    </div>
+                    <!--</paper-material>-->
+                </paper-item>
+                
             </template>
         </div>
         <paper-material class="material-card">
@@ -104,6 +138,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
             getItemClasses: function (item) {
                 return item.tags.join(" ");
+            },
+            getReadState: function (message) {
+                return 'wonderjam-icons:' + (message.read ? 'read' : 'unread');
+            },
+            onMarkMessage: function (event, detail) {
+                this.fire('mark-as-read', {
+                    messageId: event.currentTarget.message
+                });
+            },
+            formatDate: function(ts) {
+              return moment(ts).format("MMMM D, YYYY h:m A");  
             },
             computeMailboxFolderRequest: function (accountId, selectedMailBoxFolder) {
                 console.log(this.is + ' fetch ' + selectedMailBoxFolder + ' from ' + accountId + '\'s mailbox.');
