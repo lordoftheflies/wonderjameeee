@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file xml:space="default" source-language="en" target-language="hu" datatype="plaintext" original="messages" date="2016-11-16T20:52:59Z" product-name="messages">
+  <file xml:space="default" source-language="en" target-language="hu" datatype="plaintext" original="messages" date="2016-11-16T21:07:13Z" product-name="messages">
     <header>
       <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
     </header>
@@ -174,13 +174,33 @@
         <source> Terms and services of TopFlavon application. Under development ... </source>
         <target state="new"> Terms and services of TopFlavon application. Under development ... </target>
       </trans-unit>
-      <trans-unit id="wonderjam-login-view.model.signinEmailPassword.label">
-        <source>Password</source>
-        <target state="new">Jelszó</target>
+      <trans-unit id="wonderjam-login-view.signin.title">
+        <source>Login</source>
+        <target state="new">Login</target>
       </trans-unit>
-      <trans-unit id="wonderjam-login-view.model.signInSubmit.title">
-        <source>Sign in</source>
-        <target state="new">Bejelentkezés</target>
+      <trans-unit id="wonderjam-login-view.signin.usernameLabel">
+        <source>Email</source>
+        <target state="new">Email</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.usernameError">
+        <source>Email is required.</source>
+        <target state="new">Email is required.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.passwodLabel">
+        <source>Password</source>
+        <target state="new">Password</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.passwordError">
+        <source>Password is required.</source>
+        <target state="new">Password is required.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.signinLabel">
+        <source>Sign-in</source>
+        <target state="new">Sign-in</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.signinError">
+        <source>Sign-in failed.</source>
+        <target state="new">Sign-in failed.</target>
       </trans-unit>
       <trans-unit id="wonderjam-login-view.rememberMeToggleButtonLabel">
         <source>Remember me</source>

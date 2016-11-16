@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-11-16T20:52:59Z" product-name="messages">
+  <file xml:space="default" source-language="en" target-language="po" datatype="plaintext" original="messages" date="2016-11-16T21:07:13Z" product-name="messages">
     <header>
       <tool tool-id="xliff-conv" tool-name="xliff-conv" tool-version="1.0.10"/>
     </header>
@@ -52,11 +52,11 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.delete-member-prompt-title">
         <source>Delete member</source>
-        <target state="new">Delete member</target>
+        <target state="new">Usuń element</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.delete-member-prompt-dialog-text.0">
         <source>You want to delete member {1}</source>
-        <target state="new">You want to delete member {1}</target>
+        <target state="new">Aby usunąć element {1}</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.delete-member-prompt-dialog-text.1">
         <source>[[deleteMemberPromptSubject]]</source>
@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="wonderjam-app.prompt-dialog-cancel-button">
         <source>Cancel</source>
-        <target state="new">Cancel</target>
+        <target state="new">Anuluj</target>
       </trans-unit>
       <trans-unit id="wonderjam-app.prompt-dialog-ok-button">
         <source>OK</source>
@@ -160,11 +160,11 @@
       </trans-unit>
       <trans-unit id="wonderjam-help-view.user-manual-title">
         <source>Help</source>
-        <target state="new">Help</target>
+        <target state="new">Pomoc</target>
       </trans-unit>
       <trans-unit id="wonderjam-help-view.user-manual-missing-label">
         <source>Missing user documentation.</source>
-        <target state="new">Missing user documentation.</target>
+        <target state="new">Brakuje dokumentacji użytkownika.</target>
       </trans-unit>
       <trans-unit id="wonderjam-legal-view.terms-card.0">
         <source> {1} </source>
@@ -172,15 +172,35 @@
       </trans-unit>
       <trans-unit id="wonderjam-legal-view.terms-card.1">
         <source> Terms and services of TopFlavon application. Under development ... </source>
-        <target state="new"> Terms and services of TopFlavon application. Under development ... </target>
+        <target state="new"> Warunki i usługi aplikacji TopFlavon. W budowie ... </target>
       </trans-unit>
-      <trans-unit id="wonderjam-login-view.model.signinEmailPassword.label">
+      <trans-unit id="wonderjam-login-view.signin.title">
+        <source>Login</source>
+        <target state="new">Zaloguj Się</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.usernameLabel">
+        <source>Email</source>
+        <target state="new">E-mail</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.usernameError">
+        <source>Email is required.</source>
+        <target state="new">E-mail jest wymagany.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.passwodLabel">
         <source>Password</source>
         <target state="new">Hasło</target>
       </trans-unit>
-      <trans-unit id="wonderjam-login-view.model.signInSubmit.title">
-        <source>Sign in</source>
+      <trans-unit id="wonderjam-login-view.signin.passwordError">
+        <source>Password is required.</source>
+        <target state="new">Wymagane jest hasło.</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.signinLabel">
+        <source>Sign-in</source>
         <target state="new">Zaloguj</target>
+      </trans-unit>
+      <trans-unit id="wonderjam-login-view.signin.signinError">
+        <source>Sign-in failed.</source>
+        <target state="new">Logowanie nie powiodło się.</target>
       </trans-unit>
       <trans-unit id="wonderjam-login-view.rememberMeToggleButtonLabel">
         <source>Remember me</source>
@@ -188,47 +208,47 @@
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registrateNameLabel.label">
         <source>Name</source>
-        <target state="new">Name</target>
+        <target state="new">Nazwa</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registrateNameLabel.error-message">
         <source>Invalid name.</source>
-        <target state="new">Invalid name.</target>
+        <target state="new">Błędna nazwa.</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registratePhoneNumberLabel.label">
         <source>Phone</source>
-        <target state="new">Phone</target>
+        <target state="new">Telefon</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registratePhoneNumberLabel.error-message">
         <source>Invalid phone number.</source>
-        <target state="new">Invalid phone number.</target>
+        <target state="new">Nieprawidłowy numer telefonu.</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registratePasswordLabel.label">
         <source>Password</source>
-        <target state="new">Password</target>
+        <target state="new">Hasło</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registratePasswordLabel.error-message">
         <source>Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.</source>
-        <target state="new">Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number.</target>
+        <target state="new">Nieprawidłowe hasło. Hasło musi być 6-16 alphanumercal charakter i minimalna 1 numer.</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registratePasswordConfirmLabel.label">
         <source>Password confirmation</source>
-        <target state="new">Password confirmation</target>
+        <target state="new">Potwierdzenie hasła</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registratePasswordConfirmLabel.error-message">
         <source>Passwords not match.</source>
-        <target state="new">Passwords not match.</target>
+        <target state="new">Hasła nie pasują do siebie.</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registrateCodeLabel.label">
         <source>Activation code</source>
-        <target state="new">Activation code</target>
+        <target state="new">Kod aktywacyjny</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registrateCodeLabel.error-message">
         <source>Activation code.</source>
-        <target state="new">Activation code.</target>
+        <target state="new">Zły kod aktywacyjny.</target>
       </trans-unit>
       <trans-unit id="wonderjam-logon-view.model.registrateButton.title">
         <source>Sign on</source>
-        <target state="new">Sign on</target>
+        <target state="new">Zapisać się</target>
       </trans-unit>
       <trans-unit id="wonderjam-mailbox-view.messageItemSenderLabel">
         <source>From:</source>
@@ -260,11 +280,11 @@
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.member-editor-create-title">
         <source>Create new member</source>
-        <target state="new">Create new member</target>
+        <target state="new">Tworzenie nowego członka</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.member-editor-edit-title.0">
         <source>Edit {1}</source>
-        <target state="new">Edit {1}</target>
+        <target state="new">Edytować {1}</target>
       </trans-unit>
       <trans-unit id="wonderjam-member-editor.member-editor-edit-title.1">
         <source>[[memberModel.name]]</source>
@@ -288,23 +308,23 @@
       </trans-unit>
       <trans-unit id="wonderjam-passwordreset-view.model.passwordResetNewLabel.label">
         <source>New password</source>
-        <target state="new">New password</target>
+        <target state="new">Nowe hasło</target>
       </trans-unit>
       <trans-unit id="wonderjam-passwordreset-view.model.passwordResetNewConfirmLabel.label">
         <source>New password confirmation</source>
-        <target state="new">New password confirmation</target>
+        <target state="new">Nowy Potwierdzenie hasła</target>
       </trans-unit>
       <trans-unit id="wonderjam-passwordreset-view.model.passwordResetButton.title">
         <source>Reset password</source>
-        <target state="new">Reset password</target>
+        <target state="new">Zresetuj hasło</target>
       </trans-unit>
       <trans-unit id="wonderjam-passwordreset-view.passwordResetLoginButton">
         <source>Sign-in</source>
-        <target state="new">Sign-in</target>
+        <target state="new">Zaloguj</target>
       </trans-unit>
       <trans-unit id="wonderjam-passwordreset-view.passwordResetRegistrateButton">
         <source>Sign-on</source>
-        <target state="new">Sign-on</target>
+        <target state="new">Zapisać się</target>
       </trans-unit>
       <trans-unit id="wonderjam-profile-view.model.preferredLanguageLabel.label">
         <source>Preferred language</source>
