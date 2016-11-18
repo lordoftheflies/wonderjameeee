@@ -65,9 +65,9 @@
       "label": "Preferowany język"
     }
   },
-  "member-editor-create-title": "Create new member",
+  "member-editor-create-title": "Tworzenie nowego członka",
   "member-editor-edit-title": [
-    "Edit {1}",
+    "Edytować {1}",
     "[[memberModel.name]]"
   ],
   "newMemberTypeUserTitle": "Użytkownik",

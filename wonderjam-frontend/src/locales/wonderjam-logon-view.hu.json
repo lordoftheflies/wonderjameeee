@@ -60,27 +60,27 @@
   },
   "model": {
     "registrateNameLabel": {
-      "label": "Name",
-      "error-message": "Invalid name."
+      "label": "Név",
+      "error-message": "Érvénytelen név."
     },
     "registratePhoneNumberLabel": {
-      "label": "Phone",
-      "error-message": "Invalid phone number."
+      "label": "Telefon",
+      "error-message": "Érvénytelen telefonszám."
     },
     "registratePasswordLabel": {
-      "label": "Password",
-      "error-message": "Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number."
+      "label": "Jelszó",
+      "error-message": "Érvénytelen jelszó. 6-16 alfanumerikus karakter, minimum egy szám."
     },
     "registratePasswordConfirmLabel": {
-      "label": "Password confirmation",
-      "error-message": "Passwords not match."
+      "label": "Jelszó megerősítés",
+      "error-message": "Jelszavak egyeznek."
     },
     "registrateCodeLabel": {
-      "label": "Activation code",
-      "error-message": "Activation code."
+      "label": "Aktivációs kód",
+      "error-message": "Aktivációs kód."
     },
     "registrateButton": {
-      "title": "Sign on"
+      "title": "Regisztráció"
     }
   }
 }

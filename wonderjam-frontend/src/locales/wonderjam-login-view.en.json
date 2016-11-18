@@ -3,28 +3,55 @@
     "todo": [
       {
         "op": "add",
-        "path": "/model/signinEmailPassword/label",
-        "value": "Password"
-      },
-      {
-        "op": "add",
         "path": "/rememberMeToggleButtonLabel",
         "value": "Remember me"
       },
       {
         "op": "add",
-        "path": "/model/signInSubmit/title",
-        "value": "Sign in"
+        "path": "/signinCardResources/title",
+        "value": "Login"
+      },
+      {
+        "op": "add",
+        "path": "/signinCardResources/usernameLabel",
+        "value": "Email"
+      },
+      {
+        "op": "add",
+        "path": "/signinCardResources/usernameError",
+        "value": "Email is required."
+      },
+      {
+        "op": "add",
+        "path": "/signinCardResources/passwordLabel",
+        "value": "Password"
+      },
+      {
+        "op": "add",
+        "path": "/signinCardResources/passwordError",
+        "value": "Password is required."
+      },
+      {
+        "op": "add",
+        "path": "/signinCardResources/signinLabel",
+        "value": "Sign-in"
+      },
+      {
+        "op": "add",
+        "path": "/signinCardResources/signinError",
+        "value": "Sign-in failed."
       }
     ]
   },
-  "model": {
-    "signinEmailPassword": {
-      "label": "Password"
-    },
-    "signInSubmit": {
-      "title": "Sign in"
-    }
+  "model": {},
+  "signinCardResources": {
+    "title": "Login",
+    "usernameLabel": "Email",
+    "usernameError": "Email is required.",
+    "passwordLabel": "Password",
+    "passwordError": "Password is required.",
+    "signinLabel": "Sign-in",
+    "signinError": "Sign-in failed."
   },
   "rememberMeToggleButtonLabel": "Remember me"
 }

@@ -201,12 +201,12 @@
       "title": "Változások elvetése & Új cikk létrehozása."
     }
   },
-  "delete-member-prompt-title": "Delete member",
+  "delete-member-prompt-title": "Tag törlése",
   "delete-member-prompt-dialog-text": [
-    "You want to delete member {1}",
+    "Biztosan törölni kívánja {1}-t?",
     "[[deleteMemberPromptSubject]]"
   ],
-  "prompt-dialog-cancel-button": "Cancel",
+  "prompt-dialog-cancel-button": "Elvetés",
   "prompt-dialog-ok-button": "OK",
   "main-menu-label": "Menü",
   "article-menu-label": "Cikkek",

@@ -21,9 +21,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/polymer-cookie/polymer-cookie.html">
 <link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="wonderjam-shared-styles.html">
+
 <dom-module id="wonderjam-login-view">
     <template>
-        <style>
+        <style include="iron-flex">
             :host {
                 position: absolute;
                 top: 0px;
@@ -59,9 +61,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             div.error {
                 color: red;
             }
-            
+
             div.form-actions {
                 padding-bottom: 16px !important;
+            }
+
+            json-data {
+                display: none;
             }
         </style>
 
@@ -70,43 +76,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             name="XSRF-TOKEN"
             value="{{xsrfToken}}">
         </polymer-cookie>
-        <!--        <polymer-cookie
-                    id="sessionCookie"
-                    name="SESSION" auto-set
-                    value="{{session}}">
-                </polymer-cookie>
-        -->       
         <polymer-cookie
             id="rememberMeCookie"
             name="REMEMBERME"
             value="{{rememberMe}}">
         </polymer-cookie>
-        <!--        <polymer-cookie
-                    id="userNameCookie"
-                    name="username"
-                    value="{{session}}">
-                </polymer-cookie>
-                <polymer-cookie
-                    id="passwordCookie"
-                    name="username"
-                    value="{{session}}">
-                </polymer-cookie>-->
 
-        <paper-card id="signinCard" heading="Login">
+        <json-data id="signinCardResources">{ "title": "Login", "usernameLabel": "Email", "usernameError": "Email is required.", "passwordLabel": "Password", "passwordError": "Password is required.", "signinLabel": "Sign-in", "signinError": "Sign-in failed." }</json-data>
+
+        <paper-card id="signinCard" heading="[[text.signinCardResources.title]]">
             <paper-spinner id="spinner" hidden="[[!loading]]"></paper-spinner>
             <div class="card-content">
                 <form is="iron-form" id="signInForm"  with-credentials
                       method="POST"  action="[[authenticationUrl]]" headers="[[authHeaders]]" content-type="application/json">
                     <template is="dom-if" if="[[hasAuthenticationError]]">
-                        <div class="error">{{authenticationError}}</div>
+                        <div class="error">[[text.signinCardResources.signinError]]</div>
                     </template>
 
                     <gold-email-input 
                         id="signinEmailInput" 
                         name="userName" 
-                        label="Email" 
+                        label="[[text.signinCardResources.usernameLabel]]" 
                         tabindex="1"
-                        error-message="[[userNameError]]"
+                        error-message="[[text.signinCardResources.usernameError]]"
                         value="{{credentials.userName}}" 
                         required auto-validate></gold-email-input>
                     <!--                    <paper-input 
@@ -121,10 +113,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <paper-input 
                         id="signinEmailPassword" 
                         name="password" 
-                        label="Password" 
+                        label="[[text.signinCardResources.passwordLabel]]" 
                         value="{{credentials.password}}" 
                         type="password"
-                        error-message="[[passwordError]]"
+                        error-message="[[text.signinCardResources.passwordError]]"
                         tabindex="2"
                         required 
                         auto-validate>
@@ -133,7 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <paper-fab 
                         id="signInSubmit" 
                         icon="arrow-forward" 
-                        title="Sign in" 
+                        title="[[text.signinCardResources.signinLabel]]" 
                         on-tap="onSignIn" 
                         tabindex="3"
                         dialog-confirm></paper-fab>
@@ -155,6 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         </paper-card>
+
     </template>
     <script>
         Polymer({
@@ -209,21 +202,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     reflectToAttribute: true,
                     notify: true
                 },
-                userNameError: {
-                    type: String,
-                    notify: true,
-                    value: 'Username is required.'
-                },
-                passwordError: {
-                    type: String,
-                    notify: true,
-                    value: 'Password is required.'
-                },
-                authenticationError: {
-                    type: String,
-                    notify: true,
-                    value: 'Sign-in failed.'
-                },
                 hasAuthenticationError: {
                     type: String,
                     notify: true,
@@ -238,7 +216,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
             listeners: {
                 'iron-form-response': 'onSigninFormResponse',
-                'iron-form-error': 'onSigninFormError'
+                'iron-form-error': 'onSigninFormError',
+                'lang-updated': '_langUpdated'
             },
             observers: [
                 'observeAuthenticationHeaders(credentials.userName, credentials.password, xsrfToken)'
@@ -246,6 +225,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attached: function () {
                 this.xsrfToken = this.$.xsrfCookie.readCookie();
                 this.rememberMe = this.$.rememberMeCookie.readCookie();
+            },
+            _langUpdated: function (event) {
+                if (Polymer.dom(event).rootTarget === this) {
+                    this.model = deepcopy(this.text.model);
+                }
             },
             onSignIn: function (event, detail) {
                 this.loading = true;

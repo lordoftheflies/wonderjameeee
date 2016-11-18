@@ -201,12 +201,12 @@
       "title": "Anuluj wszystkie zmiany & stworzyć nowy artykuł."
     }
   },
-  "delete-member-prompt-title": "Delete member",
+  "delete-member-prompt-title": "Usuń element",
   "delete-member-prompt-dialog-text": [
-    "You want to delete member {1}",
+    "Aby usunąć element {1}",
     "[[deleteMemberPromptSubject]]"
   ],
-  "prompt-dialog-cancel-button": "Cancel",
+  "prompt-dialog-cancel-button": "Anuluj",
   "prompt-dialog-ok-button": "OK",
   "main-menu-label": "Menu",
   "article-menu-label": "Artykuły",

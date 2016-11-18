@@ -150,13 +150,15 @@
         "po"
       ]
     },
-    "model": {
-      "signinEmailPassword": {
-        "label": "Password"
-      },
-      "signInSubmit": {
-        "title": "Sign in"
-      }
+    "model": {},
+    "signinCardResources": {
+      "title": "Login",
+      "usernameLabel": "Email",
+      "usernameError": "Email is required.",
+      "passwordLabel": "Password",
+      "passwordError": "Password is required.",
+      "signinLabel": "Sign-in",
+      "signinError": "Sign-in failed."
     },
     "rememberMeToggleButtonLabel": "Remember me"
   },

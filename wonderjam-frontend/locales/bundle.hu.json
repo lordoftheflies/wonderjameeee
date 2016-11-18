@@ -233,12 +233,12 @@
         "title": "Változások elvetése & Új cikk létrehozása."
       }
     },
-    "delete-member-prompt-title": "Delete member",
+    "delete-member-prompt-title": "Tag törlése",
     "delete-member-prompt-dialog-text": [
-      "You want to delete member {1}",
+      "Biztosan törölni kívánja {1}-t?",
       "[[deleteMemberPromptSubject]]"
     ],
-    "prompt-dialog-cancel-button": "Cancel",
+    "prompt-dialog-cancel-button": "Elvetés",
     "prompt-dialog-ok-button": "OK",
     "main-menu-label": "Menü",
     "article-menu-label": "Cikkek",
@@ -308,7 +308,7 @@
     },
     "model": {},
     "user-manual-title": "Help",
-    "user-manual-missing-label": "Missing user documentation."
+    "user-manual-missing-label": "Hiányzó felhasználói dokumentáció."
   },
   "wonderjam-legal-view": {
     "meta": {
@@ -328,7 +328,7 @@
     "model": {},
     "terms-card": [
       " {1} ",
-      " Terms and services of TopFlavon application. Under development ... "
+      "TopFlavon alkalmazás felhasználási feltételei. Fejlesztés alatt ... "
     ]
   },
   "wonderjam-login-view": {
@@ -336,28 +336,55 @@
       "todo": [
         {
           "op": "add",
-          "path": "/model/signinEmailPassword/label",
-          "value": "Password"
-        },
-        {
-          "op": "add",
           "path": "/rememberMeToggleButtonLabel",
           "value": "Remember me"
         },
         {
           "op": "add",
-          "path": "/model/signInSubmit/title",
-          "value": "Sign in"
+          "path": "/signinCardResources/title",
+          "value": "Login"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/usernameLabel",
+          "value": "Email"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/usernameError",
+          "value": "Email is required."
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/passwordLabel",
+          "value": "Password"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/passwordError",
+          "value": "Password is required."
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/signinLabel",
+          "value": "Sign-in"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/signinError",
+          "value": "Sign-in failed."
         }
       ]
     },
-    "model": {
-      "signinEmailPassword": {
-        "label": "Jelszó"
-      },
-      "signInSubmit": {
-        "title": "Bejelentkezés"
-      }
+    "model": {},
+    "signinCardResources": {
+      "title": "Bejelentkezés",
+      "usernameLabel": "Email",
+      "usernameError": "Email kötelező.",
+      "passwordLabel": "Jelszó",
+      "passwordError": "Jelszó kötelező.",
+      "signinLabel": "Bejelentkezés",
+      "signinError": "Bejelentkezés sikertelen."
     },
     "rememberMeToggleButtonLabel": "Emlékezz rám"
   },
@@ -423,27 +450,27 @@
     },
     "model": {
       "registrateNameLabel": {
-        "label": "Name",
-        "error-message": "Invalid name."
+        "label": "Név",
+        "error-message": "Érvénytelen név."
       },
       "registratePhoneNumberLabel": {
-        "label": "Phone",
-        "error-message": "Invalid phone number."
+        "label": "Telefon",
+        "error-message": "Érvénytelen telefonszám."
       },
       "registratePasswordLabel": {
-        "label": "Password",
-        "error-message": "Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number."
+        "label": "Jelszó",
+        "error-message": "Érvénytelen jelszó. 6-16 alfanumerikus karakter, minimum egy szám."
       },
       "registratePasswordConfirmLabel": {
-        "label": "Password confirmation",
-        "error-message": "Passwords not match."
+        "label": "Jelszó megerősítés",
+        "error-message": "Jelszavak egyeznek."
       },
       "registrateCodeLabel": {
-        "label": "Activation code",
-        "error-message": "Activation code."
+        "label": "Aktivációs kód",
+        "error-message": "Aktivációs kód."
       },
       "registrateButton": {
-        "title": "Sign on"
+        "title": "Regisztráció"
       }
     }
   },
@@ -545,9 +572,9 @@
         "label": "Preferált nyelv"
       }
     },
-    "member-editor-create-title": "Create new member",
+    "member-editor-create-title": "Új tag létrehozása",
     "member-editor-edit-title": [
-      "Edit {1}",
+      "Módosítás {1}",
       "[[memberModel.name]]"
     ],
     "newMemberTypeUserTitle": "Felhasználó",
@@ -599,17 +626,17 @@
     },
     "model": {
       "passwordResetNewLabel": {
-        "label": "New password"
+        "label": "Új jelszó"
       },
       "passwordResetNewConfirmLabel": {
-        "label": "New password confirmation"
+        "label": "Új jelszó megerősítése"
       },
       "passwordResetButton": {
-        "title": "Reset password"
+        "title": "Jelszó visszaállítás"
       }
     },
-    "passwordResetLoginButton": "Sign-in",
-    "passwordResetRegistrateButton": "Sign-on"
+    "passwordResetLoginButton": "Bejelentkezés",
+    "passwordResetRegistrateButton": "Regisztráció"
   },
   "wonderjam-profile-view": {
     "meta": {

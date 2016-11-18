@@ -6,9 +6,9 @@ android {
 
     defaultConfig {
         applicationId "hu.digitaldefense.topflavonnetwork"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 24
-        versionCode 12
+        versionCode 13
         versionName "1.6"
     }
     buildTypes {

@@ -65,9 +65,9 @@
       "label": "Preferált nyelv"
     }
   },
-  "member-editor-create-title": "Create new member",
+  "member-editor-create-title": "Új tag létrehozása",
   "member-editor-edit-title": [
-    "Edit {1}",
+    "Módosítás {1}",
     "[[memberModel.name]]"
   ],
   "newMemberTypeUserTitle": "Felhasználó",

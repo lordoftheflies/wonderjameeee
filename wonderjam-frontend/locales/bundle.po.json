@@ -233,12 +233,12 @@
         "title": "Anuluj wszystkie zmiany & stworzyć nowy artykuł."
       }
     },
-    "delete-member-prompt-title": "Delete member",
+    "delete-member-prompt-title": "Usuń element",
     "delete-member-prompt-dialog-text": [
-      "You want to delete member {1}",
+      "Aby usunąć element {1}",
       "[[deleteMemberPromptSubject]]"
     ],
-    "prompt-dialog-cancel-button": "Cancel",
+    "prompt-dialog-cancel-button": "Anuluj",
     "prompt-dialog-ok-button": "OK",
     "main-menu-label": "Menu",
     "article-menu-label": "Artykuły",
@@ -307,8 +307,8 @@
       ]
     },
     "model": {},
-    "user-manual-title": "Help",
-    "user-manual-missing-label": "Missing user documentation."
+    "user-manual-title": "Pomoc",
+    "user-manual-missing-label": "Brakuje dokumentacji użytkownika."
   },
   "wonderjam-legal-view": {
     "meta": {
@@ -328,7 +328,7 @@
     "model": {},
     "terms-card": [
       " {1} ",
-      " Terms and services of TopFlavon application. Under development ... "
+      " Warunki i usługi aplikacji TopFlavon. W budowie ... "
     ]
   },
   "wonderjam-login-view": {
@@ -336,28 +336,55 @@
       "todo": [
         {
           "op": "add",
-          "path": "/model/signinEmailPassword/label",
-          "value": "Password"
-        },
-        {
-          "op": "add",
           "path": "/rememberMeToggleButtonLabel",
           "value": "Remember me"
         },
         {
           "op": "add",
-          "path": "/model/signInSubmit/title",
-          "value": "Sign in"
+          "path": "/signinCardResources/title",
+          "value": "Login"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/usernameLabel",
+          "value": "Email"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/usernameError",
+          "value": "Email is required."
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/passwordLabel",
+          "value": "Password"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/passwordError",
+          "value": "Password is required."
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/signinLabel",
+          "value": "Sign-in"
+        },
+        {
+          "op": "add",
+          "path": "/signinCardResources/signinError",
+          "value": "Sign-in failed."
         }
       ]
     },
-    "model": {
-      "signinEmailPassword": {
-        "label": "Hasło"
-      },
-      "signInSubmit": {
-        "title": "Zaloguj"
-      }
+    "model": {},
+    "signinCardResources": {
+      "title": "Zaloguj Się",
+      "usernameLabel": "E-mail",
+      "usernameError": "E-mail jest wymagany.",
+      "passwordLabel": "Hasło",
+      "passwordError": "Wymagane jest hasło.",
+      "signinLabel": "Zaloguj",
+      "signinError": "Logowanie nie powiodło się."
     },
     "rememberMeToggleButtonLabel": "Zapamiętaj mnie"
   },
@@ -423,27 +450,27 @@
     },
     "model": {
       "registrateNameLabel": {
-        "label": "Name",
-        "error-message": "Invalid name."
+        "label": "Nazwa",
+        "error-message": "Błędna nazwa."
       },
       "registratePhoneNumberLabel": {
-        "label": "Phone",
-        "error-message": "Invalid phone number."
+        "label": "Telefon",
+        "error-message": "Nieprawidłowy numer telefonu."
       },
       "registratePasswordLabel": {
-        "label": "Password",
-        "error-message": "Invalid password. Password have to be 6-16 alphanumercal character and minimum 1 number."
+        "label": "Hasło",
+        "error-message": "Nieprawidłowe hasło. Hasło musi być 6-16 alphanumercal charakter i minimalna 1 numer."
       },
       "registratePasswordConfirmLabel": {
-        "label": "Password confirmation",
-        "error-message": "Passwords not match."
+        "label": "Potwierdzenie hasła",
+        "error-message": "Hasła nie pasują do siebie."
       },
       "registrateCodeLabel": {
-        "label": "Activation code",
-        "error-message": "Activation code."
+        "label": "Kod aktywacyjny",
+        "error-message": "Zły kod aktywacyjny."
       },
       "registrateButton": {
-        "title": "Sign on"
+        "title": "Zapisać się"
       }
     }
   },
@@ -545,9 +572,9 @@
         "label": "Preferowany język"
       }
     },
-    "member-editor-create-title": "Create new member",
+    "member-editor-create-title": "Tworzenie nowego członka",
     "member-editor-edit-title": [
-      "Edit {1}",
+      "Edytować {1}",
       "[[memberModel.name]]"
     ],
     "newMemberTypeUserTitle": "Użytkownik",
@@ -599,17 +626,17 @@
     },
     "model": {
       "passwordResetNewLabel": {
-        "label": "New password"
+        "label": "Nowe hasło"
       },
       "passwordResetNewConfirmLabel": {
-        "label": "New password confirmation"
+        "label": "Nowy Potwierdzenie hasła"
       },
       "passwordResetButton": {
-        "title": "Reset password"
+        "title": "Zresetuj hasło"
       }
     },
-    "passwordResetLoginButton": "Sign-in",
-    "passwordResetRegistrateButton": "Sign-on"
+    "passwordResetLoginButton": "Zaloguj",
+    "passwordResetRegistrateButton": "Zapisać się"
   },
   "wonderjam-profile-view": {
     "meta": {

@@ -254,12 +254,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-ajax id="logoutAjax" url="[[apiUrl]]/logout" 
                    headers="[[headers]]" on-response="onLogoutResponse" on-error="onLogoutError"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
-        
+
         <!--Subscription AJAX request-->
         <iron-ajax id="subscriptionAjax" url="[[apiUrl]]/mailbox/subscription" 
                    headers="[[headers]]" body="[[subscription]]" on-response="onSubscriptionAjaxResponse" on-error="onSubscriptionAjaxError"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
-        
+
         <!--<iron-ajax id="rootArticlesAjax" url="http://localhost:8081/cms/root" headers="[[headers]]" last-response="{{rootArticlesModel}}" auto="[[token]]"></iron-ajax>-->
         <!--<iron-ajax id="rootArticlesAjax" url="http://localhost:8081/cms/root" headers="[[headers]]" last-response="{{rootArticlesModel}}" auto="false"></iron-ajax>-->
         <!--Routing-->
@@ -335,7 +335,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden$="[[!authenticated]]"></paper-icon-button>
                         <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
                         <plutonium-language-picker id="languagePicker" lang$="{{profile.preferredLanguage}}">
-                                                   <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
+                            <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
                             <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
                             <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
                         </plutonium-language-picker>
@@ -400,7 +400,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         name="logon-view"
                         route="{{subroute}}"
                         registration-subroute-data="[[registrationSubrouteData]]"
-                        
+
                         api-url="[[apiUrl]]"
                         headers="[[headers]]"
                         signed-in="{{authenticated}}"
@@ -454,7 +454,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         member-model="{{memberDetailsModel}}"
                         possible-parents="[[possibleParents]]">
                     </wonderjam-member-editor>
-                    
+
                     <wonderjam-recipients-view
                         id="recipientsView"
                         name="recipients-view"
@@ -531,12 +531,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <!--<paper-fab icon="wonderjam-icons:remove" on-tap="onDeleteMember"></paper-fab>-->
 
                             <paper-fab icon="wonderjam-icons:send" on-tap="onSendToMember"></paper-fab>
-<!--                            <template is="dom-if" if="[[isUserIndicator]]">
-                                <paper-fab icon="wonderjam-icons:star" on-tap="onPromoteMember"></paper-fab>
-                            </template>
-                            <template is="dom-if" if="[[isAdminIndicator]]">
-                                <paper-fab icon="wonderjam-icons:star-border" on-tap="onDemoteMember"></paper-fab>
-                            </template>-->
+                            <!--                            <template is="dom-if" if="[[isUserIndicator]]">
+                                                            <paper-fab icon="wonderjam-icons:star" on-tap="onPromoteMember"></paper-fab>
+                                                        </template>
+                                                        <template is="dom-if" if="[[isAdminIndicator]]">
+                                                            <paper-fab icon="wonderjam-icons:star-border" on-tap="onDemoteMember"></paper-fab>
+                                                        </template>-->
                         </template>
 
                     </div>
@@ -595,6 +595,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 rootArticlesModel: {
                     type: Object,
                     notify: true
+                },
+                profile: {
+                    type: Object,
+                    notify: true,
+//                    value: {
+//                        profile: ''
+//                    }
                 },
 //                authenticated: {
 //                    type: Boolean,
@@ -656,7 +663,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             },
             observers: [
-                'observeRootArticlesModel(rootArticlesModel)'
+                'observeRootArticlesModel(rootArticlesModel)',
+//                'observeLanguageChange(profile.*)'
             ],
             listeners: {
                 'change-language': 'onChangeLocale',
@@ -699,19 +707,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         (page === 'recipients-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1)) ||
                         (page === 'article-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1));
             },
-            handleChangeLanguageResponse: function () {
+            handleChangeLanguageResponse: function (event, r) {
                 var msg = 'Language changed successfully to ' + this.locales.filter(function (currentValue, index, arr) {
                     return (currentValue.code === this.profile.preferredLanguage);
                 }, this)[0].name + '.';
                 console.log(msg);
-                var oldLang = document.querySelector('html').getAttribute('lang');
-                document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
-                var newLang = document.querySelector('html').getAttribute('lang');
-                console.log('Change from locale ' + oldLang + ' to ' + newLang);
-                this.$.languagePicker.lang = this.profile.preferredLanguage;
-                this.fire('feedback', {
-                    message: msg
-                });
+                this.$.profileIronAjax.generateRequest();
             },
             handleChangeLanguageError: function () {
                 var msg = 'Language changing failed.';
@@ -724,11 +725,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             },
             onProfileIronAjaxResponse: function (event, details) {
-
+                
+                var oldLang = document.querySelector('html').getAttribute('lang');
+                document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
+                var newLang = document.querySelector('html').getAttribute('lang');
+                console.log('Change from locale ' + oldLang + ' to ' + newLang);
+//                this.$.languagePicker.lang = this.profile.preferredLanguage;
+                
+            },
+            observeLanguageChange: function (preferredLanguage) {
+//                if (preferredLanguage.path !== 'profile') {
+//                    this.changeLanguageModel = {
+//                        accountId: this.profile.id,
+//                        language: this.profile.preferredLanguage
+//                    };
+//                    console.log('Change language request: ' + JSON.stringify(this.changeLanguageModel));
+//                    this.fire('change-language', this.changeLanguageModel);
+//                }
             },
             onChangeLocale: function (event, details) {
-                this.changeLanguageModel = details;
-                this.$.changeLanguageAjax.generateRequest();
+//                this.changeLanguageModel = details;
+                if (this.authenticated && this.profile.preferredLanguage !== details.language) {
+                    console.debug('Language CHANGED to', details);
+                    this.changeLanguageModel = {
+                        accountId: this.profile.id,
+                        language: details.language
+                    };
+                    this.$.changeLanguageAjax.generateRequest();
+                }
             },
             onFullscreen: function (event, details) {
                 this.fullScreenContent = !this.fullScreenContent;
