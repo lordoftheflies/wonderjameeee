@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../bower_components/paper-fab-transitions/paper-fab-morph.html">
 <link rel="import" href="../bower_components/plutonium-cms/plutonium-cms.html">
+<link rel="import" href="../bower_components/plutonium-i18n-controls/plutonium-i18n-input.html">
 
 <link rel="import" href="../bower_components/file-upload/file-upload.html">
 
@@ -163,7 +164,8 @@ Wham! It's all awesome now!
 
         <paper-material id="propertiesCardTitle" elevation="1" heading="Properties"  name="props" class="layout vertical main-action-fab-container">
             <div class="card-header layout horizontal">
-                <paper-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}"></paper-input>
+                <plutonium-i18n-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}" source-lang="en" locales='[{"lang": "de", "value": ""}, {"lang": "en", "value": ""}, {"lang": "po", "value": ""}, {"lang": "hu", "value": ""}]'></plutonium-i18n-input>
+                <!--<paper-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}"></paper-input>-->
             </div>
             <div class="card-content layout horizontal">
                 <div class="layout vertical flex">
