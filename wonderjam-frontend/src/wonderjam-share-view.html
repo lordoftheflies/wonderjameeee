@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../bower_components/paper-fab-transitions/paper-fab-morph.html">
 <link rel="import" href="../bower_components/plutonium-cms/plutonium-cms.html">
+<link rel="import" href="../bower_components/plutonium-language-picker/plutonium-nation-flags.html">
 <link rel="import" href="../bower_components/plutonium-i18n-controls/plutonium-i18n-input.html">
 
 <link rel="import" href="../bower_components/file-upload/file-upload.html">
@@ -37,6 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="wonderjam-icons.html">
 <link rel="import" href="wonderjam-shared-styles.html">
 
+<link rel="import" href="wonderjam-article-locale-view.html">
 <link rel="import" href="wonderjam-article-form.html">
 
 
@@ -163,72 +165,84 @@ Wham! It's all awesome now!
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
 
         <paper-material id="propertiesCardTitle" elevation="1" heading="Properties"  name="props" class="layout vertical main-action-fab-container">
-            <div class="card-header layout horizontal">
-                <plutonium-i18n-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}" source-lang="en" locales='[{"lang": "de", "value": ""}, {"lang": "en", "value": ""}, {"lang": "po", "value": ""}, {"lang": "hu", "value": ""}]'></plutonium-i18n-input>
-                <!--<paper-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}"></paper-input>-->
-            </div>
-            <div class="card-content layout horizontal">
-                <div class="layout vertical flex">
-                    <paper-dropdown-menu 
-                        id="parentDdLabel"
-                        label="Parent">
-                        <paper-listbox id="parentCandidatesList"
-                                       class="dropdown-content"
-                                       attr-for-selected="id"
-                                       items="[[parentCandidates]]"
-                                       as="parent"
-                                       selected="{{selectedParent}}">
-                            <template is="dom-repeat" items="[[parentCandidates]]">
-                                <paper-item id="[[item.id]]" class="item pad">
-                                    <label>[[item.title]]</label> 
-                                </paper-item>
-                            </template>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
+            <iron-pages selected="{{mode}}" attr-for-selected="name">
+                <div name="details">
+
+                    <div class="card-header layout horizontal">
+                        <!--<plutonium-i18n-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}" source-lang="en" locales='[{"lang": "de", "value": ""}, {"lang": "en", "value": ""}, {"lang": "po", "value": ""}, {"lang": "hu", "value": ""}]'></plutonium-i18n-input>-->
+                        <paper-input id="contentTitleInput" class="title-text flex" label="Title" value="{{contentModel.title}}"></paper-input>
+                        
+                        <paper-icon-button icon="plutonium-nation-flags:[[selectedLanguage]]" class="center-center" on-tap="_onNavigateToLocales"></paper-icon-button>
+                    </div>
+                    <div class="card-content layout horizontal">
+                        <div class="layout vertical flex">
+                            <paper-dropdown-menu 
+                                id="parentDdLabel"
+                                label="Parent">
+                                <paper-listbox id="parentCandidatesList"
+                                               class="dropdown-content"
+                                               attr-for-selected="id"
+                                               items="[[parentCandidates]]"
+                                               as="parent"
+                                               selected="{{selectedParent}}">
+                                    <template is="dom-repeat" items="[[parentCandidates]]">
+                                        <paper-item id="[[item.id]]" class="item pad">
+                                            <label>[[item.title]]</label> 
+                                        </paper-item>
+                                    </template>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <paper-checkbox id="draftIndicator" checked="{{contentModel.draft}}">Draft</paper-checkbox>
+                        <paper-fab-morph id="show-toolbar" vertical-align="top" horizontal-align="left">
+                            <paper-fab icon="wonderjam-icons:[[articleContentType]]" class="dropdown-trigger"></paper-fab>
+                            <paper-toolbar class="dropdown-content">
+                                <paper-tabs attr-for-selected="name" selected="{{articleContentType}}" class="flex" autoselect>
+                                    <paper-tab text-id="fileContentTabLabel" name="embedded">Upload</paper-tab>
+                                    <paper-tab text-id="folderContentTabLabel" name="linked">Folder</paper-tab>
+                                    <paper-tab text-id="articleContentTabLabel" name="assembled">Assemble</paper-tab>
+                                </paper-tabs>
+                            </paper-toolbar>
+                        </paper-fab-morph>
+                    </div>
+                    <iron-pages class="card-content" selected="{{articleContentType}}" attr-for-selected="name">
+
+                        <plutonium-cms-form id="sectionEditor"
+                                            name="assembled"
+                                            content-model="{{contentModel}}"></plutonium-cms-form>
+
+                        <!--<paper-card id="propertiesCardTitle" name="embedded" class="card-content layout horizontal" elevation="1" heading="Upload article">-->
+                        <json-data id="fileUpload">
+                            { "chooseFile": "Choose file", "dropText": "Drop any PDF file here.", "error-text": "File upload failed." }
+                        </json-data>
+                        <div id="propertiesCardTitle" name="embedded" class="layout vertical center" heading="Upload article">
+                            <file-upload 
+                                id="uploadFileText"
+                                drop-text="[[text.fileUpload.dropText]]"
+                                error-text="[[text.fileUpload.errorText]]"
+                                droppable="true" 
+                                raised="true" 
+                                multi="false" 
+                                method="POST"
+                                target="{{fileUploadTarget}}">
+
+                                [[text.fileUpload.chooseFile]]
+                            </file-upload>
+                        </div>
+                        <div id="propertiesCardTitle" name="linked" class="layout vertical center" heading="Upload article">
+                            Select articles.
+                        </div>
+
+                    </iron-pages>
+
                 </div>
-            </div>
 
-            <div class="card-content">
-                <paper-checkbox id="draftIndicator" checked="{{contentModel.draft}}">Draft</paper-checkbox>
-                <paper-fab-morph id="show-toolbar" vertical-align="top" horizontal-align="left">
-                    <paper-fab icon="wonderjam-icons:[[articleContentType]]" class="dropdown-trigger"></paper-fab>
-                    <paper-toolbar class="dropdown-content">
-                        <paper-tabs attr-for-selected="name" selected="{{articleContentType}}" class="flex" autoselect>
-                            <paper-tab text-id="fileContentTabLabel" name="embedded">Upload</paper-tab>
-                            <paper-tab text-id="folderContentTabLabel" name="linked">Folder</paper-tab>
-                            <paper-tab text-id="articleContentTabLabel" name="assembled">Assemble</paper-tab>
-                        </paper-tabs>
-                    </paper-toolbar>
-                </paper-fab-morph>
-            </div>
-            <iron-pages class="card-content" selected="{{articleContentType}}" attr-for-selected="name">
-
-                <plutonium-cms-form id="sectionEditor"
-                                    name="assembled"
-                                    content-model="{{contentModel}}"></plutonium-cms-form>
-
-                <!--<paper-card id="propertiesCardTitle" name="embedded" class="card-content layout horizontal" elevation="1" heading="Upload article">-->
-                <json-data id="fileUpload">
-                    { "chooseFile": "Choose file", "dropText": "Drop any PDF file here.", "error-text": "File upload failed." }
-                </json-data>
-                <div id="propertiesCardTitle" name="embedded" class="layout vertical center" heading="Upload article">
-                    <file-upload 
-                        id="uploadFileText"
-                        drop-text="[[text.fileUpload.dropText]]"
-                        error-text="[[text.fileUpload.errorText]]"
-                        droppable="true" 
-                        raised="true" 
-                        multi="false" 
-                        method="POST"
-                        target="{{fileUploadTarget}}">
-
-                        [[text.fileUpload.chooseFile]]
-                    </file-upload>
-                </div>
-                <div id="propertiesCardTitle" name="linked" class="layout vertical center" heading="Upload article">
-                    Select articles.
-                </div>
-
+                <wonderjam-article-locale-view class="card-content" name="locales" locales="[[locales]]" selected-language="[[selectedLanguage]]"
+                                               content-model="[[contentModel]]">
+                </wonderjam-article-locale-view>
             </iron-pages>
         </paper-material>
 
@@ -243,6 +257,18 @@ Wham! It's all awesome now!
                 PlutoniumBehaviors.WidgetBoundBehavior
             ],
             properties: {
+                mode: {
+                    type: String,
+                    value: 'details'
+                },
+                locales: {
+                    type: Array,
+                    notify: true
+                },
+                selectedLanguage: {
+                    type: String,
+                    notify: true
+                },
                 edit: {
                     type: Boolean,
                     notify: true,
@@ -307,12 +333,19 @@ Wham! It's all awesome now!
                 'itemsAddedOrRemoved(selectedItemIds.splices)'
             ],
             listeners: {
-                'lang-updated': '_langUpdated'
+                'lang-updated': '_langUpdated',
+                'view-article-details': '_viewArticleDetails'
             },
             _langUpdated: function (event) {
                 if (Polymer.dom(event).rootTarget === this) {
                     this.model = deepcopy(this.text.model);
                 }
+            },
+            _viewArticleDetails: function () {
+                this.mode = 'details';
+            },
+            _onNavigateToLocales: function () {
+                this.mode = 'locales';
             },
             observePageId: function (pageId) {
 

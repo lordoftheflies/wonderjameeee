@@ -1,0 +1,121 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/polymer-cookie/polymer-cookie.html">
+<link rel="import" href="../bower_components/i18n-behavior/i18n-behavior.html">
+<link rel="import" href="../bower_components/plutonium-language-picker/plutonium-nation-flags.html">
+<link rel="import" href="wonderjam-icons.html">
+<link rel="import" href="wonderjam-shared-styles.html">
+
+<dom-module id="wonderjam-article-locale-view">
+    <template>
+        <style include="iron-flex wonderjam-shared-styles">
+            :host {
+                display: block;
+            }
+        </style>
+
+        <div class="layout horizontal">
+            <div class="flex">
+                <paper-tabs attr-for-selected="locale" selected="{{selectedLanguage}}" style="width: 100%;" autoselect>
+                    <template is="dom-repeat" items="[[locales]]" as="locale">
+                        <paper-tab locale="[[locale.code]]" hidden$="[[_inSourceLang(locale.code)]]">
+                                   <iron-icon icon="plutonium-nation-flags:[[locale.code]]"></iron-icon>
+                        </paper-tab>
+                    </template>
+                </paper-tabs>
+            </div>
+            <paper-icon-button icon="wonderjam-icons:details" on-tap="_onReturnToDetails"></paper-icon-button>
+        </div>
+
+        <iron-pages selected="[[selectedLanguage]]" attr-for-selected="locale">
+            <template is="dom-repeat" items="[[locales]]" as="locale">
+                <div locale="[[locale.code]]">
+                    <paper-input label="[[contentModel.title]]"></paper-input>
+
+                    <template is="dom-repeat" items="[[contentModel.sections]]" as="section">
+                        <div class="layout horizontal">
+                            <div class="layout horizontal center">
+                                <div class="circle-small">#<span>{{index}}</span></div>
+                            </div>
+                            <div class="flex">
+                                <paper-input label="[[section.title]]" hidden$="{{_notEmpty(section)}}"></paper-input>
+                                <paper-input label="[[section.data]]" hidden$="{{_notEmptyAndTextual(section)}}"></paper-input>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </iron-pages>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'wonderjam-article-locale-view',
+            behaviors: [
+                BehaviorsStore.I18nBehavior
+            ],
+            properties: {
+                locales: {
+                    type: Array,
+                    notify: true,
+                    value: []
+                },
+                selectedLanguage: {
+                    type: String,
+                    notify: true
+                },
+                contentModel: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            listeners: {
+                'lang-updated': '_langUpdated'
+            },
+            observers: [
+                '_observeLocales(locales)'
+            ],
+            _observeLocales: function (locales) {
+
+            },
+            _langUpdated: function (event) {
+                if (Polymer.dom(event).rootTarget === this) {
+                    this.model = deepcopy(this.text.model);
+                }
+            },
+            _onReturnToDetails: function () {
+                this.fire('view-article-details', {});
+            },
+            _notEmpty: function (section) {
+                return (!section.title || 0 === section.title.length);
+            },
+            _notEmptyAndTextual: function (section) {
+                return section.type !== 'text' || (!section.data || 0 === section.data.length);
+            },
+            _inSourceLang: function (lang) {
+                return lang === this.selectedLanguage;
+            }
+        });
+    </script>
+</dom-module>
