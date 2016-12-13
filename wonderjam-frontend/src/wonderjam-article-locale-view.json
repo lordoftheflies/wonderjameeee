@@ -1,0 +1,8 @@
+{
+  "meta": {},
+  "model": {},
+  "iron-pages_2:template:div:template_1:div:div:div": [
+    "#{1}",
+    "{{index}}"
+  ]
+}
