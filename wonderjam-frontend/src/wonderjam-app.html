@@ -313,13 +313,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!--Layout-->
         <app-drawer-layout id="mainLayout" fullbleed force-narrow="[[forceNarrow]]">
             <!-- Drawer content -->
-            <app-drawer>
+            <app-drawer id="mainDrawer">
                 <app-toolbar text-id="main-menu-label">Menu</app-toolbar>
-                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                    <a text-id="article-menu-label" name="article-view" href="#/article-view/ROOT">Articles</a>
-                    <a text-id="mailbox-menu-label" name="mailbox-view" href$="#/mailbox-view/[[selectedMailBoxFolder]]">Mailbox</a>
-                    <a text-id="members-menu-label" name="members-view" href$="#/members-view/[[accountId]]" hidden$="{{!hasPrivileges}}">Network</a>
-                    <a text-id="help-menu-label" name="help-view" href="#/help-view">Help</a>
+                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation" paper-drawer-toggle>
+                    <a text-id="article-menu-label" name="article-view" href="#/article-view/ROOT" on-tap="_onCloseDrawer">Articles</a>
+                    <a text-id="mailbox-menu-label" name="mailbox-view" href$="#/mailbox-view/[[selectedMailBoxFolder]]" on-tap="_onCloseDrawer">Mailbox</a>
+                    <a text-id="members-menu-label" name="members-view" href$="#/members-view/[[accountId]]" hidden$="{{!hasPrivileges}}" on-tap="_onCloseDrawer">Network</a>
+                    <a text-id="help-menu-label" name="help-view" href="#/help-view" on-tap="_onCloseDrawer">Help</a>
                 </iron-selector>
                 <div id="legalContainer" class="terms-container">
                     <a text-id="about-menu-label" href="#/about-view">About</a>
@@ -758,6 +758,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },
             onFullscreen: function (event, details) {
                 this.fullScreenContent = !this.fullScreenContent;
+            },
+            _onCloseDrawer: function() {
+                this.$.mainDrawer.close();
             }
         });
     </script>
