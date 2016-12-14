@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
@@ -33,10 +34,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             :host {
                 display: block;
             }
+            
+            iron-icon {
+                border-color: var(--dark-theme-background-color);
+                border-width: thin;
+                border-style: solid;
+            }
         </style>
 
         <div class="layout horizontal">
-            <div class="flex">
+            <app-toolbar class="flex">
                 <paper-tabs attr-for-selected="locale" selected="{{selectedLanguage}}" style="width: 100%;" autoselect>
                     <template is="dom-repeat" items="[[locales]]" as="locale">
                         <paper-tab locale="[[locale.code]]" hidden$="[[_inSourceLang(locale.code)]]">
@@ -44,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-tab>
                     </template>
                 </paper-tabs>
-            </div>
+            </app-toolbar>
             <paper-icon-button icon="wonderjam-icons:details" on-tap="_onReturnToDetails"></paper-icon-button>
         </div>
 

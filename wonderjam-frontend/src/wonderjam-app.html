@@ -335,7 +335,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden$="[[!authenticated]]"></paper-icon-button>
                         <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
                         <plutonium-language-picker id="languagePicker" lang$="{{profile.preferredLanguage}}">
-                            <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
+                                                   <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
                             <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
                             <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
                         </plutonium-language-picker>
@@ -488,254 +488,254 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         selected-language$="[[profile.preferredLanguage]]"
                         selected-item-ids="{{recipients}}"
                         selected-meta-action="{{selectedMetaAction}}">
-                    </wonderjam-share-view>
-                    <wonderjam-legal-view
-                        name="legal-view">
-                    </wonderjam-legal-view>
-                    <wonderjam-view401 
-                        name="view401">
-                    </wonderjam-view401>
-                    <wonderjam-view404 
-                        name="view404">
-                    </wonderjam-view404>
-                </iron-pages>
-                <div class="footer-placeholder">
-                </div>
-            </app-header-layout>
-            <div class="floating-action-bar" hidden$="[[fullScreenContent]]">
-                 <iron-pages
-                    selected="[[page]]"
-                    attr-for-selected="name">
-                    <div name="article-view" class="layout horizontal wrap">
-                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToParentArticle" hidden$="[[!backNavigable]]"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToCreator" hidden$="{{!hasPrivileges}}"></paper-fab>
-                    </div>
-                    <div name="article-section" class="layout horizontal wrap">
-                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToDelete" hidden$="{{!hasPrivileges}}"></paper-fab>
-                    </div>
-                    <div name="mailbox-view" class="layout horizontal wrap">
-                        <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToMessage"></paper-fab>
-                    </div>
-                    <div name="member-editor" class="layout horizontal wrap">
-                        <paper-fab mini id="newMemberDialogCancelButton" icon="wonderjam-icons:arrow-back" on-tap="onCancelMemberEditor"></paper-fab>
-                        <paper-fab mini id="deleteMemberButton" hidden$="[[memberEditorCreateMode]]" icon="wonderjam-icons:delete" on-tap="onOpenDeleteMember"></paper-fab>
-                        <paper-fab mini id="newMemberDialogCreateAndRepeatButton" icon="wonderjam-icons:add" on-tap="onCreateMemberRepeat"></paper-fab>
-                        <paper-fab id="newMemberDialogCreateButton" icon="wonderjam-icons:save" on-tap="onCreateMember"></paper-fab>
-                    </div>
-                    <div name="members-view" class="layout horizontal wrap">
-                        <!--<paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToMailBox" title="Back to mailbox" id="sendMessageFab"></paper-fab>-->
-                        <paper-fab icon="wonderjam-icons:edit" mini on-tap="onOpenMemberEditor" title="Edit member." id="openMemberEditorFab"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:add" on-tap="onOpenCreateMember"></paper-fab>
-                        <template is="dom-if" if="[[!isMeIndicator]]">
-                            <!--<paper-fab icon="wonderjam-icons:remove" on-tap="onDeleteMember"></paper-fab>-->
-
-                            <paper-fab icon="wonderjam-icons:send" on-tap="onSendToMember"></paper-fab>
-                            <!--                            <template is="dom-if" if="[[isUserIndicator]]">
-                                                            <paper-fab icon="wonderjam-icons:star" on-tap="onPromoteMember"></paper-fab>
-                                                        </template>
-                                                        <template is="dom-if" if="[[isAdminIndicator]]">
-                                                            <paper-fab icon="wonderjam-icons:star-border" on-tap="onDemoteMember"></paper-fab>
-                                                        </template>-->
-                        </template>
-
-                    </div>
-                    <div name="recipients-view" class="layout horizontal wrap">
-                        <paper-fab icon="wonderjam-icons:close" mini on-tap="onBackToMessageEditor"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:accept" on-tap="onApplyRecipients"></paper-fab>
-                    </div>
-                    <div name="send-view" class="layout horizontal wrap">
-                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToMailBox" title="Back to mailbox" id="sendMessageFab"></paper-fab>
-                        <paper-fab icon="wonderjam-icons:send" on-tap="onSendMessage" title="Publish content" id="sendMessageFab"></paper-fab>
-                    </div>
-                    <div name="share-view" class="layout horizontal wrap">
-                        <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
-
-                        <paper-fab icon="wonderjam-icons:save" on-tap="onShare" title="Publish content" id="sendMessageFab"></paper-fab>
-
-                        <paper-fab-speed-dial direction="top" mini class="bottom-right">
-                            <paper-fab icon="add" class="dropdown-trigger"></paper-fab>
-                            <div class="dropdown-content">
-                                <paper-fab id="addSectionButton" mini on-tap="onAddSection" icon="wonderjam-icons:text" class="minor-action-fab" title="Embedd text to the message content."></paper-fab>
-                                <paper-fab id="addVideoButton" mini on-tap="onEmbedVideo" icon="wonderjam-icons:video" class="minor-action-fab" title="Embedd video to the message content."></paper-fab>
-                                <paper-fab id="addImageButton" mini on-tap="onEmbedImage" icon="wonderjam-icons:image"  class="minor-action-fab" title="Embedd image to the message content."></paper-fab>
-                                <paper-fab id="addLinkButton" mini on-tap="onEmbedLink" icon="wonderjam-icons:link" class="minor-action-fab" title="Embedd a link to another message to the message content."></paper-fab>
-                            </div>
-                        </paper-fab-speed-dial>
-
-
-                        <paper-fab mini class="minor-action-fab" icon="wonderjam-icons:send" on-tap="onNavigateToMessage" title="Publish content" id="sendMessageFab"></paper-fab>
-                        <paper-fab mini icon="wonderjam-icons:delete" on-tap="onClear" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>
-
-                    </div>
-                </iron-pages>
+                </wonderjam-share-view>
+                <wonderjam-legal-view
+                    name="legal-view">
+                </wonderjam-legal-view>
+                <wonderjam-view401 
+                    name="view401">
+                </wonderjam-view401>
+                <wonderjam-view404 
+                    name="view404">
+                </wonderjam-view404>
+            </iron-pages>
+            <div class="footer-placeholder">
             </div>
-        </app-drawer-layout>
+        </app-header-layout>
+        <div class="floating-action-bar" hidden$="[[fullScreenContent]]">
+             <iron-pages
+                selected="[[page]]"
+                attr-for-selected="name">
+                <div name="article-view" class="layout horizontal wrap">
+                    <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToParentArticle" hidden$="[[!backNavigable]]"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToCreator" hidden$="{{!hasPrivileges}}"></paper-fab>
+                </div>
+                <div name="article-section" class="layout horizontal wrap">
+                    <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToDelete" hidden$="{{!hasPrivileges}}"></paper-fab>
+                </div>
+                <div name="mailbox-view" class="layout horizontal wrap">
+                    <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToMessage"></paper-fab>
+                </div>
+                <div name="member-editor" class="layout horizontal wrap">
+                    <paper-fab mini id="newMemberDialogCancelButton" icon="wonderjam-icons:arrow-back" on-tap="onCancelMemberEditor"></paper-fab>
+                    <paper-fab mini id="deleteMemberButton" hidden$="[[memberEditorCreateMode]]" icon="wonderjam-icons:delete" on-tap="onOpenDeleteMember"></paper-fab>
+                    <paper-fab mini id="newMemberDialogCreateAndRepeatButton" icon="wonderjam-icons:add" on-tap="onCreateMemberRepeat"></paper-fab>
+                    <paper-fab id="newMemberDialogCreateButton" icon="wonderjam-icons:save" on-tap="onCreateMember"></paper-fab>
+                </div>
+                <div name="members-view" class="layout horizontal wrap">
+                    <!--<paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToMailBox" title="Back to mailbox" id="sendMessageFab"></paper-fab>-->
+                    <paper-fab icon="wonderjam-icons:edit" mini on-tap="onOpenMemberEditor" title="Edit member." id="openMemberEditorFab"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:add" on-tap="onOpenCreateMember"></paper-fab>
+                    <template is="dom-if" if="[[!isMeIndicator]]">
+                        <!--<paper-fab icon="wonderjam-icons:remove" on-tap="onDeleteMember"></paper-fab>-->
+
+                        <paper-fab icon="wonderjam-icons:send" on-tap="onSendToMember"></paper-fab>
+                        <!--                            <template is="dom-if" if="[[isUserIndicator]]">
+                                                        <paper-fab icon="wonderjam-icons:star" on-tap="onPromoteMember"></paper-fab>
+                                                    </template>
+                                                    <template is="dom-if" if="[[isAdminIndicator]]">
+                                                        <paper-fab icon="wonderjam-icons:star-border" on-tap="onDemoteMember"></paper-fab>
+                                                    </template>-->
+                    </template>
+
+                </div>
+                <div name="recipients-view" class="layout horizontal wrap">
+                    <paper-fab icon="wonderjam-icons:close" mini on-tap="onBackToMessageEditor"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:accept" on-tap="onApplyRecipients"></paper-fab>
+                </div>
+                <div name="send-view" class="layout horizontal wrap">
+                    <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToMailBox" title="Back to mailbox" id="sendMessageFab"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:send" on-tap="onSendMessage" title="Publish content" id="sendMessageFab"></paper-fab>
+                </div>
+                <div name="share-view" class="layout horizontal wrap">
+                    <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
+
+                    <paper-fab icon="wonderjam-icons:save" on-tap="onShare" title="Publish content" id="sendMessageFab"></paper-fab>
+
+                    <paper-fab-speed-dial direction="top" mini class="bottom-right">
+                        <paper-fab icon="add" class="dropdown-trigger"></paper-fab>
+                        <div class="dropdown-content">
+                            <paper-fab id="addSectionButton" mini on-tap="onAddSection" icon="wonderjam-icons:text" class="minor-action-fab" title="Embedd text to the message content."></paper-fab>
+                            <paper-fab id="addVideoButton" mini on-tap="onEmbedVideo" icon="wonderjam-icons:video" class="minor-action-fab" title="Embedd video to the message content."></paper-fab>
+                            <paper-fab id="addImageButton" mini on-tap="onEmbedImage" icon="wonderjam-icons:image"  class="minor-action-fab" title="Embedd image to the message content."></paper-fab>
+                            <paper-fab id="addLinkButton" mini on-tap="onEmbedLink" icon="wonderjam-icons:link" class="minor-action-fab" title="Embedd a link to another message to the message content."></paper-fab>
+                        </div>
+                    </paper-fab-speed-dial>
 
 
-        <paper-toast id="mainToast"></paper-toast>
-    </template>
+                    <paper-fab mini class="minor-action-fab" icon="wonderjam-icons:send" on-tap="onNavigateToMessage" title="Publish content" id="sendMessageFab"></paper-fab>
+                    <paper-fab mini icon="wonderjam-icons:delete" on-tap="onClear" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>
 
-    <script>
-        Polymer({
-            is: 'wonderjam-app',
-            behaviors: [
-                PlutoniumBehaviors.DatasourceBehavior,
-                PlutoniumBehaviors.AppRoutingBehavior,
-                PlutoniumBehaviors.AppToastingBehavior,
-                PlutoniumBehaviors.RoleBehavior,
-                BehaviorsStore.I18nBehavior,
-                WonderjamAppBehaviors.ControllerArticleBehavior,
-                WonderjamAppBehaviors.ControllerPublicherBehavior,
-                WonderjamAppBehaviors.ControllerMemberBehavior,
-                WonderjamAppBehaviors.ControllerManagerBehavior,
-                WonderjamAppBehaviors.ControllerMailingBehavior
-            ],
-            properties: {
-                rootArticlesModel: {
-                    type: Object,
-                    notify: true
-                },
-                profile: {
-                    type: Object,
-                    notify: true,
+                </div>
+            </iron-pages>
+        </div>
+    </app-drawer-layout>
+
+
+    <paper-toast id="mainToast"></paper-toast>
+</template>
+
+<script>
+    Polymer({
+        is: 'wonderjam-app',
+        behaviors: [
+            PlutoniumBehaviors.DatasourceBehavior,
+            PlutoniumBehaviors.AppRoutingBehavior,
+            PlutoniumBehaviors.AppToastingBehavior,
+            PlutoniumBehaviors.RoleBehavior,
+            BehaviorsStore.I18nBehavior,
+            WonderjamAppBehaviors.ControllerArticleBehavior,
+            WonderjamAppBehaviors.ControllerPublicherBehavior,
+            WonderjamAppBehaviors.ControllerMemberBehavior,
+            WonderjamAppBehaviors.ControllerManagerBehavior,
+            WonderjamAppBehaviors.ControllerMailingBehavior
+        ],
+        properties: {
+            rootArticlesModel: {
+                type: Object,
+                notify: true
+            },
+            profile: {
+                type: Object,
+                notify: true,
 //                    value: {
 //                        profile: ''
 //                    }
-                },
+            },
 //                authenticated: {
 //                    type: Boolean,
 //                    notify: true,
 //                    value: false
 //                },
-                apiUrl: {
-                    value: '/backend'
+            apiUrl: {
+                value: '/backend'
 //                    value: "http://localhost:8080/backend"
-                },
-                minorToolbarHidden: {
-                    type: Boolean,
-                    computed: 'computeMinorToolbarHidden(authenticated, page)'
-                },
-                fullScreenContent: {
-                    type: Boolean,
-                    notify: true,
-                    value: false,
-                },
-                forceNarrow: {
-                    type: Boolean,
-                    computed: 'computeForceNarrow(authenticated, fullScreenContent)'
-                },
-                regProfileAjaxUrl: {
-                    type: String,
-                    computed: 'computeRegProfileAjaxUrl(apiUrl, registrationSubrouteData.activationCode)'
-                },
-                locales: {
-                    type: Array,
-                    notify: true
-                },
-                changeLanguageModel: {
-                    type: Object,
-                    notify: true
-                },
-                queryParams: {
-                    type: Object,
-                    notify: true
-                },
-                routeData: {
-                    type: Object,
-                    notify: true
-                },
-                pageRouteData: {
-                    type: Object,
-                    notify: true
-                },
-                articleSectionRouteData: {
-                    type: Object,
-                    notify: true
-                },
-                registrationSubrouteData: {
-                    type: Object,
-                    notify: true
-                },
-                subroute: {
-                    type: String,
-                    notify: true
-                }
             },
-            observers: [
-                'observeRootArticlesModel(rootArticlesModel)',
+            minorToolbarHidden: {
+                type: Boolean,
+                computed: 'computeMinorToolbarHidden(authenticated, page)'
+            },
+            fullScreenContent: {
+                type: Boolean,
+                notify: true,
+                value: false,
+            },
+            forceNarrow: {
+                type: Boolean,
+                computed: 'computeForceNarrow(authenticated, fullScreenContent)'
+            },
+            regProfileAjaxUrl: {
+                type: String,
+                computed: 'computeRegProfileAjaxUrl(apiUrl, registrationSubrouteData.activationCode)'
+            },
+            locales: {
+                type: Array,
+                notify: true
+            },
+            changeLanguageModel: {
+                type: Object,
+                notify: true
+            },
+            queryParams: {
+                type: Object,
+                notify: true
+            },
+            routeData: {
+                type: Object,
+                notify: true
+            },
+            pageRouteData: {
+                type: Object,
+                notify: true
+            },
+            articleSectionRouteData: {
+                type: Object,
+                notify: true
+            },
+            registrationSubrouteData: {
+                type: Object,
+                notify: true
+            },
+            subroute: {
+                type: String,
+                notify: true
+            }
+        },
+        observers: [
+            'observeRootArticlesModel(rootArticlesModel)',
 //                'observeLanguageChange(profile.*)'
-            ],
-            listeners: {
-                'change-language': 'onChangeLocale',
-                'plutonium-fullscreen': 'onFullscreen'
-            },
-            ready: function () {
-                this.$.tokenAjax.generateRequest();
-            },
-            computeRegProfileAjaxUrl: function (apiUrl, activationCode) {
-                return apiUrl + '/addressbook/' + activationCode + '/profile';
-            },
-            onOpenSpeedDial: function () {
-                this.$.asd.open();
-            },
-            getIcon: function (data) {
-                if (data === 'GROUP') {
-                    return 'group';
-                } else if (data === 'USER') {
-                    return 'person';
-                } else if (data === 'ADMIN') {
-                    return 'member';
-                }
-            },
-            computeForceNarrow: function (authenticated, fullScreenContent) {
-                return !authenticated || fullScreenContent;
-            },
-            observeRootArticlesModel: function (rootArticlesModel) {
-                console.log('KKKKKKKKKKKKKKKKKKKKKK ', rootArticlesModel);
-            },
-            patchOverlay: function (e) {
-                if (e.target.withBackdrop) {
-                    e.target.parentNode.insertBefore(e.target._backdrop, e.target);
-                }
-            },
-            computeMinorToolbarHidden: function (authenticated, page) {
-                return !authenticated || (page === 'about-view' || page === 'help-view' || page === 'legal-view' || page === 'member-editor' ||
-                        page === 'profile-view') ||
-                        page === 'send-view' ||
-                        page === 'share-view' ||
-                        (page === 'recipients-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1)) ||
-                        (page === 'article-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1));
-            },
-            handleChangeLanguageResponse: function (event, r) {
-                var msg = 'Language changed successfully to ' + this.locales.filter(function (currentValue, index, arr) {
-                    return (currentValue.code === this.profile.preferredLanguage);
-                }, this)[0].name + '.';
-                console.log(msg);
-                this.$.profileIronAjax.generateRequest();
-            },
-            handleChangeLanguageError: function () {
-                var msg = 'Language changing failed.';
-                console.log(msg);
-                this.fire('feedback', {
-                    message: msg
-                });
-            },
-            onProfileIronAjaxError: function (event, details) {
+        ],
+        listeners: {
+            'change-language': 'onChangeLocale',
+            'plutonium-fullscreen': 'onFullscreen'
+        },
+        ready: function () {
+            this.$.tokenAjax.generateRequest();
+        },
+        computeRegProfileAjaxUrl: function (apiUrl, activationCode) {
+            return apiUrl + '/addressbook/' + activationCode + '/profile';
+        },
+        onOpenSpeedDial: function () {
+            this.$.asd.open();
+        },
+        getIcon: function (data) {
+            if (data === 'GROUP') {
+                return 'group';
+            } else if (data === 'USER') {
+                return 'person';
+            } else if (data === 'ADMIN') {
+                return 'member';
+            }
+        },
+        computeForceNarrow: function (authenticated, fullScreenContent) {
+            return !authenticated || fullScreenContent;
+        },
+        observeRootArticlesModel: function (rootArticlesModel) {
+            console.log('KKKKKKKKKKKKKKKKKKKKKK ', rootArticlesModel);
+        },
+        patchOverlay: function (e) {
+            if (e.target.withBackdrop) {
+                e.target.parentNode.insertBefore(e.target._backdrop, e.target);
+            }
+        },
+        computeMinorToolbarHidden: function (authenticated, page) {
+            return !authenticated || (page === 'about-view' || page === 'help-view' || page === 'legal-view' || page === 'member-editor' ||
+                    page === 'profile-view') ||
+                    page === 'send-view' ||
+                    page === 'share-view' ||
+                    (page === 'recipients-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1)) ||
+                    (page === 'article-view' && (this.user && this.user.authorities.indexOf('ADMIN') === -1));
+        },
+        handleChangeLanguageResponse: function (event, r) {
+            var msg = 'Language changed successfully to ' + this.locales.filter(function (currentValue, index, arr) {
+                return (currentValue.code === this.profile.preferredLanguage);
+            }, this)[0].name + '.';
+            console.log(msg);
+            this.$.profileIronAjax.generateRequest();
+        },
+        handleChangeLanguageError: function () {
+            var msg = 'Language changing failed.';
+            console.log(msg);
+            this.fire('feedback', {
+                message: msg
+            });
+        },
+        onProfileIronAjaxError: function (event, details) {
 
-            },
-            onProfileIronAjaxResponse: function (event, details) {
-                
-                var oldLang = document.querySelector('html').getAttribute('lang');
-                document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
-                var newLang = document.querySelector('html').getAttribute('lang');
-                console.log('Change from locale ' + oldLang + ' to ' + newLang);
+        },
+        onProfileIronAjaxResponse: function (event, details) {
+
+            var oldLang = document.querySelector('html').getAttribute('lang');
+            document.querySelector('html').setAttribute('lang', this.profile.preferredLanguage);
+            var newLang = document.querySelector('html').getAttribute('lang');
+            console.log('Change from locale ' + oldLang + ' to ' + newLang);
 //                this.$.languagePicker.lang = this.profile.preferredLanguage;
-                
-            },
-            observeLanguageChange: function (preferredLanguage) {
+
+        },
+        observeLanguageChange: function (preferredLanguage) {
 //                if (preferredLanguage.path !== 'profile') {
 //                    this.changeLanguageModel = {
 //                        accountId: this.profile.id,
@@ -744,24 +744,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 //                    console.log('Change language request: ' + JSON.stringify(this.changeLanguageModel));
 //                    this.fire('change-language', this.changeLanguageModel);
 //                }
-            },
-            onChangeLocale: function (event, details) {
+        },
+        onChangeLocale: function (event, details) {
 //                this.changeLanguageModel = details;
-                if (this.authenticated && this.profile.preferredLanguage !== details.language) {
-                    console.debug('Language CHANGED to', details);
-                    this.changeLanguageModel = {
-                        accountId: this.profile.id,
-                        language: details.language
-                    };
-                    this.$.changeLanguageAjax.generateRequest();
-                }
-            },
-            onFullscreen: function (event, details) {
-                this.fullScreenContent = !this.fullScreenContent;
-            },
-            _onCloseDrawer: function() {
-                this.$.mainDrawer.close();
+            if (this.authenticated && this.profile.preferredLanguage !== details.language) {
+                console.debug('Language CHANGED to', details);
+                this.changeLanguageModel = {
+                    accountId: this.profile.id,
+                    language: details.language
+                };
+                this.$.changeLanguageAjax.generateRequest();
             }
-        });
-    </script>
+        },
+        onFullscreen: function (event, details) {
+            this.fullScreenContent = !this.fullScreenContent;
+        },
+        _onCloseDrawer: function () {
+            if (this.$.mainLayout.narrow)
+                this.$.mainDrawer.close();
+        }
+    });
+</script>
 </dom-module>
