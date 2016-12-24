@@ -25,23 +25,38 @@ import javax.persistence.OneToMany;
 @Entity
 @DiscriminatorValue(value = ContainerContentEntity.RESOURCE_TYPE)
 @NamedQueries({
-//    @NamedQuery(name = "ContainerContentEntity.findByParent", query = "SELECT c FROM ContentEntity c WHERE c.parent.id = :parentId"),
-//    @NamedQuery(name = "ContainerContentEntity.findRoots", query = "SELECT c FROM ContentEntity c WHERE c.parent IS NULL"),
-    @NamedQuery(name = "ContainerContentEntity.findByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId ORDER BY c.title"),
-    @NamedQuery(name = "ContainerContentEntity.findDraftByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.node.contact.id = :accountId ORDER BY c.title"),
-    @NamedQuery(name = "ContainerContentEntity.findPublicByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.publicIndicator = TRUE ORDER BY c.title"),
-    @NamedQuery(name = "ContainerContentEntity.findPublishedByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.publicIndicator = FALSE ORDER BY c.title"),
+    //    @NamedQuery(name = "ContainerContentEntity.findByParent", query = "SELECT c FROM ContentEntity c WHERE c.parent.id = :parentId"),
+    //    @NamedQuery(name = "ContainerContentEntity.findRoots", query = "SELECT c FROM ContentEntity c WHERE c.parent IS NULL"),
+    @NamedQuery(name = "ContainerContentEntity.findOne", query = "SELECT c FROM ContainerContentEntity c WHERE c.id = :id AND c.active = TRUE")
+    ,
+    @NamedQuery(name = "ContainerContentEntity.findByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.active = TRUE ORDER BY c.title")
+    ,
+    @NamedQuery(name = "ContainerContentEntity.findDraftByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.node.contact.id = :accountId AND c.active = TRUE ORDER BY c.title")
+    ,
+    @NamedQuery(name = "ContainerContentEntity.findPublicByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.publicIndicator = TRUE AND c.active = TRUE ORDER BY c.title")
+    ,
+    @NamedQuery(name = "ContainerContentEntity.findPublishedByParent", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent.id = :parentId AND c.publicIndicator = FALSE AND c.active = TRUE ORDER BY c.title")
+    ,
 
-    @NamedQuery(name = "ContainerContentEntity.findByChild", query = "SELECT c.parent FROM ContainerContentEntity c WHERE c.id = :id"),
+    @NamedQuery(name = "ContainerContentEntity.findByChild", query = "SELECT c.parent FROM ContainerContentEntity c WHERE c.id = :id AND c.active = TRUE")
+    ,
     
-    @NamedQuery(name = "ContainerContentEntity.findRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL"),
-    @NamedQuery(name = "ContainerContentEntity.findDraftRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.node.contact.id = :accountId ORDER BY c.title"),
-    @NamedQuery(name = "ContainerContentEntity.findPublicRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.publicIndicator = TRUE ORDER BY c.title"),
-    @NamedQuery(name = "ContainerContentEntity.findPublishedRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.publicIndicator = FALSE ORDER BY c.title")
+    @NamedQuery(name = "ContainerContentEntity.findRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.active = TRUE")
+    ,
+    @NamedQuery(name = "ContainerContentEntity.findDraftRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.node.contact.id = :accountId AND c.active = TRUE ORDER BY c.title")
+    ,
+    @NamedQuery(name = "ContainerContentEntity.findPublicRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.publicIndicator = TRUE AND c.active = TRUE ORDER BY c.title")
+    ,
+    @NamedQuery(name = "ContainerContentEntity.findPublishedRoots", query = "SELECT c FROM ContainerContentEntity c WHERE c.parent IS NULL AND c.publicIndicator = FALSE AND c.active = TRUE ORDER BY c.title")
 })
 public class ContainerContentEntity extends UniqueEntity {
 
     public static final String RESOURCE_TYPE = ViewConstants.CONTENT_MANAGEMENT_WIDGET_CONTAINER;
+
+    public ContainerContentEntity() {
+        this.active = true;
+
+    }
 
     @Basic
     @Enumerated(EnumType.STRING)
@@ -76,7 +91,7 @@ public class ContainerContentEntity extends UniqueEntity {
     public void setPublicIndicator(Boolean publicIndicator) {
         this.publicIndicator = publicIndicator;
     }
-    
+
     @Basic
     private String embeddedFile;
 
@@ -109,4 +124,16 @@ public class ContainerContentEntity extends UniqueEntity {
     public void setChildren(List<ContentEntity> children) {
         this.children = children;
     }
+
+    @Basic(optional = true)
+    private Boolean active = true;
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
 }

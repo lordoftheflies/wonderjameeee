@@ -52,4 +52,8 @@ public interface ContainerContentRepository extends PagingAndSortingRepository<C
     public List<ContainerContentEntity> findDraftByParent(@Param("parentId") UUID parentId, @Param("accountId") UUID accountId);
     
     public ContainerContentEntity findByChild(@Param("id") UUID childId);
+
+    @Override
+    ContainerContentEntity findOne(@Param("id") UUID id);
+    
 }

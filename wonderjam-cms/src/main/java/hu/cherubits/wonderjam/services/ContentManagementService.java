@@ -611,6 +611,20 @@ public class ContentManagementService {
     }
 
     @CrossOrigin
+    @RequestMapping(path = "/remove",
+            method = RequestMethod.POST,
+            consumes = {
+                MediaType.APPLICATION_JSON_VALUE
+            })
+    public void remove(@RequestBody PublisherDto dto) throws ContentNotFoundException {
+        NetworkNodeEntity entity = networkRepository.findByAccount(dto.getOwner());
+        ContainerContentEntity content = contentContainerRepository.findOne(dto.getArticle());
+        LOG.log(Level.INFO, "Article {0} deleted by owner {1}", new Object[]{dto.getArticle(), dto.getOwner()});
+        content.setActive(false);
+        contentContainerRepository.save(content);
+    }
+    
+    @CrossOrigin
     @RequestMapping(path = "/publish",
             method = RequestMethod.POST,
             consumes = {

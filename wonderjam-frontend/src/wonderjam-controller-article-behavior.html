@@ -107,6 +107,14 @@
                 articleDetailsActive: {
                     type: Boolean,
                     notify: true
+                },
+                deleteArticlePromptSubject: {
+                    type: String,
+                    computed: 'computeDeleteArticlePromptSubject(childTocModel.title)'
+                },
+                deleteArticleModel: {
+                    type: Object,
+                    notify: true
                 }
             },
             observers: [
@@ -207,6 +215,39 @@
             },
             computeRootArticleBackNavigable: function (selectedArticleId) {
                 return selectedArticleId !== 'ROOT';
+            },
+            onNavigateToDeleteArticle: function () {
+                console.debug('Open prompt for delete article.');
+                this.$.deleteArticlePrompt.open();
+            },
+            onDeleteArticle: function () {
+                console.debug('Delete article');
+                this.deleteArticleModel = {
+                    article: this.pageRouteData.contentId,
+                    owner: this.accountId
+                };
+                this.$.deleteArticleAjax.generateRequest();
+            },
+            /**
+             * Ajax response handler for `deleteArticleAjax` element.
+             */
+            onDeleteArticleAjaxResponse: function (event, details) {
+                console.debug(this.is, 'remove', details);
+                this.fire('feedback', {
+                    message: 'Article removed succesfully.'
+                });
+            },
+            /**
+             * Ajax error handler for `deleteArticleAjax` element.
+             */
+            onDeleteArticleAjaxError: function (event, details) {
+                console.warn(this.is, 'removing failed', details);
+                this.fire('feedback', {
+                    message: 'Article remove failed.'
+                });
+            },
+            computeDeleteArticlePromptSubject: function (contentModelId) {
+                return this.childTocModel.title;
             }
         };
 

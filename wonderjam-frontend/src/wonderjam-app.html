@@ -204,7 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    handle-as="json" content-type="application/json" auto="[[childrenRequestParams.parentId]]"></iron-ajax>
 
 
-        <!--Share content-->
+        <!--Delete member-->
         <iron-ajax id="deleteMemberAjax" url="[[apiUrl]]/addressbook/delete"
                    body="{{deleteMemberModel}}" headers="[[headers]]" on-error="onDeleteMemberAjaxError" on-response="onDeleteMemberAjaxResponse"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
@@ -212,6 +212,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!--Share content-->
         <iron-ajax id="shareAjax" url="[[shareAjaxUrl]]"
                    body="{{editedContentModel}}" headers="[[headers]]"
+                   method="POST" handle-as="json" content-type="application/json"></iron-ajax>
+        <!--Delete content-->
+        <iron-ajax id="deleteArticleAjax" url="[[apiUrl]]/content-management/remove" 
+                   body="{{deleteArticleModel}}" on-response="onDeleteArticleAjaxResponse" on-error="onDeleteArticleAjaxError" headers="[[headers]]"
                    method="POST" handle-as="json" content-type="application/json"></iron-ajax>
 
         <!--Publish content-->
@@ -302,11 +306,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-dialog id="deleteMemberPrompt" modal>
             <h2 text-id="delete-member-prompt-title">Delete member</h2>
             <paper-dialog-scrollable>
-                <p text-id="delete-member-prompt-dialog-text">You want to delete member [[deleteMemberPromptSubject]]</p>
+                <p text-id="delete-member-prompt-dialog-text">You want to delete member [[deleteMemberPromptSubject]]?</p>
             </paper-dialog-scrollable>
             <div class="buttons">
                 <paper-button text-id="prompt-dialog-cancel-button" dialog-dismiss>Cancel</paper-button>
                 <paper-button text-id="prompt-dialog-ok-button" on-tap="onDeleteMember" dialog-confirm raised autofocus>OK</paper-button>
+            </div>
+        </paper-dialog>
+        <paper-dialog id="deleteArticlePrompt" modal>
+            <h2 text-id="delete-article-prompt-title">Delete article</h2>
+            <paper-dialog-scrollable>
+                <p text-id="delete-article-prompt-dialog-text">You want to delete article "[[deleteArticlePromptSubject]]"?</p>
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button text-id="prompt-dialog-cancel-button" dialog-dismiss>Cancel</paper-button>
+                <paper-button text-id="prompt-dialog-ok-button" on-tap="onDeleteArticle" dialog-confirm raised autofocus>OK</paper-button>
             </div>
         </paper-dialog>
 
@@ -514,7 +528,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <paper-fab icon="wonderjam-icons:arrow-back" mini on-tap="onBackToContents"></paper-fab>
                     <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
                     <paper-fab icon="wonderjam-icons:edit" on-tap="onNavigateToEditor" hidden$="{{!hasPrivileges}}"></paper-fab>
-                    <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToDelete" hidden$="{{!hasPrivileges}}"></paper-fab>
+                    <paper-fab icon="wonderjam-icons:delete" on-tap="onNavigateToDeleteArticle" hidden$="{{!hasPrivileges}}"></paper-fab>
                 </div>
                 <div name="mailbox-view" class="layout horizontal wrap">
                     <paper-fab icon="wonderjam-icons:add" on-tap="onNavigateToMessage"></paper-fab>
@@ -567,7 +581,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
                     <paper-fab mini class="minor-action-fab" icon="wonderjam-icons:send" on-tap="onNavigateToMessage" title="Publish content" id="sendMessageFab"></paper-fab>
-                    <paper-fab mini icon="wonderjam-icons:delete" on-tap="onClear" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>
+                    <!--<paper-fab mini icon="wonderjam-icons:delete" on-tap="onClear" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>-->
+                    <!--<paper-fab mini icon="wonderjam-icons:delete" on-tap="onNavigateToDeleteArticle" title="Cancel all changes & create new article." id="sendNewContentFab"></paper-fab>-->
 
                 </div>
             </iron-pages>
