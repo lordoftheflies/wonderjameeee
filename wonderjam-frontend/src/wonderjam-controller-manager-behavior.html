@@ -70,8 +70,7 @@
                 },
                 memberEditorCreateMode: {
                     type: Boolean,
-                    notify: true,
-                    value: true
+                    notify: true
                 },
                 deleteMemberPromptSubject: {
                     type: String,
@@ -128,7 +127,9 @@
              */
             onOpenMemberEditor: function (event, detail) {
 
-                this.memberEditorCreateMode = this.$.membersView.selectedAccountId === this.accountId;
+//                this.memberEditorCreateMode = this.$.membersView.selectedAccountId === this.accountId;
+                this.memberEditorCreateMode = false;
+                
 //                this.set('memberSubrouteData.memberId', this.$.membersView.selectedAccountId);
 //                this.$.
                 this.set('route.path', '/member-editor/' + this.$.membersView.selectedAccountId);
