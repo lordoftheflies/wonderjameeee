@@ -11,6 +11,7 @@ package hu.cherubits.wonderjam.common;
  */
 public enum ContentType {
     assembled("assembled"), embedded("embedded"), linked("linked");
+    
     private final String key;
 
     private ContentType(String key) {
