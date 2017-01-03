@@ -121,7 +121,7 @@
                     message: 'Message publishing failed.'
                 });
             },
-            
+
             /**
              * Ajax response handler for `unpublisherAjax` element.
              */
@@ -141,7 +141,9 @@
                 });
             },
             onNavigateToEditor: function () {
-                this.set('route.path', '/share-view');
+//                this.$.shareView.contentModel = this.articleDetailsModel;
+//                this.set('contentModel', );
+                this.set('route.path', '/share-view/' + this.articleDetailsModel.id);
 //                this.fire('page-go', {page: 'share-view'});
             },
             onNavigateToCreator: function () {
