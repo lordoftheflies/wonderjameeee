@@ -223,7 +223,7 @@
             onDeleteArticle: function () {
                 console.debug('Delete article');
                 this.deleteArticleModel = {
-                    article: this.pageRouteData.contentId,
+                    article: this.articleSectionRouteData.pageId,
                     owner: this.accountId
                 };
                 this.$.deleteArticleAjax.generateRequest();
