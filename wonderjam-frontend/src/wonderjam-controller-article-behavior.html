@@ -110,7 +110,7 @@
                 },
                 deleteArticlePromptSubject: {
                     type: String,
-                    computed: 'computeDeleteArticlePromptSubject(childTocModel.title)'
+                    computed: 'computeDeleteArticlePromptSubject(articleDetailsModel.title)'
                 },
                 deleteArticleModel: {
                     type: Object,
@@ -233,9 +233,19 @@
              */
             onDeleteArticleAjaxResponse: function (event, details) {
                 console.debug(this.is, 'remove', details);
+                
+                this.fire('article-details', {
+                    contentId: this.articleDetailsModel.parentId,
+                    type: 'linked'
+                });
+        
+                this.$.childTocAjax.generateRequest();
+                this.$.parentTocAjax.generateRequest();
                 this.fire('feedback', {
                     message: 'Article removed succesfully.'
                 });
+                
+                
             },
             /**
              * Ajax error handler for `deleteArticleAjax` element.
@@ -246,8 +256,8 @@
                     message: 'Article remove failed.'
                 });
             },
-            computeDeleteArticlePromptSubject: function (contentModelId) {
-                return this.childTocModel.title;
+            computeDeleteArticlePromptSubject: function (contentModelTitle) {
+                return contentModelTitle;
             }
         };
 
