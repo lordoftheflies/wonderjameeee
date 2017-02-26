@@ -328,7 +328,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-drawer-layout id="mainLayout" fullbleed force-narrow="[[forceNarrow]]">
             <!-- Drawer content -->
             <app-drawer id="mainDrawer">
-                <app-toolbar text-id="main-menu-label">Menu</app-toolbar>
+                <!--<app-toolbar text-id="main-menu-label">Menu</app-toolbar>-->
+                <app-toolbar id="mainTitle">Topflavon</app-toolbar>
                 <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation" paper-drawer-toggle>
                     <a text-id="article-menu-label" name="article-view" href="#/article-view/ROOT" on-tap="_onCloseDrawer">Articles</a>
                     <a text-id="mailbox-menu-label" name="mailbox-view" href$="#/mailbox-view/[[selectedMailBoxFolder]]" on-tap="_onCloseDrawer">Mailbox</a>
@@ -344,28 +345,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- Main content -->
             <app-header-layout id="headerLayout" has-scrolling-region>
 
-                <app-header reveals shadow="[[authenticated]]" hidden$="[[fullScreenContent]]">
-                            <app-toolbar sticky>
+                <app-header condenses reveals shadow="[[authenticated]]" hidden$="[[fullScreenContent]]">
+                      <app-toolbar sticky>
                         <paper-icon-button icon="wonderjam-icons:menu" drawer-toggle hidden$="[[!authenticated]]"></paper-icon-button>
-                        <div id="mainTitle" main-title class="flex center-center">Topflavon</div>
-                        <plutonium-language-picker id="languagePicker" lang$="{{profile.preferredLanguage}}">
-                                                   <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
-                            <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
-                            <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
-                        </plutonium-language-picker>
-                        <plutonium-avatar-button 
-                            hidden$="[[!authenticated]]"
-                            display-name-attribute="userName" display-unique-attribute="userName" user="[[user]]">
-                            <a href="#" on-tap="onLogout" class="menu">
-                                <paper-item class="menu">
-                                    <iron-icon icon="markunread-mailbox" item-icon></iron-icon>
-                                    <span  text-id="logout-label">Logout</span>
-                                </paper-item>
-                            </a>
-                        </plutonium-avatar-button>
-                    </app-toolbar>
-                    <app-toolbar hidden$="[[minorToolbarHidden]]">
-                                 <iron-pages
+                        <!--<div id="mainTitle" main-title class="flex center-center">Topflavon</div>-->
+                        <!--<div class="layout horizontal">-->
+
+                        <!--</div>-->
+                        <!--                    </app-toolbar>
+                                            <app-toolbar hidden$="[[minorToolbarHidden]]">-->
+                        <iron-pages
                             selected="[[page]]"
                             attr-for-selected="data-route"
                             fallback-selection="none"
@@ -400,6 +389,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 <paper-tab name="group">Group</paper-tab>
                             </paper-tabs>
                         </iron-pages>
+
+                        <plutonium-language-picker id="languagePicker" lang$="{{profile.preferredLanguage}}">
+                                                   <plutonium-language-item lang="en" text-id="english-language-label">English</plutonium-language-item>
+                            <plutonium-language-item lang="hu" text-id="hungarian-language-label">Magyar</plutonium-language-item>
+                            <plutonium-language-item lang="po" text-id="polish-language-label">Polski</plutonium-language-item>
+                        </plutonium-language-picker>
+                        <plutonium-avatar-button 
+                            hidden$="[[!authenticated]]"
+                            display-name-attribute="userName" display-unique-attribute="userName" user="[[user]]">
+                            <a href="#" on-tap="onLogout" class="menu">
+                                <paper-item class="menu">
+                                    <iron-icon icon="markunread-mailbox" item-icon></iron-icon>
+                                    <span  text-id="logout-label">Logout</span>
+                                </paper-item>
+                            </a>
+                        </plutonium-avatar-button>
                     </app-toolbar>
                 </app-header>
 
