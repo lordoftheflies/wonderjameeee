@@ -53,6 +53,9 @@ public class CmsDataService {
     @PostConstruct
     public void init() {
         File dir = new File(videoLocation);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
         videos.clear();
         videos.putAll(Arrays.asList(dir.listFiles()).stream().collect(Collectors.toMap((f) -> {
             String name = ((File) f).getName();
